@@ -8,19 +8,31 @@ const routes = [
     path: '/',
     name: 'Home',
     component: () => import('@/views/Home.vue'),
-    redirect: '/main',
-    children: [
-      {
-        path: 'main',
-        name: 'Main',
-        component: () => import('@/views/home/Main.vue')
-      },
-    ]
   },
   {
-    path: '/login',
-    name: 'Login',
-    component: () => import('@/views/Login.vue')
+    path: '/about',
+    name: 'About',
+    component: () => import('@/views/About.vue')
+  },
+  {
+    path: '/product',
+    name: 'Product',
+    component: () => import('@/views/Product.vue')
+  },
+  {
+    path: '/event',
+    name: 'Event',
+    component: () => import('@/views/Event.vue')
+  },
+  {
+    path: '/contact',
+    name: 'Contact',
+    component: () => import('@/views/Contact.vue')
+  },
+  {
+    path: '/search/:text',
+    name: 'Search',
+    component: () => import('@/views/Search.vue')
   },
 ]
 
