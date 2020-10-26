@@ -16,7 +16,7 @@
                 <h1>여기는 about 관리</h1>
             </div>
             <div class="tab-pane fade" id="v-pills-main" role="tabpanel" aria-labelledby="v-pills-main-tab">
-                <h1>여기는 main 페이지</h1>
+                <h1>여기는 main</h1>
             </div>
             <div class="tab-pane fade" id="v-pills-product" role="tabpanel" aria-labelledby="v-pills-log-product">
                 <h1>여기는 product 페이지</h1>
