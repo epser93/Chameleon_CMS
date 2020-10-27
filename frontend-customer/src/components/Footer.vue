@@ -11,10 +11,10 @@
           <div class="col-xs-6 col-md-3">
             <h6>Categories</h6>
             <ul class="footer-links">
-              <li><a href="@/views/home/About.vue">About</a></li>
-              <li><a href="@/views/home/Product.vue">Product</a></li>
-              <li><a href="@/views/home/Event.vue">Event</a></li>
-              <li><a href="@/views/home/Contact.vue">Contact</a></li>
+              <li @click="onRoute('About')">About</li>
+              <li @click="onRoute('Product')">Product</li>
+              <li @click="onRoute('Event')">Event</li>
+              <li @click="onRoute('Contact')">Contact</li>
             </ul>
           </div>
         </div>
@@ -35,7 +35,13 @@
 
 <script>
 export default {
-    name: 'Footer'
+  name: 'Footer',
+  methods: {
+    onRoute(name) {
+      this.$router.push({name: name}, () => {})
+		},
+
+  }
 }
 </script>
 
@@ -203,5 +209,9 @@ export default {
     margin-right:0;
     font-weight:600
   }
+}
+
+li {
+  cursor: pointer;
 }
 </style>
