@@ -34,6 +34,16 @@ const routes = [
     name: 'Search',
     component: () => import('@/views/Search.vue')
   },
+  {
+    path: '/template/design',
+    name: 'DesignTemplate',
+    component: () => import('@/views/Category/DesignTemplate.vue')
+  },
+  {
+    path: '/design/spec',
+    name: 'SpecTemplate',
+    component: () => import('@/views/Category/SpecTemplate.vue')
+  },
 ]
 
 const router = new VueRouter({
