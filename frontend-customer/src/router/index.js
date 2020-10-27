@@ -17,7 +17,19 @@ const routes = [
   {
     path: '/product',
     name: 'Product',
-    component: () => import('@/views/Product.vue')
+    component: () => import('@/views/Product.vue'),
+    children: [
+      {
+        path: 'design',
+        name: 'DesignTemplate',
+        component: () => import('@/views/Category/DesignTemplate.vue')
+      },
+      {
+        path: 'spec',
+        name: 'SpecTemplate',
+        component: () => import('@/views/Category/SpecTemplate.vue')
+      },
+    ]
   },
   {
     path: '/event',
@@ -33,16 +45,6 @@ const routes = [
     path: '/search/:text',
     name: 'Search',
     component: () => import('@/views/Search.vue')
-  },
-  {
-    path: '/template/design',
-    name: 'DesignTemplate',
-    component: () => import('@/views/Category/DesignTemplate.vue')
-  },
-  {
-    path: '/design/spec',
-    name: 'SpecTemplate',
-    component: () => import('@/views/Category/SpecTemplate.vue')
   },
 ]
 

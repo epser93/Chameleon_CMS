@@ -24,8 +24,8 @@
             <div class="collapse d-md-none productContent" id="productToggle">
               <div class="card card-body">
                 <div class="nav nav-pills flex-column" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                  <a class="nav-link active" data-toggle="tab"  role="tab" aria-selected="true">categoryA</a>
-                  <a class="nav-link" data-toggle="tab" role="tab" aria-selected="false">categoryB</a>
+                  <a class="nav-link active" @click="onRoute('DesignTemplate'); onHideCollapse();" data-toggle="tab"  role="tab" aria-selected="true">DesignTemplate</a>
+                  <a class="nav-link" @click="onRoute('SpecTemplate'); onHideCollapse();" data-toggle="tab" role="tab" aria-selected="false">SpecTemplate</a>
                   <a class="nav-link" data-toggle="tab" role="tab" aria-selected="false">categoryC</a>
                 </div>
               </div>
@@ -50,8 +50,8 @@
       <div class="collapse bg-light productContent" id="productWide">
         <div class="row mx-4 pt-2 pb-4">
           <div class="nav nav-pills flex-column col-2 bg-light" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-            <a class="nav-link active" id="v-pills-home-tab" data-toggle="tab" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">categoryA</a>
-            <a class="nav-link" id="v-pills-profile-tab" data-toggle="tab" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">categoryB</a>
+            <a class="nav-link active" id="v-pills-home-tab" data-toggle="tab" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">DesignTemplate</a>
+            <a class="nav-link" id="v-pills-profile-tab" data-toggle="tab" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">SpecTemplate</a>
             <a class="nav-link" id="v-pills-messages-tab" data-toggle="tab" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">categoryC</a>
           </div>
           <div class="tab-content col-10 bg-light" id="v-pills-tabContent">
@@ -62,6 +62,7 @@
                     <a class="nav-link active" data-toggle="tab"  role="tab" aria-selected="true">itemA</a>
                     <a class="nav-link" data-toggle="tab" role="tab" aria-selected="false">itemB</a>
                     <a class="nav-link" data-toggle="tab" role="tab" aria-selected="false">itemC</a>
+                    <a class="nav-link" @click="onRoute('DesignTemplate'); onHideWide();" data-toggle="tab" role="tab" aria-selected="false">더 알아보기</a>
                   </div>
                   <div class="col-9">
                     <img class="category-thumbanil" src="https://picsum.photos/500/500" alt="dummy">
@@ -75,7 +76,7 @@
                   <div class="nav nav-pills col-3 flex-column" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                     <a class="nav-link active" data-toggle="tab"  role="tab" aria-selected="true">itemA</a>
                     <a class="nav-link" data-toggle="tab" role="tab" aria-selected="false">itemB</a>
-                    <a class="nav-link" data-toggle="tab" role="tab" aria-selected="false">itemC</a>
+                    <a class="nav-link" @click="onRoute('SpecTemplate'); onHideWide();" data-toggle="tab" role="tab" aria-selected="false">더 알아보기</a>
                   </div>
                   <div class="col-9">
                     <img class="category-thumbanil" src="https://picsum.photos/500/500" alt="dummy">
