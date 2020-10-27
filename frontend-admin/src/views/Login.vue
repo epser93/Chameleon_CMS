@@ -28,7 +28,7 @@
 <script>
 import SignupModal from '@/components/SignupModal'
 export default {
-  name: 'Accounts',
+  name: 'Login',
   components : {
     SignupModal
   }
