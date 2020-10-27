@@ -7,8 +7,8 @@ from products.models import Item
 
 class Event(models.Model):
     title = models.CharField(max_length=500)
-    start_date = models.DateTimeField(auto_now=True)
-    end_date = models.DateTimeField(auto_now=True)
+    start_date = models.DateTimeField()
+    end_date = models.DateTimeField()
     is_active = models.BooleanField(default=True)
     thumbnail_image = models.ImageField()
     create_date = models.DateTimeField(auto_now_add=True)
@@ -17,6 +17,9 @@ class Event(models.Model):
 
     cms_user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.DO_NOTHING)
     department = models.ForeignKey(Department, on_delete=models.SET_NULL, related_name='event', null=True)
+
+    def __str__(self) -> str:
+        return self.title
 
 
 class EventDetail(models.Model):
@@ -90,4 +93,4 @@ class Template(models.Model):
 
 class Manual(models.Model):
     content = models.TextField()
-    image = models.ImageField()
+    image = models.ImageField(null=True)

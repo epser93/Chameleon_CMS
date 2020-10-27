@@ -7,6 +7,8 @@ from django.conf import settings
 
 class Department(models.Model):
     name = models.CharField(max_length=40)
+    def __str__(self) -> str:
+        return self.name
 
 class User(AbstractUser):
     is_access = models.BooleanField(default=False)
@@ -29,3 +31,6 @@ class TotalLog(models.Model):
 
     cms_user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.DO_NOTHING)
     department = models.ForeignKey(Department, on_delete=models.SET_NULL, related_name='log', null=True)
+
+    def __str__(self) -> str:
+        return '{} {}'.format(self.cms_user.username, self.type)
