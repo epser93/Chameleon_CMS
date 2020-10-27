@@ -7,18 +7,22 @@ from accounts.models import Department
 class Category(models.Model):
     name = models.CharField(max_length=200)
     is_active = models.BooleanField(default=True)
-    priorty = models.IntegerField(default=1)
+    priority = models.IntegerField(default=1)
     created_date = models.DateTimeField(auto_now_add=True)
     update_date = models.DateTimeField(auto_now=True)
     
     department = models.ForeignKey(Department, on_delete=models.SET_NULL, related_name='category', null=True)
 
+    def __str__(self) -> str:
+        return self.name
+
 
 class CategoryDescription(models.Model):
-    name = models.CharField(max_length=200)
-    
+    name = models.CharField(max_length=200)    
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, related_name='description', null=True)
 
+    def __str__(self) -> str:
+        return self.name
 
 class Item(models.Model):
     name = models.CharField(max_length=200)
@@ -30,6 +34,9 @@ class Item(models.Model):
     update_date = models.DateTimeField(auto_now=True)
     
     cms_user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.DO_NOTHING)
+
+    def __str__(self) -> str:
+        return self.name
 
 
 class ItemImage(models.Model):
@@ -44,12 +51,15 @@ class ItemImage(models.Model):
 
 
 class ItemDescription(models.Model):
-    title = models.CharField(max_length=200)
+    title = models.CharField(max_length=200, null=True)
     content = models.TextField()
 
     item = models.ForeignKey(Item, on_delete=models.SET_NULL, related_name='description', null=True)
     category_description = models.ForeignKey(CategoryDescription, on_delete=models.SET_NULL, related_name='description', null=True)
     cms_user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.DO_NOTHING)
+
+    def __str__(self) -> str:
+        return self.content
 
 
 class CustomerItemLog(models.Model):
