@@ -13,7 +13,22 @@ const routes = [
       {
         path: 'main',
         name: 'Main',
-        component: () => import('@/views/home/Main.vue')
+        component: () => import('@/views/home/Main.vue'),
+      },
+      {
+        path: 'manage',
+        name: 'Manage',
+        component: () => import('@/views/home/Manage.vue')
+      },
+      {
+        path: 'data',
+        name: 'Data',
+        component: () => import('@/views/home/Data.vue')
+      },
+      {
+        path: 'contents',
+        name: 'Contents',
+        component: () => import('@/views/home/Contents.vue'),
       },
     ]
   },
