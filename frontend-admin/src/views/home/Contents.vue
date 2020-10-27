@@ -13,22 +13,22 @@
     <div class="col-9">
         <div class="tab-content" id="v-pills-tabContent">
             <div class="tab-pane fade show active" id="v-pills-about" role="tabpanel" aria-labelledby="v-pills-about-tab">
-                <h1>여기는 about 관리</h1>
+                <About/>
             </div>
             <div class="tab-pane fade" id="v-pills-main" role="tabpanel" aria-labelledby="v-pills-main-tab">
-                <h1>여기는 main</h1>
+                <Main/>
             </div>
             <div class="tab-pane fade" id="v-pills-product" role="tabpanel" aria-labelledby="v-pills-log-product">
-                <h1>여기는 product 페이지</h1>
+                <Product/>
             </div>
             <div class="tab-pane fade" id="v-pills-event" role="tabpanel" aria-labelledby="v-pills-event-tab">
-                <h1>여기는 event 페이지</h1>
+                <Event/>
             </div>
             <div class="tab-pane fade" id="v-pills-contact" role="tabpanel" aria-labelledby="v-pills-contact-tab">
-                <h1>여기는 contact 페이지</h1>
+                <Contact/>
             </div>
             <div class="tab-pane fade" id="v-pills-notice" role="tabpanel" aria-labelledby="v-pills-notice-tab">
-                <h1>여기는 notice 페이지</h1>
+                <Notice/>
             </div>
         </div>
     </div>
@@ -36,8 +36,22 @@
 </template>
 
 <script>
-export default {
+import About from '../homeContent/About.vue'
+import Contact from '../homeContent/Contact.vue'
+import Event from '../homeContent/Event.vue'
+import Main from '../homeContent/Main.vue'
+import Notice from '../homeContent/Notice.vue'
+import Product from '../homeContent/Product.vue'
 
+export default {
+    components: {
+        About,
+        Contact,
+        Event,
+        Main,
+        Notice,
+        Product
+  }
 }
 </script>
 
