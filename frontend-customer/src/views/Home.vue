@@ -33,10 +33,10 @@
         <h2 class="mr-auto ml-auto">추천 제품</h2>
       </div>
       <div class="row justify-content-around mb-2">
-        <img src="@/assets/dummy-250.png" class="col-6 col-lg-3 mb-4" alt="recommand product image1">
-        <img src="@/assets/dummy-250.png" class="col-6 col-lg-3 mb-4" alt="recommand product image2">
-        <img src="@/assets/dummy-250.png" class="col-6 col-lg-3 mb-4" alt="recommand product image3">
-        <img src="@/assets/dummy-250.png" class="col-6 col-lg-3 mb-4" alt="recommand product image4">
+        <img src="@/assets/250.png" class="col-6 col-lg-3 mb-4" alt="recommand product image1">
+        <img src="@/assets/250.png" class="col-6 col-lg-3 mb-4" alt="recommand product image2">
+        <img src="@/assets/250.png" class="col-6 col-lg-3 mb-4" alt="recommand product image3">
+        <img src="@/assets/250.png" class="col-6 col-lg-3 mb-4" alt="recommand product image4">
       </div>
     </div>
     <!-- 이벤트 Carousel --> 
