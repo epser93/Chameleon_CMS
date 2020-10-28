@@ -20,7 +20,7 @@
       <SignupModal/>
     </div>
     <div class="div-B">
-      <img class="company-image" src="../assets/cat.jpg" alt="">
+      <img class="company-image" src="../assets/login1.png" alt="">
     </div>
   </div>
 </template>
@@ -60,7 +60,7 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  font-size: 30px;
+  font-size: 50px;
   margin-bottom: 2vh;
 }
 
@@ -77,7 +77,7 @@ export default {
 }
 
 .company-image {
-  border-left: 1px black solid;
+  border-left: 5px gray solid;
   width: 100%;
   height: 100vh;
 }
