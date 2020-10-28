@@ -6,7 +6,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from .models import Department, TotalLog, User
+from .models import Department, User, TotalLog
 from .serializers import UserSerializer
 
 
@@ -15,12 +15,6 @@ class UserAPI(APIView):
     def get(self, request):
         serializer = UserSerializer(request.user)
         return Response(serializer.data)
-
-
-    # def put(self, request):
-    #     request.user.update(request.data)
-    #     serializer = UserSerializer(request.user)
-    #     return Response(serializer.data)
 
 
 def string_to_boolean(n):
@@ -62,3 +56,16 @@ class Logout(LogoutView):
         log = TotalLog()
         log.update('로그아웃', request.data, user)
         return answer
+
+
+class ManagementAPI(APIView):
+
+    def post(self, request):
+        if request.user.is_superuser:
+            users = request.data['users']
+            for user_id in users:
+                user = User.objects.get(pk=user_id)
+                user.access_ok()
+            return Response('승인 완료')
+        else:
+            return Response('권한 없음', status=status.HTTP_403_FORBIDDEN)

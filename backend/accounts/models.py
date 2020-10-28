@@ -31,7 +31,15 @@ class User(AbstractUser):
         self.is_producter = is_producter
         self.is_marketer = is_marketer
         self.save()
-    
+
+    def access_ok(self):
+        if self.is_access == False:
+            self.is_access = True
+            self.save()
+            log = TotalLog()
+            log.update('회원가입 승인', None, self)
+
+            
 
 class TotalLog(models.Model):
     type = models.CharField(max_length=100)
