@@ -1,7 +1,6 @@
-from django.db import DefaultConnectionProxy, models
+from django.db import models
 from django.conf import settings
 from django.db.models.deletion import DO_NOTHING
-from django.db.models.signals import ModelSignal
 from accounts.models import Department
 from products.models import Item
 
@@ -94,3 +93,5 @@ class Template(models.Model):
 class Manual(models.Model):
     content = models.TextField()
     image = models.ImageField(null=True)
+
+

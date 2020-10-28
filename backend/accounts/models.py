@@ -22,7 +22,24 @@ class User(AbstractUser):
 
     def __str__(self):
         return self.username
-    
+
+    def update(self, department, employee_number, is_logger, is_eventer, is_producter, is_marketer):
+        self.department = department
+        self.employee_number = employee_number
+        self.is_logger = is_logger
+        self.is_eventer = is_eventer
+        self.is_producter = is_producter
+        self.is_marketer = is_marketer
+        self.save()
+
+    def access_ok(self):
+        if self.is_access == False:
+            self.is_access = True
+            self.save()
+            log = TotalLog()
+            log.update('회원가입 승인', None, self)
+
+            
 
 class TotalLog(models.Model):
     type = models.CharField(max_length=100)
@@ -34,3 +51,10 @@ class TotalLog(models.Model):
 
     def __str__(self) -> str:
         return '{} {}'.format(self.cms_user.username, self.type)
+
+    def update(self, type, data, user):
+        self.type = type
+        self.register_ip = '0.0.0.0'
+        self.cms_user = user
+        self.department = user.department
+        self.save()
