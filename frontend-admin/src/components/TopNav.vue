@@ -1,19 +1,21 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" @click="onRoute('Main')">
-      <img src="@/assets/icons/bootstrap.svg" width="30" height="30" class="d-inline-block align-top" alt="" loading="lazy">
+      <img src="@/assets/logo.png" width="200" height="100%" class="d-inline-block align-top" alt="" loading="lazy">
     </a>
-    <ul class="nav nav-tabs" id="myTab" role="tablist">
-      <li class="nav-item" role="presentation">
-        <a class="nav-link" id="manage-tab" data-toggle="tab" @click="onRoute('Manage')" role="tab" aria-controls="manage" aria-selected="true">Manage</a>
-      </li>
-      <li class="nav-item" role="presentation">
-        <a class="nav-link" id="data-tab" data-toggle="tab" @click="onRoute('Data')" role="tab" aria-controls="data" aria-selected="false">Data</a>
-      </li>
-      <li class="nav-item" role="presentation">
-        <a class="nav-link" id="contents-tab" data-toggle="tab" @click="onRoute('Contents')" role="tab" aria-controls="contents" aria-selected="false">Contents</a>
-      </li>
-    </ul>
+    <div class="nav-tabs-container">
+      <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item" role="presentation">
+          <a class="nav-link" id="manage-tab" data-toggle="tab" @click="onRoute('Manage')" role="tab" aria-controls="manage" aria-selected="true">Manage</a>
+        </li>
+        <li class="nav-item" role="presentation">
+          <a class="nav-link" id="data-tab" data-toggle="tab" @click="onRoute('Data')" role="tab" aria-controls="data" aria-selected="false">Data</a>
+        </li>
+        <li class="nav-item" role="presentation">
+          <a class="nav-link" id="contents-tab" data-toggle="tab" @click="onRoute('Contents')" role="tab" aria-controls="contents" aria-selected="false">Contents</a>
+        </li>
+      </ul>
+    </div>
   </nav>
 </template>
 
@@ -37,6 +39,35 @@ export default {
 
 .nav-link:hover {
   cursor: pointer;
+}
+
+nav {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  padding-bottom: 0;
+}
+
+.nav-tabs-container {
+  align-self: flex-end;
+}
+
+.nav-tabs {
+  font-size: 30px;
+  color: black;
+  height : 80%;
+  margin-right: 3vw;
+}
+
+.nav-link {
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  padding-left: 60px;
+  padding-right: 60px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  text-decoration: none;
+  color: black;
 }
 
 </style>
