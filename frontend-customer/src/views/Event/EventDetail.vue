@@ -1,11 +1,15 @@
 <template>
   <div>
-    <router-view/>
+    EventDetail
   </div>
 </template>
 
 <script>
 export default {
-  name: 'Event',
+  name: 'EventDetail',
 }
 </script>
+
+<style>
+
+</style>
