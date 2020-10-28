@@ -1,47 +1,37 @@
 <template>
 <div class="container">
-  <div class="content-part">
-    <h1>대표 이미지</h1>
-    <div v-if="!files.length" class="file-upload-container">
-      <div class="file-upload-example">
-        <div class="notice-item">
-          <div class="image-box">
-            <label for="file">이미지 등록</label>
-            <input type="file" id="file" ref="files" @change="imageUpload" multiple />
-          </div>
-        </div>
-        <div class="notice-item">
-          이미지는 최소 4장 및 (100x100)사이즈를 권장합니다.
-        </div>
-        <div class="notice-item">
-          부족할 경우, 기본이미지(상품준비중)가 제공됩니다.
+  <h1>대표 이미지</h1>
+  <div v-if="!files.length" class="file-upload-container">
+    <div class="file-upload-example">
+      <div class="notice-item">
+        <div class="image-box">
+          <label for="file">이미지 등록</label>
+          <input type="file" id="file" ref="files" @change="imageUpload" multiple />
         </div>
       </div>
-    </div>
-    <div v-else class="file-preview-content-container">
-      <div class="file-preview-container">
-        <div v-for="(file, index) in files" :key="index" class="file-preview-wrapper">
-          <div class="file-close-button" @click="fileDeleteButton" :name="file.number">
-            x
-          </div>
-          <img :src="file.preview" />
-        </div>
-        <div class="file-preview-wrapper-upload">
-          <div class="image-box" id="image-box-preview">
-            <label for="file">추가 사진 등록</label>
-            <input type="file" id="file" ref="files" @change="imageAddUpload" multiple />
-          </div>
-        </div>
+      <div class="notice-item">
+        이미지는 최소 4장 및 (100x100)사이즈를 권장합니다.
+      </div>
+      <div class="notice-item">
+        부족할 경우, 기본이미지(상품준비중)가 제공됩니다.
       </div>
     </div>
   </div>
-  <div class="content-part">
-    <h1>추천 제품 등록</h1>
-    <div>
-
+  <div v-else class="file-preview-content-container">
+    <div class="file-preview-container">
+      <div v-for="(file, index) in files" :key="index" class="file-preview-wrapper">
+        <div class="file-close-button" @click="fileDeleteButton" :name="file.number">
+          x
+        </div>
+        <img :src="file.preview" />
+      </div>
+      <div class="file-preview-wrapper-upload">
+        <div class="image-box" id="image-box-preview">
+          <label for="file">추가 사진 등록</label>
+          <input type="file" id="file" ref="files" @change="imageAddUpload" multiple />
+        </div>
+      </div>
     </div>
-
-
   </div>
     
 
@@ -126,10 +116,6 @@ export default {
 </script>
 
 <style>
-.content-part{
-  margin-top: 30px;
-}
-
 .file-upload-example {
     height: 100%;
 }
