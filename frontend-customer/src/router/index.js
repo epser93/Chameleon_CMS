@@ -29,6 +29,16 @@ const routes = [
         name: 'SpecTemplate',
         component: () => import('@/views/Category/SpecTemplate.vue')
       },
+      {
+        path: 'carousel',
+        name: 'CarouselTemplate',
+        component: () => import('@/views/ProductDetail/CarouselTemplate.vue')
+      },
+      {
+        path: 'movingimage',
+        name: 'MovingImageTemplate',
+        component: () => import('@/views/ProductDetail/MovingImageTemplate.vue')
+      },
     ]
   },
   {
