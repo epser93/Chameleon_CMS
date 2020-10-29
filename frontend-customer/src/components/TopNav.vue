@@ -1,5 +1,5 @@
 <template>
-  <div class="fixed-top" @mouseleave="onHideWide()">
+  <div class="" @mouseleave="onHideWide()">
     <nav class="navbar navbar-expand-md navbar-light bg-light">
       
       <a class="navbar-brand" @click="onRoute('Home'); onHideWide(); onHideCollapse();" >

@@ -71,12 +71,19 @@
         </a>
       </div>
     </div>
+
+    <notice/>
   </div>
 </template>
 
 <script>
+import Notice from '@/components/Notice'
+
 export default {
   name: 'Home',
+  components: {
+    Notice,
+  },
 }
 </script>
 

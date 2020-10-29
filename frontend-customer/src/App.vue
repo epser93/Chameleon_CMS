@@ -18,5 +18,9 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+router-view {
+  margin-top: 68px;
+}
+
 </style>

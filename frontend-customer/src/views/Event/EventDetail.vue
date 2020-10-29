@@ -1,6 +1,11 @@
 <template>
   <div>
-    EventDetail
+    <h1>EventDetail</h1>
+    <h1>EventDetail</h1>
+    <h1>EventDetail</h1>
+    <h1>EventDetail</h1>
+    <h1>EventDetail</h1>
+    <h1>EventDetail</h1>
   </div>
 </template>
 
