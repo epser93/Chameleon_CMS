@@ -18,7 +18,20 @@ const routes = [
       {
         path: 'manage',
         name: 'Manage',
-        component: () => import('@/views/home/Manage.vue')
+        component: () => import('@/views/home/Manage.vue'),
+        redirect: 'manage/user',
+        children: [
+          {
+            path: 'user',
+            name: 'User',
+            component: () => import('@/views/home/User.vue')
+          },
+          {
+            path: 'userLog',
+            name: 'UserLog',
+            component: () => import('@/views/home/UserLog.vue')
+          }
+        ]
       },
       {
         path: 'data',
