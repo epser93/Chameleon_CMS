@@ -1,9 +1,14 @@
-from django.db.models.fields.related import create_many_to_many_intermediary_model
 from django.db import models
 from django.conf import settings
 from accounts.models import Department
-from services.models import Template
 import os
+
+class Template(models.Model):
+    name = models.CharField(max_length=100)
+    type = models.IntegerField()
+
+    def __str__(self) -> str:
+        return self.name
 
 # Create your models here.
 class Category(models.Model):
@@ -15,17 +20,16 @@ class Category(models.Model):
     
     template = models.ForeignKey(Template, on_delete=models.SET_NULL, related_name='category', null=True)
     cms_user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.DO_NOTHING)
-    department = models.ForeignKey(Department, on_delete=models.SET_NULL, related_name='category', null=True)
 
     def __str__(self) -> str:
         return self.name
 
     def create(self, data, user, template):
         self.name = data['name']
-        self.is_active = data['is_active']
+        self.is_active = True
         self.priority = data['priority']
+        # 순서 변경 로직 호출
         self.cms_user = user
-        self.department = user.department
         self.template = template
         self.save()
 
@@ -33,8 +37,12 @@ class Category(models.Model):
         self.name = data['name']
         self.is_active = data['is_active']
         self.priority = data['priority']
+        # 순서 변경 로직 호출
         self.template = template
         self.save()
+
+    
+    # 카테고리 우선순위 변경 로직 추가
 
 
 class CategoryDescription(models.Model):
@@ -45,8 +53,8 @@ class CategoryDescription(models.Model):
     def __str__(self) -> str:
         return self.name
 
-    def create(self, data, category):
-        self.name = data['name']
+    def create(self, description, category):
+        self.name = description
         self.category = category
         self.save()
 

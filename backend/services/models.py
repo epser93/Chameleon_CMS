@@ -86,9 +86,6 @@ class MainCarouselItem(models.Model):
     department = models.ForeignKey(Department, on_delete=models.SET_NULL, related_name='maincarousel', null=True)
 
 
-class Template(models.Model):
-    name = models.CharField(max_length=100)
-
 
 class Manual(models.Model):
     content = models.TextField()

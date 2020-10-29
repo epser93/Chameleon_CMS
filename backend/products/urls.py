@@ -3,8 +3,7 @@ from . import views
 
 app_name = 'products'
 urlpatterns = [
-    path('api/products/', admin.site.urls),
-    path('api/accounts/', include('accounts.urls')),
-    path('api/products/', include('products.urls')),
-    path('api/services/', include('services.urls')),
+    path('categories/', views.CategoryList.as_view()),
+    path('categories/<int:pk>/', views.CategoryDetail.as_view()),
+    path('product/<int:pk>/', views.ProductDetail.as_view()),
 ]

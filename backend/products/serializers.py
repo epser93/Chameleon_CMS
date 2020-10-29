@@ -1,4 +1,4 @@
-from s03p31c205.backend.accounts.serializers import UserSerializer
+from accounts.serializers import UserSerializer
 from rest_framework import serializers
 from accounts.serializers import UserSerializer
 #from services.models import TemplateSerializer
@@ -11,7 +11,8 @@ class CategorySerializer(serializers.ModelSerializer):
     #department = DepartmentSerializer()
     class Meta:
         model = Category
-        fields = ['name', 'is_active', 'priority', 'created_date', 'update_date', 'template', 'cms_user', 'department']
+        # fields = ['name', 'is_active', 'priority', 'created_date', 'update_date', 'template', 'cms_user', 'department']
+        fields = ['id', 'name', 'is_active', 'priority', 'created_date', 'update_date', 'cms_user']
 
 
 class CategoryDescriptionSerializer(serializers.ModelSerializer):
@@ -19,16 +20,16 @@ class CategoryDescriptionSerializer(serializers.ModelSerializer):
     #department = DepartmentSerializer()
     class Meta:
         model = CategoryDescription
-        fields = ['name', 'cms_user', 'department']
+        fields = ['name', 'cms_user']
 
 
 class ItemSerializer(serializers.ModelSerializer):
     cms_user = UserSerializer(required=False)
-    item_image = ItemImageSerializer()
-    item_description = ItemDescriptionSerializer()
+    # item_image = ItemImageSerializer()
+    # item_description = ItemDescriptionSerializer()
     class Meta:
         model = Item
-        fields = ['name', 'price', 'title', 'is_temp', 'is_active', 'created_date', 'update_date', 'cms_user', 'item_image', 'item_description']
+        fields = ['name', 'price', 'title', 'is_temp', 'is_active', 'created_date', 'update_date', 'cms_user']
 
 
 class ItemImageSerializer(serializers.ModelSerializer):
@@ -46,8 +47,8 @@ class ItemDescriptionSerializer(serializers.ModelSerializer):
         fields = ['title', 'content', 'item', 'is_active', 'created_date', 'update_date', 'category_description', 'cms_user']
 
 
-class ProductsSerializer(serializers.ModelSerializer):
-    item = ItemSerializer()
-    item_image = ItemImageSerializer()
-    itme_description = ItemDescriptionSerializer()
-    class Meta:
+# class ProductsSerializer(serializers.ModelSerializer):
+#     item = ItemSerializer()
+#     item_image = ItemImageSerializer()
+#     itme_description = ItemDescriptionSerializer()
+#     class Meta:
