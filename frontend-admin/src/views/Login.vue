@@ -35,7 +35,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .box {
   width: 100vw;
   height:100vh;
