@@ -6,13 +6,13 @@
     <div class="nav-tabs-container">
       <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item" role="presentation">
-          <a class="nav-link" id="manage-tab" data-toggle="tab" @click="onRoute('Manage')" role="tab" aria-controls="manage" aria-selected="true">Manage</a>
+          <a ref="Manage" class="nav-link" id="manage-tab" data-toggle="tab" @click="onRoute('Manage')" role="tab" aria-controls="manage" aria-selected="true">Manage</a>
         </li>
         <li class="nav-item" role="presentation">
-          <a class="nav-link" id="data-tab" data-toggle="tab" @click="onRoute('Data')" role="tab" aria-controls="data" aria-selected="false">Data</a>
+          <a ref="Data" class="nav-link" id="data-tab" data-toggle="tab" @click="onRoute('Data')" role="tab" aria-controls="data" aria-selected="false">Data</a>
         </li>
         <li class="nav-item" role="presentation">
-          <a class="nav-link" id="contents-tab" data-toggle="tab" @click="onRoute('Contents')" role="tab" aria-controls="contents" aria-selected="false">Contents</a>
+          <a ref="Contents" class="nav-link" id="contents-tab" data-toggle="tab" @click="onRoute('Contents')" role="tab" aria-controls="contents" aria-selected="false">Contents</a>
         </li>
       </ul>
     </div>
@@ -24,9 +24,23 @@ export default {
   name: 'Header',
   methods: {
     onRoute(name) {
+      // this.activeTab()
       this.$router.push({name: name}, () => {})
     },
+    fixTabs() {
+      if (this.$route.matched[1].name === "Manage") {
+        this.$refs.Manage.classList.add('active')
+      } else if (this.$route.matched[1].name === "Data") {
+        this.$refs.Data.classList.add('active')
+      } else {
+        this.$refs.Contents.classList.add('active')
+      }
+    },
   },
+  mounted() {
+    this.fixTabs()
+  }
+
 
 }
 
