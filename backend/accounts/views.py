@@ -2,7 +2,6 @@ from django.http import response
 from rest_auth.registration.views import RegisterView
 from rest_auth.views import LoginView, LogoutView
 from rest_framework import status
-from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -32,9 +31,10 @@ class Signup(RegisterView):
         is_eventer = string_to_boolean(request.data.get('is_eventer', 'False'))
         is_producter = string_to_boolean(request.data.get('is_producter', 'False'))
         is_marketer = string_to_boolean(request.data.get('is_marketer', 'False'))
-        answer = super(RegisterView, self).create(request, *args, **kwargs)  
-        user = User.objects.get(username=request.data['username'])
-        user.update(department, employee_number, is_logger, is_eventer, is_producter, is_marketer)
+        answer = super(RegisterView, self).create(request, *args, **kwargs)
+        # 상황에 맞게 수정하기
+        # user = User.objects.get(username=request.data['username'])
+        # user.update(department, employee_number, is_logger, is_eventer, is_producter, is_marketer)
         return answer
 
 

@@ -1,10 +1,10 @@
 from django.contrib import admin
-from .models import Category, CategoryDescription, Item, ItemImage, ItemDescription, CustomerItemLog
+from .models import Category, CategoryDescription, Item, ItemImage, ItemDescription, CustomerItemLog, Template
 # Register your models here.
 
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ['id', 'name', 'is_active', 'priority', 'created_date', 'update_date', 'department']
-    fields = ['name', 'is_active', 'priority', 'department']
+    list_display = ['id', 'name', 'is_active', 'priority', 'created_date', 'update_date', 'cms_user', 'template']
+    fields = ['name', 'is_active', 'priority', 'cms_user', 'template']
 
 
 class CategoryDescriptionAdmin(admin.ModelAdmin):
@@ -13,8 +13,8 @@ class CategoryDescriptionAdmin(admin.ModelAdmin):
 
 
 class ItemAdmin(admin.ModelAdmin):
-    list_display = ['id', 'name', 'price', 'title', 'is_temp', 'is_active', 'created_date', 'update_date', 'cms_user']
-    fields = ['name', 'price', 'title', 'is_temp', 'is_active', 'cms_user']
+    list_display = ['id', 'name', 'price', 'title', 'is_temp', 'is_active', 'created_date', 'update_date', 'cms_user', 'template', 'category']
+    fields = ['name', 'price', 'title', 'is_temp', 'is_active', 'cms_user', 'template', 'category']
 
 
 class ItemImageAdmin(admin.ModelAdmin):
@@ -32,9 +32,15 @@ class CustomerItemLogAdmin(admin.ModelAdmin):
     fields = ['register_ip', 'item']
 
 
+class TemplateAdmin(admin.ModelAdmin):
+    list_display = ['id', 'name', 'type']
+    fields = ['name', 'type']
+
+
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(CategoryDescription, CategoryDescriptionAdmin)
 admin.site.register(Item, ItemAdmin)
 admin.site.register(ItemImage, ItemImageAdmin)
 admin.site.register(ItemDescription, ItemDescriptionAdmin)
 admin.site.register(CustomerItemLog, CustomerItemLogAdmin)
+admin.site.register(Template, TemplateAdmin)

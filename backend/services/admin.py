@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Event, EventDetail, Notices, FAQ, CompanyData, MainItem, MainCarouselItem, Template, Manual
+from .models import Event, EventDetail, Notices, FAQ, CompanyData, MainItem, MainCarouselItem, Manual
 # Register your models here.
 
 class EventAdmin(admin.ModelAdmin):
@@ -37,10 +37,6 @@ class MainCarouselItemAdmin(admin.ModelAdmin):
     fields = ['image', 'priority', 'is_active', 'item', 'cms_user', 'department']
 
 
-class TemplateAdmin(admin.ModelAdmin):
-    list_display = ['id', 'name']
-    fields = ['name']
-
 
 class ManualAdmin(admin.ModelAdmin):
     list_display = ['id', 'content', 'image']
@@ -54,5 +50,4 @@ admin.site.register(FAQ, FAQAdmin)
 admin.site.register(CompanyData, CompanyDataAdmin)
 admin.site.register(MainItem, MainItemAdmin)
 admin.site.register(MainCarouselItem, MainCarouselItemAdmin)
-admin.site.register(Template, TemplateAdmin)
 admin.site.register(Manual, ManualAdmin)
