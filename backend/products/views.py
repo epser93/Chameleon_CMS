@@ -28,7 +28,7 @@ class CategoryDetail(APIView):
 
     def get(self, request, pk):
         category = Category.objects.get(pk=pk)
-        items = Item.objects.filter(category=category)
+        items = Item.objects.filter(category=category).filter(is_active=True)
         serializer = ItemSerializer(items, many=True)
         return Response(serializer.data)
 
@@ -69,11 +69,13 @@ class ProductsList(APIView):
     # 이거
     def post(self, request, format=None):
         item = Item()
-        item_image = ItemImage()
-        item_description = ItemDescription()
-        item.create(request.data, request.user, request.category, request.template)
-        item_image.create(request.data, item)
-        item_description.create(request.data, request.user, item, request.category_description)
+        template = Template.objects.get(pk=request.data['template'])
+        category = Category.objects.get(pk=request.data['category'])
+        item.create(request.data, request.user, category, template)
+        for description in request.data['descriptions']:
+            item_description = ItemDescription()
+            category_description = CategoryDescription.objects.get(pk=description['id'])
+            item_description.create(description['content'], request.user, item, category_description)
         serializer = ItemSerializer(item)
         return Response(serializer.data)
 

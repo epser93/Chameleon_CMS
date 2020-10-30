@@ -29,13 +29,13 @@ class ItemSerializer(serializers.ModelSerializer):
     # item_description = ItemDescriptionSerializer()
     class Meta:
         model = Item
-        fields = ['name', 'price', 'title', 'is_temp', 'is_active', 'created_date', 'update_date', 'cms_user']
+        fields = ['id', 'name', 'price', 'is_temp', 'is_active', 'created_date', 'update_date', 'cms_user']
 
 
 class ItemImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = ItemImage
-        fields = ['item_image', 'is_thumbnail', 'priority', 'is_active', 'created_date', 'update_date']
+        fields = ['id', 'item_image', 'is_thumbnail', 'priority', 'is_active', 'created_date', 'update_date']
 
 
 class ItemDescriptionSerializer(serializers.ModelSerializer):
@@ -44,7 +44,7 @@ class ItemDescriptionSerializer(serializers.ModelSerializer):
     category_description = CategoryDescription
     class Meta:
         model = ItemDescription
-        fields = ['title', 'content', 'item', 'is_active', 'created_date', 'update_date', 'category_description', 'cms_user']
+        fields = ['content', 'item', 'is_active', 'created_date', 'update_date', 'category_description', 'cms_user']
 
 
 # class ProductsSerializer(serializers.ModelSerializer):
