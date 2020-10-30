@@ -35,10 +35,13 @@ class Category(models.Model):
 
     def update(self, data, template):
         self.name = data['name']
-        self.is_active = data['is_active']
         self.priority = data['priority']
         # 순서 변경 로직 호출
         self.template = template
+        self.save()
+
+    def delete(self):
+        self.is_active = False
         self.save()
 
     
@@ -58,8 +61,8 @@ class CategoryDescription(models.Model):
         self.category = category
         self.save()
 
-    def update(self, data):
-        self.name = data['name']
+    def update(self, description):
+        self.name = description
         self.save()
 
 

@@ -37,16 +37,32 @@ class CategoryDetail(APIView):
         template = Template.objects.get(pk=request.data['template'])
         category = Category.objects.get(pk=pk)
         category.update(request.data, template)
-
+        self.descriptions_add(request.data, category)
+        self.descriptions_update(request.data, category)
+        self.descriptions_delete(request.data)
         serializer = CategorySerializer(category)
         return Response(serializer.data)
 
     
+    def delete(self, request, pk):
+        category = Category.objects.get(pk=pk)
+        category.delete()
+
+    
     def descriptions_update(self, data, category):
-        for description in data['descriptions_update']:
+        for description in data.get('descriptions_update', []):
             category_description = CategoryDescription.objects.get(pk=description['id'])
             category_description.update(description['name']) 
-        pass
+
+    def descriptions_add(self, data, category):
+        for description in data.get('descriptions_add', []):
+            category_description = CategoryDescription()
+            category_description.create(description, category)
+
+    def descriptions_delete(self, data):
+        for description in data.get('descriptions_delete', []):
+            category_description = CategoryDescription.objects.get(pk=description)
+            category_description.delete()
 
 
 class ProductsList(APIView):
