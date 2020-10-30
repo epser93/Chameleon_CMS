@@ -3,7 +3,6 @@
     <!-- 반응형 추가해야 함 -->
     <div class="row">
       <div class="col-2">
-        <!-- Preview Image -->
         <ol class="carousel-indicators mb-0" data-interval="false">
           <div class="column mt-5">
             <img src="@/assets/250.png" data-target="#carouselExampleCaptions" data-slide-to="0" class="active preview-img" alt="">
