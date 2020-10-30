@@ -66,7 +66,7 @@ class CategoryDetail(APIView):
 
 
 class ProductsList(APIView):
-    # 이거
+    
     def post(self, request, format=None):
         item = Item()
         template = Template.objects.get(pk=request.data['template'])
@@ -76,20 +76,22 @@ class ProductsList(APIView):
             item_description = ItemDescription()
             category_description = CategoryDescription.objects.get(pk=description['id'])
             item_description.create(description['content'], request.user, item, category_description)
+        # 임시저장 테이블 추가, 임시저장 데이터 추가 기능 
+
+        # 이미지 추가 코드 넣기
         serializer = ItemSerializer(item)
         return Response(serializer.data)
 
 
 class ProductDetail(APIView):
     def get(self, request, pk):
-        item = Item.objects.get(pk=pk)
+        item = Item.objects.get(pk=pk, is_active=True)
         serializer = ItemSerializer(item)
         return Response(serializer.data)
     
     def put(self, request, pk):
         item = Item.objects.get(pk=pk)
-        item_image = Item.objects.filter(item=item)
-        item_description = Item.objects.filter(item=item)
-        item.update(request.data, request.template)
+        item.update(request.data)
         serializer = ItemSerializer(item)
         return Response(serializer.data)
+        
