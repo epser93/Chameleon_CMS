@@ -103,7 +103,7 @@
                   </div>
                 </div>
                 <div class="modal-footer">
-                  <input type="submit" class="btn btn-secondary" data-dismiss="modal" value="추가">
+                  <input type="submit" class="btn btn-secondary" data-dismiss="modal" value="추가" @click.prevent="addProduct">
                 </div>
               </div>
             </div>
@@ -115,7 +115,7 @@
           <button type="button" class="btn btn-secondary btn-sm" @click="onClickWindows">미리보기</button>
         </div>
         <div >
-          <!-- <button type="button" class="btn btn-secondary btn-sm" @click="onClickTemp">임시저장</button> -->
+          <button type="button" class="btn btn-secondary btn-sm" @click="onClickTemp">임시저장</button>
         </div>
       </div>  
     </div>
@@ -128,7 +128,7 @@
         <div class="temp-part-history">
           <ul v-if="history.length">
             <li v-for="his in history.slice().reverse()" :key="his.id">
-              <div class="history-view" @click="onHistory">
+              <div class="history-view" @click="onHistory(his)">
                 <p>저장 {{ his.idx }}</p>
                 <p>{{ his.date }}</p>
               </div>
@@ -152,11 +152,11 @@ export default {
       filesPreview: [],
       uploadImageIndex: 0, // 이미지 업로드를 위한 변수
       items: [
-        { name: 'item1' },
-        { name: 'item2' },
-        { name: 'item3' },
-        { name: 'item4' },
-        { name: 'item5' }
+        { name: 'item1', chuchun_images: '@/assets/icons/egg-fill.svg'},
+        { name: 'item2', chuchun_images: '@/assets/icons/vr.svg'},
+        { name: 'item3', chuchun_images: '@/assets/icons/window.svg'},
+        { name: 'item4', chuchun_images: '@/assets/icons/sun.svg'},
+        { name: 'item5', chuchun_images: '@/assets/icons/wifi-2.svg'}
       ],
       checkedItem: [],
       history: [
@@ -176,12 +176,17 @@ export default {
           idx: 2,
           date: '2020-10-30',
           daepyo_images: ['@/assets/icons/watch.svg', '@/assets/icons/sun.svg', '@/assets/icons/wifi-1.svg', '@/assets/icons/wifi-2.svg'],
-          chuchun_images: ['@/assets/icons/egg-fill.svg', '@/assets/icons/vr.svg', '@/assets/icons/window.svg']
+          chuchun_images: [
+             { name: 'item1', chuchun_images: '@/assets/icons/egg-fill.svg'},
+             { name: 'item2', chuchun_images: '@/assets/icons/vr.svg'},
+             { name: 'item3', chuchun_images: '@/assets/icons/window.svg'},
+          ]
         },
         { 
           idx: 3,
           date: '2020-10-31',
           daepyo_images: ['@/assets/icons/egg-fill.svg', '@/assets/icons/sun.svg', '@/assets/icons/wifi-1.svg', '@/assets/icons/wifi-2.svg'],
+          name: 'item3',
           chuchun_images: ['@/assets/icons/egg-fill.svg', '@/assets/icons/vr.svg', '@/assets/icons/window.svg']
         }
       ]
@@ -189,6 +194,9 @@ export default {
 
   },
   methods: {
+    onClickTemp(){
+
+    },
     onClickRegister(){
       console.log('dfdfdf')
     },
@@ -196,8 +204,13 @@ export default {
       var url="test.html";
       window.open(url,"",);
     },
-    onHistory(){
-      console.log('ㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹ')
+    onHistory(his){
+      console.log(his)
+      this.checkedItem = []
+
+      for ( var i = 0; i < his.chuchun_images.length; i++ ) {
+          this.checkedItem.push(his.chuchun_images[i].name)
+        }
     },
     imageUpload() {
       console.log(this.$refs.files.files);
