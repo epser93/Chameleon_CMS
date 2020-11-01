@@ -69,7 +69,6 @@ class CategoryDescription(models.Model):
 class Item(models.Model):
     name = models.CharField(max_length=200)
     price = models.IntegerField(default=0)
-    title = models.CharField(max_length=200)
     is_temp = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     created_date = models.DateTimeField(auto_now_add=True)
@@ -85,9 +84,7 @@ class Item(models.Model):
     def create(self, data, user, category, template):
         self.name = data['name']
         self.price = data['price']
-        self.title = data['title']
         self.is_temp = data['is_temp']
-        self.is_active = data['is_active']
         self.cms_user = user
         self.category = category
         self.template = template
@@ -130,7 +127,6 @@ class ItemImage(models.Model):
 
 
 class ItemDescription(models.Model):
-    title = models.CharField(max_length=200, null=True)
     content = models.TextField()
 
     item = models.ForeignKey(Item, on_delete=models.SET_NULL, related_name='description', null=True)
@@ -140,9 +136,8 @@ class ItemDescription(models.Model):
     def __str__(self) -> str:
         return self.content
 
-    def create(self, data, user, item, category_description):
-        self.title = data['title']
-        self.content = data['content']
+    def create(self, name, user, item, category_description):
+        self.content = name
         self.item = item
         self.category_description = category_description
         self.cms_user = user

@@ -13,8 +13,8 @@ class CategoryDescriptionAdmin(admin.ModelAdmin):
 
 
 class ItemAdmin(admin.ModelAdmin):
-    list_display = ['id', 'name', 'price', 'title', 'is_temp', 'is_active', 'created_date', 'update_date', 'cms_user', 'template', 'category']
-    fields = ['name', 'price', 'title', 'is_temp', 'is_active', 'cms_user', 'template', 'category']
+    list_display = ['id', 'name', 'price', 'is_temp', 'is_active', 'created_date', 'update_date', 'cms_user', 'template', 'category']
+    fields = ['name', 'price', 'is_temp', 'is_active', 'cms_user', 'template', 'category']
 
 
 class ItemImageAdmin(admin.ModelAdmin):
@@ -23,8 +23,8 @@ class ItemImageAdmin(admin.ModelAdmin):
 
 
 class ItemDescriptionAdmin(admin.ModelAdmin):
-    list_display = ['id', 'title', 'content', 'item', 'category_description', 'cms_user']
-    fields = ['title', 'content', 'item', 'category_description', 'cms_user']
+    list_display = ['id', 'content', 'item', 'category_description', 'cms_user']
+    fields = ['title', 'item', 'category_description', 'cms_user']
 
 
 class CustomerItemLogAdmin(admin.ModelAdmin):

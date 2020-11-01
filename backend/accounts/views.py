@@ -8,6 +8,11 @@ from rest_framework.views import APIView
 from .models import Department, User, TotalLog
 from .serializers import UserSerializer
 
+message = 'message'
+number = set('1234567890')
+en = set('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ')
+s_chr = set('~`!@#$%^&*()-_=+\\|/?.>,<;:\'\"')
+email_check = set('@.')
 
 class UserAPI(APIView):
     
@@ -23,28 +28,61 @@ def string_to_boolean(n):
 
 
 class Signup(RegisterView):
-
     def create(self, request, *args, **kwargs):
+        if User.objects.filter(username=request.data['username']).exists():
+            answer = {message: '존재하는 아이디 입니다.'}
+            return Response(answer, status=status.HTTP_400_BAD_REQUEST)
+        if request.data['password1'] != request.data['password2']:
+            answer = {message: '비밀번호가 일치하지 않습니다.'}
+            return Response(answer, status=status.HTTP_400_BAD_REQUEST)
+        email = request.data.get('email', '')
+        if len(email) < 5 or len(set(email)&email_check) != 2:
+            answer = {message: '잘못된 이메일 입니다.'}
+            return Response(answer, status=status.HTTP_400_BAD_REQUEST)
+        if User.objects.filter(email=email).exists():
+            answer = {message: '존재하는 이메일 입니다.'}
+            return Response(answer, status=status.HTTP_400_BAD_REQUEST)
+        # 비밀번호 조건 체크
+        password = set(request.data['password1'])
+        length = len(password)
+        if length < 8 or length > 12 or not (password & number and password & en and password & s_chr) :
+            answer = {message: '비밀번호가 조건에 부합하지 않습니다.'}
+            return Response(answer, status=status.HTTP_400_BAD_REQUEST)
         department = Department.objects.get(name=request.data['department'])
         employee_number = request.data['employee_number']
         is_logger = string_to_boolean(request.data.get('is_logger', 'False'))
         is_eventer = string_to_boolean(request.data.get('is_eventer', 'False'))
         is_producter = string_to_boolean(request.data.get('is_producter', 'False'))
         is_marketer = string_to_boolean(request.data.get('is_marketer', 'False'))
-        answer = super(RegisterView, self).create(request, *args, **kwargs)
-        # 상황에 맞게 수정하기
-        # user = User.objects.get(username=request.data['username'])
-        # user.update(department, employee_number, is_logger, is_eventer, is_producter, is_marketer)
-        return answer
+        super().create(request, *args, **kwargs)
+        user = User.objects.get(username=request.data['username'])
+        user.update(department, employee_number, is_logger, is_eventer, is_producter, is_marketer)
+        log = TotalLog()
+        log.update('회원가입', request.data, user)
+        answer = {message: '회원가입이 완료되었습니다. 관리자 승인 후 로그인 해주세요.'}
+        return Response(answer)
 
 
 class Login(LoginView):
 
     def post(self, request, *args, **kwargs):
-        answer = super().post(request, *args, **kwargs)
+        if not User.objects.filter(username=request.data['username']).exists():
+            answer = {message: '존재하지 않는 아이디 입니다.'}
+            return Response(answer, status=status.HTTP_400_BAD_REQUEST)
+        self.request = request
+        self.serializer = self.get_serializer(data=self.request.data,
+                                              context={'request': request})
+        if not self.serializer.is_valid(raise_exception=False):
+            answer = {message: '잘못된 비밀번호 입니다.'}
+            return Response(answer, status=status.HTTP_400_BAD_REQUEST)
+        self.login()
+        answer = self.get_response()
         user = User.objects.get(username=request.data['username'])
+        if user.is_access == False:
+            answer = {message: '관리자 승인이 필요합니다.'}
+            return Response(answer, status=status.HTTP_403_FORBIDDEN)
         log = TotalLog()
-        log.update('로그인', request.data, user)        
+        log.update('로그인', request.data, user)
         return answer
 
 
@@ -52,10 +90,15 @@ class Logout(LogoutView):
     
     def post(self, request, *args, **kwargs):
         user = request.user
-        answer = super().post(request, *args, **kwargs)
+        print(user)
+        if user.is_anonymous:
+            answer = {message: '로그인되지 않은 유저입니다.'}
+            return Response(answer, status=status.HTTP_400_BAD_REQUEST)
+        super().post(request, *args, **kwargs)
         log = TotalLog()
         log.update('로그아웃', request.data, user)
-        return answer
+        answer = {message: '로그아웃 되었습니다.'}
+        return Response(answer)
 
 
 class ManagementAPI(APIView):
@@ -66,6 +109,8 @@ class ManagementAPI(APIView):
             for user_id in users:
                 user = User.objects.get(pk=user_id)
                 user.access_ok()
-            return Response('승인 완료')
+            answer = {message : '승인이 완료되었습니다.'}
+            return Response(answer)
         else:
-            return Response('권한 없음', status=status.HTTP_403_FORBIDDEN)
+            answer = {message : '권한이 없습니다.'}
+            return Response(answer, status=status.HTTP_403_FORBIDDEN)

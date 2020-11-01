@@ -28,7 +28,7 @@ class CategoryDetail(APIView):
 
     def get(self, request, pk):
         category = Category.objects.get(pk=pk)
-        items = Item.objects.filter(category=category)
+        items = Item.objects.filter(category=category).filter(is_active=True)
         serializer = ItemSerializer(items, many=True)
         return Response(serializer.data)
 
@@ -47,6 +47,7 @@ class CategoryDetail(APIView):
     def delete(self, request, pk):
         category = Category.objects.get(pk=pk)
         category.delete()
+        return Response('삭제완료')
 
     
     def descriptions_update(self, data, category):
@@ -66,28 +67,48 @@ class CategoryDetail(APIView):
 
 
 class ProductsList(APIView):
-    # 이거
+    
     def post(self, request, format=None):
         item = Item()
-        item_image = ItemImage()
-        item_description = ItemDescription()
-        item.create(request.data, request.user, request.category, request.template)
-        item_image.create(request.data, item)
-        item_description.create(request.data, request.user, item, request.category_description)
+        template = Template.objects.get(pk=request.data['template'])
+        category = Category.objects.get(pk=request.data['category'])
+        item.create(request.data, request.user, category, template)
+        for description in request.data['descriptions']:
+            item_description = ItemDescription()
+            category_description = CategoryDescription.objects.get(pk=description['id'])
+            item_description.create(description['content'], request.user, item, category_description)
+        # 임시저장 테이블 추가, 임시저장 데이터 추가 기능 
+
+        # 이미지 추가 코드 넣기
         serializer = ItemSerializer(item)
         return Response(serializer.data)
 
 
 class ProductDetail(APIView):
     def get(self, request, pk):
-        item = Item.objects.get(pk=pk)
+        item = Item.objects.get(pk=pk, is_active=True)
         serializer = ItemSerializer(item)
         return Response(serializer.data)
     
     def put(self, request, pk):
         item = Item.objects.get(pk=pk)
-        item_image = Item.objects.filter(item=item)
-        item_description = Item.objects.filter(item=item)
-        item.update(request.data, request.template)
+        item.update(request.data)
+        
         serializer = ItemSerializer(item)
         return Response(serializer.data)
+        
+
+    def descriptions_update(self, data, category):
+        for description in data.get('descriptions_update', []):
+            category_description = CategoryDescription.objects.get(pk=description['id'])
+            category_description.update(description['name']) 
+
+    def descriptions_add(self, data, category):
+        for description in data.get('descriptions_add', []):
+            category_description = CategoryDescription()
+            category_description.create(description, category)
+
+    def descriptions_delete(self, data):
+        for description in data.get('descriptions_delete', []):
+            category_description = CategoryDescription.objects.get(pk=description)
+            category_description.delete()
