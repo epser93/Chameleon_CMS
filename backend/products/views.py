@@ -47,6 +47,7 @@ class CategoryDetail(APIView):
     def delete(self, request, pk):
         category = Category.objects.get(pk=pk)
         category.delete()
+        return Response('삭제완료')
 
     
     def descriptions_update(self, data, category):
@@ -92,6 +93,22 @@ class ProductDetail(APIView):
     def put(self, request, pk):
         item = Item.objects.get(pk=pk)
         item.update(request.data)
+        
         serializer = ItemSerializer(item)
         return Response(serializer.data)
         
+
+    def descriptions_update(self, data, category):
+        for description in data.get('descriptions_update', []):
+            category_description = CategoryDescription.objects.get(pk=description['id'])
+            category_description.update(description['name']) 
+
+    def descriptions_add(self, data, category):
+        for description in data.get('descriptions_add', []):
+            category_description = CategoryDescription()
+            category_description.create(description, category)
+
+    def descriptions_delete(self, data):
+        for description in data.get('descriptions_delete', []):
+            category_description = CategoryDescription.objects.get(pk=description)
+            category_description.delete()

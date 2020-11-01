@@ -154,3 +154,24 @@ CORS_ALLOW_ALL_ORIGINS = True
 # 이미지 파일 관리
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+CORS_ORIGIN_ALLOW_ALL = True
+
+# 이메일 관련 환경변수
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_HOST_USER = env('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+# 비밀번호 변경시 이전 비밀번호 체크여부
+OLD_PASSWORD_FIELD_ENABLED = True
+
+# 이메일 인증
+ACCOUNT_ADAPTER = 'accounts.adapter.DefaultAccountAdapterCustom'
+URL_FRONT = 'https://i3c205.p.ssafy.io/'
