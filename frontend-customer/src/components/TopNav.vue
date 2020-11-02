@@ -1,13 +1,5 @@
 <template>
-<<<<<<< HEAD
-<<<<<<< HEAD
-  <div class="" @mouseleave="onHideWide()">
-=======
   <div @mouseleave="onHideWide()">
->>>>>>> 0a09e09a7d9a4c0274fd9b0b3ca6c56a3dcc3788
-=======
-  <div @mouseleave="onHideWide()">
->>>>>>> d9b54a8f9b8fb80d23a7b4af016b597a2f7c1e3d
     <nav class="navbar navbar-expand-md navbar-light bg-light">
       
       <a class="navbar-brand" @click="onRoute('Home'); onHideWide(); onHideCollapse();" >
