@@ -42,6 +42,14 @@
         <h1>추천 제품 등록</h1>
         <div>
           <!-- Button trigger modal -->
+          <div v-if="checkedItemImg">
+            <div v-for="(item, index) in checkedItemImg" :key="index">
+              {{ item }}
+              <img :src="item">
+            </div>
+          </div>
+
+
           <button type="button" class="recommand-btn" data-toggle="modal" data-target="#staticBackdrop">
             추가
           </button>
@@ -74,7 +82,7 @@
                           </label>
                         </div>
                       </div>
-                        {{checkedItem}}
+                        <!-- {{checkedItem}} -->
                     </div>
                     <div v-else>
                       <div v-for="(item, index) in items" :key="index">
@@ -82,10 +90,11 @@
                           <input class="form-check-input" type="checkbox" v-model="checkedItem" :id="index" :value="item.name">
                           <label class="form-check-label" :for="index">
                             {{ item.name }}
+                            <!-- {{ item }} -->
                           </label>
                         </div>
                       </div>
-                        {{checkedItem}}
+                        <!-- {{checkedItem}} -->
                     </div>
                   </div>
                   <!-- 제품 검색 결과 리스트 -->
@@ -110,7 +119,7 @@
           </div>
         </div>
       </div>
-      <div class="row justify-content-end">
+      <div class="row justify-content-end" id="content-btn">
         <div >
           <button type="button" class="btn btn-secondary btn-sm" @click="onClickWindows">미리보기</button>
         </div>
@@ -120,7 +129,7 @@
       </div>  
     </div>
 
-    <div class="col-4">
+    <div class="col-4" id="history">
       <div>
         <div class="temp-part">
           <h1>History</h1>
@@ -129,7 +138,7 @@
           <ul v-if="history.length">
             <li v-for="his in history.slice().reverse()" :key="his.id">
               <div class="history-view" @click="onHistory(his)">
-                <p>저장 {{ his.idx }}</p>
+                저장 {{ his.idx }}
                 <p>{{ his.date }}</p>
               </div>
             </li>
@@ -144,7 +153,16 @@
 </div>
 </template>
 
-<script>          
+<script>
+import $ from 'jquery'
+$(function(){
+  $('li').click(function(){
+    $('li').removeClass()
+    $(this).addClass('on')
+
+      })
+    })
+
 export default {
   data() { 
     return {
@@ -152,50 +170,52 @@ export default {
       filesPreview: [],
       uploadImageIndex: 0, // 이미지 업로드를 위한 변수
       items: [
-        { name: 'item1', chuchun_images: '@/assets/icons/egg-fill.svg'},
-        { name: 'item2', chuchun_images: '@/assets/icons/vr.svg'},
-        { name: 'item3', chuchun_images: '@/assets/icons/window.svg'},
-        { name: 'item4', chuchun_images: '@/assets/icons/sun.svg'},
-        { name: 'item5', chuchun_images: '@/assets/icons/wifi-2.svg'}
+        { name: 'item1', chuchun_images: '@/assets/product/elec.png'},
+        { name: 'item2', chuchun_images: '@/assets/product/mixer.png'},
+        { name: 'item3', chuchun_images: '@/assets/product/oven.png'},
+        { name: 'item4', chuchun_images: '@/assets/product/refre.png'},
+        { name: 'item5', chuchun_images: '@/assets/product/washer.png'}
       ],
       checkedItem: [],
+      checkedItemImg: [],
       history: [
         { 
           idx: 0,
           date: '2020-10-29',
-          daepyo_images: ['@/assets/icons/egg-fill.svg', '@/assets/icons/sun.svg'],
-          chuchun_images: ['@/assets/icons/egg-fill.svg']
+          daepyo_images: ['@/assets/product/elec.png', '@/assets/product/refre.png'],
+          chuchun_images: ['@/assets/product/elec.png']
         },
         { 
           idx: 1,
           date: '2020-10-29',
-          daepyo_images: ['@/assets/icons/egg-fill.svg', '@/assets/icons/sun.svg', '@/assets/icons/wifi-1.svg'],
-          chuchun_images: ['@/assets/icons/egg-fill.svg', '@/assets/icons/vr.svg']
+          daepyo_images: ['@/assets/product/elec.png', '@/assets/product/refre.png', '@/assets/product/washer.png'],
+          chuchun_images: ['@/assets/product/elec.png', '@/assets/product/mixer.png']
         },
         { 
           idx: 2,
           date: '2020-10-30',
-          daepyo_images: ['@/assets/icons/watch.svg', '@/assets/icons/sun.svg', '@/assets/icons/wifi-1.svg', '@/assets/icons/wifi-2.svg'],
+          daepyo_images: ['@/assets/product/oven.png', '@/assets/product/refre.png', '@/assets/product/washer.png', '@/assets/product/washer.png'],
           chuchun_images: [
-             { name: 'item1', chuchun_images: '@/assets/icons/egg-fill.svg'},
-             { name: 'item2', chuchun_images: '@/assets/icons/vr.svg'},
-             { name: 'item3', chuchun_images: '@/assets/icons/window.svg'},
+             { name: 'item1', chuchun_images: '@/assets/product/elec.png'},
+             { name: 'item2', chuchun_images: '@/assets/product/mixer.png'},
+             { name: 'item3', chuchun_images: '@/assets/product/oven.png'},
           ]
         },
         { 
           idx: 3,
           date: '2020-10-31',
-          daepyo_images: ['@/assets/icons/egg-fill.svg', '@/assets/icons/sun.svg', '@/assets/icons/wifi-1.svg', '@/assets/icons/wifi-2.svg'],
+          daepyo_images: ['@/assets/product/elec.png', '@/assets/product/refre.png', '@/assets/product/washer.png', '@/assets/product/mixer.png'],
           name: 'item3',
-          chuchun_images: ['@/assets/icons/egg-fill.svg', '@/assets/icons/vr.svg', '@/assets/icons/window.svg']
+          chuchun_images: ['@/assets/product/elec.png', '@/assets/product/mixer.png', '@/assets/product/oven.png']
         }
       ]
     }
 
   },
+  
   methods: {
     onClickTemp(){
-
+      console.log('모든 데이터를 보내면 됌')
     },
     onClickRegister(){
       console.log('dfdfdf')
@@ -207,10 +227,14 @@ export default {
     onHistory(his){
       console.log(his)
       this.checkedItem = []
-
+      this.checkedItemImg = []
       for ( var i = 0; i < his.chuchun_images.length; i++ ) {
-          this.checkedItem.push(his.chuchun_images[i].name)
+          this.checkedItem.push(his.chuchun_images[i].name) // .name
+          this.checkedItemImg.push(his.chuchun_images[i].chuchun_images)
         }
+      // console.log(this.checkedItem)
+      // console.log(his)
+      console.log(this.checkedItemImg)
     },
     imageUpload() {
       console.log(this.$refs.files.files);
@@ -404,15 +428,39 @@ export default {
   margin-bottom: 20px;
 }
 
-.temp-part {
-  margin-top: 20px;
-}
-
 .temp-part-history {
 
 }
 
 .history-view{
   cursor: pointer;
+}
+
+#content-btn {
+  width: inherit;
+}
+
+#history {
+  border: 1px solid gray;
+  padding: 10px;
+}
+
+ul,li {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  font-size: 20px;
+}
+
+.clear{
+  clear: both;
+}
+
+li.on{
+  color:white;
+  background-color:lightgray;
 }
 </style>
