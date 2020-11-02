@@ -22,6 +22,14 @@
             <input v-model="name" type="text">
           </div>
           <div>
+            <div>사번</div>
+            <input v-model="employeeNumber" type="text">
+          </div>
+          <div>
+            <div>이메일</div>
+            <input v-model="email" type="email">
+          </div>
+          <div>
             <div>
               ID
               <span class="validate-fail" v-if="idValidate == 1">아이디는 영문,숫자 6~12자이내입니다.</span>
@@ -48,7 +56,7 @@
       </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" @click="onRoute('Manage')">회원가입</button>
+        <button type="button" class="btn btn-primary" @click="signup()">회원가입</button>
       </div>
     </div>
   </div>
@@ -56,6 +64,8 @@
 </template>
 
 <script>
+import SERVER from '@/api/drf'
+import axios from 'axios'
 import $ from "jquery";
 const idchk = /^[a-z0-9]{6,12}$/;
 const pwchk = /^.*(?=^.{8,16}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/;
@@ -64,6 +74,8 @@ export default {
   data() {
     return {
       departments: ['생산관리', '영업', '재무', '마케팅', '전산', '개발', '홍보'],
+      employeeNumber : '',
+      email : '',
       part: '',
       name: '',
       pw1: '',
@@ -91,6 +103,22 @@ export default {
       this.$router.push({ name : name }, () => {})
       this.initializeParameter()
     },
+    signup() {
+      const signUpData = {
+        username : this.name,
+        password1 : this.pw1,
+        password2 : this.pw2,
+        department : this.part,
+        email : this.email,
+        employee_number : this.employeeNumber
+      }
+      axios.post(SERVER.URL + SERVER.ROUTER.signup, signUpData)
+        .then(() => {
+          alert('회원가입이 완료되었습니다. 관리자 승인후 로그인해주세요')
+          this.onRoute("Login")
+        })
+        .catch(error => console.log(error.response))
+    }
   },
   watch: {
     id: function() {

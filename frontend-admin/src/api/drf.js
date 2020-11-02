@@ -3,5 +3,6 @@ export default{
     ROUTER: {
       //user
       login: 'accounts/login/',
+      signup: 'accounts/signup/'
     }
   }

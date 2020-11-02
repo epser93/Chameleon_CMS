@@ -11,9 +11,9 @@
       </div>
       <div class="pw">
         <label for="pw">pw</label>
-        <input type="text">
+        <input type="password">
       </div>
-      <div class="login-btn">Login</div>
+      <div class="login-btn" @click="login()">Login</div>
       <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#signupModal">
         회원가입
       </button>
@@ -26,11 +26,30 @@
 </template>
 
 <script>
+import SERVER from '@/api/drf'
+import axios from 'axios'
 import SignupModal from '@/components/SignupModal'
 export default {
   name: 'Login',
   components : {
-    SignupModal
+    SignupModal,
+  },
+  data() {
+    return {
+      id: null,
+      pw : null
+    }
+  },
+  methods: {
+    login() {
+      const loginData = {
+        username : this.id,
+        password : this.pw
+      }
+      axios.post(SERVER.URL + SERVER.ROUTER.login, loginData)
+        .then(res => console.log(res))
+        .catch(error => console.log(error.response))
+    }
   }
 }
 </script>
@@ -74,6 +93,7 @@ export default {
 
 .login-btn {
   margin-bottom: 2vh;
+  cursor: pointer;
 }
 
 .company-image {
