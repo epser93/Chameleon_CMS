@@ -7,11 +7,11 @@
       </div>
       <div class="id">
         <label for="id">ID</label>
-        <input type="text">
+        <input type="text" v-model="id">
       </div>
       <div class="pw">
         <label for="pw">pw</label>
-        <input type="password">
+        <input type="password" v-model="pw">
       </div>
       <div class="login-btn" @click="login()">Login</div>
       <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#signupModal">
@@ -37,7 +37,7 @@ export default {
   data() {
     return {
       id: null,
-      pw : null
+      pw : null,
     }
   },
   methods: {
@@ -47,6 +47,22 @@ export default {
         password : this.pw
       }
       axios.post(SERVER.URL + SERVER.ROUTER.login, loginData)
+        .then(res => {
+          this.$cookies.set('auth-token', res.data.key)
+          let token = res.data.key
+          this.getUserInfo(token)
+          this.$router.push('Manage')
+          })
+        .catch(error => console.log(error.response))
+    },
+
+    getUserInfo(token) {
+      const config = {
+        headers: {
+          'Authorization' : 'Token ' + token
+        }
+      }
+      axios.get(SERVER.URL + SERVER.ROUTER.userinfo, config)
         .then(res => console.log(res))
         .catch(error => console.log(error.response))
     }

@@ -105,7 +105,7 @@ export default {
     },
     signup() {
       const signUpData = {
-        username : this.name,
+        username : this.id,
         password1 : this.pw1,
         password2 : this.pw2,
         department : this.part,
@@ -114,8 +114,8 @@ export default {
       }
       axios.post(SERVER.URL + SERVER.ROUTER.signup, signUpData)
         .then(() => {
-          alert('회원가입이 완료되었습니다. 관리자 승인후 로그인해주세요')
           this.onRoute("Login")
+          alert('회원가입이 완료되었습니다. 관리자 승인후 로그인해주세요')
         })
         .catch(error => console.log(error.response))
     }

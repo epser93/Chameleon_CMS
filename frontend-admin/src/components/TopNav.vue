@@ -1,8 +1,12 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" @click="onRoute('Main')">
-      <img src="@/assets/logo.png" width="200" height="100%" class="d-inline-block align-top" alt="" loading="lazy">
-    </a>
+    <div class="logo-section">
+      <a class="navbar-brand" @click="onRoute('Main')">
+        <img src="@/assets/logo.png" width="200" height="100%" class="d-inline-block align-top" alt="" loading="lazy">
+      </a>
+      <div class="user-info">{{ user }}님 환영합니다.</div>
+      <div class="logout-btn" @click="logout()">로그아웃</div>
+    </div>
     <div class="nav-tabs-container">
       <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item" role="presentation">
@@ -20,8 +24,15 @@
 </template>
 
 <script>
+import SERVER from '@/api/drf'
+import axios from 'axios'
 export default {
   name: 'Header',
+  data() {
+    return {
+      user: null
+    }
+  },
   methods: {
     onRoute(name) {
       // this.activeTab()
@@ -36,9 +47,39 @@ export default {
         this.$refs.Contents.classList.add('active')
       }
     },
+    getUserInfo() {
+      const token = this.$cookies.get('auth-token')
+      const config = {
+        headers: {
+          'Authorization' : 'Token ' + token
+        }
+      }
+      axios.get(SERVER.URL + SERVER.ROUTER.userinfo, config)
+        .then(res => {
+          this.user = res.data.username
+        })
+        .catch(error => console.log(error.response))
+    },
+    logout() {
+      const token = this.$cookies.get('auth-token')
+      const config = {
+        headers: {
+          'Authorization' : 'Token ' + token
+        }
+      }
+      axios.post(SERVER.URL + SERVER.ROUTER.logout, null, config)
+        .then(() => {
+          this.$cookies.remove('auth-token')
+          this.$router.push({name : 'Login'})
+        })
+        .catch(error => console.log(error.response))
+    }
   },
   mounted() {
     this.fixTabs()
+  },
+  created() {
+    this.getUserInfo()
   }
 
 
@@ -84,4 +125,21 @@ nav {
   color: black;
 }
 
+.logo-section {
+  display: flex;
+  align-items: center;
+}
+
+.user-info {
+  font-size: 25px;
+  margin-left: 3vw;
+  margin-right: 2vw
+}
+
+.logout-btn {
+  cursor: pointer;
+  /* padding: 15px; */
+  /* border: 1px black solid; */
+  /* border-radius: 10px; */
+}
 </style>
