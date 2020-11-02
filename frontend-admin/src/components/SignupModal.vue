@@ -45,13 +45,6 @@
             </div>
             <input v-model="pw2" type="password" autocomplete="off">
           </div>
-          <div>
-          <div>Access<span @click="plusAccess" class="plus-access">  +</span><span @click="minusAccess" class="minus-access">  -</span></div> 
-            <select v-for="index in selectIdx" :key="index" name="access" id="access" v-model="selected">
-              <option disabled value="">Please select one</option>
-              <option v-for="(access, index) in accesses" :key="index" :value="access">{{ access }}</option>
-            </select>
-          </div>
       </form>
       </div>
       <div class="modal-footer">
@@ -70,27 +63,18 @@ export default {
   name : 'SignupModal',
   data() {
     return {
-      selectIdx: 1,
       departments: ['생산관리', '영업', '재무', '마케팅', '전산', '개발', '홍보'],
-      accesses: ['phone', 'TV', 'tablet', 'earphone'],
       part: '',
       name: '',
       pw1: '',
       pw2: '',
       id: '',
-      selected: '',
       pwValidate1: 0, // 0 : nothing / 1 : 사용불가 비밀번호 / 2 : 사용가능 비밀번호
       pwValidate2: 0, // 0 : nothing / 1 : 비밀번호 일치x / 2 : 비밀번호 일치 
       idValidate: 0 // 0: nothing / 1: id검증 실패 / 2: id검증 성공
     }
   },
   methods: {
-    plusAccess() {
-      this.selectIdx += 1
-    },
-    minusAccess() {
-      this.selectIdx -= 1
-    },
     initializeParameter() {
       this.part = ''
       this.name = ''
