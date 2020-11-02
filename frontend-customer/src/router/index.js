@@ -8,6 +8,7 @@ const routes = [
     path: '/',
     name: 'Main',
     component: () => import('@/views/Main.vue'),
+    redirect: '/',
     children: [
       {
         path: '/',
@@ -62,7 +63,25 @@ const routes = [
       {
         path: '/search/:text',
         name: 'Search',
-        component: () => import('@/views/Search.vue')
+        component: () => import('@/views/Search.vue'),
+        redirect: '/search/:text',
+        children: [
+          {
+            path: '',
+            name: 'SearchResult',
+            component: () => import('@/views/Search/SearchResult.vue')
+          },
+          {
+            path: 'product',
+            name: 'SearchProduct',
+            component: () => import('@/views/Search/SearchProduct.vue')
+          },
+          {
+            path: 'event',
+            name: 'SearchEvent',
+            component: () => import('@/views/Search/SearchEvent.vue')
+          },
+        ]
       },
       {
         path: 'carousel',
