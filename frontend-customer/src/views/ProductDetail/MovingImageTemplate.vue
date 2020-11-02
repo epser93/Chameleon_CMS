@@ -1,16 +1,14 @@
 <template>
-  <div class="container-fluid mt-4">
+  <div class="container-fluid">
     <section class="one clearfix">
+      <!-- Moving item images -->
       <div class="left">
         <div v-for="image in images" :key="image.name" class="product-img">
           <img :src="image.src" class="product-image mb-3" alt="">
         </div>
-        <!-- <div></div>
-        <div></div>
-        <div></div>
-        <div></div> -->
       </div>
-      <div class="right">
+      <!-- Item detail -->
+      <div class="right mt-4">
         <div class="right-child">
           <div class="itm-info-box">
             <h3>제품 이름</h3>
@@ -28,8 +26,9 @@
         </div>
       </div>
     </section>
+    <!-- Item deatil image ara -->
     <div class="bottom mb-4">
-      <h1>Image Area</h1>
+      <h1>Item detail image Area</h1>
     </div>
   </div>
 </template>
@@ -80,7 +79,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .container {
   height:100%;
   width:992px;
@@ -102,14 +101,6 @@ export default {
   width: 100%;
 }
 
-/* .left > div{
-  width:100%;
-  height:200px;
-  background:#ccd9f1;
-  margin-bottom:25px;
-  border-radius:4px;
-} */
-
 .right {
   width:calc(50% - 13px);
   float:right;
@@ -126,20 +117,16 @@ export default {
   border-radius: 10px;
 }
 
-.right-child > h2{
-  font-size:38px;
-}
-
 .posFix {
   position:fixed;
   top:25px;
-  margin-right: auto;
-  margin-left: auto;
 }
 
 .posAbs {
   position:absolute;
   bottom:25px;
+  margin-right: auto;
+  margin-left: auto;
 }
 
 .bottom {
