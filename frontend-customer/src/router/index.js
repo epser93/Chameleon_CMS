@@ -64,6 +64,16 @@ const routes = [
         name: 'Search',
         component: () => import('@/views/Search.vue')
       },
+      {
+        path: 'carousel',
+        name: 'CarouselTemplate',
+        component: () => import('@/views/ProductDetail/CarouselTemplate.vue')
+      },
+      {
+        path: 'movingimage',
+        name: 'MovingImageTemplate',
+        component: () => import('@/views/ProductDetail/MovingImageTemplate.vue')
+      },
     ]
   },
   {

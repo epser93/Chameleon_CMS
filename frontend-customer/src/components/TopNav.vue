@@ -1,5 +1,5 @@
 <template>
-  <div class="" @mouseleave="onHideWide()">
+  <div @mouseleave="onHideWide()">
     <nav class="navbar navbar-expand-md navbar-light bg-light">
       
       <a class="navbar-brand" @click="onRoute('Home'); onHideWide(); onHideCollapse();" >
@@ -59,8 +59,8 @@
               <div class="card card-body">
                 <div class="row">
                   <div class="nav nav-pills col-3 flex-column" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                    <a class="nav-link active" data-toggle="tab"  role="tab" aria-selected="true">itemA</a>
-                    <a class="nav-link" data-toggle="tab" role="tab" aria-selected="false">itemB</a>
+                    <a class="nav-link active" @click="onRoute('CarouselTemplate')" data-toggle="tab"  role="tab" aria-selected="true">itemA</a>
+                    <a class="nav-link" @click="onRoute('MovingImageTemplate')" data-toggle="tab" role="tab" aria-selected="false">itemB</a>
                     <a class="nav-link" data-toggle="tab" role="tab" aria-selected="false">itemC</a>
                     <a class="nav-link" @click="onRoute('DesignTemplate'); onHideWide();" data-toggle="tab" role="tab" aria-selected="false">더 알아보기</a>
                   </div>
