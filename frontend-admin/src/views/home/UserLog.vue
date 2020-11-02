@@ -52,6 +52,10 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+.table-container {
+  width: 100%;
+  margin-top: 10vh; 
+  text-align: center;
+}
 </style>
