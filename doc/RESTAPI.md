@@ -104,7 +104,6 @@
 ```json
 {
     "username": "test",
-    "password": "test1234!",
     "password1": "test1234!",
     "password2": "test1234!",
     "is_logger": "False",

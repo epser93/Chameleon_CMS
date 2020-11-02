@@ -84,18 +84,17 @@ class Item(models.Model):
     def create(self, data, user, category, template):
         self.name = data['name']
         self.price = data['price']
-        self.is_temp = data['is_temp']
+        self.is_temp = data.get('is_temp', False)
         self.cms_user = user
         self.category = category
         self.template = template
         self.save()
 
     def update(self, data, template):
-        self.name = data['name']
-        self.price = data['price']
-        self.title = data['title']
-        self.is_temp = data['is_temp']
-        self.is_active = data['is_active']
+        self.name = data.get('name', self.name)
+        self.price = data.get('price', self.price)
+        self.is_temp = data.get('is_temp', self.is_temp)
+        self.is_active = data.get('is_active', self.is_active)
         self.template = template
         self.save()
 
@@ -144,8 +143,7 @@ class ItemDescription(models.Model):
         self.save()
 
     def update(self, data):
-        self.title = data['title']
-        self.content = data['content']
+        self.content = data
         self.save()
 
 
