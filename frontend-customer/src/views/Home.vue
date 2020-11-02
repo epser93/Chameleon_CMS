@@ -71,12 +71,18 @@
         </a>
       </div>
     </div>
+
   </div>
 </template>
 
 <script>
 export default {
   name: 'Home',
+  created() {
+    if (!this.$cookies.get("DontOpenNotice")) {
+      window.open("http://localhost:8080/notice", "", "width=305,height=332,left=200,top=200")
+    }
+  }
 }
 </script>
 

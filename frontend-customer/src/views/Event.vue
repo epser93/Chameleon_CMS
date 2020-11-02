@@ -1,6 +1,6 @@
 <template>
   <div>
-    Event
+    <router-view/>
   </div>
 </template>
 
