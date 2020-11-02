@@ -73,10 +73,12 @@
                 <p>Item Detail Information 6</p>
               </div>
           </div>
-          <!-- <div> -->
-          <!-- </div> -->
         </div>
       </div>
+    </div>
+    <!-- Item deatil image ara -->
+    <div class="bottom mb-4">
+      <h1>Item detail image Area</h1>
     </div>
   </div>
 </template>
@@ -87,7 +89,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .box {
   background-color: #e8f0f7;
 }
@@ -138,8 +140,14 @@ ol {
   flex-direction: column;
 }
 
-/* 반응형 추가해야 함 */
-/* @media screen and (max-width: 768px) {
+.bottom {
+  width:100%;
+  height:900px;
+  background:#8698b9;
+}
 
-} */
+/* 반응형 추가해야 함 */
+@media screen and (max-width: 768px) {
+
+}
 </style>
