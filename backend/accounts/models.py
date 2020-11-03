@@ -1,6 +1,5 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-from django.db.models.query_utils import RegisterLookupMixin
 from django.conf import settings
 
 # Create your models here.
@@ -9,6 +8,11 @@ class Department(models.Model):
     name = models.CharField(max_length=40)
     def __str__(self) -> str:
         return self.name
+
+def string_to_boolean(n):
+    if type(n) == type(''):
+        return n == 'True'
+    return n
 
 class User(AbstractUser):
     is_access = models.BooleanField(default=False)
@@ -23,13 +27,14 @@ class User(AbstractUser):
     def __str__(self):
         return self.username
 
-    def update(self, department, employee_number, is_logger, is_eventer, is_producter, is_marketer):
-        self.department = department
-        self.employee_number = employee_number
-        self.is_logger = is_logger
-        self.is_eventer = is_eventer
-        self.is_producter = is_producter
-        self.is_marketer = is_marketer
+    def update(self, department, data):
+        if department != None:
+            self.department = department
+        self.employee_number = data.get('employee_number', self.employee_number)
+        self.is_logger = string_to_boolean(data.get('is_logger', self.is_logger))
+        self.is_eventer = string_to_boolean(data.get('is_eventer', self.is_eventer))
+        self.is_producter = string_to_boolean(data.get('is_producter', self.is_producter))
+        self.is_marketer = string_to_boolean(data.get('is_marketer', self.is_marketer))
         self.save()
 
     def access_ok(self):
