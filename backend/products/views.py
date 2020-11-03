@@ -55,6 +55,7 @@ class CategoryDetail(APIView):
             category_description = CategoryDescription.objects.get(pk=description['id'])
             category_description.update(description['name']) 
 
+    # 위에 코드와 중복됨 나중에 리팩토링
     def descriptions_add(self, data, category):
         for description in data.get('descriptions_add', []):
             category_description = CategoryDescription()
@@ -92,23 +93,28 @@ class ProductDetail(APIView):
     
     def put(self, request, pk):
         item = Item.objects.get(pk=pk)
-        item.update(request.data)
-        
+        template = Template.objects.get(id=request.data['template'])
+        item.update(request.data, template)
+        self.descriptions_add(request.data, item, request.user)
+        self.descriptions_update(request.data)
+        self.descriptions_delete(request.data)
         serializer = ItemSerializer(item)
         return Response(serializer.data)
         
 
-    def descriptions_update(self, data, category):
+    def descriptions_update(self, data):
         for description in data.get('descriptions_update', []):
-            category_description = CategoryDescription.objects.get(pk=description['id'])
-            category_description.update(description['name']) 
+            item_description = ItemDescription.objects.get(id=description['id'])
+            item_description.update(description['content'])
 
-    def descriptions_add(self, data, category):
+    # 위에 코드와 중복됨 나중에 리팩토링(상속 or 외부로 함수빼기)
+    def descriptions_add(self, data, item, user):
         for description in data.get('descriptions_add', []):
-            category_description = CategoryDescription()
-            category_description.create(description, category)
+            category_description = CategoryDescription.objects.get(id=description['id'])
+            item_description = ItemDescription()
+            item_description.create(description['content'], user, item, category_description)
 
     def descriptions_delete(self, data):
         for description in data.get('descriptions_delete', []):
-            category_description = CategoryDescription.objects.get(pk=description)
-            category_description.delete()
+            item_description = ItemDescription.objects.get(pk=description)
+            item_description.delete()

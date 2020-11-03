@@ -136,7 +136,7 @@
         </div>
         <div class="temp-part-history">
           <ul v-if="history.length">
-            <li v-for="his in history.slice().reverse()" :key="his.id">
+            <li v-for="(his,index) in history.slice().reverse()" :key="index">
               <div class="history-view" @click="onHistory(his)">
                 저장 {{ his.idx }}
                 <p>{{ his.date }}</p>
@@ -154,14 +154,14 @@
 </template>
 
 <script>
-import $ from 'jquery'
-$(function(){
-  $('li').click(function(){
-    $('li').removeClass()
-    $(this).addClass('on')
+// import $ from 'jquery'
+// $(function(){
+//   $('li').click(function(){
+//     $('li').removeClass()
+//     $(this).addClass('on')
 
-      })
-    })
+//       })
+//     })
 
 export default {
   data() { 

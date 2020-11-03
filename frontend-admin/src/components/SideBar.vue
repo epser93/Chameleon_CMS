@@ -1,34 +1,21 @@
 <template>
   <div class="row">
-    <ul class="col-3 nav-container">
-			<!-- <li class="nav-items">
-				<div ref="User" @click="onRoute('User')">User</div>
-			</li>
-			<li class="nav-items">
-				<div ref="UserLog" @click="onRoute('UserLog')">UserLog</div>
-			</li> -->
-			<!-- <li class="nav-items" v-for="(category, index) in categories" :key="index">
+    <ul class="nav-container">
+			<li class="nav-items" v-for="(category, index) in categories" :key="index">
 				<div :class="category" @click="onRoute(category)">{{ category }}</div>
-			</li> -->
-			<SideBar :categories="categories"></SideBar>
+			</li>
     </ul>
-    <div class="col-9">
-			<router-view></router-view>
-    </div>
   </div>
 </template>
 
 <script>
-import SideBar from '@/components/SideBar'
 export default {
-	components: {
-		SideBar
-	},
 	data() {
 		return {
-			categories : ["User", "UserLog"]
+      cate : this.categories
 		}
-	},
+  },
+  props: ['categories'],
 	methods: {
 		onRoute(name) {
 			this.$router.push({name:name}, () => {})
@@ -88,32 +75,67 @@ export default {
 		// 		this.$refs.UserLog.classList.add('active')
 		// 	}
 		// },
-		// '$route' : function() {
-		// 	for (let i=0; i<this.categories.length; i++) {
-		// 		let className = '.' + this.categories[i]
-		// 		if (this.$route.name === this.categories[i]) {
-		// 			document.querySelector(className).classList.add('active')
-		// 		} else {
-		// 			document.querySelector(className).classList.remove('active')
-		// 		}
-		// 	}
-		// },
+		'$route' : function() {
+			for (let i=0; i<this.categories.length; i++) {
+				let className = '.' + this.categories[i]
+				if (this.$route.name === this.categories[i]) {
+					document.querySelector(className).classList.add('active')
+				} else {
+					document.querySelector(className).classList.remove('active')
+				}
+			}
+		},
 
 	},
 	mounted() {
-		// this.fixCategory()
-		console.log(this.$refs)
+		this.fixCategory()
 	}
 }
 </script>
 
 <style scoped>
-.row {
-	height: calc(100vh - 135px);
+.nav-items {
+	margin-top: 30px;
+	margin-left: 50px;
+	margin-bottom: 30px;
+	font-size: 40px;
+	list-style: none;
+
 }
 
-.nav-container {
-	border-right: 1px gray solid;
-	margin-bottom: 0;
+.nav-items div {
+	text-decoration: none;
+	color: black;
+	position: relative;
+	width: fit-content;
+	cursor: pointer;
+}
+
+.nav-items div::before {
+	content: '';
+	height: 5px;
+	width: 0;
+	background-color: gray;
+	border-radius: 10px;
+	transition: 0.3s;
+	position: absolute;
+	bottom: -10px;
+	left: 0;
+}
+
+.nav-items div.active::before {
+	content: '';
+	height: 5px;
+	width: 140%;
+	background-color: gray;
+	border-radius: 10px;
+	transition: 0.3s;
+	position: absolute;
+	bottom: -10px;
+	left: 0;
+}
+
+.nav-items div:hover::before {
+	width: 140%;
 }
 </style>

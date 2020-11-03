@@ -11,11 +11,6 @@ const routes = [
     redirect: '/login',
     children: [
       {
-        path: 'main',
-        name: 'Main',
-        component: () => import('@/views/home/Main.vue'),
-      },
-      {
         path: 'manage',
         name: 'Manage',
         component: () => import('@/views/home/Manage.vue'),
@@ -42,6 +37,29 @@ const routes = [
         path: 'contents',
         name: 'Contents',
         component: () => import('@/views/home/Contents.vue'),
+        redirect: 'contents/main',
+        children: [
+          {
+            path: 'main',
+            name: 'Main',
+            component: () => import('@/views/homeContent/Main.vue')
+          },
+          {
+            path: 'product',
+            name: 'Product',
+            component: () => import('@/views/homeContent/Product.vue')
+          },
+          {
+            path: 'event',
+            name: 'Event',
+            component: () => import('@/views/homeContent/Event.vue')
+          },
+          {
+            path: 'notice',
+            name: 'Notice',
+            component: () => import('@/views/homeContent/Notice.vue')
+          }
+        ]
       },
     ]
   },

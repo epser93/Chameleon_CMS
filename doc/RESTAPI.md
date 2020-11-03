@@ -5,7 +5,7 @@
 | accounts/login/                               |                     | 로그인             |                     |               |
 | accounts/signup/                              |                     | 회원가입           |                     |               |
 | accounts/logout/                              |                     | 로그아웃           |                     |               |
-| accounts/management/                          |                     | 회원가입 승인      | 회원권한 수정       |               |
+| accounts/manage/<user_id>/                    |                     | 회원가입 승인      | 회원권한 수정       |               |
 | products/main/                                | 메인페이지 상세     |                    |                     |               |
 | products/main/carousel/                       |                     | 대표페이지 등록    |                     |               |
 | products/category/                            | 카테고리 리스트     | 카테고리 생성      |                     |               |
@@ -29,7 +29,7 @@
 ## 로그인
 
 ```
-주소/api/accounts/login/
+주소/api/accounts/login/(post)
 ```
 
 - Body
@@ -64,7 +64,7 @@
 ## 로그아웃
 
 ```
-주소/api/accounts/login/
+주소/api/accounts/login/(post)
 ```
 
 - 성공 Response
@@ -96,7 +96,7 @@
 ## 회원가입
 
 ```
-주소/api/accounts/signup/
+주소/api/accounts/signup/(post)
 ```
 
 - Body
@@ -104,13 +104,9 @@
 ```json
 {
     "username": "test",
-    "password": "test1234!",
     "password1": "test1234!",
     "password2": "test1234!",
-    "is_logger": "False",
-    "is_eventer": "False",
-    "is_producter": "False",
-    "is_maketer": "False",
+    "first_name": "내이름",
     "department": "인사과",
     "email": "abc@naver.com",
     "employee_number": 749172
@@ -129,11 +125,12 @@
 
 ```json
 {
-	"messge": "존재하는 아이디 입니다.",
-    "messge": "비밀번호가 일치하지 않습니다.",
-    "messge": "잘못된 이메일 입니다.",
-    "messge": "존재하는 이메일 입니다.",
-    "messge": "비밀번호가 조건에 부합하지 않습니다.",
+    "message": "이름이 없습니다.",
+	"message": "존재하는 아이디 입니다.",
+    "message": "비밀번호가 일치하지 않습니다.",
+    "message": "잘못된 이메일 입니다.",
+    "message": "존재하는 이메일 입니다.",
+    "message": "비밀번호가 조건에 부합하지 않습니다.",
 }
 ```
 
@@ -142,19 +139,43 @@
 ## 회원가입 승인
 
 ```
-주소/api/accounts/manage/
+주소/api/accounts/manage/<int:user_id>/(post)
 ```
 
 
+
+- 성공 Response
+
+```json
+{
+    "message" : "승인이 완료되었습니다."
+}
+```
+
+- 실패 Response(403 error)
+
+```json
+{
+    "message" : "권한이 없습니다."
+}
+```
+
+
+
+## 회원 권한 변경
+
+```
+주소/api/accounts/manage/<int:user_id>/(put)
+```
 
 - Body
 
 ```json
 {
-    "users": [
-        1,
-        2
-    ]
+    "is_producter": "False",
+    "is_logger": "True",
+    "is_eventer": "False",
+    "is_marketer": "False"
 }
 ```
 
@@ -162,7 +183,21 @@
 
 ```json
 {
-    "message" : "승인이 완료되었습니다."
+    "id": 3,
+    "username": "test1",
+    "first_name": "",
+    "is_superuser": false,
+    "is_access": true,
+    "is_logger": true,
+    "is_eventer": false,
+    "is_producter": false,
+    "is_marketer": false,
+    "department": {
+        "id": 1,
+        "name": "인사과"
+    },
+    "last_login": "2020-11-03T10:19:53.021080+09:00",
+    "employee_number": 0
 }
 ```
 
