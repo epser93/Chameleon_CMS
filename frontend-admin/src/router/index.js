@@ -47,7 +47,25 @@ const routes = [
           {
             path: 'product',
             name: 'Product',
-            component: () => import('@/views/Contents/Product.vue')
+            component: () => import('@/views/Contents/Product.vue'),
+            redirect: 'product',
+            children: [
+              {
+                path: '',
+                name: 'CategoryMain',
+                component: () => import('@/views/category/CategoryMain.vue')
+              },
+              {
+                path: 'category',
+                name: 'Category',
+                component: () => import('@/views/category/CategoryInfo.vue')
+              },
+              {
+                path: 'item',
+                name: 'Item',
+                component: () => import('@/components/ItemInfo.vue')
+              }
+            ]
           },
           {
             path: 'event',
