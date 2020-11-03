@@ -6,21 +6,21 @@
     <h3 class="title my-4">Product</h3>
     <hr>
     <div class="row col-12 my-4">
-      <div class="vertical col-12 col-sm-6 col-md-4">
+      <div class="column col-12 col-sm-6 col-md-4 mb-4">
         <img class="product-img" src="@/assets/250.png" alt="">
         <h4 class="product-name mt-2">제품명</h4>
         <hr>
         <h5 class="product-price">제품가격</h5>
         <p class="product-des">간단한 설명</p>
       </div>
-      <div class="vertical col-12 col-sm-6 col-md-4">
+      <div class="column col-12 col-sm-6 col-md-4 mb-4">
         <img class="product-img" src="@/assets/250.png" alt="">
         <h4 class="product-name mt-2">제품명</h4>
         <hr>
         <h5 class="product-price">제품가격</h5>
         <p class="product-des">간단한 설명</p>
       </div>
-      <div class="vertical col-12 col-sm-6 col-md-4">
+      <div class="column col-12 col-sm-6 col-md-4 mb-4">
         <img class="product-img" src="@/assets/250.png" alt="">
         <h4 class="product-name mt-2">제품명</h4>
         <hr>
@@ -38,29 +38,29 @@
     <h3 class="title my-4">EVENT</h3>
     <hr>
 
-    <div class="row my-4 ml-4">
-      <div class="col-8">
+    <div class="row my-4 justify-content-around">
+      <div class="col-sm-12 col-md-8">
         <img src="https://picsum.photos/600/250" class="event-img" alt="">
       </div>
-      <div class="col-4">
+      <div class="col-sm-12 col-md-4">
         <h4 class="event-name">이벤트 B</h4>
-        <div class="event-spec m-0">
-          <p>이벤트 설명</p>
+        <div class="column">
+          <p class="event-des">이벤트 설명</p>
+          <p class="date">기간: 2020-00-00 ~ 2020-00-00</p>
         </div>
-        <p class="date">기간: 2020-00-00 ~ 2020-00-00</p>
       </div>
     </div>
     <hr>
-    <div class="row my-4 ml-4">
-      <div class="col-8">
+    <div class="row my-4 justify-content-around">
+      <div class="col-sm-12 col-md-8">
         <img src="https://picsum.photos/600/250" class="event-img" alt="">
       </div>
-      <div class="col-4">
-        <h4 class="event-name">이벤트 A</h4>
-        <div class="event-spec m-0">
-          <p>이벤트 설명</p>
+      <div class="col-sm-12 col-md-4">
+        <h4 class="event-name">이벤트 B</h4>
+        <div class="column">
+          <p class="event-des">이벤트 설명</p>
+          <p class="date">기간: 2020-00-00 ~ 2020-00-00</p>
         </div>
-        <p class="date">기간: 2020-00-00 ~ 2020-00-00</p>
       </div>
     </div>
 
@@ -117,19 +117,19 @@ export default {
   }
 
   .event-img {
-   width: 80%;
+   width: 100%;
    height: auto;
   }
   .event-name {
    font-size: 1rem; 
    margin-bottom: 10px;
   }
-  .event-spec {
+  .date {
     font-size: 1rem;
   }
-  .date {
-    position: relative;
+  .event-des {
     font-size: 1rem;
+    margin-bottom: 20px;
   }
 }
 
@@ -137,16 +137,15 @@ export default {
   .product-img {
     width: 100%;
   }
-
-  .event-spec {
-    font-size: 0.5rem;
-  }
   .event-name {
     margin-bottom: 5px;
   }
   .date {
-    position: relative;
     font-size: 0.5rem;
+  }
+  .event-des {
+    font-size: 0.8rem;
+    margin-bottom: 14px;
   }
 }
 
