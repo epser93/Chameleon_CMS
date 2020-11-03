@@ -212,8 +212,10 @@ export default {
     }
 
   },
-  
   methods: {
+    doAThing(){
+
+    },
     onClickTemp(){
       console.log('모든 데이터를 보내면 됌')
     },
@@ -303,7 +305,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .content-part{
   margin-top: 30px;
 }
