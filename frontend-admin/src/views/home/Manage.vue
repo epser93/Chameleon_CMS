@@ -26,7 +26,7 @@ export default {
 	},
 	data() {
 		return {
-			categories : ["User", "UserLog"]
+			categories : ["User", "Log"]
 		}
 	},
 	methods: {
