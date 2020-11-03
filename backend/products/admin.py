@@ -24,7 +24,7 @@ class ItemImageAdmin(admin.ModelAdmin):
 
 class ItemDescriptionAdmin(admin.ModelAdmin):
     list_display = ['id', 'content', 'item', 'category_description', 'cms_user']
-    fields = ['title', 'item', 'category_description', 'cms_user']
+    fields = ['content','item', 'category_description', 'cms_user']
 
 
 class CustomerItemLogAdmin(admin.ModelAdmin):

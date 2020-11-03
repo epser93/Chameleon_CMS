@@ -5,8 +5,8 @@ from .models import Department, TotalLog
 
 
 class UserAdmin(admin.ModelAdmin):
-    list_display = ['id', 'username', 'is_superuser', 'is_access', 'is_logger', 'is_eventer', 'is_producter', 'is_marketer']
-    fields = ['username', 'is_access','is_logger', 'is_eventer', 'is_producter', 'is_marketer']
+    list_display = ['id', 'username', 'first_name','is_superuser', 'is_access', 'is_logger', 'is_eventer', 'is_producter', 'is_marketer']
+    fields = ['username','first_name', 'is_access','is_logger', 'is_eventer', 'is_producter', 'is_marketer']
 
 
 class DepartmentAdmin(admin.ModelAdmin):

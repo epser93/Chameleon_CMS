@@ -107,7 +107,7 @@ class ItemImage(models.Model):
     created_date = models.DateTimeField(auto_now_add=True)
     update_date = models.DateTimeField(auto_now=True)
     
-    item = models.ForeignKey(Item, on_delete=models.SET_NULL, related_name='image', null=True)
+    item = models.ForeignKey(Item, on_delete=models.SET_NULL, related_name='images', null=True)
 
     def create(self, data, item):
         self.item_image = data['item_image']
@@ -128,8 +128,8 @@ class ItemImage(models.Model):
 class ItemDescription(models.Model):
     content = models.TextField()
 
-    item = models.ForeignKey(Item, on_delete=models.SET_NULL, related_name='description', null=True)
-    category_description = models.ForeignKey(CategoryDescription, on_delete=models.SET_NULL, related_name='description', null=True)
+    item = models.ForeignKey(Item, on_delete=models.SET_NULL, related_name='descriptions', null=True)
+    category_description = models.ForeignKey(CategoryDescription, on_delete=models.SET_NULL, related_name='descriptions', null=True)
     cms_user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.DO_NOTHING)
 
     def __str__(self) -> str:

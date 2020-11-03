@@ -366,39 +366,28 @@
 [
     {
         "id": 1,
-        "name": "삼성 오디세이",
-        "price": 22800000,
+        "name": "노트북A",
+        "price": 1280000,
         "is_temp": false,
         "is_active": true,
-        "created_date": "2020-10-28T17:50:19.413411+09:00",
-        "update_date": "2020-10-28T17:50:19.413411+09:00",
-        "cms_user": {
-            "id": 1,
-            "username": "admin",
-            "is_access": false,
-            "is_eventer": false,
-            "is_producter": false,
-            "is_marketer": false,
-            "department": null
-        }
-    },
-    {
-        "id": 5,
-        "name": "노트북123",
-        "price": 1280000,
-        "is_temp": true,
-        "is_active": true,
-        "created_date": "2020-10-30T15:15:58.430740+09:00",
-        "update_date": "2020-10-30T15:15:58.430740+09:00",
+        "created_date": "2020-11-04T00:28:57.816001+09:00",
+        "update_date": "2020-11-04T00:28:57.816001+09:00",
         "cms_user": {
             "id": 2,
             "username": "test",
-            "is_access": false,
-            "is_eventer": false,
-            "is_producter": false,
-            "is_marketer": false,
-            "department": null
-        }
+            "first_name": ""
+        },
+        "descriptions": [
+            {
+                "content": "AMD",
+                "item": 1,
+                "category_description": {
+                    "id": 1,
+                    "name": "제조사"
+                }
+            }
+        ],
+        "images": []
     }
 ]
 ```
@@ -419,11 +408,11 @@
 
 ```json
 {
-    "name": "노트북11",
-    "price": 380000,
+    "name": "노트북A",
+    "price": 1280000,
     "is_temp": "False",
     "category": 1,
-    "template": 1,
+    "template": 2,
     "descriptions": [
         {
             "id": 20,
@@ -437,22 +426,29 @@
 
 ```json
 {
-    "id": 7,
-    "name": "노트북11",
-    "price": 380000,
+    "id": 1,
+    "name": "노트북A",
+    "price": 1280000,
     "is_temp": false,
     "is_active": true,
-    "created_date": "2020-10-30T16:59:20.284650+09:00",
-    "update_date": "2020-10-30T16:59:20.284650+09:00",
+    "created_date": "2020-11-04T00:28:57.816001+09:00",
+    "update_date": "2020-11-04T00:28:57.816001+09:00",
     "cms_user": {
         "id": 2,
         "username": "test",
-        "is_access": false,
-        "is_eventer": false,
-        "is_producter": false,
-        "is_marketer": false,
-        "department": null
-    }
+        "first_name": ""
+    },
+    "descriptions": [
+        {
+            "content": "AMD",
+            "item": 1,
+            "category_description": {
+                "id": 1,
+                "name": "제조사"
+            }
+        }
+    ],
+    "images": []
 }
 ```
 
@@ -467,7 +463,31 @@
 - Response
 
 ```json
-
+{
+    "id": 1,
+    "name": "노트북A",
+    "price": 1280000,
+    "is_temp": false,
+    "is_active": true,
+    "created_date": "2020-11-04T00:28:57.816001+09:00",
+    "update_date": "2020-11-04T00:28:57.816001+09:00",
+    "cms_user": {
+        "id": 2,
+        "username": "test",
+        "first_name": ""
+    },
+    "descriptions": [
+        {
+            "content": "AMD",
+            "item": 1,
+            "category_description": {
+                "id": 1,
+                "name": "제조사"
+            }
+        }
+    ],
+    "images": []
+}
 ```
 
 
@@ -785,4 +805,26 @@
 ```json
 
 ```
+
+
+
+## 유저 전체정보
+
+
+
+
+
+## 유저 필터링
+
+
+
+
+
+## 템플릿 정보
+
+
+
+
+
+## 부서 정보
 
