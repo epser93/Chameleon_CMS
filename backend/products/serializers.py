@@ -1,6 +1,5 @@
 from accounts.serializers import UserSerializer
 from rest_framework import serializers
-from accounts.serializers import UserSerializer
 #from services.models import TemplateSerializer
 #from accounts.models import DepartmentSerializer
 from .models import Category, CategoryDescription, Item, ItemDescription, ItemImage

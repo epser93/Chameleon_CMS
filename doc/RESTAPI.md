@@ -1,28 +1,24 @@
 # REST API 명세서
 
-| url                                           | GET                 | POST               | PUT                 | DELETE        |
-| --------------------------------------------- | ------------------- | ------------------ | ------------------- | ------------- |
-| accounts/login/                               |                     | 로그인             |                     |               |
-| accounts/signup/                              |                     | 회원가입           |                     |               |
-| accounts/logout/                              |                     | 로그아웃           |                     |               |
-| accounts/manage/<user_id>/                    |                     | 회원가입 승인      | 회원권한 수정       |               |
-| products/main/                                | 메인페이지 상세     |                    |                     |               |
-| products/main/carousel/                       |                     | 대표페이지 등록    |                     |               |
-| products/category/                            | 카테고리 리스트     | 카테고리 생성      |                     |               |
-| products/category/<category_id>/              | 카테고리 물품리스트 |                    | 카테고리 수정       | 카테고리 삭제 |
-| products/product/                             |                     | 제품생성(임시까지) |                     |               |
-| products/product/<product_id>/                | 제품 상세정보       |                    | 제품 수정           | 제품 삭제     |
-| products/serarch/?type=<>&content=<>&order=<> | 검색                |                    |                     |               |
-| services/notices/                             | 공지사항 리스트     | 공지사항 생성      |                     |               |
-| services/notices/<notices_id>/                | 공지사항 상세       |                    | 공지사항 수정       | 공지사항 삭제 |
-| services/event/                               | 이벤트 리스트       | 이벤트 생성        |                     |               |
-| services/event/<event_id>/                    | 이벤트 상세         |                    | 이벤트 수정         | 이벤트 삭제   |
-| services/faq/                                 | FAQ 리스트          | FAQ 생성           |                     |               |
-| services/faq/<faq_id>/                        | FAQ 상세            |                    | FAQ 수정            | FAQ 삭제      |
-| services/company/                             | 회사 정보           |                    | 회사 정보 수정      |               |
-| services/contact/                             | contact 정보        |                    | contact 이미지 수정 |               |
-| services/manual/                              | 메뉴얼 데이터       |                    |                     |               |
-| services/log/                                 | 로그데이터          |                    |                     |               |
+| url                                           | GET                 | POST               | PUT           | DELETE        |
+| --------------------------------------------- | ------------------- | ------------------ | ------------- | ------------- |
+| accounts/login/                               |                     | 로그인             |               |               |
+| accounts/signup/                              |                     | 회원가입           |               |               |
+| accounts/logout/                              |                     | 로그아웃           |               |               |
+| accounts/manage/<user_id>/                    |                     | 회원가입 승인      | 회원권한 수정 |               |
+| products/main/                                | 메인페이지 상세     |                    |               |               |
+| products/main/carousel/                       |                     | 대표페이지 등록    |               |               |
+| products/category/                            | 카테고리 리스트     | 카테고리 생성      |               |               |
+| products/category/<category_id>/              | 카테고리 물품리스트 |                    | 카테고리 수정 | 카테고리 삭제 |
+| products/product/                             |                     | 제품생성(임시까지) |               |               |
+| products/product/<product_id>/                | 제품 상세정보       |                    | 제품 수정     | 제품 삭제     |
+| products/serarch/?type=<>&content=<>&order=<> | 검색                |                    |               |               |
+| services/notices/                             | 공지사항 리스트     | 공지사항 생성      |               |               |
+| services/notices/<notices_id>/                | 공지사항 상세       |                    | 공지사항 수정 | 공지사항 삭제 |
+| services/event/                               | 이벤트 리스트       | 이벤트 생성        |               |               |
+| services/event/<event_id>/                    | 이벤트 상세         |                    | 이벤트 수정   | 이벤트 삭제   |
+| services/manual/                              | 메뉴얼 데이터       |                    |               |               |
+| services/log/                                 | 로그데이터          |                    |               |               |
 
 
 
@@ -469,4 +465,310 @@
 
 
 ## 아이템 삭제
+
+
+
+## 이벤트 리스트 읽기
+
+```
+주소/api/services/event/(GET)
+```
+
+- Response
+
+```json
+[
+    {
+        "id": 20,
+        "title": "이벤트",
+        "start_date": "2020-11-03T18:00:00+09:00",
+        "end_date": "2020-11-05T18:00:00+09:00",
+        "thumbnail_image": "/media/erd.png",
+        "create_date": "2020-11-03T20:59:53.770623+09:00",
+        "update_date": "2020-11-03T20:59:53.770623+09:00",
+        "priority": 1,
+        "user": 2,
+        "detail": [
+            {
+                "image": "/media/KakaoTalk_20201019_093205576.png",
+                "content": "테스트1",
+                "priority": 1
+            },
+            {
+                "image": "/media/KakaoTalk_20200907_134019738.jpg",
+                "content": "테스트2",
+                "priority": 2
+            }
+        ]
+    }
+]
+```
+
+
+
+
+
+## 이벤트 읽기
+
+```
+주소/api/services/event/<int:pk>/(POST)
+```
+
+- Response
+
+```json
+{
+    "id": 20,
+    "title": "이벤트",
+    "start_date": "2020-11-03T18:00:00+09:00",
+    "end_date": "2020-11-05T18:00:00+09:00",
+    "thumbnail_image": "/media/erd.png",
+    "create_date": "2020-11-03T20:59:53.770623+09:00",
+    "update_date": "2020-11-03T20:59:53.770623+09:00",
+    "priority": 1,
+    "user": 2,
+    "detail": [
+        {
+            "image": "/media/KakaoTalk_20201019_093205576.png",
+            "content": "테스트1",
+            "priority": 1
+        },
+        {
+            "image": "/media/KakaoTalk_20200907_134019738.jpg",
+            "content": "테스트2",
+            "priority": 2
+        }
+    ]
+}
+```
+
+
+
+## 이벤트 생성
+
+```
+주소/api/services/event/<int:pk>/(POST)
+```
+
+- Body(form-data)
+
+```json
+{
+    "thumbnail": "썸네일 이미지",
+    "title": "이벤트 이름",
+    "strat_date": "2020-11-03 18:00:00",
+    "end_date": "2020-11-05 18:00:00",
+    "images": ["디테일에 들어갈 여러 이미지"],
+    "contents": ["이미지와 같이들어갈 글"],
+}
+```
+
+- Response
+
+```json
+{
+    "id": 21,
+    "title": "이벤트 이름",
+    "start_date": "2020-11-03T18:00:00+09:00",
+    "end_date": "2020-11-05T18:00:00+09:00",
+    "thumbnail_image": "/media/erd_lnMaLcv.png",
+    "create_date": "2020-11-03T21:38:16.990359+09:00",
+    "update_date": "2020-11-03T21:38:16.990359+09:00",
+    "priority": 1,
+    "user": 2,
+    "detail": [
+        {
+            "image": "/media/KakaoTalk_20201019_093205576_PxySHT2.png",
+            "content": "테스트1",
+            "priority": 1
+        },
+        {
+            "image": "/media/KakaoTalk_20200907_134019738_BqgSpGX.jpg",
+            "content": "테스트2",
+            "priority": 2
+        }
+    ]
+}
+```
+
+
+
+## 이벤트 수정(미완)
+
+
+
+```
+주소/api/services/event/<int:pk>/(PUT)
+```
+
+- Body
+
+```json
+
+```
+
+- Response
+
+```json
+
+```
+
+
+
+
+
+## 이벤트 삭제
+
+```
+주소/api/services/event/<int:pk>/(DELETE)
+```
+
+- Response
+
+```json
+{
+    "message": "이벤트가 삭제되었습니다."
+}
+```
+
+
+
+
+
+## 공지 리스트 읽기
+
+```
+주소/api/services/notices/(GET)
+```
+
+- Response
+
+```json
+[
+    {
+        "id": 4,
+        "title": "테스트",
+        "content": "테스트1",
+        "create_date": "2020-11-03T22:39:28.063168+09:00",
+        "update_date": "2020-11-03T22:39:28.063168+09:00",
+        "is_active": true,
+        "user": 2,
+        "image": "/media/KakaoTalk_20200907_134019738_CnpdyfJ.jpg"
+    }
+]
+```
+
+
+
+## 공지사항 읽기
+
+```
+주소/api/services/event/<int:pk>/(GET)
+```
+
+- Response
+
+```json
+{
+    "id": 4,
+    "title": "테스트",
+    "content": "테스트1",
+    "create_date": "2020-11-03T22:39:28.063168+09:00",
+    "update_date": "2020-11-03T22:39:28.063168+09:00",
+    "is_active": true,
+    "user": 2,
+    "image": "/media/KakaoTalk_20200907_134019738_CnpdyfJ.jpg"
+}
+```
+
+
+
+
+
+## 공지 생성
+
+```
+주소/api/services/notices/(post)
+```
+
+- Body(form-data)
+
+```json
+{
+    "title": "제목",
+    "content": "내용",
+    "image": "이미지데이터"
+}
+```
+
+- Response
+
+```json
+{
+    "id": 4,
+    "title": "테스트",
+    "content": "테스트1",
+    "create_date": "2020-11-03T22:39:28.063168+09:00",
+    "update_date": "2020-11-03T22:39:28.063168+09:00",
+    "is_active": true,
+    "user": 2,
+    "image": "/media/KakaoTalk_20200907_134019738_CnpdyfJ.jpg"
+}
+```
+
+
+
+## 공지 수정(미완)
+
+```
+주소/api/services/event/<int:pk>/(PUT)
+```
+
+- Body
+
+```json
+
+```
+
+- Response
+
+```json
+
+```
+
+
+
+## 공지 삭제
+
+```
+주소/api/services/event/<int:pk>/(DELETE)
+```
+
+- Response
+
+```json
+{
+    "message": "공지가 삭제되었습니다."
+}
+```
+
+
+
+## 로그데이터 가져오기(미완)
+
+```
+주소/api/services/event/<int:pk>/(PUT)
+```
+
+- Body
+
+```json
+
+```
+
+- Response
+
+```json
+
+```
 
