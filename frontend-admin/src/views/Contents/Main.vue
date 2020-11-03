@@ -137,7 +137,7 @@
         <div class="temp-part-history">
           <ul v-if="history.length">
             <li v-for="(his,index) in history.slice().reverse()" :key="index">
-              <div class="history-view" @click="onHistory(his)">
+              <div class="history-btn" :id="`history-${index}`" @click="onHistory(his), fixHistory(index)">
                 저장 {{ his.idx }}
                 <p>{{ his.date }}</p>
               </div>
@@ -154,15 +154,6 @@
 </template>
 
 <script>
-// import $ from 'jquery'
-// $(function(){
-//   $('li').click(function(){
-//     $('li').removeClass()
-//     $(this).addClass('on')
-
-//       })
-//     })
-
 export default {
   data() { 
     return {
@@ -214,6 +205,17 @@ export default {
   },
   
   methods: {
+    fixHistory(idx) {
+      for (let i=0; i<this.history.length; i++) {
+        let className = '#history-' + i
+        console.log(className)
+        if (i == idx) {
+          document.querySelector(className).classList.add('on')
+        } else {
+          document.querySelector(className).classList.remove('on')
+        }
+      }
+    },
     onClickTemp(){
       console.log('모든 데이터를 보내면 됌')
     },
@@ -428,10 +430,6 @@ export default {
   margin-bottom: 20px;
 }
 
-.temp-part-history {
-
-}
-
 .history-view{
   cursor: pointer;
 }
@@ -459,7 +457,11 @@ li {
   clear: both;
 }
 
-li.on{
+.history-btn {
+  cursor: pointer;
+}
+
+.history-btn.on {
   color:white;
   background-color:lightgray;
 }
