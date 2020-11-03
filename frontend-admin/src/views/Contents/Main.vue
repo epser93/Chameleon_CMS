@@ -203,7 +203,6 @@ export default {
     }
 
   },
-  
   methods: {
     fixHistory(idx) {
       for (let i=0; i<this.history.length; i++) {
