@@ -7,13 +7,13 @@
       </div>
       <div class="id">
         <label for="id">ID</label>
-        <input type="text">
+        <input type="text" v-model="id">
       </div>
       <div class="pw">
         <label for="pw">pw</label>
-        <input type="text">
+        <input type="password" v-model="pw">
       </div>
-      <div class="login-btn">Login</div>
+      <div class="login-btn" @click="login()">Login</div>
       <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#signupModal">
         회원가입
       </button>
@@ -26,11 +26,46 @@
 </template>
 
 <script>
+import SERVER from '@/api/drf'
+import axios from 'axios'
 import SignupModal from '@/components/SignupModal'
 export default {
   name: 'Login',
   components : {
-    SignupModal
+    SignupModal,
+  },
+  data() {
+    return {
+      id: null,
+      pw : null,
+    }
+  },
+  methods: {
+    login() {
+      const loginData = {
+        username : this.id,
+        password : this.pw
+      }
+      axios.post(SERVER.URL + SERVER.ROUTER.login, loginData)
+        .then(res => {
+          this.$cookies.set('auth-token', res.data.key)
+          let token = res.data.key
+          this.getUserInfo(token)
+          this.$router.push('Manage')
+          })
+        .catch(error => console.log(error.response))
+    },
+
+    getUserInfo(token) {
+      const config = {
+        headers: {
+          'Authorization' : 'Token ' + token
+        }
+      }
+      axios.get(SERVER.URL + SERVER.ROUTER.userinfo, config)
+        .then(res => console.log(res))
+        .catch(error => console.log(error.response))
+    }
   }
 }
 </script>
@@ -74,6 +109,7 @@ export default {
 
 .login-btn {
   margin-bottom: 2vh;
+  cursor: pointer;
 }
 
 .company-image {
