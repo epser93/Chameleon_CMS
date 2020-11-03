@@ -1,3 +1,4 @@
+import re
 from django.http import response
 from rest_auth.registration.views import RegisterView
 from rest_auth.views import LoginView, LogoutView
@@ -6,7 +7,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from .models import Department, User, TotalLog
-from .serializers import UserSerializer
+from .serializers import CMSUserSerializer
 
 message = 'message'
 number = set('1234567890')
@@ -17,18 +18,16 @@ email_check = set('@.')
 class UserAPI(APIView):
     
     def get(self, request):
-        serializer = UserSerializer(request.user)
+        serializer = CMSUserSerializer(request.user)
         return Response(serializer.data)
 
-
-def string_to_boolean(n):
-    if n == 'True':
-        return True
-    return False
 
 
 class Signup(RegisterView):
     def create(self, request, *args, **kwargs):
+        if len(request.data.get('first_name', '')) == 0:
+            answer = {message: '이름이 없습니다.'}
+            return Response(answer, status=status.HTTP_400_BAD_REQUEST)
         if User.objects.filter(username=request.data['username']).exists():
             answer = {message: '존재하는 아이디 입니다.'}
             return Response(answer, status=status.HTTP_400_BAD_REQUEST)
@@ -49,14 +48,10 @@ class Signup(RegisterView):
             answer = {message: '비밀번호가 조건에 부합하지 않습니다.'}
             return Response(answer, status=status.HTTP_400_BAD_REQUEST)
         department = Department.objects.get(name=request.data['department'])
-        employee_number = request.data['employee_number']
-        is_logger = string_to_boolean(request.data.get('is_logger', 'False'))
-        is_eventer = string_to_boolean(request.data.get('is_eventer', 'False'))
-        is_producter = string_to_boolean(request.data.get('is_producter', 'False'))
-        is_marketer = string_to_boolean(request.data.get('is_marketer', 'False'))
+        
         super().create(request, *args, **kwargs)
         user = User.objects.get(username=request.data['username'])
-        user.update(department, employee_number, is_logger, is_eventer, is_producter, is_marketer)
+        user.update(department, request.data)
         log = TotalLog()
         log.update('회원가입', request.data, user)
         answer = {message: '회원가입이 완료되었습니다. 관리자 승인 후 로그인 해주세요.'}
@@ -103,14 +98,22 @@ class Logout(LogoutView):
 
 class ManagementAPI(APIView):
 
-    def post(self, request):
+    def post(self, request, pk):
         if request.user.is_superuser:
-            users = request.data['users']
-            for user_id in users:
-                user = User.objects.get(pk=user_id)
-                user.access_ok()
+            user = User.objects.get(pk=pk)
+            user.access_ok()
             answer = {message : '승인이 완료되었습니다.'}
             return Response(answer)
         else:
             answer = {message : '권한이 없습니다.'}
+            return Response(answer, status=status.HTTP_403_FORBIDDEN)
+
+    def put(self, request, pk):
+        if request.user.is_superuser:
+            user = User.objects.get(pk=pk)
+            user.update(None, request.data)
+            serializer = CMSUserSerializer(user)
+            return Response(serializer.data)
+        else:
+            answer = {message: '권한이 없습니다.'}
             return Response(answer, status=status.HTTP_403_FORBIDDEN)
