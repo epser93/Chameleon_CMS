@@ -19,12 +19,12 @@ const routes = [
           {
             path: 'user',
             name: 'User',
-            component: () => import('@/views/home/User.vue')
+            component: () => import('@/views/Manage/User.vue')
           },
           {
-            path: 'userLog',
-            name: 'UserLog',
-            component: () => import('@/views/home/UserLog.vue')
+            path: 'log',
+            name: 'Log',
+            component: () => import('@/views/Manage/Log.vue')
           }
         ]
       },
@@ -42,22 +42,22 @@ const routes = [
           {
             path: 'main',
             name: 'Main',
-            component: () => import('@/views/homeContent/Main.vue')
+            component: () => import('@/views/Contents/Main.vue')
           },
           {
             path: 'product',
             name: 'Product',
-            component: () => import('@/views/homeContent/Product.vue')
+            component: () => import('@/views/Contents/Product.vue')
           },
           {
             path: 'event',
             name: 'Event',
-            component: () => import('@/views/homeContent/Event.vue')
+            component: () => import('@/views/Contents/Event.vue')
           },
           {
             path: 'notice',
             name: 'Notice',
-            component: () => import('@/views/homeContent/Notice.vue')
+            component: () => import('@/views/Contents/Notice.vue')
           }
         ]
       },

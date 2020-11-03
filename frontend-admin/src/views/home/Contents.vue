@@ -1,7 +1,10 @@
 <template>
   <div class="row">
-    <div class="col-3">
-      <SideBar :categories="categories"></SideBar>
+    <div class="col-3 nav-container">
+      <SideBar
+      :categories="categories"
+      :productCategories="productCategories"
+      ></SideBar>
     </div>
     <div class="col-9">
       <router-view></router-view>
@@ -15,7 +18,8 @@ import SideBar from '@/components/SideBar'
 export default {
   data() {
     return {
-      categories: ['Main', 'Product', 'Event', 'Notice']
+      categories: ['Main', 'Product', 'Event', 'Notice'],
+      productCategories: ['노트북', '스마트폰', '냉장고']
     }
   },
   components: {

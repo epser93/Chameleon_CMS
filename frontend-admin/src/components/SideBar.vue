@@ -3,6 +3,9 @@
     <ul class="nav-container">
 			<li class="nav-items" v-for="(category, index) in categories" :key="index">
 				<div :class="category" @click="onRoute(category)">{{ category }}</div>
+        <div v-if="category==='Product'">
+          <div class="product-category" v-for="(product, index) in productCategories" :key="index">{{ product }}</div>
+        </div>
 			</li>
     </ul>
   </div>
@@ -12,10 +15,11 @@
 export default {
 	data() {
 		return {
-      cate : this.categories
+      cate : this.categories,
+      productdCate : this.productCategories
 		}
   },
-  props: ['categories'],
+  props: ['categories', 'productCategories'],
 	methods: {
 		onRoute(name) {
 			this.$router.push({name:name}, () => {})
@@ -137,5 +141,11 @@ export default {
 
 .nav-items div:hover::before {
 	width: 140%;
+}
+
+.product-category {
+  margin-top: 20px;
+  margin-left: 20px;
+  font-size : 20px;
 }
 </style>
