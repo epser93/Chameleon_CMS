@@ -3,7 +3,7 @@
   <h1>Product</h1>
   <div class="row justify-content-between">
     <div class="col-3">
-      <button type="button" class="btn btn-info">
+      <button type="button" class="btn btn-info" @click="onRoute('Item')">
         추가
       </button>
       <button type="button" class="btn btn-danger">
@@ -24,7 +24,7 @@
     <table class="table">
       <thead>
         <tr>
-          <th scope="col"><input type="checkbox"></th>
+          <th scope="col"></th>
           <th scope="col">카테고리</th>
           <th scope="col">제품명</th>
           <th scope="col">기타</th>
@@ -77,7 +77,11 @@
 
 <script>
 export default {
-
+  methods: {
+    onRoute(name) {
+			this.$router.push({name:name}, () => {})
+		},
+  }
 }
 </script>
 
