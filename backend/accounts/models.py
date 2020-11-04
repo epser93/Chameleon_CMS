@@ -35,6 +35,7 @@ class User(AbstractUser):
         self.is_eventer = string_to_boolean(data.get('is_eventer', self.is_eventer))
         self.is_producter = string_to_boolean(data.get('is_producter', self.is_producter))
         self.is_marketer = string_to_boolean(data.get('is_marketer', self.is_marketer))
+        self.first_name = data['first_name']
         self.save()
 
     def access_ok(self):
