@@ -410,7 +410,7 @@
 ## 아이템 생성
 
 ```
-주소/api/products/product/
+주소/api/products/product/(POST)
 ```
 
 
@@ -454,6 +454,20 @@
         "department": null
     }
 }
+```
+
+
+
+## 아이템 상세 정보
+
+```
+주소/api/products/<int:pk>/(GET)
+```
+
+- Response
+
+```json
+
 ```
 
 
