@@ -61,9 +61,14 @@ const routes = [
                 component: () => import('@/views/category/CategoryInfo.vue')
               },
               {
+                path: 'category/:cid',
+                name: 'ItemMain',
+                component: () => import('@/views/Item/ItemMain.vue')
+              },
+              {
                 path: 'item',
                 name: 'Item',
-                component: () => import('@/components/ItemInfo.vue')
+                component: () => import('@/views/Item/ItemInfo.vue')
               }
             ]
           },

@@ -8,6 +8,7 @@
           <th scope="col"></th>
           <th scope="col">카테고리</th>
           <th scope="col">상태</th>
+          <th scope="col">상세보기</th>
         </tr>
       </thead>
       <tbody>
@@ -15,6 +16,7 @@
           <th scope="row"><input type="checkbox"></th>
           <td>노트북</td>
           <td>임시저장</td>
+          <td><button type="button" class="btn btn-info" @click="onRoute('Item')">더 보기</button></td>
         </tr>
       </tbody>
     </table>
