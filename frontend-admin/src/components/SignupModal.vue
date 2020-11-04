@@ -110,14 +110,19 @@ export default {
         password2 : this.pw2,
         department : this.part,
         email : this.email,
+        first_name: this.name,
         employee_number : this.employeeNumber
       }
+      console.log(signUpData)
       axios.post(SERVER.URL + SERVER.ROUTER.signup, signUpData)
         .then(() => {
           this.onRoute("Login")
           alert('회원가입이 완료되었습니다. 관리자 승인후 로그인해주세요')
         })
-        .catch(error => console.log(error.response))
+        .catch(error => {
+          console.log(error.response)
+          alert(error.response.data.message)
+          })
     }
   },
   watch: {
