@@ -1,51 +1,60 @@
 <template>
   <div class="container">
-    <div class="category row">
+    <div class="item row">
       <div class="col-8">
-        <div class="category-content">
-          <h4>제품군</h4>
+        <div class="item-content">
+          <h4>카테고리 : </h4>
+        </div>
+        <div class="item-content">
+          <h4>제품명</h4>
           <input type="text" class="form-control" placeholder="명칭을 입력해주세요" aria-label="Username">
         </div>
         
-        <div class="category-content">
+        <div class="item-content">
           <h4>템플릿 선택</h4>
           <table class="template-table">
             <tr>
               <td>
-                <img src="@/assets/product/template1.jpg" alt="template1">
+                <img src="@/assets/product/template3.jpg" alt="template1">
               </td>
               <td>
-                <img src="@/assets/product/template2.jpg" alt="template2">
+                <img src="@/assets/product/template4.jpg" alt="template2">
               </td>
             </tr>
             <tr>
               <td>
                 <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
-                <label class="form-check-label" for="inlineRadio1">사양 위주</label>
+                <label class="form-check-label" for="inlineRadio1">캐로우셀</label>
               </td>
               <td>          
                 <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
-                <label class="form-check-label" for="inlineRadio2">디자인 위주</label>
+                <label class="form-check-label" for="inlineRadio2">격자</label>
               </td>
             </tr>
           </table>
         </div>
 
-        <div class="category-content">
-          <h4>제품군 대표 이미지</h4>
+        <div class="item-content">
+          <h4>제품 소개</h4>
               <input ref="imageInput" type="file" hidden @change="onChangeImages">
               <button type="button" class="btn btn-success btn-sm" @click="onClickImageUpload">업로드</button>
           <div class="preview-img">
             <img id="inner-img" v-if="imageUrl" :src="imageUrl">
           </div>
         </div>
-        <div class="category-content">
+        <div class="item-content">
           <h4>제품 사양 카테고리</h4>
-          <!-- 태그 -->
-          <div class="tag">
-            <span v-for="(tag,index) in aboutText.tags" :key="index" class="badge badge-pill badge-light mr-2 p-2" @click="deleteTag(index)">{{ tag }}<span id="closeTag">  x</span></span>
-          </div>
-          <input class="form-control" placeholder="사양 입력후 enter키를 눌러주세요" id="category-desc" type="text" v-model="tag" @keydown.enter="postTag">
+          <table>
+            <tr>
+              <td>
+                태그1
+              </td>
+              <td>
+                태그2
+              </td>
+            </tr>
+          </table>
+         
         </div>
 
         <div class="row justify-content-end" id="content-btn">
@@ -57,7 +66,7 @@
           </div>
         </div>  
       </div>
-        <!-- history -->
+      <!-- history -->
       <div class="col-4" id="history">
         <div class="temp-part">
           <h1>History</h1>
@@ -128,25 +137,7 @@ export default {
         const file = e.target.files[0];
         this.imageUrl = URL.createObjectURL(file);
     },
-    deleteTag(index) {
-      this.aboutText.tags.splice(index,1)
-    },
-    postTag() {
-      const chkpatterns = /[~!@#$%^&*()_+|<>?:{}]/;
-      if (this.tag === null || this.tag.replace(/^\s*|\s*$/g, '').length === 0) {
-        alert('빈칸은 태그로 입력 불가능합니다.')
-        this.tag = ""
-      } else if (chkpatterns.test(this.tag)) {
-        alert('특수문자는 입력할 수 없습니다.')
-        this.tag = ""
-      } else if (!this.aboutText.tags.includes(this.tag)) {
-        this.aboutText.tags.push(this.tag)
-        this.tag = ""
-      } else {
-        alert('중복된 태그입니다.')
-        this.tag= ""
-      }
-    },
+
   }
 }
 </script>
@@ -161,7 +152,7 @@ export default {
   width: 250px;
 }
 
-.category-content {
+.item-content {
   margin-top: 30px;
 }
 
@@ -176,17 +167,6 @@ export default {
   height: 125px;
   margin-left: auto;
   margin-right: auto;
-}
-
-#closeTag {
-  opacity: 0.5;
-  cursor: pointer;
-}
-
-#category-desc {
-  width: 280px;
-  margin-top: 20px;
-
 }
 
 #history {
