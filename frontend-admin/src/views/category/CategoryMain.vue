@@ -16,7 +16,7 @@
           <th scope="row"><input type="checkbox"></th>
           <td>노트북</td>
           <td>임시저장</td>
-          <td><button type="button" class="btn btn-info" @click="onRoute('Item')">더 보기</button></td>
+          <td><button type="button" class="btn btn-info" @click="onRoute('ItemMain')">더 보기</button></td>
         </tr>
       </tbody>
     </table>
