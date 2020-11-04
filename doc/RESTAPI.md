@@ -2,22 +2,25 @@
 
 | url                                           | GET                 | POST               | PUT           | DELETE        |
 | --------------------------------------------- | ------------------- | ------------------ | ------------- | ------------- |
+| accounts/                                     | 자신의 정보         |                    |               |               |
+| accounts/search/?조건식                       | 유저 검색(필터링)   |                    |               |               |
+| accounts/department/                          | 부서 정보           |                    |               |               |
 | accounts/login/                               |                     | 로그인             |               |               |
 | accounts/signup/                              |                     | 회원가입           |               |               |
 | accounts/logout/                              |                     | 로그아웃           |               |               |
 | accounts/manage/<user_id>/                    |                     | 회원가입 승인      | 회원권한 수정 |               |
 | products/main/                                | 메인페이지 상세     |                    |               |               |
 | products/main/carousel/                       |                     | 대표페이지 등록    |               |               |
+| products/template/                            | 템플릿 정보         |                    |               |               |
 | products/category/                            | 카테고리 리스트     | 카테고리 생성      |               |               |
 | products/category/<category_id>/              | 카테고리 물품리스트 |                    | 카테고리 수정 | 카테고리 삭제 |
 | products/product/                             |                     | 제품생성(임시까지) |               |               |
-| products/product/<product_id>/                | 제품 상세정보       |                    | 제품 수정     | 제품 삭제     |
+| products/product/<product_id>/                | 제품 상세정보       | 임시정보 생성      | 임시제품 적용 | 제품 삭제     |
 | products/serarch/?type=<>&content=<>&order=<> | 검색                |                    |               |               |
 | services/notices/                             | 공지사항 리스트     | 공지사항 생성      |               |               |
 | services/notices/<notices_id>/                | 공지사항 상세       |                    | 공지사항 수정 | 공지사항 삭제 |
 | services/event/                               | 이벤트 리스트       | 이벤트 생성        |               |               |
 | services/event/<event_id>/                    | 이벤트 상세         |                    | 이벤트 수정   | 이벤트 삭제   |
-| services/manual/                              | 메뉴얼 데이터       |                    |               |               |
 | services/log/                                 | 로그데이터          |                    |               |               |
 
 
@@ -396,7 +399,7 @@
 
 
 
-## 아이템 생성
+## 아이템 생성(이미지 미완성)
 
 ```
 주소/api/products/product/(POST)
@@ -494,11 +497,11 @@
 
 
 
-## 아이템 수정
+## 아이템 수정(미완성)
 
 
 
-## 아이템 삭제
+## 아이템 삭제(미완성)
 
 
 
@@ -629,10 +632,8 @@
 
 ## 이벤트 수정(미완)
 
-
-
 ```
-주소/api/services/event/<int:pk>/(PUT)
+
 ```
 
 - Body
@@ -755,7 +756,7 @@
 ## 공지 수정(미완)
 
 ```
-주소/api/services/event/<int:pk>/(PUT)
+
 ```
 
 - Body
@@ -791,7 +792,7 @@
 ## 로그데이터 가져오기(미완)
 
 ```
-주소/api/services/event/<int:pk>/(PUT)
+
 ```
 
 - Body
@@ -808,19 +809,83 @@
 
 
 
-## 유저 전체정보
+## 유저 필터링(미완성)
+
+```
+주소/api/accounts/search/?type=abc&content
+```
+
+> type 종류
+>
+> - all  - 전체유저 정보
+> - is_access - 회원가입 승인이 안되어 있는 유저 정보
+> - name - content에 들어가있는 이름으로 검색
+> - department - content에 들어가있는 부서명으로 검색
+>
+> ex) `주소/api/accounts/search/?type=department&content=생산관리`
+
+- Response
+
+```json
+[
+    {
+        "id": 7,
+        "username": "songsong",
+        "first_name": "송은석",
+        "is_superuser": false,
+        "is_access": false,
+        "is_logger": false,
+        "is_eventer": false,
+        "is_producter": false,
+        "is_marketer": false,
+        "department": {
+            "id": 3,
+            "name": "생산관리"
+        },
+        "last_login": "2020-11-04T11:22:32.481028+09:00",
+        "employee_number": 123414141
+    },
+    {
+        "id": 9,
+        "username": "test6",
+        "first_name": "은석",
+        "is_superuser": false,
+        "is_access": false,
+        "is_logger": false,
+        "is_eventer": false,
+        "is_producter": false,
+        "is_marketer": false,
+        "department": {
+            "id": 3,
+            "name": "생산관리"
+        },
+        "last_login": "2020-11-04T11:31:24.566257+09:00",
+        "employee_number": 749172
+    }
+]
+```
 
 
 
 
 
-## 유저 필터링
+## 템플릿 정보(미완성)
 
+```
 
+```
 
+- Body
 
+```json
 
-## 템플릿 정보
+```
+
+- Response
+
+```json
+
+```
 
 
 
@@ -828,3 +893,25 @@
 
 ## 부서 정보
 
+```
+주소/api/accounts/department/
+```
+
+- Response
+
+```json
+[
+    {
+        "id": 1,
+        "name": "인사과"
+    },
+    {
+        "id": 2,
+        "name": "기획과"
+    },
+    {
+        "id": 3,
+        "name": "생산관리"
+    }
+]
+```

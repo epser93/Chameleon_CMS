@@ -1,6 +1,12 @@
 <template>
   <div class="container-fluid">
     <div class="table-container">
+      <div class="unauthorized">
+        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#unauthorizedUser">
+          미승인 회원 <span class="badge badge-light">4</span>
+        </button>
+      </div>
+      <UnauthorizedUser></UnauthorizedUser>
       <table class="table">
         <thead>
           <tr>
@@ -28,10 +34,12 @@
 
 <script>
 import AuthorityModal from '@/components/AuthorityModal'
+import UnauthorizedUser from'@/components/UnauthorizedUser'
 import $ from 'jquery'
 export default {
   components: {
-    AuthorityModal
+    AuthorityModal,
+    UnauthorizedUser
   },
   data() {
     return {
@@ -112,5 +120,9 @@ export default {
 
 .user-infos:hover {
   background-color: #e9e9e9;
+}
+
+.unauthorized {
+  display: flex;
 }
 </style>
