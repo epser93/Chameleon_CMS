@@ -1,5 +1,6 @@
 import re
 from django.http import response
+from django.http import request
 from rest_auth.registration.views import RegisterView
 from rest_auth.views import LoginView, LogoutView
 from rest_framework import status
@@ -7,7 +8,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from .models import Department, User, TotalLog
-from .serializers import CMSUserSerializer
+from .serializers import CMSUserSerializer, DepartmentSerializer
 
 message = 'message'
 number = set('1234567890')
@@ -117,3 +118,11 @@ class ManagementAPI(APIView):
         else:
             answer = {message: '권한이 없습니다.'}
             return Response(answer, status=status.HTTP_403_FORBIDDEN)
+
+
+class DepartmentAPI(APIView):
+
+    def get(self, request):
+        departments = Department.objects.all()
+        serializer = DepartmentSerializer(departments, many=True)
+        return Response(serializer.data)
