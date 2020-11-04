@@ -38,7 +38,6 @@ export default {
     return {
       id: null,
       pw : null,
-      is_superuser: false
     }
   },
   methods: {
@@ -51,18 +50,12 @@ export default {
         .then(res => {
           this.$cookies.set('auth-token', res.data.key)
           let token = res.data.key
-          this.getUserInfo(token)
-          console.log(this.is_superuser)
-          if (this.is_superuser){
-            this.$router.push({ name : 'Manage'})
-          } else {
-            this.$router.push({ name : 'Data'})
-          }
-          })
+          this.getUserInfoAndRoute(token)
+        })
         .catch(error => console.log(error.response))
     },
 
-    getUserInfo(token) {
+    getUserInfoAndRoute(token) {
       const config = {
         headers: {
           'Authorization' : 'Token ' + token
@@ -70,8 +63,13 @@ export default {
       }
       axios.get(SERVER.URL + SERVER.ROUTER.userinfo, config)
         .then(res => {
-          console.log(res)
-          this.is_superuser = res.data.is_superuser
+          console.log(res)  
+          console.log(res.data.is_superuser)
+          if (res.data.is_superuser ){
+            this.$router.push({ name : 'Manage'})
+          } else {
+            this.$router.push({ name : 'Data'})
+          }
         })
         .catch(error => console.log(error.response))
     }
