@@ -1,8 +1,11 @@
 <template>
-  <router-view/>
+  <div>
+    Contact
+  </div>
 </template>
 
 <script>
 export default {
+  name: 'Contact',
 }
 </script>
