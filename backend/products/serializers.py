@@ -1,34 +1,19 @@
 from accounts.serializers import UserSerializer
 from rest_framework import serializers
-#from services.models import TemplateSerializer
-#from accounts.models import DepartmentSerializer
 from .models import Category, CategoryDescription, Item, ItemDescription, ItemImage
 
-class CategorySerializer(serializers.ModelSerializer):
-    #template = TemplateSerializer()
-    cms_user = UserSerializer(required=False)
-    #department = DepartmentSerializer()
-    class Meta:
-        model = Category
-        # fields = ['name', 'is_active', 'priority', 'created_date', 'update_date', 'template', 'cms_user', 'department']
-        fields = ['id', 'name', 'is_active', 'priority', 'created_date', 'update_date', 'cms_user']
-
-
 class CategoryDescriptionSerializer(serializers.ModelSerializer):
-    cms_user = UserSerializer(required=False)
-    #department = DepartmentSerializer()
     class Meta:
         model = CategoryDescription
-        fields = ['name', 'cms_user']
+        fields = ['id', 'name']
 
 
-class ItemSerializer(serializers.ModelSerializer):
+class CategorySerializer(serializers.ModelSerializer):
     cms_user = UserSerializer(required=False)
-    # item_image = ItemImageSerializer()
-    # item_description = ItemDescriptionSerializer()
+    description = CategoryDescriptionSerializer(required=False, many=True)
     class Meta:
-        model = Item
-        fields = ['id', 'name', 'price', 'is_temp', 'is_active', 'created_date', 'update_date', 'cms_user']
+        model = Category
+        fields = ['id', 'name', 'is_active', 'priority', 'created_date', 'update_date', 'cms_user', 'description']
 
 
 class ItemImageSerializer(serializers.ModelSerializer):
@@ -39,15 +24,15 @@ class ItemImageSerializer(serializers.ModelSerializer):
 
 class ItemDescriptionSerializer(serializers.ModelSerializer):
     category_description = CategoryDescriptionSerializer()
-    cms_user = UserSerializer(required=False)
-    category_description = CategoryDescription
     class Meta:
         model = ItemDescription
-        fields = ['content', 'item', 'is_active', 'created_date', 'update_date', 'category_description', 'cms_user']
+        fields = ['content', 'item', 'category_description']
 
 
-# class ProductsSerializer(serializers.ModelSerializer):
-#     item = ItemSerializer()
-#     item_image = ItemImageSerializer()
-#     itme_description = ItemDescriptionSerializer()
-#     class Meta:
+class ItemSerializer(serializers.ModelSerializer):
+    cms_user = UserSerializer(required=False)
+    images = ItemImageSerializer(required=False, many=True)
+    descriptions = ItemDescriptionSerializer(required=False, many=True)
+    class Meta:
+        model = Item
+        fields = ['id', 'name', 'price', 'is_temp', 'is_active', 'created_date', 'update_date', 'cms_user','descriptions', 'images']

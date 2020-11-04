@@ -11,10 +11,9 @@ class DepartmentSerializer(serializers.ModelSerializer):
 
 
 class UserSerializer(serializers.ModelSerializer):
-    department = DepartmentSerializer()
     class Meta:
         model = User
-        fields = ['id', 'username', 'is_access', 'is_eventer', 'is_producter', 'is_marketer', 'department']
+        fields = ['id', 'username', 'first_name']
 
 
 class CMSUserSerializer(serializers.ModelSerializer):
