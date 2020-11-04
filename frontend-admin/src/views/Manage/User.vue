@@ -47,7 +47,7 @@ export default {
           department: "품질관리",
           name : "강현영",
           id : "id2",
-          authority : ["Main"]
+          authority : ["Main+Notice"]
         },
         {
           department: "구매",
@@ -71,7 +71,7 @@ export default {
           department: "개발",
           name : "윤상목",
           id : "id6",
-          authority : ["Notice", "Event"]
+          authority : ["Main+Notice", "Event"]
         }
       ]
     }

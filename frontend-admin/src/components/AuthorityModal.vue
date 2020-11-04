@@ -49,7 +49,7 @@ export default {
   data() {
     return {
       checkedAuthorities : [],
-      authorities : ["Product", "Main", "Event", "Notice"]
+      authorities : ["Product", "Main+Notice", "Event"]
     }
   },
   // computed: {
