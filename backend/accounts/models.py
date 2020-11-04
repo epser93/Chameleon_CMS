@@ -6,8 +6,14 @@ from django.conf import settings
 
 class Department(models.Model):
     name = models.CharField(max_length=40)
+    
     def __str__(self) -> str:
         return self.name
+
+    def create(self, name):
+        self.name = name
+        self.save()
+
 
 def string_to_boolean(n):
     if type(n) == type(''):
@@ -35,7 +41,7 @@ class User(AbstractUser):
         self.is_eventer = string_to_boolean(data.get('is_eventer', self.is_eventer))
         self.is_producter = string_to_boolean(data.get('is_producter', self.is_producter))
         self.is_marketer = string_to_boolean(data.get('is_marketer', self.is_marketer))
-        self.first_name = data['first_name']
+        self.first_name = data.get('first_name', self.first_name)
         self.save()
 
     def access_ok(self):
