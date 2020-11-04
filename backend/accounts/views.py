@@ -126,3 +126,37 @@ class DepartmentAPI(APIView):
         departments = Department.objects.all()
         serializer = DepartmentSerializer(departments, many=True)
         return Response(serializer.data)
+
+    def post(self, request):
+        if Department.objects.filter(name=request.data['name']).exists():
+            answer = {message: '존재하는 부서입니다.'}
+            return Response(answer, status=status.HTTP_400_BAD_REQUEST)
+        department = Department()
+        department.create(request.data['name'])
+        serializer = DepartmentSerializer(department)
+        return Response(serializer.data)
+        
+
+class USerSearchAPI(APIView):   
+    def get(self, request):
+        if request.user.is_superuser == False:
+            answer = {message: "권한이 없습니다."}
+            return Response(answer, status=status.HTTP_400_BAD_REQUEST)
+        _type = request.GET.get('type', 'all')
+        print(_type)
+        content = request.GET.get('content', '')
+        print(content)
+        if _type == 'all':
+            users = User.objects.exclude(is_superuser=True)
+        elif _type == 'is_access':
+            users = User.objects.filter(is_access=False).exclude(is_superuser=True)
+        elif _type == 'name':
+            users = User.objects.filter(first_name__contains=content).exclude(is_superuser=True)
+        elif _type == 'department':
+            department = Department.objects.get(name=content)
+            users = User.objects.filter(department=department).exclude(is_superuser=True)
+        else:
+            answer = {message: "잘못된 요청입니다."}
+            return Response(answer, status=status.HTTP_400_BAD_REQUEST)
+        serializer = CMSUserSerializer(users, many=True)
+        return Response(serializer.data)

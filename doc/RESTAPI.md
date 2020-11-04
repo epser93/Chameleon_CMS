@@ -3,7 +3,6 @@
 | url                                           | GET                 | POST               | PUT           | DELETE        |
 | --------------------------------------------- | ------------------- | ------------------ | ------------- | ------------- |
 | accounts/                                     | 자신의 정보         |                    |               |               |
-| accounts/all/                                 | 모든 유저의 정보    |                    |               |               |
 | accounts/search/?조건식                       | 유저 검색(필터링)   |                    |               |               |
 | accounts/department/                          | 부서 정보           |                    |               |               |
 | accounts/login/                               |                     | 로그인             |               |               |
@@ -22,7 +21,6 @@
 | services/notices/<notices_id>/                | 공지사항 상세       |                    | 공지사항 수정 | 공지사항 삭제 |
 | services/event/                               | 이벤트 리스트       | 이벤트 생성        |               |               |
 | services/event/<event_id>/                    | 이벤트 상세         |                    | 이벤트 수정   | 이벤트 삭제   |
-|                                               |                     |                    |               |               |
 | services/log/                                 | 로그데이터          |                    |               |               |
 
 
@@ -811,42 +809,60 @@
 
 
 
-## 유저 전체정보(미완성)
-
-```
-
-```
-
-- Body
-
-```json
-
-```
-
-- Response
-
-```json
-
-```
-
-
-
 ## 유저 필터링(미완성)
 
 ```
-
+주소/api/accounts/search/?type=abc&content
 ```
 
-- Body
-
-```json
-
-```
+> type 종류
+>
+> - all  - 전체유저 정보
+> - is_access - 회원가입 승인이 안되어 있는 유저 정보
+> - name - content에 들어가있는 이름으로 검색
+> - department - content에 들어가있는 부서명으로 검색
+>
+> ex) `주소/api/accounts/search/?type=department&content=생산관리`
 
 - Response
 
 ```json
-
+[
+    {
+        "id": 7,
+        "username": "songsong",
+        "first_name": "송은석",
+        "is_superuser": false,
+        "is_access": false,
+        "is_logger": false,
+        "is_eventer": false,
+        "is_producter": false,
+        "is_marketer": false,
+        "department": {
+            "id": 3,
+            "name": "생산관리"
+        },
+        "last_login": "2020-11-04T11:22:32.481028+09:00",
+        "employee_number": 123414141
+    },
+    {
+        "id": 9,
+        "username": "test6",
+        "first_name": "은석",
+        "is_superuser": false,
+        "is_access": false,
+        "is_logger": false,
+        "is_eventer": false,
+        "is_producter": false,
+        "is_marketer": false,
+        "department": {
+            "id": 3,
+            "name": "생산관리"
+        },
+        "last_login": "2020-11-04T11:31:24.566257+09:00",
+        "employee_number": 749172
+    }
+]
 ```
 
 
@@ -875,21 +891,27 @@
 
 
 
-## 부서 정보(미완성)
+## 부서 정보
 
 ```
-
-```
-
-- Body
-
-```json
-
+주소/api/accounts/department/
 ```
 
 - Response
 
 ```json
-
+[
+    {
+        "id": 1,
+        "name": "인사과"
+    },
+    {
+        "id": 2,
+        "name": "기획과"
+    },
+    {
+        "id": 3,
+        "name": "생산관리"
+    }
+]
 ```
-
