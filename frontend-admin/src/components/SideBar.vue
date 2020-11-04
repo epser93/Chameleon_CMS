@@ -26,7 +26,7 @@ export default {
 		},
 		fixCategory () {
 			for (let i=0; i<this.categories.length; i++) {
-				let className = '.' + this.categories[i]
+        let className = '.' + this.categories[i]
 				if (this.$route.name === this.categories[i]) {
 					document.querySelector(className).classList.add('active')
 				} else {
