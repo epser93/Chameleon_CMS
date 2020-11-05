@@ -27,7 +27,6 @@
                 <td>{{ user.username}}</td>
                 <td>
                   <button type="button" class="btn btn-outline-primary approve-btn" @click="approve(user.id)">승인</button>
-                  <!-- <button type="button" class="btn btn-outline-danger">거부</button> -->
                 </td>
               </tr>
             </tbody>
@@ -50,10 +49,10 @@ export default {
     }
   },
   methods: {
-    ...mapActions('account', ['getUnAccessUserInfo', 'approveAccess']),
+    ...mapActions('account', ['getUnAccessUserInfo', 'approveAccess', 'getAccessUserInfo']),
     approve(userPk) {
       this.approveAccess(userPk)
-    }
+    },
   },
   computed: {
     ...mapState('account', ['unAccessedUserInfos'])

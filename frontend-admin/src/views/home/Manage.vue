@@ -102,7 +102,6 @@ export default {
 	},
 	mounted() {
 		// this.fixCategory()
-		console.log(this.$refs)
 	}
 }
 </script>
