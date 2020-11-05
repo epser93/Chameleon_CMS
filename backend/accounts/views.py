@@ -149,7 +149,11 @@ class USerSearchAPI(APIView):
         if _type == 'all':
             users = User.objects.exclude(is_superuser=True)
         elif _type == 'is_access':
-            users = User.objects.filter(is_access=False).exclude(is_superuser=True)
+            if content == 'False':
+                content = False
+            else:
+                content = True
+            users = User.objects.filter(is_access=content).exclude(is_superuser=True)
         elif _type == 'name':
             users = User.objects.filter(first_name__contains=content).exclude(is_superuser=True)
         elif _type == 'department':

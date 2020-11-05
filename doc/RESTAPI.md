@@ -809,7 +809,7 @@
 
 
 
-## 유저 필터링(미완성)
+## 유저 필터링
 
 ```
 주소/api/accounts/search/?type=abc&content
@@ -818,7 +818,7 @@
 > type 종류
 >
 > - all  - 전체유저 정보
-> - is_access - 회원가입 승인이 안되어 있는 유저 정보
+> - is_access - 승인 여부에 따라 유저 정보 검색 content에 True, False 입력
 > - name - content에 들어가있는 이름으로 검색
 > - department - content에 들어가있는 부서명으로 검색
 >
