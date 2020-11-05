@@ -64,6 +64,7 @@
 </template>
 
 <script>
+import { mapActions, mapState } from 'vuex'
 import SERVER from '@/api/drf'
 import axios from 'axios'
 import $ from "jquery";
@@ -73,7 +74,6 @@ export default {
   name : 'SignupModal',
   data() {
     return {
-      departments: ['생산관리', '영업', '재무', '마케팅', '전산', '개발', '홍보'],
       employeeNumber : '',
       email : '',
       part: '',
@@ -87,12 +87,15 @@ export default {
     }
   },
   methods: {
+    ...mapActions('account', ['getDepartments']),
     initializeParameter() {
       this.part = ''
       this.name = ''
       this.id = ''
       this.pw1 = ''
       this.pw2 = ''
+      this.employeeNumber = ''
+      this.email = ''
       this.selected = []
       this.pwValidate1 = 0
       this.pwValidate2 = 0
@@ -122,8 +125,8 @@ export default {
         .catch(error => {
           console.log(error.response)
           alert(error.response.data.message)
-          })
-    }
+        })
+    },
   },
   watch: {
     id: function() {
@@ -160,6 +163,12 @@ export default {
       }
     },
   },
+  computed: {
+    ...mapState('account', ['departments'])
+  },
+  created() {
+    this.getDepartments()
+  }
 }
 </script>
 
