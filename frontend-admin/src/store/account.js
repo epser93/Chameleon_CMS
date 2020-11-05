@@ -48,7 +48,7 @@ export default {
           dispatch('loginRoute')
           dispatch('getUserInfo')
         })
-        .catch(error => {console.log(error.response)})
+        .catch(error => {alert(error.response.data.message)})
     },
 
     loginRoute({ getters }) {
