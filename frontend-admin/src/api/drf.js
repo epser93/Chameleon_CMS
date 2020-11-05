@@ -10,6 +10,10 @@ export default{
       usermanage : 'accounts/manage/',
 
       // user search
-      usersearch : 'accounts/search/'
+      usersearch : 'accounts/search/',
+
+      // category
+      category : 'products/categories/', 
+
     }
   }
