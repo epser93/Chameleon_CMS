@@ -1,8 +1,8 @@
 <template>
   <div class="modal" tabindex="-1" id="authorityModal">
-    <div class="modal-dialog">
+    <div class="modal-dialog" v-if="authorityModalUser">
       <div class="modal-content">
-        <div class="modal-header">
+        <div class="modal-header" >
           <h5 class="modal-title">접근권한 부여</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
@@ -11,30 +11,42 @@
         <div class="modal-body">
           <div>
             <p class="tag">부서</p>
-            <p>{{ modalinfos.department }}</p>
+            <p>{{ authorityModalUser.department.name }}</p>
           </div>
           <hr>
           <div>
             <p class="tag">이름</p>
-            <p>{{ modalinfos.first_name }}</p>
+            <p>{{ authorityModalUser.first_name }}</p>
           </div>
           <hr>
           <div>
             <p class="tag">아이디</p>
-            <p>{{ modalinfos.username }}</p>
+            <p>{{ authorityModalUser.username }}</p>
           </div>
           <hr>
-          <div>
+          <div> 
             <p class="tag">권한</p>
-            <!-- <label class="chkbox-label" v-for="(authority, idx) in authorities" :key="idx">
-              <input type="checkbox" :value="authority" v-model="modalinfos.authority">
-              {{ authority }}
-            </label> -->
+            <label class="chkbox-label">
+              <input type="checkbox" :value="authorityModalUser.is_eventer" v-model="authorityModalUser.is_eventer">
+              Event
+            </label>
+            <label class="chkbox-label">
+              <input type="checkbox" :value="authorityModalUser.is_logger" v-model="authorityModalUser.is_logger">
+              Log
+            </label>
+            <label class="chkbox-label">
+              <input type="checkbox" :value="authorityModalUser.is_producter" v-model="authorityModalUser.is_producter">
+              Product
+            </label>
+            <label class="chkbox-label">
+              <input type="checkbox" :value="authorityModalUser.is_marketer" v-model="authorityModalUser.is_marketer">
+              Main + Notice
+            </label>
           </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
-          <button type="button" class="btn btn-primary" @click="onRoute('User')">권한 수정</button>
+          <button type="button" class="btn btn-primary" @click="onRoute('User'), giveAuthority()">권한 수정</button>
         </div>
       </div>
     </div>
@@ -43,35 +55,37 @@
 
 <script>
 import $ from 'jquery'
+import { mapActions, mapState } from 'vuex'
+
 export default {
   name : "AuthorityModal",
-  props: ["modalinfos"],
   data() {
     return {
-      department : this.modalinfos.department,
-      checkedAuthorities : [],
-      authorities : ["Product", "Main+Notice", "Event"]
+  
     }
   },
-  // computed: {
-  //   getCheckedAuthorites() {
-  //     this.checkedAuthorities = this.modalinfos.authority
-  //     return this.check
-  //   }
-  // },
   methods: {
+    ...mapActions('account', ['giveAuthorities']),
+    giveAuthority() {
+      let authorityInfo = {
+        is_producter : this.authorityModalUser.is_producter,
+        is_eventer : this.authorityModalUser.is_eventer,
+        is_marketer : this.authorityModalUser.is_marketer,
+        is_logger : this.authorityModalUser.is_logger
+      }
+      this.giveAuthorities(authorityInfo)
+    },
     onRoute(name) {
       $('#authorityModal').modal('hide')
       this.$router.push({ name : name }, () => {})
     },
-    getInitialData() {
-      this.checkedAuthorities = this.modalinfos.authority
-    }
+  },
+  computed: {
+    ...mapState('account', ['authorityModalUser']),
   },
   created() {
-    // console.log(this.modalinformaion)
-    // this.getInitialData()
-  }
+
+  },
 }
 </script>
 

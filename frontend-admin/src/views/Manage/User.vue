@@ -3,7 +3,7 @@
     <div class="table-container">
       <div class="unauthorized">
         <button type="button" class="btn btn-info" data-toggle="modal" data-target="#unauthorizedUser">
-          미승인 회원 <span class="badge badge-light">4</span>
+          미승인 회원 <span class="badge badge-light">{{unAuthorizedUserCount}}</span>
         </button>
       </div>
       <UnauthorizedUser></UnauthorizedUser>
@@ -18,25 +18,31 @@
           </tr>
         </thead>
         <tbody>
-          <tr class="user-infos" @click="giveAuthority(userinfo)" v-for="(userinfo, idx) in accessUserInfos" :key="idx">
+          <tr class="user-infos" @click="authorityModalUser(userinfo)" v-for="(userinfo, idx) in accessUserInfos" :key="idx">
             <th scope="row">{{ idx+1 }} </th>
             <td>{{ userinfo.department.name }}</td>
             <td>{{ userinfo.first_name }}</td>
             <td>{{ userinfo.username }}</td>
-            <td>{{ getAuthority(userinfo) }}</td>
+            <td>
+              <span v-if="userinfo.is_eventer" class="badge badge-primary">Event</span>
+              <span v-if="userinfo.is_logger" class="badge badge-secondary">Log</span>
+              <span v-if="userinfo.is_producter" class="badge badge-success">Product</span>
+              <span v-if="userinfo.is_marketer" class="badge badge-dark">Main + Notice</span>
+            </td>
           </tr>
         </tbody>
       </table>
     </div>
-    <AuthorityModal :modalinfos="modalinfos"></AuthorityModal>
+    <AuthorityModal/>
   </div>
 </template>
 
 <script>
 import AuthorityModal from '@/components/AuthorityModal'
 import UnauthorizedUser from'@/components/UnauthorizedUser'
+import { mapActions, mapState, mapMutations, mapGetters } from 'vuex'
 import $ from 'jquery'
-import { mapActions, mapState } from 'vuex'
+
 export default {
   components: {
     AuthorityModal,
@@ -44,62 +50,21 @@ export default {
   },
   data() {
     return {
-      modalinfos : [],
-      userinfos: []
+
     }
   },
   methods: {
     ...mapActions('account', ['getAccessUserInfo']),
-    giveAuthority(userinfo) {
-      console.log(userinfo)
-      this.modalinfos = userinfo
+    ...mapMutations('account', ['SET_USER']),
+    authorityModalUser(userdata) {
+      const copydata = JSON.parse(JSON.stringify(userdata))
+      this.SET_USER(copydata)
       $('#authorityModal').modal('show')
-    },
-
-    // sliceAuthorities(authorities) {
-    //   let authoritiyList = ""
-    //   for (let i=0; i<authorities.length; i++) {
-    //     if (i === authorities.length - 1) {
-    //       authoritiyList += authorities[i]
-    //     } else {
-    //       authoritiyList += authorities[i] + ', '
-    //     }
-    //   }
-    //   return authoritiyList
-    // },
-
-    // getAccessUserInfo() {
-    //   const config = {
-    //     headers: {
-    //       'Authorization' : 'Token ' + this.$cookies.get('auth-token')
-    //     }
-    //   }
-    //   axios.get(SERVER.URL + SERVER.ROUTER.usersearch + '?type=all', config)
-    //     .then(res => {
-    //       this.userinfos = res.data
-    //       console.log(this.userinfos)
-    //     })
-    //     .catch(error => console.log(error))
-    // },
-    getAuthority(userinfo) {
-      let authority = ""
-      if (userinfo.is_logger) {
-        authority += "Log "
-      }
-      if (userinfo.is_eventer) {
-        authority += "Event "
-      }
-      if (userinfo.is_producter) {
-        authority += "Product "
-      }
-      if (userinfo.is_marketer) {
-        authority += "Main + Notice "
-      }
-      return authority
     }
   },
   computed : {
-    ...mapState('account', ['accessUserInfos'])
+    ...mapState('account', ['accessUserInfos']),
+    ...mapGetters('account', ['unAuthorizedUserCount'])
   },
   created() {
     this.getAccessUserInfo()
@@ -125,5 +90,9 @@ export default {
 
 .unauthorized {
   display: flex;
+}
+
+td span {
+  margin-right: 1vw;
 }
 </style>
