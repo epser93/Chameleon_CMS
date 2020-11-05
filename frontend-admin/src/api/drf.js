@@ -6,6 +6,10 @@ export default{
       userinfo : 'accounts/',
       login: 'accounts/login/',
       signup: 'accounts/signup/',
-      logout: 'accounts/logout/'
+      logout: 'accounts/logout/',
+      giveAccess : 'accounts/manage/',
+
+      // user search
+      userinfoSearch : 'accounts/search/'
     }
   }

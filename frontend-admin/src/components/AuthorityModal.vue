@@ -16,20 +16,20 @@
           <hr>
           <div>
             <p class="tag">이름</p>
-            <p>{{ modalinfos.name }}</p>
+            <p>{{ modalinfos.first_name }}</p>
           </div>
           <hr>
           <div>
             <p class="tag">아이디</p>
-            <p>{{ modalinfos.id }}</p>
+            <p>{{ modalinfos.username }}</p>
           </div>
           <hr>
           <div>
             <p class="tag">권한</p>
-            <label class="chkbox-label" v-for="(authority, idx) in authorities" :key="idx">
+            <!-- <label class="chkbox-label" v-for="(authority, idx) in authorities" :key="idx">
               <input type="checkbox" :value="authority" v-model="modalinfos.authority">
               {{ authority }}
-            </label>
+            </label> -->
           </div>
         </div>
         <div class="modal-footer">
@@ -48,6 +48,7 @@ export default {
   props: ["modalinfos"],
   data() {
     return {
+      department : this.modalinfos.department,
       checkedAuthorities : [],
       authorities : ["Product", "Main+Notice", "Event"]
     }
@@ -68,6 +69,7 @@ export default {
     }
   },
   created() {
+    // console.log(this.modalinformaion)
     // this.getInitialData()
   }
 }
