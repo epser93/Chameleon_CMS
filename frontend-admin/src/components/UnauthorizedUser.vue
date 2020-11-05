@@ -20,14 +20,14 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <th scope="row">1</th>
-                <td>인사</td>
-                <td>송은석</td>
-                <td>songsong123</td>
+              <tr v-for="(user, index) in users" :key="index">
+                <th scope="row">{{ index+1 }}</th>
+                <td>{{ user.department.name }}</td>
+                <td>{{ user.first_name }}</td>
+                <td>{{ user.username}}</td>
                 <td>
-                  <button type="button" class="btn btn-outline-primary approve-btn">승인</button>
-                  <button type="button" class="btn btn-outline-danger">거부</button>
+                  <button type="button" class="btn btn-outline-primary approve-btn" @click="approveAccess(user.id)">승인</button>
+                  <!-- <button type="button" class="btn btn-outline-danger">거부</button> -->
                 </td>
               </tr>
             </tbody>
@@ -35,7 +35,6 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
-          <button type="button" class="btn btn-primary">완료</button>
         </div>
       </div>
     </div>
@@ -43,8 +42,46 @@
 </template>
 
 <script>
+import axios from 'axios'
+import SERVER from '@/api/drf'
 export default {
-
+  data() {
+    return {
+      users: []
+    }
+  },
+  methods: {
+    getUnaccessUserInfo() {
+      const config = {
+        headers: {
+          'Authorization' : 'Token ' + this.$cookies.get('auth-token')
+        }
+      }
+      axios.get(SERVER.URL + SERVER.ROUTER.userinfoSearch + "?type=is_access", config)
+        .then(res => {
+          console.log(res)
+          this.users = res.data
+          })
+        .catch(error => console.log(error.response))
+    },
+    approveAccess(userPk) {
+      const config = {
+        headers: {
+          'Authorization' : 'Token ' + this.$cookies.get('auth-token')
+        }
+      }
+      axios.post(SERVER.URL + SERVER.ROUTER.giveAccess + `${userPk}/`, null, config)
+        .then(res => {
+          console.log(res)
+          alert(res.data.message)
+          this.getUnaccessUserInfo()
+        })
+        .catch(error => console.log(error.response))
+    }
+  },
+  created() {
+    this.getUnaccessUserInfo()
+  }
 }
 </script>
 

@@ -18,12 +18,12 @@
           </tr>
         </thead>
         <tbody>
-          <tr class="user-infos" @click="console(userinfo)" v-for="(userinfo, idx) in userinfos" :key="idx">
+          <tr class="user-infos" @click="giveAuthority(userinfo)" v-for="(userinfo, idx) in userinfos" :key="idx">
             <th scope="row">{{ idx+1 }} </th>
-            <td>{{ userinfo.department }}</td>
-            <td>{{ userinfo.name }}</td>
-            <td>{{ userinfo.id }}</td>
-            <td>{{ sliceAuthorities(userinfo.authority) }}</td>
+            <td>{{ userinfo.department.name }}</td>
+            <td>{{ userinfo.first_name }}</td>
+            <td>{{ userinfo.username }}</td>
+            <td>{{ getAuthority(userinfo) }}</td>
           </tr>
         </tbody>
       </table>
@@ -36,6 +36,8 @@
 import AuthorityModal from '@/components/AuthorityModal'
 import UnauthorizedUser from'@/components/UnauthorizedUser'
 import $ from 'jquery'
+import axios from 'axios'
+import SERVER from '@/api/drf'
 export default {
   components: {
     AuthorityModal,
@@ -44,48 +46,11 @@ export default {
   data() {
     return {
       modalinfos : [],
-      userinfos: [
-        {
-          department: "생산관리",
-          name : "송은석",
-          id : "id1",
-          authority: ["Product"]
-        },
-        {
-          department: "품질관리",
-          name : "강현영",
-          id : "id2",
-          authority : ["Main+Notice"]
-        },
-        {
-          department: "구매",
-          name : "장주환",
-          id : "id3",
-          authority : ["Product"]
-        },
-        {
-          department: "전산",
-          name : "김유기",
-          id : "id4",
-          authority : ["Product"]
-        },
-        {
-          department: "마케팅",
-          name : "임선빈",
-          id : "id5",
-          authority : ["Event"]
-        },
-        {
-          department: "개발",
-          name : "윤상목",
-          id : "id6",
-          authority : ["Main+Notice", "Event"]
-        }
-      ]
+      userinfos: []
     }
   },
   methods: {
-    console(userinfo) {
+    giveAuthority(userinfo) {
       console.log(userinfo)
       this.modalinfos = userinfo
       $('#authorityModal').modal('show')
@@ -101,7 +66,43 @@ export default {
         }
       }
       return authoritiyList
+    },
+
+    getAccessUserInfo() {
+      const config = {
+        headers: {
+          'Authorization' : 'Token ' + this.$cookies.get('auth-token')
+        }
+      }
+      axios.get(SERVER.URL + SERVER.ROUTER.userinfoSearch + '?type=all', config)
+        .then(res => {
+          this.userinfos = res.data
+          console.log(this.userinfos)
+        })
+        .catch(error => console.log(error))
+    },
+    getAuthority(userinfo) {
+      let authority = ""
+      if (userinfo.is_logger) {
+        authority += "Log "
+      }
+      if (userinfo.is_eventer) {
+        authority += "Event "
+      }
+      if (userinfo.is_producter) {
+        authority += "Product "
+      }
+      if (userinfo.is_marketer) {
+        authority += "Main + Notice "
+      }
+      return authority
     }
+  },
+  computed : {
+
+  },
+  created() {
+    this.getAccessUserInfo()
   }
 
 }
