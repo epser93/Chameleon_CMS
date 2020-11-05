@@ -75,7 +75,20 @@ const routes = [
           {
             path: 'event',
             name: 'Event',
-            component: () => import('@/views/Contents/Event.vue')
+            component: () => import('@/views/Contents/Event.vue'),
+            redirect: 'event',
+            children: [
+              {
+                path: '',
+                name: 'EventMain',
+                component: () => import('@/views/event/EventMain.vue')
+              },
+              {
+                path: 'form',
+                name: 'EventForm',
+                component: () => import('@/views/event/EventForm.vue')
+              },
+            ]
           },
           {
             path: 'notice',
