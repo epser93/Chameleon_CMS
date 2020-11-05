@@ -26,9 +26,10 @@
 </template>
 
 <script>
-import SERVER from '@/api/drf'
-import axios from 'axios'
 import SignupModal from '@/components/SignupModal'
+
+import { mapActions } from 'vuex'
+
 export default {
   name: 'Login',
   components : {
@@ -41,38 +42,14 @@ export default {
     }
   },
   methods: {
+    ...mapActions('account', ['userLogin']),
     login() {
       const loginData = {
         username : this.id,
         password : this.pw
       }
-      axios.post(SERVER.URL + SERVER.ROUTER.login, loginData)
-        .then(res => {
-          this.$cookies.set('auth-token', res.data.key)
-          let token = res.data.key
-          this.getUserInfoAndRoute(token)
-        })
-        .catch(error => console.log(error.response))
+      this.userLogin(loginData)
     },
-
-    getUserInfoAndRoute(token) {
-      const config = {
-        headers: {
-          'Authorization' : 'Token ' + token
-        }
-      }
-      axios.get(SERVER.URL + SERVER.ROUTER.userinfo, config)
-        .then(res => {
-          console.log(res)  
-          console.log(res.data.is_superuser)
-          if (res.data.is_superuser ){
-            this.$router.push({ name : 'Manage'})
-          } else {
-            this.$router.push({ name : 'Data'})
-          }
-        })
-        .catch(error => console.log(error.response))
-    }
   }
 }
 </script>

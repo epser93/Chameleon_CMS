@@ -3,13 +3,13 @@ export default{
     URL: 'http://k3c205.p.ssafy.io/api/',
     ROUTER: {
       //user
-      userinfo : 'accounts/',
+      userinfo: 'accounts/',
       login: 'accounts/login/',
       signup: 'accounts/signup/',
       logout: 'accounts/logout/',
-      giveAccess : 'accounts/manage/',
+      usermanage : 'accounts/manage/',
 
       // user search
-      userinfoSearch : 'accounts/search/'
+      usersearch : 'accounts/search/'
     }
   }

@@ -74,7 +74,7 @@ export default {
           'Authorization' : 'Token ' + this.$cookies.get('auth-token')
         }
       }
-      axios.get(SERVER.URL + SERVER.ROUTER.userinfoSearch + '?type=all', config)
+      axios.get(SERVER.URL + SERVER.ROUTER.usersearch + '?type=all', config)
         .then(res => {
           this.userinfos = res.data
           console.log(this.userinfos)
