@@ -18,7 +18,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr class="user-infos" @click="giveAuthority(userinfo)" v-for="(userinfo, idx) in userinfos" :key="idx">
+          <tr class="user-infos" @click="giveAuthority(userinfo)" v-for="(userinfo, idx) in accessUserInfos" :key="idx">
             <th scope="row">{{ idx+1 }} </th>
             <td>{{ userinfo.department.name }}</td>
             <td>{{ userinfo.first_name }}</td>
@@ -36,8 +36,7 @@
 import AuthorityModal from '@/components/AuthorityModal'
 import UnauthorizedUser from'@/components/UnauthorizedUser'
 import $ from 'jquery'
-import axios from 'axios'
-import SERVER from '@/api/drf'
+import { mapActions, mapState } from 'vuex'
 export default {
   components: {
     AuthorityModal,
@@ -50,37 +49,38 @@ export default {
     }
   },
   methods: {
+    ...mapActions('account', ['getAccessUserInfo']),
     giveAuthority(userinfo) {
       console.log(userinfo)
       this.modalinfos = userinfo
       $('#authorityModal').modal('show')
     },
 
-    sliceAuthorities(authorities) {
-      let authoritiyList = ""
-      for (let i=0; i<authorities.length; i++) {
-        if (i === authorities.length - 1) {
-          authoritiyList += authorities[i]
-        } else {
-          authoritiyList += authorities[i] + ', '
-        }
-      }
-      return authoritiyList
-    },
+    // sliceAuthorities(authorities) {
+    //   let authoritiyList = ""
+    //   for (let i=0; i<authorities.length; i++) {
+    //     if (i === authorities.length - 1) {
+    //       authoritiyList += authorities[i]
+    //     } else {
+    //       authoritiyList += authorities[i] + ', '
+    //     }
+    //   }
+    //   return authoritiyList
+    // },
 
-    getAccessUserInfo() {
-      const config = {
-        headers: {
-          'Authorization' : 'Token ' + this.$cookies.get('auth-token')
-        }
-      }
-      axios.get(SERVER.URL + SERVER.ROUTER.usersearch + '?type=all', config)
-        .then(res => {
-          this.userinfos = res.data
-          console.log(this.userinfos)
-        })
-        .catch(error => console.log(error))
-    },
+    // getAccessUserInfo() {
+    //   const config = {
+    //     headers: {
+    //       'Authorization' : 'Token ' + this.$cookies.get('auth-token')
+    //     }
+    //   }
+    //   axios.get(SERVER.URL + SERVER.ROUTER.usersearch + '?type=all', config)
+    //     .then(res => {
+    //       this.userinfos = res.data
+    //       console.log(this.userinfos)
+    //     })
+    //     .catch(error => console.log(error))
+    // },
     getAuthority(userinfo) {
       let authority = ""
       if (userinfo.is_logger) {
@@ -99,7 +99,7 @@ export default {
     }
   },
   computed : {
-
+    ...mapState('account', ['accessUserInfos'])
   },
   created() {
     this.getAccessUserInfo()
