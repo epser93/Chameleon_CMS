@@ -20,14 +20,13 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="(user, index) in users" :key="index">
+              <tr v-for="(user, index) in unAccessedUserInfos" :key="index">
                 <th scope="row">{{ index+1 }}</th>
                 <td>{{ user.department.name }}</td>
                 <td>{{ user.first_name }}</td>
                 <td>{{ user.username}}</td>
                 <td>
-                  <button type="button" class="btn btn-outline-primary approve-btn" @click="approveAccess(user.id)">승인</button>
-                  <!-- <button type="button" class="btn btn-outline-danger">거부</button> -->
+                  <button type="button" class="btn btn-outline-primary approve-btn" @click="approve(user.id)">승인</button>
                 </td>
               </tr>
             </tbody>
@@ -42,45 +41,24 @@
 </template>
 
 <script>
-import axios from 'axios'
-import SERVER from '@/api/drf'
+import { mapState, mapActions } from 'vuex'
 export default {
   data() {
     return {
-      users: []
+
     }
   },
   methods: {
-    getUnaccessUserInfo() {
-      const config = {
-        headers: {
-          'Authorization' : 'Token ' + this.$cookies.get('auth-token')
-        }
-      }
-      axios.get(SERVER.URL + SERVER.ROUTER.usersearch + "?type=is_access", config)
-        .then(res => {
-          console.log(res)
-          this.users = res.data
-          })
-        .catch(error => console.log(error.response))
+    ...mapActions('account', ['getUnAccessUserInfo', 'approveAccess', 'getAccessUserInfo']),
+    approve(userPk) {
+      this.approveAccess(userPk)
     },
-    approveAccess(userPk) {
-      const config = {
-        headers: {
-          'Authorization' : 'Token ' + this.$cookies.get('auth-token')
-        }
-      }
-      axios.post(SERVER.URL + SERVER.ROUTER.giveAccess + `${userPk}/`, null, config)
-        .then(res => {
-          console.log(res)
-          alert(res.data.message)
-          this.getUnaccessUserInfo()
-        })
-        .catch(error => console.log(error.response))
-    }
+  },
+  computed: {
+    ...mapState('account', ['unAccessedUserInfos'])
   },
   created() {
-    this.getUnaccessUserInfo()
+    this.getUnAccessUserInfo()
   }
 }
 </script>

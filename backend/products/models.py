@@ -1,7 +1,17 @@
 from django.db import models
 from django.conf import settings
-from accounts.models import Department
-import os
+from django.core.files.storage import FileSystemStorage
+
+extentions = ['jpg', 'png', 'jpeg']
+fs = FileSystemStorage()
+message = "message"
+
+def get_imagefile(image):
+    extention = image.name.split('.')[-1].lower()
+    if extention not in extentions:
+        return False, {message: "잘못된 확장자 입니다."}
+    image_file = fs.save(image.name, image)
+    return True, image_file
 
 class Template(models.Model):
     name = models.CharField(max_length=100)
@@ -109,13 +119,16 @@ class ItemImage(models.Model):
     
     item = models.ForeignKey(Item, on_delete=models.SET_NULL, related_name='images', null=True)
 
-    def create(self, data, item):
-        self.item_image = data['item_image']
-        self.is_thumbnail = data['is_thumbnail']
-        self.priority = data['priority']
-        self.is_active = data['is_active']
+    def create(self, image, item, is_thumbnail, priority):
+        is_success, answer = get_imagefile(image)
+        if is_success == False:
+            return False, answer
+        self.item_image = answer
+        self.is_thumbnail = is_thumbnail
+        self.priority = priority
         self.item = item
         self.save()
+        return True, None
 
     def update(self, data):
         self.item_image = data['item_image']

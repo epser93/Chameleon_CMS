@@ -2,22 +2,12 @@ from django.db import models
 from django.conf import settings
 from django.db.models.deletion import DO_NOTHING
 from accounts.models import Department
-from products.models import Item
+from products.models import Item, extentions, get_imagefile
 from datetime import datetime, timezone, timedelta
-from django.core.files.storage import FileSystemStorage
 
-fs = FileSystemStorage()
-extentions = ['jpg', 'png', 'jpeg']
-message = "message"
+
 date_type = '%Y-%m-%d %H:%M:%S'
 KST = timezone(timedelta(hours=9))
-
-def get_imagefile(image):
-    extention = image.name.split('.')[-1].lower()
-    if extention not in extentions:
-        return False, {message: "잘못된 확장자 입니다."}
-    image_file = fs.save(image.name, image)
-    return True, image_file
 
 class Event(models.Model):
     title = models.CharField(max_length=500)

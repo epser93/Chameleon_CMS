@@ -8,6 +8,9 @@ export default{
       signup: 'accounts/signup/',
       logout: 'accounts/logout/',
       usermanage : 'accounts/manage/',
+      
+      // department
+      department : 'accounts/department/',
 
       // user search
       usersearch : 'accounts/search/',
