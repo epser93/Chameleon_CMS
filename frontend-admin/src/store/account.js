@@ -64,7 +64,7 @@ export default {
           dispatch('loginRoute')
           dispatch('getUserInfo')
         })
-        .catch(error => {console.log(error.response)})
+        .catch(error => {alert(error.response.data.message)})
     },
 
     // 로그인- 관리자 유무 판단 후 라우팅

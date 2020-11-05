@@ -11,27 +11,27 @@
       <div class="modal-body">
         <form class="signup-form" autocomplete="on">
           <div>
-            <div>Department</div>
+            <p class="mb-2">부서</p>
             <select name="department" id="department" v-model="part">
-              <option disabled value="">Please select one</option>
-              <option v-for="(department, index) in departments" :key="index" :value="department">{{ department.name }}</option>
+              <option disabled value="">부서를 선택해 주세요.</option>
+              <option v-for="(department, index) in departments" :key="index" :value="department">{{ department }}</option>
             </select>
           </div>
           <div>
-            <div>Name</div>
+            <p>이름</p>
             <input v-model="name" type="text">
           </div>
           <div>
-            <div>사번</div>
+            <p>사번</p>
             <input v-model="employeeNumber" type="text">
           </div>
           <div>
-            <div>이메일</div>
+            <p>이메일</p>
             <input v-model="email" type="email">
           </div>
           <div>
             <div>
-              ID
+              아이디
               <span class="validate-fail" v-if="idValidate == 1">아이디는 영문,숫자 6~12자이내입니다.</span>
               <span class="validate-success" v-if="idValidate == 2">가능한 아이디입니다.</span> 
             </div>
@@ -39,7 +39,7 @@
           </div>
           <div>
             <div>
-              PW
+              비밀번호
               <span class="validate-fail" v-if="pwValidate1 == 1">비밀번호는 문자+숫자+특수문자 8~16자입니다.</span>
               <span class="validate-success" v-if="pwValidate1 == 2">사용가능한 비밀번호입니다.</span>
             </div>
@@ -47,7 +47,7 @@
           </div>
           <div>
             <div>
-              PW Check
+              비밀번호 확인
               <span class="validate-fail" v-if="pwValidate2 == 1">비밀번호가 일치하지 않습니다.</span>
               <span class="validate-success" v-if="pwValidate2 == 2">비밀번호가 일치합니다.</span>
             </div>
@@ -173,6 +173,9 @@ export default {
 </script>
 
 <style scoped>
+p {
+  margin: 0;
+}
 input {
   margin-bottom : 2vh;
   width: 100%;
@@ -211,5 +214,18 @@ input:focus {
 
 .validate-success {
   color: green;
+}
+
+.modal-footer {
+  margin-left: auto;
+  margin-right: auto;
+  border-top: none;
+  padding: 0;
+  margin-bottom: 30px;
+}
+
+.btn {
+  background-color: #56b596;
+  border: none;
 }
 </style>
