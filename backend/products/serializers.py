@@ -1,3 +1,4 @@
+from re import template
 from accounts.serializers import UserSerializer
 from rest_framework import serializers
 from .models import Category, CategoryDescription, Item, ItemDescription, ItemImage
@@ -35,4 +36,4 @@ class ItemSerializer(serializers.ModelSerializer):
     descriptions = ItemDescriptionSerializer(required=False, many=True)
     class Meta:
         model = Item
-        fields = ['id', 'name', 'price', 'is_temp', 'is_active', 'created_date', 'update_date', 'cms_user','descriptions', 'images']
+        fields = ['id', 'name', 'price', 'is_temp', 'is_active', 'template','created_date', 'update_date', 'cms_user','descriptions', 'images']

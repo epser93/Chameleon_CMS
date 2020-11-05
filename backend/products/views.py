@@ -1,3 +1,4 @@
+from django.http import request
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -6,7 +7,7 @@ from .serializers import ItemSerializer, CategorySerializer
 
 class CategoryList(APIView):
     def get(self, request, format=None):
-        categories = Category.objects.filter(is_active=True)
+        categories = Category.objects.all()
         serializer = CategorySerializer(categories, many=True)
         return Response(serializer.data)
 
@@ -28,8 +29,15 @@ class CategoryDetail(APIView):
 
     def get(self, request, pk):
         category = Category.objects.get(pk=pk)
-        items = Item.objects.filter(category=category).filter(is_active=True)
+        items = Item.objects.filter(category=category)
         serializer = ItemSerializer(items, many=True)
+        return Response(serializer.data)
+
+    def post(self, request, pk):
+        category = Category.objects.get(pk=pk)
+        category.is_active = True
+        category.save()
+        serializer = CategorySerializer(category)
         return Response(serializer.data)
 
     # 테스트
@@ -70,24 +78,40 @@ class CategoryDetail(APIView):
 class ProductsList(APIView):
     
     def post(self, request, format=None):
+        print(request.data)
+        # return Response(1)
         item = Item()
         template = Template.objects.get(pk=request.data['template'])
         category = Category.objects.get(pk=request.data['category'])
         item.create(request.data, request.user, category, template)
-        for description in request.data['descriptions']:
+        for description in request.data.get('descriptions', []):
             item_description = ItemDescription()
             category_description = CategoryDescription.objects.get(pk=description['id'])
             item_description.create(description['content'], request.user, item, category_description)
         # 임시저장 테이블 추가, 임시저장 데이터 추가 기능 
 
         # 이미지 추가 코드 넣기
+        images = request.FILES.getlist('images')
+        is_thumbnails = request.data.get('is_thumbnails', [False for _ in range(len(images))])
+        prioritys = request.data.get('prioritys', [i+1 for i in range(len(images))])
+        for i in range(len(images)):
+            item_image = ItemImage()
+            item_image.create(images[i], item, is_thumbnails[i], prioritys[i])
         serializer = ItemSerializer(item)
         return Response(serializer.data)
 
 
 class ProductDetail(APIView):
     def get(self, request, pk):
-        item = Item.objects.get(pk=pk, is_active=True)
+        item = Item.objects.get(pk=pk)
+        serializer = ItemSerializer(item)
+        return Response(serializer.data)
+
+
+    def post(self, request, pk):
+        item = Item.objects.get(pk=pk)
+        item.is_active = True
+        item.save()
         serializer = ItemSerializer(item)
         return Response(serializer.data)
     
