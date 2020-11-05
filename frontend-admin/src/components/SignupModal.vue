@@ -14,7 +14,7 @@
             <p class="mb-2">부서</p>
             <select name="department" id="department" v-model="part">
               <option disabled value="">부서를 선택해 주세요.</option>
-              <option v-for="(department, index) in departments" :key="index" :value="department">{{ department }}</option>
+              <option v-for="(department, index) in departments" :key="index" :value="department">{{ department.name }}</option>
             </select>
           </div>
           <div>
