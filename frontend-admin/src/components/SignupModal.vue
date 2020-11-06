@@ -14,7 +14,7 @@
             <p class="mb-2">부서</p>
             <select name="department" id="department" v-model="part">
               <option disabled value="">부서를 선택해 주세요.</option>
-              <option v-for="(department, index) in departments" :key="index" :value="department">{{ department }}</option>
+              <option v-for="(department, index) in departments" :key="index" :value="department">{{ department.name }}</option>
             </select>
           </div>
           <div>
@@ -111,7 +111,7 @@ export default {
         username : this.id,
         password1 : this.pw1,
         password2 : this.pw2,
-        department : this.part,
+        department : this.part.name,
         email : this.email,
         first_name: this.name,
         employee_number : this.employeeNumber

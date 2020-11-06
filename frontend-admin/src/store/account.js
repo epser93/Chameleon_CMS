@@ -12,7 +12,7 @@ export default {
     accessUserInfos : '', // access 권한을 가진 유저들 정보
     unAccessedUserInfos : '', // access 권한을 가지지 못한 유저들 정보
     departments : '', // 부서 정보
-    authorityModalUser: '',
+    authorityModalUser: '', // 권한부여 창에 뿌려질 유저정보 (deep copy적용)
   },
 
   getters: {
@@ -25,6 +25,7 @@ export default {
       }
     },
 
+    // 미승인 회원 숫자 표시
     unAuthorizedUserCount(state) {
       return state.unAccessedUserInfos.length
     }
