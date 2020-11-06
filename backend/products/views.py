@@ -4,7 +4,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from .models import Item, ItemImage, ItemDescription, Category, CategoryDescription, Template, CopyOfItem, CopyOfItemDescription, CopyOfItemImage
-from .serializers import ItemSerializer, CategorySerializer
+from .serializers import CopyItemSerializer, ItemSerializer, CategorySerializer, TemplateSerializer
 
 class CategoryList(APIView):
     def get(self, request, format=None):
@@ -56,7 +56,8 @@ class CategoryDetail(APIView):
     def delete(self, request, pk):
         category = Category.objects.get(pk=pk)
         category.delete()
-        return Response('삭제완료')
+        answer = {'message': "비활성화 되었습니다."}
+        return Response(answer)
 
     
     def descriptions_update(self, data, category):
@@ -149,7 +150,7 @@ class CopyProduct(APIView):
     def get(self, request, pk):
         item = Item.objects.get(pk=pk)
         copy_items = CopyOfItem.objects.filter(item=item)
-        serializer = ItemSerializer(copy_items, many=True)
+        serializer = CopyItemSerializer(copy_items, many=True)
         return Response(serializer.data)
 
     def post(self, request, pk):
@@ -188,4 +189,11 @@ class CopyProduct(APIView):
                 copy_item_image.copy(item_image, copy_of_item)
 
         serializer = ItemSerializer(copy_of_item)
+        return Response(serializer.data)
+
+
+class TemplateAPI(APIView):
+    def get(self, request):
+        templates = Template.objects.all()
+        serializer = TemplateSerializer(templates, many=True)
         return Response(serializer.data)
