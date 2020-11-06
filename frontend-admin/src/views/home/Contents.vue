@@ -6,7 +6,7 @@
       :productCategories="productCategories"
       ></SideBar>
     </div>
-    <div class="col-9">
+    <div class="col-9 pl-0">
       <router-view></router-view>
     </div>
   </div>
@@ -36,5 +36,6 @@ export default {
 .nav-container {
 	border-right: 1px gray solid;
 	margin-bottom: 0;
+  height: calc(100vh - 115px);
 }
 </style>
