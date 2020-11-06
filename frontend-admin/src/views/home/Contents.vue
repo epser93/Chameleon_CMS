@@ -2,8 +2,8 @@
   <div class="row">
     <div class="col-3 nav-container">
       <SideBar
-      :categories="categories"
-      :productCategories="productCategories"
+      :categories="categoriess"
+      :productCategories="findActive"
       ></SideBar>
     </div>
     <div class="col-9">
@@ -14,17 +14,39 @@
 
 <script>
 import SideBar from '@/components/SideBar'
+import { mapActions, mapState } from 'vuex'
 
 export default {
   data() {
     return {
-      categories: ['Main', 'Product', 'Event', 'Notice'],
-      productCategories: ['노트북', '스마트폰', '냉장고']
+      categoriess: ['Main', 'Product', 'Event', 'Notice'],
     }
   },
   components: {
     SideBar
+  },
+  computed: {
+    ...mapState('category', ['categories']),
+    
+    findActive() {
+      const tmpCategory = []
+      for(let i=0; i<this.categories.length; i++) {
+        if(this.categories[i].is_active) {
+          tmpCategory.push(this.categories[i])
+        }
+      }
+      return tmpCategory
+    }
+    
+  },
+  methods: {
+    ...mapActions('category', ['getCategoryList'])
+  },
+  created(){
+    this.getCategoryList()
   }
+  
+
 }
 </script>
 
