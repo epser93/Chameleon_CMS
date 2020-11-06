@@ -38,7 +38,6 @@ class Category(models.Model):
         self.name = data['name']
         self.is_active = True
         self.priority = data['priority']
-        # 순서 변경 로직 호출
         self.cms_user = user
         self.template = template
         self.save()
@@ -46,7 +45,6 @@ class Category(models.Model):
     def update(self, data, template):
         self.name = data['name']
         self.priority = data['priority']
-        # 순서 변경 로직 호출
         self.template = template
         self.save()
 
@@ -76,7 +74,7 @@ class CategoryDescription(models.Model):
         self.save()
 
 
-class Item(models.Model):
+class AbstractItem(models.Model):
     name = models.CharField(max_length=200)
     price = models.IntegerField(default=0)
     is_temp = models.BooleanField(default=False)
@@ -85,8 +83,8 @@ class Item(models.Model):
     update_date = models.DateTimeField(auto_now=True)
     
     cms_user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.DO_NOTHING)
-    category = models.ForeignKey(Category, on_delete=models.SET_NULL, related_name='items', null=True)
-    template = models.ForeignKey(Template, on_delete=models.SET_NULL, related_name='items', null=True)
+    category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
+    template = models.ForeignKey(Template, on_delete=models.SET_NULL, null=True)
 
     def __str__(self) -> str:
         return self.name
@@ -100,24 +98,39 @@ class Item(models.Model):
         self.template = template
         self.save()
 
-    def update(self, data, template):
-        self.name = data.get('name', self.name)
-        self.price = data.get('price', self.price)
-        self.is_temp = data.get('is_temp', self.is_temp)
-        self.is_active = data.get('is_active', self.is_active)
-        self.template = template
+    def copy(self, item):
+        self.name = item.name
+        self.price = item.price
+        self.is_temp = item.is_temp
+        self.created_date = item.created_date
+        self.update_date = item.update_date
+        self.cms_user = item.cms_user
+        self.category = item.category
+        self.template = item.template
+
+    def delete(self):
+        self.is_active = False
         self.save()
 
+    def recovery(self):
+        self.is_active = True
+        self.save()
 
-class ItemImage(models.Model):
+    class Meta:
+        abstract = True
+
+class Item(AbstractItem):
+    pass
+
+
+class AbstractItemImage(models.Model):
     item_image = models.ImageField()
     is_thumbnail = models.BooleanField(default=False)
     priority = models.IntegerField(default=1)
-    is_active = models.BooleanField(default=True)
     created_date = models.DateTimeField(auto_now_add=True)
     update_date = models.DateTimeField(auto_now=True)
     
-    item = models.ForeignKey(Item, on_delete=models.SET_NULL, related_name='images', null=True)
+    item = models.ForeignKey(Item, on_delete=models.CASCADE, related_name='images', null=True)
 
     def create(self, image, item, is_thumbnail, priority):
         is_success, answer = get_imagefile(image)
@@ -130,19 +143,26 @@ class ItemImage(models.Model):
         self.save()
         return True, None
 
-    def update(self, data):
-        self.item_image = data['item_image']
-        self.is_thumbnail = data['is_thumbnail']
-        self.priority = data['priority']
-        self.is_active = data['is_active']
+    def copy(self, item_image, item):
+        self.item_image = item_image.item_image
+        self.is_thumbnail = item_image.is_thumbnail
+        self.created_date = item_image.created_date
+        self.update_date = item_image.update_date
+        self.item = item
         self.save()
 
+    class Meta:
+        abstract = True
 
-class ItemDescription(models.Model):
+class ItemImage(AbstractItemImage):
+    pass
+
+
+class AbstractItemDescription(models.Model):
     content = models.TextField()
 
-    item = models.ForeignKey(Item, on_delete=models.SET_NULL, related_name='descriptions', null=True)
-    category_description = models.ForeignKey(CategoryDescription, on_delete=models.SET_NULL, related_name='descriptions', null=True)
+    item = models.ForeignKey(Item, on_delete=models.CASCADE, related_name='descriptions', null=True)
+    category_description = models.ForeignKey(CategoryDescription, on_delete=models.CASCADE, null=True)
     cms_user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.DO_NOTHING)
 
     def __str__(self) -> str:
@@ -154,19 +174,35 @@ class ItemDescription(models.Model):
         self.category_description = category_description
         self.cms_user = user
         self.save()
-
-    def update(self, data):
-        self.content = data
-        self.save()
-
-
-class CustomerItemLog(models.Model):
-    view_date = models.DateTimeField(auto_now_add=True)
-    register_ip = models.CharField(max_length=150)
-
-    item = models.ForeignKey(Item, on_delete=models.SET_NULL, related_name='itemlog', null=True)
-
-    def create(self, data, item):
-        self.register_ip = data['register_ip']
+    
+    def copy(self, item_description, item):
+        self.content = item_description.content
+        self.category_description = item_description.category_description
+        self.cms_user = item_description.cms_user
         self.item = item
         self.save()
+
+    class Meta:
+        abstract = True
+
+
+class ItemDescription(AbstractItemDescription):
+    pass
+
+
+class CopyOfItem(AbstractItem):
+    item = models.ForeignKey(Item, on_delete=models.CASCADE, related_name='historys')
+
+
+    def copy_create(self, data, user, category, template, item):
+        self.item = item
+        super().create(data, user,category, template)
+        self.save()
+
+
+class CopyOfItemImage(AbstractItemImage):
+    item = models.ForeignKey(CopyOfItem, on_delete=models.CASCADE, related_name='copy_images', null=True)
+
+
+class CopyOfItemDescription(AbstractItemDescription):
+    item = models.ForeignKey(CopyOfItem, on_delete=models.CASCADE, related_name='copy_descriptions', null=True)

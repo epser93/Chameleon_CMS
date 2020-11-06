@@ -1,6 +1,5 @@
 from django.db import models
 from django.conf import settings
-from django.db.models.deletion import DO_NOTHING
 from accounts.models import Department
 from products.models import Item, extentions, get_imagefile
 from datetime import datetime, timezone, timedelta
@@ -81,7 +80,7 @@ class Notices(models.Model):
     update_date = models.DateTimeField(auto_now=True)
     is_active = models.BooleanField(default=True)
     image = models.ImageField(default=None)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=DO_NOTHING)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.DO_NOTHING)
 
     def create(self, data, user, image):
         self.title = data['title']
@@ -105,7 +104,7 @@ class MainItem(models.Model):
     update_date = models.DateTimeField(auto_now=True)
 
     item = models.ForeignKey(Item, on_delete=models.SET_NULL, related_name='main', null=True)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=DO_NOTHING)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.DO_NOTHING)
     department = models.ForeignKey(Department, on_delete=models.SET_NULL, related_name='main', null=True)
 
 
@@ -117,6 +116,6 @@ class MainCarouselItem(models.Model):
     is_active = models.BooleanField(default=True)
 
     item = models.ForeignKey(Item, on_delete=models.SET_NULL, related_name='maincarousel', null=True)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=DO_NOTHING)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.DO_NOTHING)
     department = models.ForeignKey(Department, on_delete=models.SET_NULL, related_name='maincarousel', null=True)
 
