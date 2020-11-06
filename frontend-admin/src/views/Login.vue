@@ -1,26 +1,32 @@
 <template>
-  <div class="box">
-    <div class="div-A">
-      <div class="cms-name">
-        <div>CHEIL</div>
-        <div>CMS</div>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="login-left col-12 col-lg-5 justify-content-center">
+        <div class="cms-name">
+          <h1 class="chamaeleon"><span class="upper-c">C</span>hamaeleon</h1>
+          <h1 class="cms">CMS</h1>
+        </div>
+        <div class="mb-4">
+          <div class="id">
+            <label for="id">ID</label>
+            <input type="text" v-model="id"  @keydown.enter="login()">
+          </div>
+          <div class="pw">
+            <label for="pw">PW</label>
+            <input type="password" v-model="pw"  @keydown.enter="login()">
+          </div>
+        </div>
+        <div class="login-signup">
+          <button type="button" class="btn" @click="login()">
+            Login
+          </button>
+          <p class="signup" data-toggle="modal" data-target="#signupModal">Sign Up</p>
+          <SignupModal/>
+        </div>
       </div>
-      <div class="id">
-        <label for="id">ID</label>
-        <input type="text" v-model="id">
+      <div class="login-right d-none d-sm-none d-md-none d-lg-block col-7">
+        <img class="company-image" src="../assets/login1.png" alt="">
       </div>
-      <div class="pw">
-        <label for="pw">pw</label>
-        <input type="password" v-model="pw">
-      </div>
-      <div class="login-btn" @click="login()">Login</div>
-      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#signupModal">
-        회원가입
-      </button>
-      <SignupModal/>
-    </div>
-    <div class="div-B">
-      <img class="company-image" src="../assets/login1.png" alt="">
     </div>
   </div>
 </template>
@@ -63,16 +69,29 @@ export default {
   align-items: center;
 }
 
-.div-A {
+h1 {
+  font-size: 60px;
+  font-family: 'Raleway', sans-serif;
+  color: grey;
+}
+
+.chamaeleon {
+  color: #4ea2b6;
+}
+
+.upper-c {
+  color: #4372c4;
+}
+
+.cms {
+  color: #c78f58;
+}
+
+.login-left {
   display: flex;
-  width : 40%;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-}
-
-.div-B {
-  width: 60%;
 }
 
 .cms-name {
@@ -97,8 +116,36 @@ export default {
 }
 
 .company-image {
-  border-left: 5px gray solid;
-  width: 100%;
+  border-left: 4px #4fa2b6 solid;
+  width: auto;
   height: 100vh;
+}
+
+.btn {
+  background-color: #56b596;
+  color: white;
+  margin-bottom: 10px;
+  margin-right: auto;
+  margin-left: auto;
+  display: block;
+}
+
+.signup {
+  color: #4472c5;
+  cursor: pointer;
+  text-align: center;
+}
+
+input {
+  border: 2px solid grey;
+  border-radius: 5px;
+  width: 100%;
+}
+
+@media screen and (max-width: 992px) {
+  .login-left {
+    display: block;
+    margin-top: 160px;
+  }
 }
 </style>
