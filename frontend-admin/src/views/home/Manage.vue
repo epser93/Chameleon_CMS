@@ -12,8 +12,8 @@
 			</li> -->
 			<SideBar :categories="categories"></SideBar>
     </ul>
-    <div class="col-9">
-			<router-view></router-view>
+    <div class="col-9 p-0">
+		<router-view></router-view>
     </div>
   </div>
 </template>
@@ -114,5 +114,6 @@ export default {
 .nav-container {
 	border-right: 1px gray solid;
 	margin-bottom: 0;
+  height: calc(100vh - 115px);
 }
 </style>

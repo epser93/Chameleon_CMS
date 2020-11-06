@@ -1,8 +1,10 @@
 <template>
   <div>
     <top-nav/>
-    <router-view/>
-    <Footer/>
+    <div class="body">
+      <router-view/>
+      <Footer/>
+    </div>
   </div>
 </template>
 
@@ -18,8 +20,8 @@ export default {
 }
 </script>
 
-<style scoped>
-router-view {
+<style>
+.body {
   margin-top: 68px;
 }
 

@@ -1,6 +1,6 @@
 <template>
   <div @mouseleave="onHideWide()">
-    <nav class="navbar navbar-expand-md navbar-light bg-light">
+    <nav class="navbar fixed-top navbar-expand-md navbar-light bg-light">
       
       <a class="navbar-brand" @click="onRoute('Home'); onHideWide(); onHideCollapse();" >
         <img src="@/assets/icons/bootstrap.svg" width="42" height="42" class="d-inline-block align-top" alt="" loading="lazy">
@@ -46,9 +46,9 @@
       
     </nav>
 
-    <div class="d-none d-md-block">
+    <div class="d-none d-md-block" id="dropDown">
       <div class="collapse bg-light productContent" id="productWide">
-        <div class="row mx-4 pt-2 pb-4">
+        <div class="row mx-4 pt-2 pb-4 float-top">
           <div class="nav nav-pills flex-column col-2 bg-light" id="v-pills-tab" role="tablist" aria-orientation="vertical">
             <a class="nav-link active" id="v-pills-home-tab" data-toggle="tab" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">DesignTemplate</a>
             <a class="nav-link" id="v-pills-profile-tab" data-toggle="tab" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">SpecTemplate</a>
@@ -184,4 +184,30 @@ export default {
   width: 100%;
 }
 
+#dropDown {
+  position: absolute;
+  z-index: 999999;
+  width: 100vw;
+}
+
+#searchBar {
+  position: absolute;
+  width: 100vw;
+  z-index: 999999;
+}
+
+.nav-link {
+  position: relative;
+  font-size: 1.3rem;
+  font-family: 'Raleway', sans-serif;
+  cursor: pointer;
+}
+
+#navbarSupportedContent {
+  font-family: 'Raleway', sans-serif;
+}
+
+#v-pills-home-tab {
+  font-family: 'Raleway', sans-serif;
+}
 </style>

@@ -3,7 +3,7 @@
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">가입승인</h5>
+          <h5 class="modal-title">승인 요청 목록</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -11,13 +11,14 @@
         <div class="modal-body">
           <table class="table">
             <thead>
-              <tr>
+              <tr v-if="unAccessedUserInfos.length > 0">
                 <th scope="col">#</th>
                 <th scope="col">부서</th>
                 <th scope="col">이름</th>
                 <th scope="col">아이디</th>
                 <th scope="col">승인여부</th>
               </tr>
+              <p v-else class="mt-4">가입 승인 요청이 없습니다.</p>
             </thead>
             <tbody>
               <tr v-for="(user, index) in unAccessedUserInfos" :key="index">
