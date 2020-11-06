@@ -246,10 +246,10 @@
 
 
 
-## 카테고리 생성(수정 필요)
+## 카테고리 생성
 
 ```
-주소/api/products/categories/
+주소/api/products/categories/(POST)
 ```
 
 - Body
@@ -289,10 +289,10 @@
 
 
 
-## 카테고리 수정(수정 필요)
+## 카테고리 수정
 
 ```
-주소/api/products/categories/6/
+주소/api/products/categories/<int:pk>/(PUT)
 ```
 
 - Body
@@ -341,17 +341,17 @@
 
 
 
-## 카테고리 삭제(수정필요)
+## 카테고리 삭제
 
 ```
-주소/api/products/categories/6/
+주소/api/products/categories/<int:pk>/(DELETE)
 ```
 
 - Response
 
 ```json
 {
-    "삭제완료"
+    "message": "비활성화 되었습니다."
 }
 ```
 
@@ -360,7 +360,7 @@
 ## 카테고리 속한 아이템 보기(수정필요, 관리자, 사용자 분리)
 
 ```
-주소/api/products/categories/1/
+주소/api/products/categories/<int:pk>/(get)
 ```
 
 - Response
@@ -390,7 +390,10 @@
                 }
             }
         ],
-        "images": []
+        "images": [],
+        "category": {
+            
+        }
     }
 ]
 ```
@@ -399,13 +402,11 @@
 
 
 
-## 아이템 생성(이미지 미완성)
+## 아이템 생성
 
 ```
 주소/api/products/product/(POST)
 ```
-
-
 
 - Body
 
@@ -416,6 +417,12 @@
     "is_temp": "False",
     "category": 1,
     "template": 2,
+    "is_thumbnails": [
+        "True", "True", "False",
+    ],
+    "images": [
+        이미지1, 이미지2, 이미지3
+    ],
     "descriptions": [
         {
             "id": 20,
@@ -451,7 +458,16 @@
             }
         }
     ],
-    "images": []
+    "images": [
+        {
+            "id": 18,
+            "item_image": "/media/KakaoTalk_20200907_134019738.jpg",
+            "is_thumbnail": false,
+            "priority": 1,
+            "created_date": "2020-11-06T15:12:53.601044+09:00",
+            "update_date": "2020-11-06T15:12:53.601044+09:00"
+        }
+    ]
 }
 ```
 
@@ -489,7 +505,16 @@
             }
         }
     ],
-    "images": []
+    "images": [
+        {
+            "id": 18,
+            "item_image": "/media/KakaoTalk_20200907_134019738.jpg",
+            "is_thumbnail": false,
+            "priority": 1,
+            "created_date": "2020-11-06T15:12:53.601044+09:00",
+            "update_date": "2020-11-06T15:12:53.601044+09:00"
+        }
+    ]
 }
 ```
 
@@ -497,11 +522,317 @@
 
 
 
-## 아이템 수정(미완성)
+## 아이템 수정
+
+```
+주소/api/products/<int:pk>/(PUT)
+```
+
+> 바꾸고 싶은 임시저장 아이템 id를 입력한다.
+
+- Body
+
+```json
+{
+    "id": 2
+}
+```
+
+- Response
+
+```json
+{
+    "id": 1,
+    "name": "노트북A",
+    "price": 1280000,
+    "is_temp": false,
+    "is_active": true,
+    "created_date": "2020-11-04T00:28:57.816001+09:00",
+    "update_date": "2020-11-04T00:28:57.816001+09:00",
+    "cms_user": {
+        "id": 2,
+        "username": "test",
+        "first_name": ""
+    },
+    "descriptions": [
+        {
+            "content": "AMD",
+            "item": 1,
+            "category_description": {
+                "id": 1,
+                "name": "제조사"
+            }
+        }
+    ],
+    "images": [
+        {
+            "id": 18,
+            "item_image": "/media/KakaoTalk_20200907_134019738.jpg",
+            "is_thumbnail": false,
+            "priority": 1,
+            "created_date": "2020-11-06T15:12:53.601044+09:00",
+            "update_date": "2020-11-06T15:12:53.601044+09:00"
+        }
+    ]
+}
+```
 
 
 
-## 아이템 삭제(미완성)
+## 아이템 비활성화
+
+```
+주소/api/products/product/<int:pk>/(DELETE)
+```
+
+- Response
+
+```json
+{
+    "message": "비활성화 되었습니다."
+}
+```
+
+
+
+## 아이템 활성화
+
+```
+주소/api/products/product/<int:pk>/(POST)
+```
+
+- Response
+
+```json
+{
+    "id": 1,
+    "name": "노트북A",
+    "price": 1280000,
+    "is_temp": false,
+    "is_active": true,
+    "created_date": "2020-11-04T00:28:57.816001+09:00",
+    "update_date": "2020-11-04T00:28:57.816001+09:00",
+    "cms_user": {
+        "id": 2,
+        "username": "test",
+        "first_name": ""
+    },
+    "descriptions": [
+        {
+            "content": "AMD",
+            "item": 1,
+            "category_description": {
+                "id": 1,
+                "name": "제조사"
+            }
+        }
+    ],
+    "images": [
+        {
+            "id": 18,
+            "item_image": "/media/KakaoTalk_20200907_134019738.jpg",
+            "is_thumbnail": false,
+            "priority": 1,
+            "created_date": "2020-11-06T15:12:53.601044+09:00",
+            "update_date": "2020-11-06T15:12:53.601044+09:00"
+        }
+    ]
+}
+```
+
+
+
+## 아이템 히스토리 기록보기
+
+```
+주소/api/products/temp_product/<int:pk>/(GET)
+```
+
+- Response
+
+```json
+[
+    {
+        "id": 3,
+        "name": "오디세이(수정)",
+        "price": 1920000,
+        "is_temp": false,
+        "is_active": true,
+        "category": {
+            "id": 1,
+            "name": "노트북"
+        },
+        "template": 2,
+        "created_date": "2020-11-06T15:12:53.508331+09:00",
+        "update_date": "2020-11-06T15:12:53.550339+09:00",
+        "cms_user": {
+            "id": 2,
+            "username": "test",
+            "first_name": "김유기"
+        },
+        "copy_descriptions": [],
+        "copy_images": [
+            {
+                "id": 6,
+                "item_image": "/media/KakaoTalk_20200907_134019738.jpg",
+                "is_thumbnail": false,
+                "priority": 1,
+                "created_date": "2020-11-06T15:12:53.641773+09:00",
+                "update_date": "2020-11-06T15:12:53.641773+09:00"
+            }
+        ]
+    },
+    {
+        "id": 6,
+        "name": "오디세이",
+        "price": 192000,
+        "is_temp": false,
+        "is_active": true,
+        "category": {
+            "id": 1,
+            "name": "노트북"
+        },
+        "template": 2,
+        "created_date": "2020-11-06T16:20:21.701843+09:00",
+        "update_date": "2020-11-06T16:20:21.741099+09:00",
+        "cms_user": {
+            "id": 2,
+            "username": "test",
+            "first_name": "김유기"
+        },
+        "copy_descriptions": [],
+        "copy_images": [
+            {
+                "id": 7,
+                "item_image": "/media/erd.png",
+                "is_thumbnail": false,
+                "priority": 1,
+                "created_date": "2020-11-06T16:20:21.778874+09:00",
+                "update_date": "2020-11-06T16:20:21.778874+09:00"
+            }
+        ]
+    },
+    {
+        "id": 7,
+        "name": "오디세이_임시3",
+        "price": 152000,
+        "is_temp": false,
+        "is_active": true,
+        "category": {
+            "id": 1,
+            "name": "노트북"
+        },
+        "template": 2,
+        "created_date": "2020-11-06T16:22:54.925281+09:00",
+        "update_date": "2020-11-06T16:22:54.960288+09:00",
+        "cms_user": {
+            "id": 2,
+            "username": "test",
+            "first_name": "김유기"
+        },
+        "copy_descriptions": [],
+        "copy_images": [
+            {
+                "id": 8,
+                "item_image": "/media/erd_IjdJt6m.png",
+                "is_thumbnail": false,
+                "priority": 1,
+                "created_date": "2020-11-06T16:22:54.997536+09:00",
+                "update_date": "2020-11-06T16:22:54.997536+09:00"
+            }
+        ]
+    }
+]
+```
+
+
+
+## 아이템 임시 저장
+
+```
+주소/api/products/temp_product/<int:pk>/(POST)
+```
+
+>  is_original : 변경하는 아이템정보가 원본기반인지 임시저장 기반인지
+>
+> 원본기반이라면 images_type에 원본 이미지 id를 넣어야 한다.
+>
+> 임시저장 기반이라면 images_type에 임시저장 이미지 id를 넣어야 한다.
+>
+> 새로추가되는 이미지라면 -1로 입력한다.
+>
+> images_type과 is_thubnails의 길이는 같아야 한다.
+
+- Body
+
+```json
+{
+    "name": "오디세이",
+    "price": 1280000,
+    "is_temp": "False",
+    "category": 1,
+    "template": 2,
+    "is_original": "True",
+    "images_type": [
+      -1, -1
+    ],
+    "is_thumbnails": [
+      "True","False",
+    ],
+    "images": [
+        이미지1, 이미지2
+    ],
+    "descriptions": [
+        {
+            "id": 1,
+            "content": "AMD"
+        }
+    ]
+}
+```
+
+- Response
+
+```json
+{
+    "id": 7,
+    "name": "오디세이",
+    "price": 128000,
+    "is_temp": false,
+    "is_active": true,
+    "category": {
+        "id": 1,
+        "name": "노트북"
+    },
+    "template": 2,
+    "created_date": "2020-11-06T16:22:54.925281+09:00",
+    "update_date": "2020-11-06T16:22:54.960288+09:00",
+    "cms_user": {
+        "id": 2,
+        "username": "test",
+        "first_name": "김유기"
+    },
+    "copy_descriptions": [
+        {
+            "content": "AMD",
+            "category_description": {
+                "id": 1,
+                "name": "제조사"
+            }
+        }
+    ],
+    "copy_images": [
+        {
+            "id": 8,
+            "item_image": "/media/erd_IjdJt6m.png",
+            "is_thumbnail": false,
+            "priority": 1,
+            "created_date": "2020-11-06T16:22:54.997536+09:00",
+            "update_date": "2020-11-06T16:22:54.997536+09:00"
+        }
+    ]
+}
+```
 
 
 
@@ -516,25 +847,92 @@
 ```json
 [
     {
-        "id": 20,
-        "title": "이벤트",
-        "start_date": "2020-11-03T18:00:00+09:00",
-        "end_date": "2020-11-05T18:00:00+09:00",
-        "thumbnail_image": "/media/erd.png",
-        "create_date": "2020-11-03T20:59:53.770623+09:00",
-        "update_date": "2020-11-03T20:59:53.770623+09:00",
-        "priority": 1,
-        "user": 2,
-        "detail": [
+        "id": 3,
+        "name": "오디세이(수정)",
+        "price": 1920000,
+        "is_temp": false,
+        "is_active": true,
+        "category": {
+            "id": 1,
+            "name": "노트북"
+        },
+        "template": 2,
+        "created_date": "2020-11-06T15:12:53.508331+09:00",
+        "update_date": "2020-11-06T15:12:53.550339+09:00",
+        "cms_user": {
+            "id": 2,
+            "username": "test",
+            "first_name": "김유기"
+        },
+        "copy_descriptions": [],
+        "copy_images": [
             {
-                "image": "/media/KakaoTalk_20201019_093205576.png",
-                "content": "테스트1",
-                "priority": 1
-            },
+                "id": 6,
+                "item_image": "/media/KakaoTalk_20200907_134019738.jpg",
+                "is_thumbnail": false,
+                "priority": 1,
+                "created_date": "2020-11-06T15:12:53.641773+09:00",
+                "update_date": "2020-11-06T15:12:53.641773+09:00"
+            }
+        ]
+    },
+    {
+        "id": 6,
+        "name": "오디세이",
+        "price": 192000,
+        "is_temp": false,
+        "is_active": true,
+        "category": {
+            "id": 1,
+            "name": "노트북"
+        },
+        "template": 2,
+        "created_date": "2020-11-06T16:20:21.701843+09:00",
+        "update_date": "2020-11-06T16:20:21.741099+09:00",
+        "cms_user": {
+            "id": 2,
+            "username": "test",
+            "first_name": "김유기"
+        },
+        "copy_descriptions": [],
+        "copy_images": [
             {
-                "image": "/media/KakaoTalk_20200907_134019738.jpg",
-                "content": "테스트2",
-                "priority": 2
+                "id": 7,
+                "item_image": "/media/erd.png",
+                "is_thumbnail": false,
+                "priority": 1,
+                "created_date": "2020-11-06T16:20:21.778874+09:00",
+                "update_date": "2020-11-06T16:20:21.778874+09:00"
+            }
+        ]
+    },
+    {
+        "id": 7,
+        "name": "오디세이_임시3",
+        "price": 152000,
+        "is_temp": false,
+        "is_active": true,
+        "category": {
+            "id": 1,
+            "name": "노트북"
+        },
+        "template": 2,
+        "created_date": "2020-11-06T16:22:54.925281+09:00",
+        "update_date": "2020-11-06T16:22:54.960288+09:00",
+        "cms_user": {
+            "id": 2,
+            "username": "test",
+            "first_name": "김유기"
+        },
+        "copy_descriptions": [],
+        "copy_images": [
+            {
+                "id": 8,
+                "item_image": "/media/erd_IjdJt6m.png",
+                "is_thumbnail": false,
+                "priority": 1,
+                "created_date": "2020-11-06T16:22:54.997536+09:00",
+                "update_date": "2020-11-06T16:22:54.997536+09:00"
             }
         ]
     }
@@ -575,7 +973,7 @@
             "content": "테스트2",
             "priority": 2
         }
-    ]
+    ],
 }
 ```
 
@@ -869,22 +1267,27 @@
 
 
 
-## 템플릿 정보(미완성)
+## 템플릿 정보
 
 ```
-
-```
-
-- Body
-
-```json
-
+주소/api/products/template/(get)
 ```
 
 - Response
 
 ```json
-
+[
+    {
+        "id": 1,
+        "name": "카테고리 이미지 특화",
+        "type": 1
+    },
+    {
+        "id": 2,
+        "name": "아이템 이미지 특화",
+        "type": 2
+    }
+]
 ```
 
 

@@ -148,7 +148,7 @@ export default {
 }
 
 .nav-items div:hover::before {
-	width: 140%;
+  width: 140%;
 }
 
 .product-category {

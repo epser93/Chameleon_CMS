@@ -44,9 +44,9 @@
             </label>
           </div>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+        <div class="modal-footer justify-content-center">
           <button type="button" class="btn btn-primary" @click="onRoute('User'), giveAuthority()">권한 수정</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
         </div>
       </div>
     </div>
