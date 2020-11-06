@@ -1,6 +1,5 @@
 <template>
 <div class="container" v-if="categories">
-  
   <div class="row justify-content-end" id="btn-add">
     <div class="col-4">
       <button type="button" class="btn btn-info" @click="onRoute('Category')">
@@ -19,6 +18,7 @@
           <th scope="col">상태</th>
           <th scope="col">수정날짜</th>
           <th scope="col">상세보기</th>
+          <th scope="col"></th>
         </tr>
       </thead>
       <tbody>
@@ -34,13 +34,14 @@
           </td>
           <td v-else>비활성화
             <div class="custom-control custom-switch">
-              <input type="checkbox" class="custom-control-input" :id="category.id"  v-model="category.is_active" value="category.is_active" @click="changeActive(category.id)">
+              <input type="checkbox" class="custom-control-input" :id="category.id" v-model="category.is_active" value="category.is_active" @click="changeActive(category.id)">
               <label class="custom-control-label" :for="category.id"></label>
             </div>
           </td>
           <!-- 스위치 -->
           <td>{{ category.update_date.slice(0,10) }}</td>
-          <td><button type="button" class="btn btn-info" @click="onRoute('ItemMain')">더 보기</button></td>
+          <td><button type="button" class="btn btn-info" @click="onDetail(category.id)">더 보기</button></td>
+          <td><button type="button" class="btn btn-secondary" @click="onUpdate(category.id)">수정</button></td>
         </tr>
       </tbody>
     </table>
@@ -54,7 +55,6 @@ import { mapActions, mapState } from 'vuex'
 export default {
   data() {
     return {
-      
     }
   },
 
@@ -63,30 +63,36 @@ export default {
   },
 
   methods: {
-    ...mapActions('category', ['getCategoryList', 'delCategory', 'postCategory']),
- 
+    ...mapActions('category', ['delCategory', 'postCategory']),
+    onUpdate(cid) {
+      this.$router.push({name:'ItemMain', params:{cid: cid}})
+    },
     onRoute(name) {
 			this.$router.push({name:name}, () => {})
     },
+    onDetail(cid) {
+      this.$router.push({name:'ItemMain', params:{cid: cid}})
+    },
     
-    changeActive(idx){
+    changeActive(id){
       if (confirm("상태를 변경하시겠습니까?") == true){    //확인
-          if (this.categories[idx].is_active) {
-            this.delCategory(idx)
+          if (this.categories[id-1].is_active) {
+            this.delCategory(id)
           }
           else {
-            this.postCategory(idx)
+            this.postCategory(id)
           }
       } else {   //취소
-          return;
+        //여기 부분 수정 필요
+        return ;
       }
     }
     
   },
 
   created(){
-    this.getCategoryList()
-    this.checked = this.categories.is_active
+    // this.getCategoryList()
+    // this.checked = this.categories.is_active
   }
 }
 </script>
