@@ -8,7 +8,7 @@ export default {
 
   state: {
     // data
-    authToken: '',
+    authToken: cookies.get('auth-token'),
     userInfo: '',
 
   },

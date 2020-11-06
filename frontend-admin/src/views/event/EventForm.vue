@@ -3,14 +3,6 @@
     <div class="event row">
       <div class="col-8">
         <div class="event-content">
-          <h4>카테고리</h4>
-          <select name="category" id="category" v-model="category.part">
-            <option disabled value="">Please select one</option>
-            <option v-for="(category, index) in category.list" :key="index" :value="category.list">{{ category }}</option>
-          </select>
-        </div>
-
-        <div class="event-content">
           <h4>이벤트 제목</h4>
           <input v-model="title" type="text">
         </div>
@@ -44,19 +36,10 @@
 
         <div class="event-content">
           <h4>이벤트 썸네일</h4>
-              <input ref="thumbImageInput" type="file" hidden @change="onChangeImages">
+              <input ref="thumbImageInput" type="file" hidden @change="onChangeThumbImages">
               <button type="button" class="btn btn-success btn-sm" @click="onClickImageUpload">업로드</button>
           <div class="preview-img">
             <img id="inner-img" v-if="imageUrl.thumbnail" :src="imageUrl.thumbnail">
-          </div>
-        </div>
-
-        <div class="event-content">
-          <h4>이벤트 상세</h4>
-              <input ref="detailImageInput" type="file" hidden @change="onChangeImages">
-              <button type="button" class="btn btn-success btn-sm" @click="onClickImageUpload">업로드</button>
-          <div class="preview-img">
-            <img id="inner-img" v-if="imageUrl.detail" :src="imageUrl.detail">
           </div>
         </div>
 
@@ -65,30 +48,11 @@
             <button type="button" class="btn btn-secondary btn-sm" @click="onClickWindows">미리보기</button>
           </div>
           <div >
-            <button type="button" class="btn btn-secondary btn-sm" @click="onClickTemp">임시저장</button>
+            <button type="button" class="btn btn-secondary btn-sm">임시저장</button>
           </div>
         </div>  
-      </div>
-      <!-- history -->
-      <div class="col-4" id="history">
-        <div class="temp-part">
-          <h1>History</h1>
-        </div>
-        <div class="temp-part-history">
-          <ul v-if="history.length">
-            <li v-for="(his,index) in history.slice().reverse()" :key="index">
-              <div class="history-btn" :id="`history-${index}`" @click="onHistory(his), fixHistory(index)">
-                저장 {{ his.idx }}
-                <p>{{ his.date }}</p>
-              </div>
-            </li>
-          </ul>
-        </div>
-        <div>
-          <button type="button" class="btn btn-success btn-sm" @click="onClickRegister">등록</button> 
-        </div>
-      </div>
 
+      </div>
     </div>
   </div>
 </template>
@@ -96,15 +60,13 @@
 <script>
 import Datepicker from "vuejs-datepicker";
 
+import { mapState, mapMutations, mapActions } from 'vuex'
+
 export default {
   data() {
     return {
       title: '',
       content: '',
-      category: {
-        list: ['노트북', '냉장고'],
-        part: ''
-      },
       date: {
         start: '',
         end: ''
@@ -113,32 +75,27 @@ export default {
       imageUrl: {
         thumbnail :'',
         detail: '',
+      },
+      eventData : {
+        title: '',
+        start_date: '',
+        end_date: '',
+        thumbnail_image: '',
+        detail: []
       }
     }
+  },
+  computed: {
+    ...mapState('event', ['event'])
   },
   components: {
     Datepicker,
   },
   methods: {
-    fixHistory(idx) {
-      for (let i=0; i<this.history.length; i++) {
-        let className = '#history-' + i
-        console.log(className)
-        if (i == idx) {
-          document.querySelector(className).classList.add('on')
-        } else {
-          document.querySelector(className).classList.remove('on')
-        }
-      }
-    },
-    onHistory(his){
-      console.log(his)
-    },
+    ...mapActions('event', ['getEvent']),
+    ...mapMutations('event', ['SET_EVENT']),
     onClickRegister(){
       console.log('dfdfdf')
-    },
-    onClickTemp(){
-      console.log('모든 데이터를 보내면 됌')
     },
     onClickWindows(){
       var url="test.html";
@@ -153,12 +110,14 @@ export default {
         const file = e.target.files[0];
         this.imageUrl.thumbnail = URL.createObjectURL(file);
     },
-    onChangeDetailImages(e) {
-        console.log(e.target.files)
-        const file = e.target.files[0];
-        this.imageUrl.detail = URL.createObjectURL(file);
-    },
-
+  },
+  created() {
+    if (this.$route.params.method == 'update') {
+      console.log(this.$store.state.event.event)
+    }
+  },
+  destroyed() {
+    this.SET_EVENT('')
   }
 }
 </script>
@@ -193,10 +152,4 @@ textarea {
   margin-left: auto;
   margin-right: auto;
 }
-
-#history {
-  border: 1px solid gray;
-  padding: 10px;
-}
-
 </style>

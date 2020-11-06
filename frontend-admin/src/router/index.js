@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import store from '@/store'
 
 Vue.use(VueRouter)
 
@@ -84,9 +85,18 @@ const routes = [
                 component: () => import('@/views/event/EventMain.vue')
               },
               {
-                path: 'form',
-                name: 'EventForm',
+                path: ':method',
+                name: 'EventCreate',
                 component: () => import('@/views/event/EventForm.vue')
+              },
+              {
+                path: ':method/:eid',
+                name: 'EventUpdate',
+                component: () => import('@/views/event/EventForm.vue'),
+                beforeEnter(to, from, next) {
+                  store.dispatch('event/getEvent', to.params.eid, { root: true })
+                  next()
+                },
               },
             ]
           },
