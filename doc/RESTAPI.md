@@ -990,11 +990,11 @@
 ```json
 {
     "thumbnail": "썸네일 이미지",
-    "title": "이벤트 이름",
+    "title": "이벤트",
+    "content": "이벤트 내용",
     "strat_date": "2020-11-03 18:00:00",
     "end_date": "2020-11-05 18:00:00",
     "images": ["디테일에 들어갈 여러 이미지"],
-    "contents": ["이미지와 같이들어갈 글"],
 }
 ```
 
@@ -1002,25 +1002,22 @@
 
 ```json
 {
-    "id": 21,
-    "title": "이벤트 이름",
-    "start_date": "2020-11-03T18:00:00+09:00",
-    "end_date": "2020-11-05T18:00:00+09:00",
-    "thumbnail_image": "/media/erd_lnMaLcv.png",
-    "create_date": "2020-11-03T21:38:16.990359+09:00",
-    "update_date": "2020-11-03T21:38:16.990359+09:00",
+    "id": 2,
+    "title": "이벤트",
+    "content": "이벤트 내용",
+    "start_date": "2020-11-09T11:00:00+09:00",
+    "is_active": true,
+    "end_date": "2020-11-10T12:00:00+09:00",
+    "thumbnail_image": "/media/erd_RL2NJeG.png",
+    "create_date": "2020-11-07T20:55:43.037011+09:00",
+    "update_date": "2020-11-07T20:55:43.037011+09:00",
     "priority": 1,
     "user": 2,
     "detail": [
         {
-            "image": "/media/KakaoTalk_20201019_093205576_PxySHT2.png",
-            "content": "테스트1",
+            "id": 1,
+            "image": "/media/erd_uMjhx20.png",
             "priority": 1
-        },
-        {
-            "image": "/media/KakaoTalk_20200907_134019738_BqgSpGX.jpg",
-            "content": "테스트2",
-            "priority": 2
         }
     ]
 }
@@ -1128,9 +1125,9 @@
 
 ```json
 {
-    "title": "제목",
-    "content": "내용",
-    "image": "이미지데이터"
+    "title": "공지",
+    "content": "공지내용",
+    "image": "이미지데이터",
 }
 ```
 
@@ -1138,35 +1135,86 @@
 
 ```json
 {
-    "id": 4,
-    "title": "테스트",
-    "content": "테스트1",
-    "create_date": "2020-11-03T22:39:28.063168+09:00",
-    "update_date": "2020-11-03T22:39:28.063168+09:00",
+    "id": 3,
+    "title": "공지",
+    "content": "공지 내용",
+    "start_date": "2020-11-09T11:00:00+09:00",
+    "end_date": "2020-11-10T12:00:00+09:00",
+    "create_date": "2020-11-07T21:00:31.419455+09:00",
+    "update_date": "2020-11-07T21:00:31.419455+09:00",
     "is_active": true,
+    "is_temp": true,
     "user": 2,
-    "image": "/media/KakaoTalk_20200907_134019738_CnpdyfJ.jpg"
+    "image": "/media/erd_q0JEL7H.png"
 }
 ```
 
 
 
-## 공지 수정(미완)
+## 공지 수정
 
 ```
-
+주소/api/services/notices/<int:pk>/
 ```
 
 - Body
 
 ```json
-
+{
+    "title": "공지 수정",
+    "content": "공지 수정 내용",
+    "image": "바꿀 이미지 없으면 안넣어도 무방함"
+}
 ```
 
 - Response
 
 ```json
+{
+    "id": 3,
+    "title": "공지 수정",
+    "content": "공지 내용수정",
+    "start_date": "2020-11-07T21:13:12.600386+09:00",
+    "end_date": null,
+    "create_date": "2020-11-07T21:00:31.419455+09:00",
+    "update_date": "2020-11-07T21:20:30.407538+09:00",
+    "is_active": true,
+    "is_temp": false,
+    "user": 2,
+    "image": "/media/erd_q0JEL7H.png"
+}
+```
 
+## 공지 활성화
+
+```
+주소/api/services/notices/<int:pk>/(POST)
+```
+
+> 활성화시 start_date가 자동으로 입력된다.
+>
+> 공지를 종료하지 않았기때문에 end가 null로 설정된다.
+>
+> 활성화시 is_temp가 True로 변경됨
+>
+> 활성화시 is_active가 True로 변경됨
+
+- Response
+
+```json
+{
+    "id": 3,
+    "title": "공지 수정",
+    "content": "공지 내용수정",
+    "start_date": "2020-11-07T21:27:28.459164+09:00",
+    "end_date": null,
+    "create_date": "2020-11-07T21:00:31.419455+09:00",
+    "update_date": "2020-11-07T21:27:28.468088+09:00",
+    "is_active": true,
+    "is_temp": false,
+    "user": 2,
+    "image": "/media/erd_q0JEL7H.png"
+}
 ```
 
 
@@ -1174,14 +1222,20 @@
 ## 공지 삭제
 
 ```
-주소/api/services/event/<int:pk>/(DELETE)
+주소/api/services/notices/<int:pk>/(DELETE)
 ```
+
+> 비활성화시 end_date가 입력된다.
+>
+> is_active가 False로 입력된다.
+>
+> is_temp가 True일경우 공지가 삭제된다.
 
 - Response
 
 ```json
 {
-    "message": "공지가 삭제되었습니다."
+    "message": "공지가 비활성화 되었습니다."
 }
 ```
 
