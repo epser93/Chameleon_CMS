@@ -1,27 +1,29 @@
 # REST API 명세서
 
-| url                                           | GET                 | POST               | PUT           | DELETE        |
-| --------------------------------------------- | ------------------- | ------------------ | ------------- | ------------- |
-| accounts/                                     | 자신의 정보         |                    |               |               |
-| accounts/search/?조건식                       | 유저 검색(필터링)   |                    |               |               |
-| accounts/department/                          | 부서 정보           |                    |               |               |
-| accounts/login/                               |                     | 로그인             |               |               |
-| accounts/signup/                              |                     | 회원가입           |               |               |
-| accounts/logout/                              |                     | 로그아웃           |               |               |
-| accounts/manage/<user_id>/                    |                     | 회원가입 승인      | 회원권한 수정 |               |
-| products/main/                                | 메인페이지 상세     |                    |               |               |
-| products/main/carousel/                       |                     | 대표페이지 등록    |               |               |
-| products/template/                            | 템플릿 정보         |                    |               |               |
-| products/category/                            | 카테고리 리스트     | 카테고리 생성      |               |               |
-| products/category/<category_id>/              | 카테고리 물품리스트 |                    | 카테고리 수정 | 카테고리 삭제 |
-| products/product/                             |                     | 제품생성(임시까지) |               |               |
-| products/product/<product_id>/                | 제품 상세정보       | 임시정보 생성      | 임시제품 적용 | 제품 삭제     |
-| products/serarch/?type=<>&content=<>&order=<> | 검색                |                    |               |               |
-| services/notices/                             | 공지사항 리스트     | 공지사항 생성      |               |               |
-| services/notices/<notices_id>/                | 공지사항 상세       |                    | 공지사항 수정 | 공지사항 삭제 |
-| services/event/                               | 이벤트 리스트       | 이벤트 생성        |               |               |
-| services/event/<event_id>/                    | 이벤트 상세         |                    | 이벤트 수정   | 이벤트 삭제   |
-| services/log/                                 | 로그데이터          |                    |               |               |
+| url                                           | GET                      | POST               | PUT           | DELETE            |
+| --------------------------------------------- | ------------------------ | ------------------ | ------------- | ----------------- |
+| accounts/                                     | 자신의 정보              |                    |               |                   |
+| accounts/search/?type=<>&content=<>           | 유저 검색(필터링)        |                    |               |                   |
+| accounts/validation/?type=<>&content=<>       | 아이디, 이메일 여부 확인 |                    |               |                   |
+| accounts/department/                          | 부서 정보                |                    |               |                   |
+| accounts/login/                               |                          | 로그인             |               |                   |
+| accounts/signup/                              |                          | 회원가입           |               |                   |
+| accounts/logout/                              |                          | 로그아웃           |               |                   |
+| accounts/manage/<user_id>/                    |                          | 회원가입 승인      | 회원권한 수정 |                   |
+| products/main/                                | 메인페이지 상세          |                    |               |                   |
+| products/main/carousel/                       |                          | 대표페이지 등록    |               |                   |
+| products/template/                            | 템플릿 정보              |                    |               |                   |
+| products/category/                            | 카테고리 리스트          | 카테고리 생성      |               |                   |
+| products/category/<category_id>/              | 카테고리 물품리스트      |                    | 카테고리 수정 | 카테고리 삭제     |
+| products/product/                             |                          | 제품생성(임시까지) |               |                   |
+| products/product/<product_id>/                | 제품 상세정보            | 제품 활성화        | 임시제품 적용 | 제품 비활성       |
+| products/temp_product/<product_id>/           | 제품 히스토리 조회       | 제품 임시정보 생성 |               |                   |
+| products/serarch/?type=<>&content=<>&order=<> | 검색                     |                    |               |                   |
+| services/notices/                             | 공지사항 리스트          | 공지사항 생성      |               |                   |
+| services/notices/<notices_id>/                | 공지사항 상세            | 공지사항 활성화    | 공지사항 수정 | 공지사항 비활성화 |
+| services/event/                               | 이벤트 리스트            | 이벤트 생성        |               |                   |
+| services/event/<event_id>/                    | 이벤트 상세              |                    | 이벤트 수정   | 이벤트 삭제       |
+| services/logs/                                | 로그데이터               |                    |               |                   |
 
 
 
@@ -1297,7 +1299,7 @@
 ## 유저 필터링
 
 ```
-주소/api/accounts/search/?type=abc&content
+주소/api/accounts/search/?type=<>&content=<>
 ```
 
 > type 종류
@@ -1405,3 +1407,46 @@
     }
 ]
 ```
+
+
+
+## 이메일,아이디 여부
+
+```
+주소/api/accounts/validation/?type=<>&content=<>
+```
+
+- 성공 Response
+
+```json
+{
+    "message": "사용이 가능합니다."
+}
+```
+
+- 실패 Response(400)
+
+```json
+{
+    message: "너무 짧은 아이디 입니다.",
+    message: "존재하는 아이디 입니다.",
+    message: "존재하는 이메일 입니다."
+}
+```
+
+
+
+## 메인화면 아이템 설정
+
+
+
+
+
+
+
+## 메인화면 캐로셀 아이템 설정
+
+
+
+
+
