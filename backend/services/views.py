@@ -21,15 +21,12 @@ class EventList(APIView):
         if is_success == False:
             return Response(answer, status=status.HTTP_400_BAD_REQUEST)
         images = request.FILES.getlist('images')
-        contents = request.data.getlist('contents')
         prioritys = request.data.getlist('prioritys')
-        if len(contents) == 0:
-            contents = ['' for _ in range(len(images))]
         if len(prioritys) == 0:
             prioritys = [i+1 for i in range(len(images))]
         for i in range(len(images)):
             event_detail = EventDetail()
-            event_detail.create(images[i], contents[i], prioritys[i], event, request.user)
+            event_detail.create(images[i], prioritys[i], event, request.user)
         # 이미지 처리로직 넣기
         serializer = EventSerializer(event)
         return Response(serializer.data)
@@ -65,7 +62,11 @@ class NoticesList(APIView):
 
     def post(self, request):
         notice = Notices()
-        is_success, answer = notice.create(request.data, request.user, request.FILES['image'])
+        try:
+            image = request.FILES['image']
+        except:
+            image = None
+        is_success, answer = notice.create(request.data, request.user, image)
         if is_success == False:
             return Response(answer, status=status.HTTP_400_BAD_REQUEST)
         serializer = NoticesSerializer(notice)
@@ -75,15 +76,29 @@ class NoticesList(APIView):
 class NoticesDetail(APIView):
 
     def get(self, request, pk):
-        notice = Notices.objects.get(is_active=True, pk=pk)
+        notice = Notices.objects.get(pk=pk)
+        serializer = NoticesSerializer(notice)
+        return Response(serializer.data)
+
+    def post(self, request, pk):
+        notice = Notices.objects.get(pk=pk)
+        notice.start()
         serializer = NoticesSerializer(notice)
         return Response(serializer.data)
 
     def put(self, request, pk):
-        pass
+        notice = Notices.objects.get(pk=pk)
+        try:
+            image = request.FILES['image']
+        except:
+            image = None
+        notice.update(request.data, request.user, image)
+        
+        serializer = NoticesSerializer(notice)
+        return Response(serializer.data)
 
     def delete(self, request, pk):
         notice = Notices.objects.get(is_active=True, pk=pk)
         notice.delete()
-        answer = {message: '공지가 삭제되었습니다.'}
+        answer = {message: '공지가 비활성화 되었습니다.'}
         return Response(answer, status=status.HTTP_200_OK)
