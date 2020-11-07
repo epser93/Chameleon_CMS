@@ -13,7 +13,7 @@ class EventSerializer(serializers.ModelSerializer):
     detail = EventDetailSerializer(required=False, many=True)
     class Meta:
         model = Event
-        fields = ['id', 'title', 'content','start_date', 'is_active', 'end_date', 'thumbnail_image', 'create_date', 'update_date', 'priority', 'user', 'detail']
+        fields = ['id', 'title', 'content','start_date', 'is_active', 'end_date', 'thumbnail_image', 'create_date', 'update_date', 'priority', 'user', 'detail', 'url']
 
 
 class NoticesSerializer(serializers.ModelSerializer):

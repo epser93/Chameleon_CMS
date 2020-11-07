@@ -3,8 +3,8 @@ from .models import Event, EventDetail, Notices, MainItem, MainCarouselItem
 # Register your models here.
 
 class EventAdmin(admin.ModelAdmin):
-    list_display = ['id', 'title', 'content','start_date', 'end_date', 'is_active', 'thumbnail_image', 'create_date', 'update_date', 'priority', 'user']
-    fields = ['title', 'start_date', 'content','end_date', 'is_active', 'thumbnail_image', 'priority', 'user']
+    list_display = ['id', 'title', 'content','start_date', 'end_date', 'is_active', 'thumbnail_image', 'create_date', 'update_date', 'priority', 'user', 'url']
+    fields = ['title', 'start_date', 'content','end_date', 'is_active', 'thumbnail_image', 'priority', 'user', 'url']
 
 
 class EventDetailAdmin(admin.ModelAdmin):

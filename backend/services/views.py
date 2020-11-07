@@ -35,7 +35,13 @@ class EventList(APIView):
 class EventDetailAPI(APIView):
 
     def get(self, request, pk):
-        event = Event.objects.get(is_active=True, pk=pk)
+        event = Event.objects.get(pk=pk)
+        serializer = EventSerializer(event)
+        return Response(serializer.data)
+
+    def post(self, request, pk):
+        event = Event.objects.get(pk=pk)
+        event.activate()
         serializer = EventSerializer(event)
         return Response(serializer.data)
 
@@ -49,7 +55,7 @@ class EventDetailAPI(APIView):
     def delete(self, request, pk):
         event = Event.objects.get(is_active=True, pk=pk)
         event.delete()
-        answer = {message: '이벤트가 삭제되었습니다.'}
+        answer = {message: '이벤트가 비활성화 되었습니다.'}
         return Response(answer, status=status.HTTP_200_OK)
 
 # 공지
