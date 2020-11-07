@@ -13,7 +13,10 @@ export default{
       department : 'accounts/department/',
 
       // user search
-      usersearch : 'accounts/search/'
+      usersearch : 'accounts/search/',
+
+      // category
+      category : 'products/categories/', 
 
     }
   }

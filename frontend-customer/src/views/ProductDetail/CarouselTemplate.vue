@@ -59,18 +59,18 @@
       <!-- col-md 이상일 때 Item Info -->
       <div class="itm-info-md d-none d-sm-none d-md-block col-5">
         <div class="d-flex mt-2">
-          <div class="column itm-info-box">
+          <div class="column itm-info-box mr-auto ml-auto">
             <h3>제품 이름</h3>
             <p>제품 No.</p>
-              <h5>000,000원</h5>
-              <div class="itm-info-detail">
-                <p>Item Detail Information 1</p>
-                <p>Item Detail Information 2</p>
-                <p>Item Detail Information 3</p>
-                <p>Item Detail Information 4</p>
-                <p>Item Detail Information 5</p>
-                <p>Item Detail Information 6</p>
-              </div>
+            <h5>000,000원</h5>
+            <div class="itm-info-detail">
+              <p>Item Detail Information 1</p>
+              <p>Item Detail Information 2</p>
+              <p>Item Detail Information 3</p>
+              <p>Item Detail Information 4</p>
+              <p>Item Detail Information 5</p>
+              <p>Item Detail Information 6</p>
+            </div>
           </div>
         </div>
       </div>
@@ -146,7 +146,7 @@ ol {
   border: 4px solid #f8f9fa;
   border-radius: 10px;
   padding: 10px;
-  position: absolute;
+  position: relative;
 }
 
 .itm-info-box {

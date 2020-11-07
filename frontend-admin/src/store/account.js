@@ -2,7 +2,6 @@ import axios from 'axios'
 import SERVER from '@/api/drf'
 import cookies from 'vue-cookies'
 import router from '@/router'
-
 export default {
   namespaced: true,
 
@@ -13,6 +12,7 @@ export default {
     accessUserInfos : '', // access 권한을 가진 유저들 정보
     unAccessedUserInfos : '', // access 권한을 가지지 못한 유저들 정보
     departments : '', // 부서 정보
+    authorityModalUser: '', // 권한부여 창에 뿌려질 유저정보 (deep copy적용)
   },
 
   getters: {
@@ -23,6 +23,11 @@ export default {
           'Authorization' : 'Token ' + state.authToken
         }
       }
+    },
+
+    // 미승인 회원 숫자 표시
+    unAuthorizedUserCount(state) {
+      return state.unAccessedUserInfos.length
     }
 
   },
@@ -51,6 +56,10 @@ export default {
 
     SET_DEPARTMENTS(state, payload) {
       state.departments = payload
+    },
+    // 권한 부여 모달창 띄우기
+    SET_USER(state, payload) {
+      state.authorityModalUser = payload
     }
   },
 
@@ -91,7 +100,7 @@ export default {
 
     // access 권한을 가진 모든 유저 조회
     getAccessUserInfo({ getters, commit }) {
-      axios.get(SERVER.URL + SERVER.ROUTER.usersearch + '?type=all', getters.config)
+      axios.get(SERVER.URL + SERVER.ROUTER.usersearch + '?type=is_access&content=True', getters.config)
         .then(res => {
           commit('SET_ACCESSUSERINFOS', res.data)
         })
@@ -100,7 +109,7 @@ export default {
 
     // access 권한을 못 가진 유저들 조회
     getUnAccessUserInfo({ getters, commit }) {
-      axios.get(SERVER.URL + SERVER.ROUTER.usersearch + "?type=is_access", getters.config)
+      axios.get(SERVER.URL + SERVER.ROUTER.usersearch + "?type=is_access&content=False", getters.config)
         .then(res => {
           commit('SET_UNACCESSUSERINFOS', res.data)
           })
@@ -113,6 +122,7 @@ export default {
         .then(res => {
           alert(res.data.message)
           dispatch('getUnAccessUserInfo')
+          dispatch('getAccessUserInfo')
         })
         .catch(error => console.log(error.response))
     },
@@ -124,7 +134,18 @@ export default {
           commit('SET_DEPARTMENTS', res.data)
         })
         .catch(error => console.log(error.response))
-    }
+    },
+
+    // 권한 부여 
+    giveAuthorities({ getters, state, dispatch }, authorityInfo) {
+      axios.put(SERVER.URL + SERVER.ROUTER.usermanage + state.authorityModalUser.id, authorityInfo, getters.config)
+       .then(res => {
+         console.log(res)
+         dispatch('getAccessUserInfo')
+        })
+       .catch(error => console.log(error.response))
+    },
+    
   },
 
   

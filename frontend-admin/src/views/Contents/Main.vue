@@ -3,7 +3,16 @@
   <div class="row">
     <div class="col-8">
       <div class="content-part">
-        <h1>대표 이미지</h1>
+        <div class="row align-items-center">
+          <h1 class="mb-0 ml-3">대표 이미지</h1>
+          <div class="row warning-box align-items-center ml-2">
+            <img src="@/assets/icons/exclamation-circle.svg" alt="" width="16" height="16" title="exclamation-circle" class="mr-2">
+            <div class="warning-text">
+              <p class="warning-text-detail">이미지는 최소 4장 및 (1920x1080)사이즈를 권장합니다.</p>
+              <p class="warning-text-detail">부족할 경우, 기본이미지(상품준비중)가 제공됩니다.</p>
+            </div>
+          </div>
+        </div>
         <div v-if="!files.length" class="file-upload-container">
           <div class="file-upload-example">
             <div class="notice-item">
@@ -11,12 +20,6 @@
                 <label for="file">이미지 등록</label>
                 <input type="file" id="file" ref="files" @change="imageUpload" multiple />
               </div>
-            </div>
-            <div class="notice-item">
-              이미지는 최소 4장 및 (100x100)사이즈를 권장합니다.
-            </div>
-            <div class="notice-item">
-              부족할 경우, 기본이미지(상품준비중)가 제공됩니다.
             </div>
           </div>
         </div>
@@ -27,7 +30,12 @@
                 x
               </div>
               <img :src="file.preview" />
-              <p>url 넣어야하면 여기에서</p>
+              <div class="input-group mb-3 mt-1">
+                <input type="text" class="form-control" placeholder="상품 페이지 URL" aria-label="Recipient's username" aria-describedby="button-addon2">
+                <div class="input-group-append">
+                  <button class="btn btn-outline-secondary" type="button" id="button-addon2">Button</button>
+                </div>
+              </div>
             </div>
             <div class="file-preview-wrapper-upload">
               <div class="image-box" id="image-box-preview">
@@ -39,7 +47,11 @@
         </div>
       </div>
       <div class="content-part">
+        <div class="row"></div>
         <h1>추천 제품 등록</h1>
+        <button type="button" class="recommand-btn" data-toggle="modal" data-target="#staticBackdrop">
+          추가
+        </button>
         <div>
           <!-- Button trigger modal -->
           <div v-if="checkedItemImg">
@@ -50,9 +62,6 @@
           </div>
 
 
-          <button type="button" class="recommand-btn" data-toggle="modal" data-target="#staticBackdrop">
-            추가
-          </button>
 
           <!-- 추천 제품 등록 Modal -->
           <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -120,31 +129,27 @@
         </div>
       </div>
       <div class="row justify-content-end" id="content-btn">
-        <div >
-          <button type="button" class="btn btn-secondary btn-sm" @click="onClickWindows">미리보기</button>
-        </div>
-        <div >
-          <button type="button" class="btn btn-secondary btn-sm" @click="onClickTemp">임시저장</button>
-        </div>
+          <button type="button" class="btn btn-secondary btn-sm mr-2" @click="onClickWindows">미리보기</button>
+          <button type="button" class="btn btn-primary btn-sm" @click="onClickTemp">임시저장</button>
       </div>  
     </div>
 
-    <div class="col-4" id="history">
-      <div>
-        <div class="temp-part">
-          <h1>History</h1>
+    <div class="col-4 mt-4">
+      <div class="card text-center">
+        <div class="card-header">
+          <h3><img src="@/assets/icons/card-list.svg" alt="" width="32" height="32" title="card-list" class="mr-2">History</h3>
         </div>
-        <div class="temp-part-history">
+        <div class="card-body">
           <ul v-if="history.length">
             <li v-for="(his,index) in history.slice().reverse()" :key="index">
-              <div class="history-btn" :id="`history-${index}`" @click="onHistory(his), fixHistory(index)">
-                저장 {{ his.idx }}
+              <div class="history-btn row justify-content-around" :id="`history-${index}`" @click="onHistory(his), fixHistory(index)">
+                <strong>저장 {{ his.idx }}</strong>
                 <p>{{ his.date }}</p>
               </div>
             </li>
           </ul>
         </div>
-        <div>
+        <div class="card-footer text-muted">
           <button type="button" class="btn btn-success btn-sm" @click="onClickRegister">등록</button> 
         </div>
       </div>
@@ -322,14 +327,12 @@ export default {
     text-align: center;
 }
 .notice-item {
-      margin-top: 5px;
-      /* text-align: center; */
-  }
+  margin-top: 5px;
+  color: grey;
+}
 
 .image-box {
-    /* margin-top: 30px; */
-    padding-bottom: 20px;
-    /* text-align: center; */
+    padding-bottom: 10px;
 }
 
 .image-box input[type='file'] {
@@ -341,10 +344,20 @@ export default {
     border: 0;
 }
 
+.warning-text {
+  align-items: center;
+  color: grey;
+}
+
+.warning-text-detail {
+  margin-bottom: 0;
+  font-size: 12px;
+}
+
 .image-box label {
     display: inline-block;
     padding: 10px 20px;
-    background-color: #232d4a;
+    background-color: #28A743;
     color: #fff;
     vertical-align: middle;
     font-size: 15px;
@@ -390,14 +403,15 @@ export default {
 .file-preview-wrapper-upload {
     margin: 10px;
     padding-top: 20px;
-    background-color: #888888;
+    /* background-color: #888888; */
     width: 190px;
     height: 130px;
 }
 
 .recommand-btn {
-  background-color: #232d4a;
+  background-color: #28A743;
   color: white;
+  border: transparent;
   border-radius: 5px;
   height: 40px;
   padding: 0 20px;
@@ -435,11 +449,9 @@ export default {
 
 #content-btn {
   width: inherit;
-}
-
-#history {
-  border: 1px solid gray;
-  padding: 10px;
+  position: absolute;
+  bottom: 0;
+  right: 10%;
 }
 
 ul,li {

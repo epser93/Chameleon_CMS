@@ -1,34 +1,30 @@
 <template>
   <div class="container-fluid">
-    <section class="one clearfix">
-      <!-- Moving item images -->
+    <section class="one">
       <div class="left">
         <div v-for="image in images" :key="image.name" class="product-img">
           <img :src="image.src" class="product-image mb-3" alt="">
         </div>
       </div>
-      <!-- Item detail -->
-      <div class="right mt-4">
-        <div class="right-child">
-          <div class="itm-info-box">
-            <h3>제품 이름</h3>
-            <p>제품 No.</p>
-              <h5>000,000원</h5>
-              <div class="itm-info-detail">
-                <p>Item Detail Information 1</p>
-                <p>Item Detail Information 2</p>
-                <p>Item Detail Information 3</p>
-                <p>Item Detail Information 4</p>
-                <p>Item Detail Information 5</p>
-                <p>Item Detail Information 6</p>
-              </div>
+    <div class="right mt-4">
+      <div class="right-child">
+        <div class="itm-info-box">
+          <h3>제품 이름</h3>
+          <p>제품 No.</p>
+          <h5>000,000원</h5>
+          <div class="itm-info-detail">
+            <p>Item Detail Information 1</p>
+            <p>Item Detail Information 2</p>
+            <p>Item Detail Information 3</p>
+            <p>Item Detail Information 4</p>
+            <p>Item Detail Information 5</p>
+            <p>Item Detail Information 6</p>
           </div>
         </div>
       </div>
+    </div>
     </section>
-    <!-- Item deatil image ara -->
-    <div class="bottom mb-4">
-      <h1>Item detail image Area</h1>
+    <div class="bottom">
     </div>
   </div>
 </template>
@@ -55,9 +51,9 @@ export default {
   },
   methods: {
     reOrder() {
-      let mq = window.matchMedia("(min-width: 992px)");
+      let mq = window.matchMedia("(min-width: 1140px)");
       if (mq.matches) {
-        $('.right-child').addClass('customm');
+        $('.right').addClass('customm');
         let scroll = $(window).scrollTop(),
           topContent = $('.one').position().top - 25,
           sectionHeight = $('.left').height(),
@@ -67,7 +63,7 @@ export default {
         if (scroll > topContent && scroll < bottomContent) {
           $('.customm').removeClass('posAbs').addClass('posFix');
         } else if (scroll > bottomContent) {
-          $('.customm').removeClass('posFix').addClass('posAbs');
+          // $('.customm').removeClass('posFix').addClass('posAbs');
         } else if (scroll < topContent) {
           $('.customm').removeClass('posFix');
         }
@@ -82,6 +78,7 @@ export default {
 <style scoped>
 .container {
   height:100%;
+  background: #b3c1da;
   width:992px;
   margin:0 auto;
   padding:25px;
@@ -89,6 +86,12 @@ export default {
 
 .one {
   position:relative;
+}
+
+.one::after {
+  content: "";
+  display: block;
+  clear: both;
 }
 
 .left {
@@ -99,16 +102,29 @@ export default {
 
 .product-img {
   width: 100%;
+
 }
 
 .right {
   width:calc(50% - 13px);
   float:right;
+  display: flex;
+  margin-bottom: 10px;
 }
 
+.content {
+  width:100%;
+  height:200px;
+  background:#ccd9f1;
+  margin-bottom:25px;
+  border-radius:4px;
+}
+
+/* check */
 .right-child {
-  display:block;
+  background-color: #8da8d0;
   width:458px;
+  margin: auto;
   height: 85vh;
   padding:10px;
   text-align:center;
@@ -118,15 +134,13 @@ export default {
 }
 
 .posFix {
-  position:fixed;
+  position: sticky;
   top:25px;
 }
 
 .posAbs {
   position:absolute;
   bottom:25px;
-  margin-right: auto;
-  margin-left: auto;
 }
 
 .bottom {
