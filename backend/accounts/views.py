@@ -1,4 +1,5 @@
 import re
+from typing import ClassVar
 from django.http import response
 from django.http import request
 from rest_auth.registration.views import RegisterView
@@ -8,7 +9,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from .models import Department, User, TotalLog
-from .serializers import CMSUserSerializer, DepartmentSerializer
+from .serializers import CMSUserSerializer, DepartmentSerializer, TotalLogSerializer
 
 message = 'message'
 number = set('1234567890')
@@ -28,6 +29,9 @@ class Signup(RegisterView):
     def create(self, request, *args, **kwargs):
         if len(request.data.get('first_name', '')) == 0:
             answer = {message: '이름이 없습니다.'}
+            return Response(answer, status=status.HTTP_400_BAD_REQUEST)
+        if len(request.data['username']) < 3:
+            answer = {message: '너무 짧은 아이디 입니다.'}
             return Response(answer, status=status.HTTP_400_BAD_REQUEST)
         if User.objects.filter(username=request.data['username']).exists():
             answer = {message: '존재하는 아이디 입니다.'}
@@ -160,7 +164,35 @@ class USerSearchAPI(APIView):
             department = Department.objects.get(name=content)
             users = User.objects.filter(department=department).exclude(is_superuser=True)
         else:
-            answer = {message: "잘못된 요청입니다."}
+            answer = {message: '잘못된 요청입니다.'}
             return Response(answer, status=status.HTTP_400_BAD_REQUEST)
         serializer = CMSUserSerializer(users, many=True)
         return Response(serializer.data)
+
+
+class TotalLogAPI(APIView):
+    def get(self, request):
+        if not request.user.is_superuser and not request.user.is_logger:
+            answer = {message: '권한이 없습니다.'}
+            return Response(answer, status=status.HTTP_403_FORBIDDEN)
+        logs = TotalLog.objects.all()
+        serializer = TotalLogSerializer(logs, many=True)
+        return Response(serializer.data)
+
+class ValidationAPI(APIView):
+    def get(self, request):
+        _type = request.GET.get('type', 'id')
+        content = request.GET.get('content', '')
+        if len(content) < 3:
+            answer = {message: '너무 짧은 아이디 입니다.'}
+            return Response(answer, status=status.HTTP_400_BAD_REQUEST)
+        if _type == 'id':
+            if User.objects.filter(username=content).exists():
+                answer = {message: '존재하는 아이디 입니다.'}
+                return Response(answer, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            if User.objects.filter(email=content).exists():
+                answer = {message: '존재하는 이메일 입니다.'}
+                return Response(answer, status=status.HTTP_400_BAD_REQUEST)
+        answer = {message: '사용이 가능합니다.'}
+        return Response(answer)
