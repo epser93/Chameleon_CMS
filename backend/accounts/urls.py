@@ -11,4 +11,5 @@ urlpatterns = [
     path('login/', views.Login.as_view()),
     path('logout/', views.Logout.as_view()),
     path('manage/<int:pk>/', views.ManagementAPI.as_view()),
+    path('logs/', views.TotalLogAPI.as_view()),
 ]

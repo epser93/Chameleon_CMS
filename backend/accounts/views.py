@@ -1,4 +1,5 @@
 import re
+from typing import ClassVar
 from django.http import response
 from django.http import request
 from rest_auth.registration.views import RegisterView
@@ -8,7 +9,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from .models import Department, User, TotalLog
-from .serializers import CMSUserSerializer, DepartmentSerializer
+from .serializers import CMSUserSerializer, DepartmentSerializer, TotalLogSerializer
 
 message = 'message'
 number = set('1234567890')
@@ -163,4 +164,14 @@ class USerSearchAPI(APIView):
             answer = {message: "잘못된 요청입니다."}
             return Response(answer, status=status.HTTP_400_BAD_REQUEST)
         serializer = CMSUserSerializer(users, many=True)
+        return Response(serializer.data)
+
+
+class TotalLogAPI(APIView):
+    def get(self, request):
+        if not request.user.is_superuser and not request.user.is_logger:
+            answer = {message: "권한이 없습니다."}
+            return Response(answer, status=status.HTTP_403_FORBIDDEN)
+        logs = TotalLog.objects.all()
+        serializer = TotalLogSerializer(logs, many=True)
         return Response(serializer.data)

@@ -1241,22 +1241,55 @@
 
 
 
-## 로그데이터 가져오기(미완)
+## 로그데이터
 
 ```
-
-```
-
-- Body
-
-```json
-
+주소/api/accounts/logs/(GEt)
 ```
 
 - Response
 
 ```json
+[
+    {
+        "type": "회원가입",
+        "register_ip": "0.0.0.0",
+        "create_date": "2020-11-06T15:02:08.835470+09:00",
+        "cms_user": 2
+    },
+    {
+        "type": "로그인",
+        "register_ip": "0.0.0.0",
+        "create_date": "2020-11-06T15:02:39.444308+09:00",
+        "cms_user": 2
+    },
+    {
+        "type": "회원가입",
+        "register_ip": "0.0.0.0",
+        "create_date": "2020-11-06T15:04:58.221495+09:00",
+        "cms_user": 3
+    },
+    {
+        "type": "로그인",
+        "register_ip": "0.0.0.0",
+        "create_date": "2020-11-06T15:05:39.168803+09:00",
+        "cms_user": 3
+    },
+    {
+        "type": "로그아웃",
+        "register_ip": "0.0.0.0",
+        "create_date": "2020-11-06T15:12:48.820754+09:00",
+        "cms_user": 3
+    }
+]
+```
 
+- 실패 Response(403)
+
+```json
+{
+    "message": "권한이 없습니다."
+}
 ```
 
 
