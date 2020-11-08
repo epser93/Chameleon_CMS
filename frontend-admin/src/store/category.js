@@ -40,10 +40,11 @@ export default {
 
   actions: {
     // API 함수
-    categoryRegister({ rootGetters }, categoryData) {
+    categoryRegister({ rootGetters, dispatch }, categoryData) {
       axios.post(SERVER.URL + SERVER.ROUTER.category, categoryData, rootGetters['account/config'])
         .then(() => {
             console.log("등록완료")
+            dispatch('getCategoryList')
             router.push({ name : 'Product'})
         })
         .catch(error => {console.log(error.response)})
@@ -81,6 +82,11 @@ export default {
           console.log(err)
         })   
     },
+
+    putCategory(){
+
+    },
+
 
     getItem({ rootGetters, commit }, id) {
       console.log(SERVER.URL + SERVER.ROUTER.category + id + '/')

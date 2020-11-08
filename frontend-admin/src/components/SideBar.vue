@@ -29,7 +29,7 @@ export default {
 			this.$router.push({name:name}, () => {})
 		},
 		onDetail(cid) {
-			console.log(cid)
+			//console.log(cid)
 			this.$router.push({name:'ProductItemMain', params:{cid: cid}}, () => {})
 		},
 		fixCategory () {
@@ -68,16 +68,16 @@ export default {
 		InnerCategory () {
 			for (let i=0; i<this.productCategories.length; i++) {
 			let className = '.' + this.productCategories[i].name
-			console.log(className)
+			//console.log(className)
 			let tmp = this.productCategories[i].id
-			console.log(tmp)
-			console.log(this.$route.params.cid)
+			//console.log(tmp)
+			//console.log(this.$route.params.cid)
 
 			if (this.$route.params.cid == tmp) {
 				document.querySelector(className).classList.add('active')
 			} else {
 				console.log(this.$route.name + "  else")
-				console.log(tmp + "  else")
+				//console.log(tmp + "  else")
 				document.querySelector(className).classList.remove('active')
 			}
 			}
@@ -85,7 +85,7 @@ export default {
 		OutCategory () {
 			for (let i=0; i<this.productCategories.length; i++) {
 			let className = '.' + this.productCategories[i].name
-			console.log(className)
+			//console.log(className)
 			document.querySelector(className).classList.remove('active')
 			}
 		}

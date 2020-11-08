@@ -69,9 +69,10 @@ export default {
     ...mapActions('category', ['delCategory', 'postCategory']),
     // ...mapMutations('category', ['SET_CATEGORY']),
     onUpdate(cid) {
-      this.$router.push({name:'ProductItemMain', params:{cid: cid}})
+      this.$router.push({name:'ProductCGupdate', params:{cid: cid, update: 'update'}})
     },
     onRoute(name) {
+      console.log("눌림")
 			this.$router.push({name:name}, () => {})
     },
     onDetail(cid) {

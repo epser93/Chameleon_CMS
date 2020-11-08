@@ -4,6 +4,7 @@
 
       <div class="category-content">
         <h4>제품군</h4>
+        <!-- {{category}} -->
         <input type="text" class="form-control" placeholder="명칭을 입력해주세요" v-model="categoryName">
       </div>
       
@@ -55,11 +56,11 @@
         <div>
           <button type="button" class="btn btn-secondary btn-sm" @click="onClickWindows">미리보기</button>
         </div>
-        <div>
-          <button type="button" class="btn btn-secondary btn-sm" @click="onClickTemp">임시저장</button>
+        <div v-if="update">
+          <button type="button" class="btn btn-success btn-sm" @click="onClickUpdate">수정</button>
         </div>
-        <div>
-          <button type="button" class="btn btn-success btn-sm" @click="onClickRegister">등록</button> 
+        <div v-else>
+          <button type="button" class="btn btn-success btn-sm" @click="onClickRegister">저장</button> 
         </div>
       </div>  
 
@@ -69,7 +70,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters, mapMutations } from 'vuex'
 
 export default {
   data() {
@@ -79,16 +80,30 @@ export default {
         tags: [],
         priority: 1,
         tag: null,
-        // aboutText: {
-          //   tags:[],
-        // },
-
         imageUrl: null,
-        history: [],
+        update: false,
+
     }
   },
+  computed: {
+    ...mapGetters('category', ['category'])
+  },
+  
+  watch: {
+    category(val) {
+      this.categoryName = val.name
+      for(let i=0; i<val.description.length; i++) {
+        this.tags.push(val.description[i].name)
+      }
+      this.picked = val.template.id
+
+      console.log(val)
+    }
+  },
+
   methods: {
     ...mapActions('category', [ 'categoryRegister', '' ]),
+    ...mapMutations('category', ['SET_CATEGORY']),
     onClickRegister(){
       const categoryData = {
         name: this.categoryName,
@@ -101,7 +116,7 @@ export default {
       this.categoryRegister(categoryData)
     },
   
-    onClickTemp(){
+    onClickUpdate(){
 
       console.log('모든 데이터를 보내면 됌')
     },
@@ -137,6 +152,13 @@ export default {
         this.tag= ""
       }
     },
+  },
+  created() {
+    if(this.$route.params.update == 'update') {
+      const cid = this.$route.params.cid
+      this.SET_CATEGORY(cid)
+      this.update = true
+    }
   }
 }
 </script>
@@ -177,11 +199,6 @@ export default {
   width: 280px;
   margin-top: 20px;
 
-}
-
-#history {
-  border: 1px solid gray;
-  padding: 10px;
 }
 
 .btn {

@@ -3,7 +3,7 @@
   <h1>{{ category.name }}</h1>
   <div class="row justify-content-between">
     <div class="col-3">
-      <button type="button" class="btn btn-info" @click="onRoute('ProductItem')">
+      <button type="button" class="btn btn-info" @click="onRoute('ProductItemCreate')">
         추가
       </button>
       <button type="button" class="btn btn-danger">
