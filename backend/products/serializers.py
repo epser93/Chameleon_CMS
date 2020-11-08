@@ -1,6 +1,14 @@
+from re import template
 from accounts.serializers import UserSerializer
 from rest_framework import serializers
 from .models import Category, CategoryDescription, CopyOfItemDescription, CopyOfItemImage, Item, ItemDescription, ItemImage, Template
+
+
+class TemplateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Template
+        fields = ['id', 'name', 'type']
+
 
 class CategoryDescriptionSerializer(serializers.ModelSerializer):
     class Meta:
@@ -11,9 +19,10 @@ class CategoryDescriptionSerializer(serializers.ModelSerializer):
 class CategorySerializer(serializers.ModelSerializer):
     cms_user = UserSerializer(required=False)
     description = CategoryDescriptionSerializer(required=False, many=True)
+    template = TemplateSerializer()
     class Meta:
         model = Category
-        fields = ['id', 'name', 'is_active', 'priority', 'created_date', 'update_date', 'cms_user', 'description']
+        fields = ['id', 'name', 'is_active', 'priority', 'template','created_date', 'update_date', 'cms_user', 'description']
 
 
 class CategoryJoinSerializer(serializers.ModelSerializer):
@@ -40,6 +49,7 @@ class ItemSerializer(serializers.ModelSerializer):
     images = ItemImageSerializer(required=False, many=True)
     descriptions = ItemDescriptionSerializer(required=False, many=True)
     category = CategoryJoinSerializer()
+    template = TemplateSerializer()
     class Meta:
         model = Item
         fields = ['id', 'name', 'price', 'is_temp', 'is_active', 'category','template','created_date', 'update_date', 'cms_user','descriptions', 'images']
@@ -66,9 +76,3 @@ class CopyItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = Item
         fields = ['id', 'name', 'price', 'is_temp', 'is_active', 'category','template','created_date', 'update_date', 'cms_user', 'copy_descriptions', 'copy_images']
-
-
-class TemplateSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Template
-        fields = ['id', 'name', 'type']

@@ -18,13 +18,13 @@ class NoticesAdmin(admin.ModelAdmin):
 
 
 class MainItemAdmin(admin.ModelAdmin):
-    list_display = ['id', 'priority', 'create_date', 'update_date', 'item', 'user', 'department']
-    fields = ['priority', 'item', 'user', 'department']
+    list_display = ['id', 'priority', 'create_date', 'update_date', 'item', 'user']
+    fields = ['priority', 'item', 'user']
 
 
 class MainCarouselItemAdmin(admin.ModelAdmin):
-    list_display = ['id', 'image', 'create_date', 'update_date', 'priority', 'is_active', 'item', 'user', 'department']
-    fields = ['image', 'priority', 'is_active', 'item', 'user', 'department']
+    list_display = ['id', 'image', 'create_date', 'update_date', 'priority', 'is_active', 'url','user']
+    fields = ['image', 'priority', 'is_active', 'url','user']
 
 admin.site.register(Event, EventAdmin)
 admin.site.register(EventDetail,EventDetailAdmin)

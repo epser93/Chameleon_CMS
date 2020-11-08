@@ -13,7 +13,7 @@ class Event(models.Model):
     start_date = models.DateTimeField()
     end_date = models.DateTimeField()
     is_active = models.BooleanField(default=True)
-    thumbnail_image = models.ImageField()
+    thumbnail_image = models.ImageField(default=None, null=True)
     content = models.TextField(default=None, null=True)
     create_date = models.DateTimeField(auto_now_add=True)
     update_date = models.DateTimeField(auto_now=True)
@@ -31,10 +31,11 @@ class Event(models.Model):
         self.start_date = datetime.strptime(data['start_date'], date_type).replace(tzinfo=KST)
         self.end_date = datetime.strptime(data['end_date'], date_type).replace(tzinfo=KST)
         self.url = data.get('url', self.url)
-        is_success, answer = get_imagefile(image)
-        if is_success == False:
-            return False, answer
-        self.thumbnail_image = answer
+        if image != None:
+            is_success, answer = get_imagefile(image)
+            if is_success == False:
+                return False, answer
+            self.thumbnail_image = answer
         self.save()
         return True, None
 
@@ -99,10 +100,11 @@ class Notices(models.Model):
         self.is_temp = data.get('is_temp', 'True') == 'True'
         if self.is_temp == False:
             self.start_date = datetime.now().replace(tzinfo=KST)
-        is_success, answer = get_imagefile(image)
-        if is_success == False:
-            return False, answer
-        self.image = answer
+        if image != None:
+            is_success, answer = get_imagefile(image)
+            if is_success == False:
+                return False, answer
+            self.image = answer
         self.save()
         return True, None
 
@@ -139,20 +141,62 @@ class MainItem(models.Model):
     priority = models.IntegerField(default=1)
     create_date = models.DateTimeField(auto_now_add=True)
     update_date = models.DateTimeField(auto_now=True)
-
+    is_active = models.BooleanField(default=True)
     item = models.ForeignKey(Item, on_delete=models.SET_NULL, related_name='main', null=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.DO_NOTHING)
-    department = models.ForeignKey(Department, on_delete=models.SET_NULL, related_name='main', null=True)
+    
+    def create(self, item, user, priority, is_active):
+        self.priority = priority
+        self.item = item
+        self.user = user
+        self.is_active = is_active
+        self.save()
+
+    def activate(self):
+        self.is_active = True
+        self.save()
+
+    def update(self, item, user, priority, is_active):
+        
+        self.priority = priority
+        if item != None:
+            self.item = item
+        self.user = user
+        self.is_active = is_active
+        self.save()
+
+    def delete(self):
+        self.is_active = False
+        self.save()
+
 
 
 class MainCarouselItem(models.Model):
-    image = models.ImageField()
+    image = models.ImageField(default=None, null=True)
     create_date = models.DateTimeField(auto_now_add=True)
     update_date = models.DateTimeField(auto_now=True)
     priority = models.IntegerField(default=1)
     is_active = models.BooleanField(default=True)
-
-    item = models.ForeignKey(Item, on_delete=models.SET_NULL, related_name='maincarousel', null=True)
+    url = models.BooleanField(default=None, null=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.DO_NOTHING)
-    department = models.ForeignKey(Department, on_delete=models.SET_NULL, related_name='maincarousel', null=True)
 
+    def create(self, data, user, image):
+        self.priority = data['priority']
+        self.is_active = data.get('is_active', 'True') == 'True'
+        self.url = data.get('url', '')
+        self.user = user
+        if image != None:
+            is_success, answer = get_imagefile(image)
+            if is_success == False:
+                return False, answer
+            self.image = answer
+        self.save()
+
+    def activate(self):
+        pass
+
+    def update(self):
+        pass
+
+    def delete(self):
+        pass

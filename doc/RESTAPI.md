@@ -239,6 +239,11 @@
         "name": "노트북",
         "is_active": true,
         "priority": 1,
+        "template": {
+            "id": 1,
+            "name": "카테고리 이미지 특화",
+            "type": 1
+        },
         "created_date": "2020-10-28T17:44:41.924474+09:00",
         "update_date": "2020-10-28T17:44:41.924474+09:00",
         "cms_user": {
@@ -285,6 +290,11 @@
     "name": "김치냉장고",
     "is_active": true,
     "priority": 3,
+    "template": {
+        "id": 1,
+        "name": "카테고리 이미지 특화",
+        "type": 1
+    },
     "created_date": "2020-10-30T16:29:20.547623+09:00",
     "update_date": "2020-10-30T16:29:20.547623+09:00",
     "cms_user": {
@@ -337,6 +347,11 @@
     "name": "김치냉장고 v2",
     "is_active": true,
     "priority": 1,
+    "template": {
+        "id": 1,
+        "name": "카테고리 이미지 특화",
+        "type": 1
+    },
     "created_date": "2020-10-30T16:29:20.547623+09:00",
     "update_date": "2020-10-30T16:34:14.215469+09:00",
     "cms_user": {
@@ -402,6 +417,11 @@
                 }
             }
         ],
+        "template": {
+            "id": 2,
+            "name": "아이템 이미지 특화",
+            "type": 2
+        },
         "images": [],
         "category": {
             
@@ -475,6 +495,11 @@
             }
         }
     ],
+    "template": {
+        "id": 2,
+        "name": "아이템 이미지 특화",
+        "type": 2
+    },
     "images": [
         {
             "id": 18,
@@ -522,6 +547,11 @@
             }
         }
     ],
+    "template": {
+        "id": 2,
+        "name": "아이템 이미지 특화",
+        "type": 2
+    },
     "images": [
         {
             "id": 18,
