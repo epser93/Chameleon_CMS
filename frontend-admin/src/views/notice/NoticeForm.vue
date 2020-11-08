@@ -1,5 +1,5 @@
 <template>
-  <div class="form-root" v-if="noticeInfo">
+  <div class="form-root">
     <div class="title-division">
       <div class="title">
         제목
@@ -28,11 +28,11 @@
       <div >
         <button type="button" class="btn btn-secondary btn-sm" @click="onClickWindows">미리보기</button>
       </div>
-      <div >
-        <button type="button" class="btn btn-secondary btn-sm" v-if="noticeInfo.is_temp" @click="onClickTemp">임시저장</button>
+      <div v-if="!noticeInfo || noticeInfo.is_temp">
+        <button type="button" class="btn btn-secondary btn-sm" @click="onClickTemp">임시저장</button>
       </div>
       <div>
-        <button type="button" class="btn btn-success btn-sm" @click="onClickRegister">등록</button> 
+        <button type="button" class="btn btn-success btn-sm" @click="onActivate">등록</button> 
       </div>
     </div>
   </div>
@@ -60,7 +60,7 @@ export default {
       this.imageFile = file
       this.imageUrl = URL.createObjectURL(file)
     },
-    onClickRegister(){
+    onActivate(){
       const config = {
         headers: {
           'Authorization' : 'Token ' + this.$cookies.get('auth-token'),
@@ -78,7 +78,7 @@ export default {
         axios.post(SERVER.URL + SERVER.ROUTER.notice, formdata, config)
           .then(res => {
             console.log(res)
-            this.$router.push({ name : 'NoticeMain'})
+            this.$router.push({ name : 'Notice'})
           })
           .catch(error => console.log(error.response))
       } else { // 임시저장후 등록의 경우 수정 + 활성이 한번에 이루어짐
@@ -87,7 +87,7 @@ export default {
             axios.post(SERVER.URL + SERVER.ROUTER.notice + this.$route.params.id + '/')
               .then(res => {
                 console.log('활성', res)
-                this.$router.push({ name : 'NoticeMain' })
+                this.$router.push({ name : 'Notice' })
               })
               .catch(error => console.log(error.response))
           })
@@ -109,14 +109,14 @@ export default {
       if (!this.$route.params.id) { // 첫글 바로 임시등록할 때
         axios.post(SERVER.URL + SERVER.ROUTER.notice, formdata, config)
           .then(() => {
-            this.$router.push({ name : 'NoticeMain' })
+            this.$router.push({ name : 'Notice' })
           })
           .catch(error => console.log(error.response))
       } else { // 임시 등록 후 다시 임시등록을 할 때
         axios.put(SERVER.URL + SERVER.ROUTER.notice + this.$route.params.id, formdata, config)
           .then(res => {
             console.log(res)
-            this.$router.push({ name : 'NoticeMain' })
+            this.$router.push({ name : 'Notice' })
           })
           .catch(error => console.log(error.response))
       }
