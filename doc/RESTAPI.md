@@ -1,5 +1,7 @@
 # REST API 명세서
 
+## Admin url
+
 | url                                           | GET                      | POST               | PUT           | DELETE            |
 | --------------------------------------------- | ------------------------ | ------------------ | ------------- | ----------------- |
 | accounts/                                     | 자신의 정보              |                    |               |                   |
@@ -24,6 +26,14 @@
 | services/event/                               | 이벤트 리스트            | 이벤트 생성        |               |                   |
 | services/event/<event_id>/                    | 이벤트 상세              |                    | 이벤트 수정   | 이벤트 삭제       |
 | services/logs/                                | 로그데이터               |                    |               |                   |
+
+## customer url
+
+| url                                  | get                   |
+| ------------------------------------ | --------------------- |
+| services/customer/search/?content=<> | 아이템 및 이벤트 검색 |
+
+
 
 
 
@@ -1436,4 +1446,35 @@
 
 
 
+
+## customer search
+
+```
+주소/api/services/customer/search/?content=<>
+```
+
+- Response
+
+```json
+{
+    "items": [],
+    "events": [
+        {
+            "id": 1,
+            "title": "테스트",
+            "content": "테스트",
+            "start_date": "2020-11-06T15:06:40+09:00",
+            "is_active": true,
+            "end_date": "2020-11-06T15:06:43+09:00",
+            "thumbnail_image": "/media/KakaoTalk_20200817_204540152.png",
+            "create_date": "2020-11-06T15:06:54.617564+09:00",
+            "update_date": "2020-11-08T00:15:28.900265+09:00",
+            "priority": 1,
+            "user": 3,
+            "detail": [],
+            "url": "asdasd"
+        }
+    ]
+}
+```
 
