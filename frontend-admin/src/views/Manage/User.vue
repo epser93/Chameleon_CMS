@@ -98,7 +98,7 @@ export default {
 }
 
 .unauthorized {
-  background-color: #e2e4e6;
+  display: flex;
 }
 
 .user-infos {
@@ -107,10 +107,6 @@ export default {
 
 .user-infos:hover {
   background-color: #e9e9e9;
-}
-
-.unauthorized {
-  display: flex;
 }
 
 td span {

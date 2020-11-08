@@ -2,20 +2,21 @@
   <div class="container">
     <div class="event row">
       <div class="col-8">
+        <!-- 이벤트 제목 -->
         <div class="event-content">
           <h4>이벤트 제목</h4>
-          <input v-model="title" type="text">
+          <input v-model="title" type="text" placeholder=" 제목을 입력해 주세요.">
         </div>
-        
+        <!-- 이벤트 기간 -->
         <div class="event-content">
           <h4>이벤트 기간</h4>
           <table class="template-table">
             <tr>
               <td>
-                <h2>시작 날짜</h2>
+                <p class="mb-0">시작 날짜</p>
               </td>
               <td>
-                <h2>종료 날짜</h2>
+                <p class="mb-0">종료 날짜</p>
               </td>
             </tr>
             <tr>
@@ -28,33 +29,42 @@
             </tr>
           </table>
         </div>
-
+        <!-- 이벤트 내용 -->
         <div class="event-content">
           <h4>이벤트 내용</h4>
           <textarea class="form-control" rows="5" cols="40" v-model="content"></textarea>
         </div>
-
+        <!-- 이벤트 썸네일 -->
         <div class="event-content">
-          <h4>이벤트 썸네일</h4>
-              <input ref="thumbnailImage" type="file" hidden @change="onChangeThumbnail">
-              <button type="button" class="btn btn-success btn-sm" @click="onUploadThumbnail">업로드</button>
-          <div class="preview-img">
-            <img id="inner-img" v-if="imageUrl.thumbnail" :src="imageUrl.thumbnail" alt="">
+          <div class="row">
+            <h4 class="ml-3">이벤트 썸네일</h4>
+            <input ref="thumbnailImage" type="file" hidden @change="onChangeThumbnail">
+            <button type="button" class="btn btn-success btn-sm ml-3" @click="onUploadThumbnail">업로드</button>
           </div>
-          <h4>이벤트 썸네일</h4>
-              <input ref="thumbnailImage2" type="file" hidden @change="onChangeThumbnail2">
-              <button type="button" class="btn btn-success btn-sm" @click="onUploadThumbnail2">업로드</button>
-          <div class="preview-img">
-            <img id="inner-img" v-if="imageUrl.thumbnail2" :src="imageUrl.thumbnail2" alt="">
+          <div class="preview-img mt-2">
+            <img id="inner-img" class="d-flex mx-auto" v-if="imageUrl.thumbnail" :src="imageUrl.thumbnail" alt="">
           </div>
         </div>
-
-        <div class="row justify-content-end" id="content-btn">
-          <div >
-            <button type="button" class="btn btn-secondary btn-sm" @click="onClickWindows">미리보기</button>
+        <div class="event-content">
+          <div class="row">
+            <h4 class="ml-3">이벤트 썸네일</h4>
+            <input ref="thumbnailImage" type="file" hidden @change="onChangeThumbnail">
+            <button type="button" class="btn btn-success btn-sm ml-3" @click="onUploadThumbnail">업로드</button>
           </div>
-          <div >
-            <button type="button" class="btn btn-secondary btn-sm" @click="onRegister">임시저장</button>
+          <div class="preview-img mt-2">
+            <img id="inner-img" class="d-flex mx-auto" v-if="imageUrl.thumbnail" :src="imageUrl.thumbnail" alt="">
+          </div>
+        </div>
+        <!-- 뒤로가기, 미리보기, 임시저장 -->
+        <div class="row justify-content-end mt-5 mb-5" id="content-btn">
+          <div>
+            <button type="button" class="btn btn-dark btn-sm mr-2" @click="onRoute('Event')">뒤로가기</button>
+          </div>
+          <div>
+            <button type="button" class="btn btn-secondary btn-sm mr-2" @click="onClickWindows">미리보기</button>
+          </div>
+          <div>
+            <button type="button" class="btn btn-primary btn-sm" @click="onRegister">임시저장</button>
           </div>
         </div>  
 
@@ -151,7 +161,11 @@ export default {
       eventData.append('images', imgArray[1])
       eventData.append('url', 'test')
       this.postEvent(eventData)
-    }
+    },
+    onRoute(name) {
+      this.$router.push({name: name}, () => {})
+    },
+
   },
   created() {
     if (this.$route.params.method == 'update') {
@@ -164,6 +178,11 @@ export default {
 <style>
 textarea {
   resize: none;
+}
+
+input {
+  border: 1px solid grey;
+  border-radius: 10px;
 }
 
 .form-control {
@@ -180,15 +199,18 @@ textarea {
 }
 
 .preview-img {
-  width: 350px;
+  width: 360px;
   height: 150px;
   background-color: ghostwhite;
+  border: 1px solid #ced4da;
+  border-radius: 10px;
 }
 
 #inner-img {
   width : 300px;
   height: 125px;
-  margin-left: auto;
-  margin-right: auto;
+  right: 50%;
+  top: 50%;
 }
+
 </style>
