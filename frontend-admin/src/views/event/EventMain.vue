@@ -1,14 +1,15 @@
 <template>
-  <div v-if="events">
-    <div class="table-container">
-      <div class="btn">
-        <button type="button" class="btn btn-outline-danger">삭제</button>
-        <button type="button" class="btn btn-outline-success" @click="onCreate()">생성</button>
+  <div v-if="events" class="container-fluid pl-0">
+    <div v-if="events" class="table-container">
+      <div class="btn-background">
+        <div class="event-btn ml-3 mt-3 mb-3">
+          <!-- <button type="button" class="btn btn-danger">삭제</button> -->
+          <button type="button" class="btn btn-info ml-3" @click="onCreate()">생성</button>
+        </div>
       </div>
       <table class="table">
-        <thead>
+        <thead class="">
           <tr>
-            <th scope="col"><input type="checkbox" @click="checkAll(events)"></th>
             <th scope="col">제목</th>
             <th scope="col">기간</th>
             <th scope="col">상세보기</th>
@@ -16,13 +17,29 @@
         </thead>
         <tbody>
           <tr v-for="(event, index) in events" :key="index">
-            <th scope="row"><input type="checkbox" v-model="checked" :value="event"></th>
             <td>{{ event.title }}</td>
             <td>{{ eventDate[index].start }} ~ {{ eventDate[index].end }}</td>
-            <td><button type="button" class="btn btn-info btn-sm" @click="onUpdate(event.id)">보기</button></td>
+            <td><button type="button" class="btn btn-secondary btn-sm" @click="onUpdate(event.id)">보기</button></td>
           </tr>
         </tbody>
       </table>
+      <div class="page-navi">
+        <nav aria-label="Page navigation example justify-content-center">
+          <ul class="pagination">
+            <li class="page-item">
+              <a class="page-link" href="#" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+              </a>
+            </li>
+            <li class="page-item active"><a class="page-link" href="#">1</a></li>
+            <li class="page-item">
+              <a class="page-link" href="#" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
     </div>
   </div>
 </template>
@@ -79,14 +96,22 @@ export default {
 
 <style scoped>
 .table-container {
-  width: 90%;
-  margin-top: 10vh; 
+  width: 100%;
   text-align: center;
 }
 
-.btn {
-  margin-bottom: 30px;
-  display: inline;
+.event-btn {
+  display: flex;
 }
 
+td {
+  padding-top: 16px;
+  padding-bottom: 10px;
+}
+
+.page-navi {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+}
 </style>
