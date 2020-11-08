@@ -13,6 +13,7 @@ export default {
     unAccessedUserInfos : '', // access 권한을 가지지 못한 유저들 정보
     departments : '', // 부서 정보
     authorityModalUser: '', // 권한부여 창에 뿌려질 유저정보 (deep copy적용)
+    logs: '', // 로그 데이터
   },
 
   getters: {
@@ -66,9 +67,15 @@ export default {
     SET_DEPARTMENTS(state, payload) {
       state.departments = payload
     },
+
     // 권한 부여 모달창 띄우기
     SET_USER(state, payload) {
       state.authorityModalUser = payload
+    },
+
+    // 로그 데이터 상태 변경
+    SET_LOGS(state, payload) {
+      state.logs = payload
     }
   },
 
@@ -147,14 +154,22 @@ export default {
 
     // 권한 부여 
     giveAuthorities({ getters, state, dispatch }, authorityInfo) {
-      axios.put(SERVER.URL + SERVER.ROUTER.usermanage + state.authorityModalUser.id, authorityInfo, getters.config)
+      axios.put(SERVER.URL + SERVER.ROUTER.usermanage + state.authorityModalUser.id + '/', authorityInfo, getters.config)
        .then(res => {
          console.log(res)
          dispatch('getAccessUserInfo')
         })
        .catch(error => console.log(error.response))
     },
-    
+
+    // 로그 조회
+    getLogs({ getters, commit }) {
+      axios.get(SERVER.URL + SERVER.ROUTER.log, getters.config)
+        .then(res => {
+          commit('SET_LOGS', res.data)
+        })
+        .catch(error => console.log(error.response))
+      }
   },
 
   

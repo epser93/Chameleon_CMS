@@ -103,7 +103,31 @@ const routes = [
           {
             path: 'notice',
             name: 'Notice',
-            component: () => import('@/views/Contents/Notice.vue')
+            component: () => import('@/views/Contents/Notice.vue'),
+            redirect : 'notice',
+            children : [
+              {
+                path: '',
+                name: 'NoticeMain',
+                component : () => import('@/views/notice/NoticeMain.vue')
+              },
+              {
+                path: 'form',
+                name: 'NoticeForm',
+                component: () => import('@/views/notice/NoticeForm.vue')
+              },
+              {
+                path: 'form/:id',
+                name: 'NoticeUpdate',
+                props: true,
+                component: () => import('@/views/notice/NoticeForm.vue')
+              },
+              {
+                path: ':id',
+                name: 'NoticeDetail',
+                component: () => import('@/views/notice/NoticeDetail')
+              }
+            ]
           }
         ]
       },
