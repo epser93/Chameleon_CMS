@@ -27,17 +27,11 @@
           <!-- {{ category }} -->
           <td>{{ category.name }}</td>
           <!-- 스위치 -->
-          <td v-if="category.is_active">활성화
-            <div class="custom-control custom-switch">
-              <input type="checkbox" class="custom-control-input" :id="category.id" v-model="category.is_active" value="category.is_active" @click="changeActive(category.id)">
-              <label class="custom-control-label" :for="category.id"></label>
-            </div>
+          <td v-if="category.is_active">
+            <span class="badge badge-success" @click="changeActive(category)">활성화</span>
           </td>
-          <td v-else>비활성화
-            <div class="custom-control custom-switch">
-              <input type="checkbox" class="custom-control-input" :id="category.id" v-model="category.is_active" value="category.is_active" @click="changeActive(category.id)">
-              <label class="custom-control-label" :for="category.id"></label>
-            </div>
+          <td v-else>
+            <span class="badge badge-danger" @click="changeActive(category)">비활성화</span>
           </td>
           <!-- 스위치 -->
           <td>{{ category.update_date.slice(0,10) }}</td>
@@ -79,17 +73,14 @@ export default {
       this.$router.push({name:'ProductItemMain', params:{cid: cid}})
     },
     
-    changeActive(id){
+    changeActive(category){
       if (confirm("상태를 변경하시겠습니까?") == true){    //확인
-          if (this.categories[id-1].is_active) {
-            this.delCategory(id)
-          }
-          else {
-            this.postCategory(id)
-          }
-      } else {   //취소
-        //여기 부분 수정 필요
-        return ;
+        if (category.is_active) {
+          this.delCategory(category.id)
+        }
+        else {
+          this.postCategory(category.id)
+        }
       }
     }
     
@@ -114,5 +105,10 @@ export default {
 #btn-add {
   margin-top: 50px;
   text-align: end;
+}
+
+span {
+  cursor: pointer;
+  margin-top: 4px;
 }
 </style>
