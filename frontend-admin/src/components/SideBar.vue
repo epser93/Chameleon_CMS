@@ -2,14 +2,14 @@
 <div class="row">
   <ul class="nav-container">
 	<li class="nav-items" v-for="(category, index) in categories" :key="index">
-	<div :class="category" @click="onRoute(category)">
-		{{ category }}
-	</div>
-	<div v-if="category==='Product'">
-		<div class="product-category" v-for="(product, index) in productCategories" :key="index" @click="onDetail(product.id)">
-		{{ product.name }}
+		<div :class="category" @click="onRoute(category)">
+			{{ category }}
 		</div>
-	</div>
+		<span class="inner-item" v-if="category ==='Product'">
+			<div :class="product.name" v-for="(product, index) in productCategories" :key="index" @click="onDetail(product.id)">
+			{{ product.name }}
+			</div>
+		</span>
 	</li>
   </ul>
  </div>
@@ -30,12 +30,19 @@ export default {
 		},
 		onDetail(cid) {
 			console.log(cid)
-			this.$router.push({name:'ItemMain', params:{cid: cid}}, () => {})
+			this.$router.push({name:'ProductItemMain', params:{cid: cid}}, () => {})
 		},
 		fixCategory () {
 			for (let i=0; i<this.categories.length; i++) {
-        let className = '.' + this.categories[i]
-				if (this.$route.name === this.categories[i]) {
+			let className = '.' + this.categories[i]
+			let tmp = this.categories[i]
+				if (this.$route.name.includes(tmp)) {
+					if(tmp == 'Product'){
+						this.InnerCategory()
+					}
+					else{
+						this.OutCategory()
+					}
 					document.querySelector(className).classList.add('active')
 				} else {
 					document.querySelector(className).classList.remove('active')
@@ -56,6 +63,31 @@ export default {
 			// 	this.$refs.User.classList.remove('active')
 			// 	this.$refs.UserLog.classList.add('active')
 			// }
+		},
+
+		InnerCategory () {
+			for (let i=0; i<this.productCategories.length; i++) {
+			let className = '.' + this.productCategories[i].name
+			console.log(className)
+			let tmp = this.productCategories[i].id
+			console.log(tmp)
+			console.log(this.$route.params.cid)
+
+			if (this.$route.params.cid == tmp) {
+				document.querySelector(className).classList.add('active')
+			} else {
+				console.log(this.$route.name + "  else")
+				console.log(tmp + "  else")
+				document.querySelector(className).classList.remove('active')
+			}
+			}
+		},
+		OutCategory () {
+			for (let i=0; i<this.productCategories.length; i++) {
+			let className = '.' + this.productCategories[i].name
+			console.log(className)
+			document.querySelector(className).classList.remove('active')
+			}
 		}
 	},
 	watch: {
@@ -88,10 +120,22 @@ export default {
 		// 	}
 		// },
 		'$route' : function() {
+			// if('Main' in this.$route.name) {
+			// 	let className = '.main'
+			// 	document.querySelector(className).classList.add('active')
+			// }
 			for (let i=0; i<this.categories.length; i++) {
 				let className = '.' + this.categories[i]
-				if (this.$route.name === this.categories[i]) {
+				let tmp = this.categories[i]
+				if (this.$route.name.includes(tmp)) {
+
 					document.querySelector(className).classList.add('active')
+					if(tmp === 'Product'){
+						this.InnerCategory()
+					}
+					else{
+						this.OutCategory()
+					}
 				} else {
 					document.querySelector(className).classList.remove('active')
 				}
@@ -123,6 +167,40 @@ export default {
 	cursor: pointer;
 }
 
+.nav-items .product.name {
+	/* 여기 */
+	text-decoration: none;
+	color: red;
+	position: relative;
+	width: fit-content;
+	cursor: pointer;
+}
+.nav-items .product.name::before {
+	/* 여기 */
+	content: '';
+	height: 5px;
+	width: 0;
+	background-color:red;
+	border-radius: 10px;
+	transition: 0.3s;
+	position: absolute;
+	bottom: -10px;
+	left: 0;
+}
+
+.nav-items .product.name.active::before {
+	/* 여기 */
+	content: '';
+	height: 5px;
+	width: 120%;
+	background-color: black;
+	border-radius: 10px;
+	transition: 0.3s;
+	position: absolute;
+	bottom: -10px;
+	left: 0;
+}
+
 .nav-items div::before {
 	content: '';
 	height: 5px;
@@ -138,7 +216,7 @@ export default {
 .nav-items div.active::before {
 	content: '';
 	height: 5px;
-	width: 140%;
+	width: 120%;
 	background-color: gray;
 	border-radius: 10px;
 	transition: 0.3s;
@@ -148,7 +226,7 @@ export default {
 }
 
 .nav-items div:hover::before {
-  width: 140%;
+	width: 120%;
 }
 
 .product-category {

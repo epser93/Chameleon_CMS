@@ -5,40 +5,19 @@
         <thead>
           <tr>
             <th scope="col">No</th>
-            <th scope="col">카테고리</th>
             <th scope="col">분류</th>
+            <th scope="col">유저</th>
             <th scope="col">서버 IP</th>
             <th scope="col">생성일</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <th scope="row">1</th>
-            <td>Product</td>
-            <td>계정로그인</td>
-            <td>192.168.000.00</td>
-            <td>2020-10-29 14:20:19</td>
-          </tr>
-          <tr>
-            <th scope="row">2</th>
-            <td>Product</td>
-            <td>게시글삭제</td>
-            <td>192.168.000.00</td>
-            <td>2020-10-29 14:20:19</td>
-          </tr>
-          <tr>
-            <th scope="row">3</th>
-            <td>Product</td>
-            <td>계정로그인</td>
-            <td>192.168.000.00</td>
-            <td>2020-10-29 14:20:19</td>
-          </tr>
-          <tr>
-            <th scope="row">4</th>
-            <td>Product</td>
-            <td>계정로그인</td>
-            <td>192.168.000.00</td>
-            <td>2020-10-29 14:20:19</td>
+          <tr v-for="(log, index) in logs" :key="index">
+            <th scope="row">{{ index + 1 }}</th>
+            <td>{{ log.type }}</td>
+            <td>{{ log.cms_user }}</td>
+            <td>{{ log.register_ip }}</td>
+            <td>{{ log.create_date }}</td>
           </tr>
         </tbody>
       </table>
@@ -64,8 +43,23 @@
 </template>
 
 <script>
+import { mapActions, mapState } from 'vuex'
 export default {
+  name: "Logs",
+  data() {
+    return {
 
+    }
+  },
+  computed: {
+    ...mapState('account', ['logs'])
+  },
+  methods: {
+    ...mapActions('account', ['getLogs'])
+  },
+  created() {
+    this.getLogs()
+  }
 }
 </script>
 

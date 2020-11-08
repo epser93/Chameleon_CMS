@@ -8,19 +8,30 @@ export default {
   state: {
     // data
     categories: '',
+    category: '',
     items: '',
 
   },
 
   getters: {
     // watch, computed
-
+    category(state) {
+      for (let i=0; i<state.categories.length; i++) {
+				if (state.category == state.categories[i].id) {
+					return state.categories[i]
+				}
+      }
+      return null
+    }
   },
 
   mutations: {
     // state 값을 변경 시켜주기 위한 함수
     SET_CATEGORIES(state, payload) {
       state.categories = payload
+    },
+    SET_CATEGORY(state, payload) {
+      state.category = payload
     },
     SET_ITEMS(state, payload) {
       state.items = payload
@@ -75,8 +86,7 @@ export default {
       console.log(SERVER.URL + SERVER.ROUTER.category + id + '/')
       axios.get(SERVER.URL + SERVER.ROUTER.category + id + '/', rootGetters['account/config'])
         .then((res) => {
-            commit('SET_ITEMS', res.data),
-            console.log("카테고리리스트")
+            commit('SET_ITEMS', res.data)
         })
         .catch(() => {console.log('왜에러남')})
     },
