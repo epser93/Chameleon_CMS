@@ -27,29 +27,44 @@ class Category(models.Model):
     priority = models.IntegerField(default=1)
     created_date = models.DateTimeField(auto_now_add=True)
     update_date = models.DateTimeField(auto_now=True)
-    
+    image = models.ImageField(default=None, null=True)
     template = models.ForeignKey(Template, on_delete=models.SET_NULL, related_name='category', null=True)
     cms_user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.DO_NOTHING)
 
     def __str__(self) -> str:
         return self.name
 
-    def create(self, data, user, template):
+    def create(self, data, user, template, image):
+        if image != None:
+            is_success, answer = get_imagefile(image)
+            if is_success == False:
+                return False, answer
+            self.image = answer
         self.name = data['name']
-        self.is_active = True
-        self.priority = data['priority']
+        is_active = data.get('is_active', 'False') == 'True'
+        self.is_active = is_active
+        self.priority = int(data.get('priority', self.priority))
         self.cms_user = user
         self.template = template
         self.save()
 
-    def update(self, data, template):
-        self.name = data['name']
-        self.priority = data['priority']
+    def update(self, data, template, image):
+        if image != None:
+            is_success, answer = get_imagefile(image)
+            if is_success == False:
+                return False, answer
+            self.image = answer
+        self.name = data.get('name', self.name)
+        self.priority = data.get('priority', self.priority)
         self.template = template
         self.save()
 
     def delete(self):
         self.is_active = False
+        self.save()
+
+    def activate(self):
+        self.is_active = True
         self.save()
 
     

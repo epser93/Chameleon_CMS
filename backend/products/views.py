@@ -1,5 +1,3 @@
-from django.http import request
-from rest_framework.serializers import Serializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -7,19 +5,19 @@ from .models import Item, ItemImage, ItemDescription, Category, CategoryDescript
 from .serializers import CopyItemSerializer, ItemSerializer, CategorySerializer, TemplateSerializer
 
 class CategoryList(APIView):
-    def get(self, request, format=None):
+    def get(self, request):
         categories = Category.objects.all()
         serializer = CategorySerializer(categories, many=True)
         return Response(serializer.data)
 
 
-    def post(self, request, format=None):
+    def post(self, request):
         if Category.objects.filter(name=request.data['name']).exists():
             return Response('존재하는 카테고리 입니다.', status=status.HTTP_400_BAD_REQUEST)
         category = Category()
-        template = Template.objects.get(pk=request.data['template'])
-        category.create(request.data, request.user, template)
-        for description in request.data['descriptions']:
+        template = Template.objects.get(pk=int(request.data['template']))
+        category.create(request.data, request.user, template, request.FILES.get('image', None))
+        for description in request.data.getlist('descriptions'):
             category_description = CategoryDescription()
             category_description.create(description, category)
         serializer = CategorySerializer(category)
@@ -36,16 +34,15 @@ class CategoryDetail(APIView):
 
     def post(self, request, pk):
         category = Category.objects.get(pk=pk)
-        category.is_active = True
-        category.save()
+        category.activate()
         serializer = CategorySerializer(category)
         return Response(serializer.data)
 
     # 테스트
     def put(self, request, pk):
-        template = Template.objects.get(pk=request.data['template'])
+        template = Template.objects.get(pk=int(request.data['template']))
         category = Category.objects.get(pk=pk)
-        category.update(request.data, template)
+        category.update(request.data, template, request.FILES.get('image', None))
         self.descriptions_add(request.data, category)
         self.descriptions_update(request.data, category)
         self.descriptions_delete(request.data)
@@ -61,19 +58,21 @@ class CategoryDetail(APIView):
 
     
     def descriptions_update(self, data, category):
-        for description in data.get('descriptions_update', []):
-            category_description = CategoryDescription.objects.get(pk=description['id'])
-            category_description.update(description['name']) 
+        descriptions_update_id = list(map(int, data.getlist('descriptions_update_id')))
+        descriptions_update_name = data.getlist('descriptions_update_name')
+        for i in range(len(descriptions_update_id)):
+            category_description = CategoryDescription.objects.get(pk=descriptions_update_id[i])
+            category_description.update(descriptions_update_name[i]) 
 
     # 위에 코드와 중복됨 나중에 리팩토링
     def descriptions_add(self, data, category):
-        for description in data.get('descriptions_add', []):
+        for description in data.getlist('descriptions_add'):
             category_description = CategoryDescription()
             category_description.create(description, category)
 
     def descriptions_delete(self, data):
-        for description in data.get('descriptions_delete', []):
-            category_description = CategoryDescription.objects.get(pk=description)
+        for description in data.getlist('descriptions_delete'):
+            category_description = CategoryDescription.objects.get(pk=int(description))
             category_description.delete()
 
 

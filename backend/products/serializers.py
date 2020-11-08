@@ -22,7 +22,7 @@ class CategorySerializer(serializers.ModelSerializer):
     template = TemplateSerializer()
     class Meta:
         model = Category
-        fields = ['id', 'name', 'is_active', 'priority', 'template','created_date', 'update_date', 'cms_user', 'description']
+        fields = ['id', 'name', 'is_active', 'image','priority', 'template','created_date', 'update_date', 'cms_user', 'description']
 
 
 class CategoryJoinSerializer(serializers.ModelSerializer):
