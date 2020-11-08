@@ -5,8 +5,8 @@
 		<div :class="category" @click="onRoute(category)">
 			{{ category }}
 		</div>
-		<span v-if="category ==='Product'">
-			<div class="product-category" v-for="(product, index) in productCategories" :key="index" @click="onDetail(product.id)">
+		<span class="inner-item" v-if="category ==='Product'">
+			<div :class="product.name" v-for="(product, index) in productCategories" :key="index" @click="onDetail(product.id)">
 			{{ product.name }}
 			</div>
 		</span>
@@ -35,17 +35,16 @@ export default {
 		fixCategory () {
 			for (let i=0; i<this.categories.length; i++) {
 			let className = '.' + this.categories[i]
-			// console.log(className)
 			let tmp = this.categories[i]
 				if (this.$route.name.includes(tmp)) {
-					// console.log(this.$route.name)
-					// console.log(this.categories[i])
+					if(tmp == 'Product'){
+						this.InnerCategory()
+					}
+					else{
+						this.OutCategory()
+					}
 					document.querySelector(className).classList.add('active')
 				} else {
-					// console.log(this.$route.name + "else")
-					// console.log(this.categories[i] + "else")
-					console.log(this.$route.name + "  else")
-					console.log(tmp + "  else")
 					document.querySelector(className).classList.remove('active')
 				}
 			}
@@ -64,6 +63,31 @@ export default {
 			// 	this.$refs.User.classList.remove('active')
 			// 	this.$refs.UserLog.classList.add('active')
 			// }
+		},
+
+		InnerCategory () {
+			for (let i=0; i<this.productCategories.length; i++) {
+			let className = '.' + this.productCategories[i].name
+			console.log(className)
+			let tmp = this.productCategories[i].id
+			console.log(tmp)
+			console.log(this.$route.params.cid)
+
+			if (this.$route.params.cid == tmp) {
+				document.querySelector(className).classList.add('active')
+			} else {
+				console.log(this.$route.name + "  else")
+				console.log(tmp + "  else")
+				document.querySelector(className).classList.remove('active')
+			}
+			}
+		},
+		OutCategory () {
+			for (let i=0; i<this.productCategories.length; i++) {
+			let className = '.' + this.productCategories[i].name
+			console.log(className)
+			document.querySelector(className).classList.remove('active')
+			}
 		}
 	},
 	watch: {
@@ -104,12 +128,15 @@ export default {
 				let className = '.' + this.categories[i]
 				let tmp = this.categories[i]
 				if (this.$route.name.includes(tmp)) {
-					// console.log(this.$route.name)
-					// console.log(this.categories[i])
+
 					document.querySelector(className).classList.add('active')
+					if(tmp === 'Product'){
+						this.InnerCategory()
+					}
+					else{
+						this.OutCategory()
+					}
 				} else {
-					console.log(this.$route.name + "  else!!")
-					console.log(tmp)
 					document.querySelector(className).classList.remove('active')
 				}
 			}
@@ -140,14 +167,16 @@ export default {
 	cursor: pointer;
 }
 
-.nav-items .product-category {
+.nav-items .product.name {
+	/* 여기 */
 	text-decoration: none;
 	color: red;
 	position: relative;
 	width: fit-content;
 	cursor: pointer;
 }
-.nav-items .product-category::before {
+.nav-items .product.name::before {
+	/* 여기 */
 	content: '';
 	height: 5px;
 	width: 0;
@@ -159,7 +188,8 @@ export default {
 	left: 0;
 }
 
-.nav-items .product-category.active::before {
+.nav-items .product.name.active::before {
+	/* 여기 */
 	content: '';
 	height: 5px;
 	width: 120%;

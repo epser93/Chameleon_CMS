@@ -86,8 +86,7 @@ export default {
       console.log(SERVER.URL + SERVER.ROUTER.category + id + '/')
       axios.get(SERVER.URL + SERVER.ROUTER.category + id + '/', rootGetters['account/config'])
         .then((res) => {
-            commit('SET_ITEMS', res.data),
-            console.log("카테고리리스트")
+            commit('SET_ITEMS', res.data)
         })
         .catch(() => {console.log('왜에러남')})
     },
