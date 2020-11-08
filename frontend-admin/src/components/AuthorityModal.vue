@@ -26,22 +26,24 @@
           <hr>
           <div> 
             <p class="tag">권한</p>
-            <label class="chkbox-label">
-              <input type="checkbox" :value="authorityModalUser.is_eventer" v-model="authorityModalUser.is_eventer">
-              Event
-            </label>
-            <label class="chkbox-label">
-              <input type="checkbox" :value="authorityModalUser.is_logger" v-model="authorityModalUser.is_logger">
-              Log
-            </label>
-            <label class="chkbox-label">
-              <input type="checkbox" :value="authorityModalUser.is_producter" v-model="authorityModalUser.is_producter">
-              Product
-            </label>
-            <label class="chkbox-label">
-              <input type="checkbox" :value="authorityModalUser.is_marketer" v-model="authorityModalUser.is_marketer">
-              Main + Notice
-            </label>
+            <div class="row justify-content-center ml-1">
+              <label class="chkbox-label">
+                <input type="checkbox" :value="authorityModalUser.is_eventer" v-model="authorityModalUser.is_eventer">
+                Event
+              </label>
+              <label class="chkbox-label">
+                <input type="checkbox" :value="authorityModalUser.is_logger" v-model="authorityModalUser.is_logger">
+                Log
+              </label>
+              <label class="chkbox-label">
+                <input type="checkbox" :value="authorityModalUser.is_producter" v-model="authorityModalUser.is_producter">
+                Product
+              </label>
+              <label class="chkbox-label">
+                <input type="checkbox" :value="authorityModalUser.is_marketer" v-model="authorityModalUser.is_marketer">
+                Main + Notice
+              </label>
+            </div>
           </div>
         </div>
         <div class="modal-footer justify-content-center">
