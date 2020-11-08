@@ -36,15 +36,10 @@
         </div>
         <!-- 이벤트 썸네일 -->
         <div class="event-content">
-          <div class="row">
-            <h4 class="ml-3">이벤트 썸네일</h4>
-            <input ref="thumbnailImage" type="file" hidden @change="onChangeThumbnail">
-            <button type="button" class="btn btn-success btn-sm ml-3" @click="onUploadThumbnail">업로드</button>
-          </div>
-          <div class="preview-img mt-2">
-            <img id="inner-img" class="d-flex mx-auto" v-if="imageUrl.thumbnail" :src="imageUrl.thumbnail" alt="">
-          </div>
+          <h4>관련 URL</h4>
+          <input type="text" class="form-control" placeholder="상품 페이지" v-model="linkUrl">
         </div>
+
         <div class="event-content">
           <div class="row">
             <h4 class="ml-3">이벤트 썸네일</h4>
@@ -55,6 +50,39 @@
             <img id="inner-img" class="d-flex mx-auto" v-if="imageUrl.thumbnail" :src="imageUrl.thumbnail" alt="">
           </div>
         </div>
+
+        <div class="content-part">
+          <div class="row align-items-center">
+            <h1 class="mb-0 ml-3">상세 이미지</h1>
+          </div>
+          <div v-if="!images.detail.length" class="file-upload-container">
+            <div class="file-upload-example">
+              <div class="notice-item">
+                <div class="image-box">
+                  <label for="file">이미지 등록</label>
+                  <input type="file" id="file" ref="detailImages" @change="imageUpload" multiple />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div v-else class="file-preview-content-container">
+            <div class="file-preview-container">
+              <div v-for="(file, index) in images.detail" :key="index" class="file-preview-wrapper">
+                <div class="file-close-button" @click="fileDeleteButton" :name="file.number">
+                  x
+                </div>
+                <img :src="file.preview" />
+              </div>
+              <div class="file-preview-wrapper-upload">
+                <div class="image-box" id="image-box-preview">
+                  <label for="file">추가 사진 등록</label>
+                  <input type="file" id="file" ref="detailImages" @change="imageAddUpload" multiple />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <!-- 뒤로가기, 미리보기, 임시저장 -->
         <div class="row justify-content-end mt-5 mb-5" id="content-btn">
           <div>
@@ -64,7 +92,7 @@
             <button type="button" class="btn btn-secondary btn-sm mr-2" @click="onClickWindows">미리보기</button>
           </div>
           <div>
-            <button type="button" class="btn btn-primary btn-sm" @click="onRegister">임시저장</button>
+            <button type="button" class="btn btn-primary btn-sm" @click="onRegister">등록하기</button>
           </div>
         </div>  
 
@@ -92,15 +120,13 @@ export default {
       },
       imageUrl: {
         thumbnail: '',
-        thumbnail2: '',
-        detail: [],
       },
       images: {
         thumbnail: '',
-        thumbnail2: '',
         detail: [],
       },
-      linkUrl: ''
+      linkUrl: '',
+      uploadImageIndex: 0,
     }
   },
   computed: {
@@ -108,12 +134,24 @@ export default {
   },
   watch: {
     event(val) {
-      this.imageUrl.thumbnail = val.thumbnail_image
+      this.imageUrl.thumbnail = 'http://k3c205.p.ssafy.io' + val.thumbnail_image
       this.title = val.title,
       this.content = val.content,
       this.date.start = val.start_date,
       this.date.end = val.end_date
-      // this.eventData.images = []
+      this.linkUrl = val.url
+      for (let i = 0; i < val.detail.length; i++) {
+        const imageData = {
+          file: val.detail[i].id,
+          number: i,
+          preview: 'http://k3c205.p.ssafy.io' + val.detail[i].image
+        }
+        this.images.detail.push(imageData)
+      }
+      this.uploadImageIndex = val.detail.length
+      console.log(val.detail)
+      console.log(this.images.detail)
+
     }
   },
   methods: {
@@ -134,31 +172,77 @@ export default {
       this.images.thumbnail = file
       this.imageUrl.thumbnail = URL.createObjectURL(file)
     },
-    onUploadThumbnail2() {
-      this.$refs.thumbnailImage2.click()
+    imageUpload() {
+      // this.images.detail = [...this.images.detail, this.$refs.detailImages.images.detail];
+      //하나의 배열로 넣기
+      let num = -1;
+      for (let i = 0; i < this.$refs.detailImages.files.length; i++) {
+        this.images.detail = [
+          ...this.images.detail,
+            //이미지 업로드
+            {
+                //실제 파일
+                file: this.$refs.detailImages.files[i],
+                //이미지 프리뷰
+                preview: URL.createObjectURL(this.$refs.detailImages.files[i]),
+                //삭제및 관리를 위한 number
+                number: i
+            }
+        ];
+        num = i;
+              //이미지 업로드용 프리뷰
+              // this.imageUrl.detail = [
+              //   ...this.imageUrl.detail,
+              //   { file: URL.createObjectURL(this.$refs.detailImages.images.detail[i]), number: i }
+              // ];
+      }
+      this.uploadImageIndex = num + 1; //이미지 index의 마지막 값 + 1 저장
+      },
+
+    imageAddUpload() {
+
+      // this.images.detail = [...this.images.detail, this.$refs.detailImages.images.detail];
+      //하나의 배열로 넣기c
+      let num = -1;
+      for (let i = 0; i < this.$refs.detailImages.files.length; i++) {
+        console.log(this.uploadImageIndex);
+        this.images.detail = [
+          ...this.images.detail,
+          //이미지 업로드
+          {
+            //실제 파일
+            file: this.$refs.detailImages.files[i],
+            //이미지 프리뷰
+            preview: URL.createObjectURL(this.$refs.detailImages.files[i]),
+            //삭제및 관리를 위한 number
+            number: i + this.uploadImageIndex
+          }
+        ];
+        num = i;
+      }
+      this.uploadImageIndex = this.uploadImageIndex + num + 1;
+
     },
-    onChangeThumbnail2(e) {
-      const file = e.target.files[0]
-      this.images.thumbnail2 = file
-      this.imageUrl.thumbnail2 = URL.createObjectURL(file)
+    fileDeleteButton(e) {
+      const name = e.target.getAttribute('name');
+      this.images.detail = this.images.detail.filter(data => data.number !== Number(name));
     },
     onRegister() {
-      const imgArray = new Array()
-      imgArray.push(this.images.thumbnail)
-      imgArray.push(this.images.thumbnail2)
-      console.log(imgArray)
-      // imgArray.from(input_file.files).forEach((f) => {
-      //   data.append('image[]', f)
-      // })
+      const imgArray = [...this.images.detail]
       const eventData = new FormData()
       eventData.append('thumbnail', this.images.thumbnail)
       eventData.append('title', this.title)
       eventData.append('content', this.content)
-      eventData.append('start_date', this.date.start.slice(0,10) + " 00:00:00")
-      eventData.append('end_date', this.date.end.slice(0,10)+" 23:59:59")
-      // json으로 해보기
-      eventData.append('images', imgArray[0])
-      eventData.append('images', imgArray[1])
+      const SD = new Date(this.date.start)
+      const startDate = SD.getFullYear() + "-" + (SD.getMonth() + 1) + "-" + SD.getDate()
+      const ED = new Date(this.date.end)
+      const endDate = ED.getFullYear() + "-" + (ED.getMonth() + 1) + "-" + ED.getDate()
+      eventData.append('start_date', startDate.slice(0,10) + " 00:00:00")
+      eventData.append('end_date', endDate.slice(0,10)+" 23:59:59")
+      eventData.append('number', imgArray.length)
+      for (let i = 0; i < imgArray.length; i++) {
+        eventData.append('image'+i, imgArray[i].file)
+      }
       eventData.append('url', 'test')
       this.postEvent(eventData)
     },
@@ -213,4 +297,100 @@ input {
   top: 50%;
 }
 
+.image-box label {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #28A743;
+    color: #fff;
+    vertical-align: middle;
+    font-size: 15px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.file-preview-wrapper {
+    padding: 10px;
+    position: relative;
+}
+
+.file-preview-wrapper>img {
+    position: relative;
+    width: 190px;
+    height: 130px;
+    z-index: 10;
+}
+
+.file-close-button {
+    position: absolute;
+    /* align-items: center; */
+    line-height: 18px;
+    z-index: 99;
+    font-size: 18px;
+    right: 5px;
+    top: 10px;
+    color: #fff;
+    font-weight: bold;
+    background-color: #666666;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.file-preview-container {
+    height: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.file-preview-wrapper-upload {
+    margin: 10px;
+    padding-top: 20px;
+    /* background-color: #888888; */
+    width: 190px;
+    height: 130px;
+}
+.content-part{
+  margin-top: 30px;
+}
+
+.file-upload-example {
+    height: 100%;
+}
+
+.file-preview-content-container {
+    height: 100%;
+}
+#image-box-preview{
+    margin-top: 30px;
+    padding-bottom: 20px;
+    text-align: center;
+}
+.notice-item {
+  margin-top: 5px;
+  color: grey;
+}
+
+.image-box {
+    padding-bottom: 10px;
+}
+
+.image-box input[type='file'] {
+    position: absolute;
+    width: 0;
+    height: 0;
+    padding: 0;
+    overflow: hidden;
+    border: 0;
+}
+
+.warning-text {
+  align-items: center;
+  color: grey;
+}
+
+.warning-text-detail {
+  margin-bottom: 0;
+  font-size: 12px;
+}
 </style>

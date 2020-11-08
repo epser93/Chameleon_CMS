@@ -11,6 +11,7 @@
         <thead class="">
           <tr>
             <th scope="col">제목</th>
+            <th scope="col">상태</th>
             <th scope="col">기간</th>
             <th scope="col">상세보기</th>
           </tr>
@@ -18,6 +19,20 @@
         <tbody>
           <tr v-for="(event, index) in events" :key="index">
             <td>{{ event.title }}</td>
+            <!-- 스위치 -->
+            <td v-if="event.is_active">활성화
+              <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input" :id="event.id" v-model="event.is_active" :value="event.is_active" @click="changeActive(event)">
+                <label class="custom-control-label" :for="event.id"></label>
+              </div>
+            </td>
+            <td v-else>비활성화
+              <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input" :id="event.id" v-model="event.is_active" :value="event.is_active" @click="changeActive(event)">
+                <label class="custom-control-label" :for="event.id"></label>
+              </div>
+            </td>
+            <!-- 스위치 -->
             <td>{{ eventDate[index].start }} ~ {{ eventDate[index].end }}</td>
             <td><button type="button" class="btn btn-secondary btn-sm" @click="onUpdate(event.id)">보기</button></td>
           </tr>
@@ -71,7 +86,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions('event',['getEvents']),
+    ...mapActions('event', ['getEvents', 'delEvent', 'actEvent']),
     onCreate() {
 			this.$router.push({name: 'EventCreate', params: {method: 'create'}}, () => {})
     },
@@ -85,6 +100,18 @@ export default {
         }
       } else {
         this.checked = []
+      }
+    },
+    changeActive(event){
+      if (confirm("상태를 변경하시겠습니까?") == true){    //확인
+          if (event.is_active) {
+            this.delEvent(event.id)
+          }
+          else {
+            this.actEvent(event.id)
+          }
+      } else {   //취소
+        this.getEvents()
       }
     }
   },
