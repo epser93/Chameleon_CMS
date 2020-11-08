@@ -2,7 +2,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from .models import Event, EventDetail, Notices
-from .serializers import EventSerializer, NoticesSerializer
+from .serializers import EventSerializer, NoticesSerializer, SearchSerializer
 
 message = 'message'
 
@@ -10,7 +10,7 @@ message = 'message'
 class EventList(APIView):
     
     def get(self, request):
-        events = Event.objects.filter(is_active=True)
+        events = Event.objects.all()
         serializer = EventSerializer(events, many=True)
         return Response(serializer.data)
 
@@ -101,3 +101,9 @@ class NoticesDetail(APIView):
         notice.delete()
         answer = {message: '공지가 비활성화 되었습니다.'}
         return Response(answer, status=status.HTTP_200_OK)
+
+
+class CustomerSearchAPI(APIView):
+    def get(self, request):
+        serializer = SearchSerializer(request.user, context = {'content': request.GET.get('content', None)})
+        return Response(serializer.data)
