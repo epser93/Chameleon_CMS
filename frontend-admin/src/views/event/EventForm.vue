@@ -44,7 +44,7 @@
           <div class="row">
             <h4 class="ml-3">이벤트 썸네일</h4>
             <input ref="thumbnailImage" type="file" hidden @change="onChangeThumbnail">
-            <button type="button" class="btn btn-success btn-sm ml-3" @click="onUploadThumbnail">업로드</button>
+            <button type="button" class="btn btn-success btn-sm ml-3" @click="onUploadThumbnail">이미지 등록</button>
           </div>
           <div class="preview-img mt-2">
             <img id="inner-img" class="d-flex mx-auto" v-if="imageUrl.thumbnail" :src="imageUrl.thumbnail" alt="">
@@ -53,13 +53,13 @@
 
         <div class="content-part">
           <div class="row align-items-center">
-            <h1 class="mb-0 ml-3">상세 이미지</h1>
+            <h4 class="mb-0 ml-3">상세 이미지</h4>
           </div>
           <div v-if="!images.detail.length" class="file-upload-container">
             <div class="file-upload-example">
               <div class="notice-item">
                 <div class="image-box">
-                  <label for="file">이미지 등록</label>
+                  <label for="file" class="mt-2">이미지 등록</label>
                   <input type="file" id="file" ref="detailImages" @change="imageUpload" multiple />
                 </div>
               </div>
@@ -69,7 +69,7 @@
             <div class="file-preview-container">
               <div v-for="(file, index) in images.detail" :key="index" class="file-preview-wrapper">
                 <div class="file-close-button" @click="fileDeleteButton" :name="file.number">
-                  x
+                  <img src="@/assets/icons/x.svg" alt="delete button" width="20" height="20" title="x">
                 </div>
                 <img :src="file.preview" />
               </div>
@@ -86,7 +86,7 @@
         <!-- 뒤로가기, 미리보기, 임시저장 -->
         <div class="row justify-content-end mt-5 mb-5" id="content-btn">
           <div>
-            <button type="button" class="btn btn-dark btn-sm mr-2" @click="onRoute('Event')">뒤로가기</button>
+            <button type="button" class="btn btn-dark btn-sm mr-2" @click="$router.go(-1)">뒤로가기</button>
           </div>
           <div>
             <button type="button" class="btn btn-secondary btn-sm mr-2" @click="onClickWindows">미리보기</button>
@@ -246,9 +246,6 @@ export default {
       eventData.append('url', 'test')
       this.postEvent(eventData)
     },
-    onRoute(name) {
-      this.$router.push({name: name}, () => {})
-    },
 
   },
   created() {
@@ -330,7 +327,7 @@ input {
     top: 10px;
     color: #fff;
     font-weight: bold;
-    background-color: #666666;
+    background-color: #cbcbcb;
     width: 20px;
     height: 20px;
     text-align: center;
