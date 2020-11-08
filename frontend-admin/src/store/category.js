@@ -8,6 +8,8 @@ export default {
   state: {
     // data
     categories: '',
+    items: '',
+
   },
 
   getters: {
@@ -17,8 +19,11 @@ export default {
 
   mutations: {
     // state 값을 변경 시켜주기 위한 함수
-    SET_CATEGORIES(state, payload){
-        state.categories = payload
+    SET_CATEGORIES(state, payload) {
+      state.categories = payload
+    },
+    SET_ITEMS(state, payload) {
+      state.items = payload
     }
   },
 
@@ -33,11 +38,11 @@ export default {
         .catch(error => {console.log(error.response)})
     },
 
-    getCategoryList({ commit, rootGetters }) {
+    getCategoryList({ rootGetters, commit }) {
         axios.get(SERVER.URL + SERVER.ROUTER.category, rootGetters['account/config'])
         .then((res) => {
-            commit('SET_CATEGORIES', res.data),
-            console.log("카테고리리스트")
+            commit('SET_CATEGORIES', res.data)
+            // console.log("카테고리리스트")
         })
         .catch(() => {console.log('에러')})
     },
@@ -66,6 +71,14 @@ export default {
         })   
     },
 
-
+    getItem({ rootGetters, commit }, id) {
+      console.log(SERVER.URL + SERVER.ROUTER.category + id + '/')
+      axios.get(SERVER.URL + SERVER.ROUTER.category + id + '/', rootGetters['account/config'])
+        .then((res) => {
+            commit('SET_ITEMS', res.data),
+            console.log("카테고리리스트")
+        })
+        .catch(() => {console.log('왜에러남')})
+    },
   }
 }

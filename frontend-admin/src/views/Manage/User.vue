@@ -1,15 +1,15 @@
 <template>
-  <div class="container-fluid">
-    <div class="table-container">
+  <div class="container-fluid p-0">
+    <div class="table-container mt-0">
       <div class="unauthorized">
-        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#unauthorizedUser">
-          미승인 회원 <span class="badge badge-light">{{unAuthorizedUserCount}}</span>
+        <button type="button" class="btn ml-3 mt-3 mb-3" data-toggle="modal" data-target="#unauthorizedUser">
+          미승인 회원 <span class="badge badge-light ml-1">{{unAuthorizedUserCount}}</span>
         </button>
       </div>
       <UnauthorizedUser></UnauthorizedUser>
       <table class="table">
         <thead>
-          <tr>
+          <tr class="top-tr">
             <th scope="col">#</th>
             <th scope="col">부서</th>
             <th scope="col">이름</th>
@@ -34,6 +34,23 @@
       </table>
     </div>
     <AuthorityModal/>
+    <div class="page-navi">
+      <nav aria-label="Page navigation example justify-content-center">
+        <ul class="pagination">
+          <li class="page-item">
+            <a class="page-link" href="#" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+          <li class="page-item active"><a class="page-link" href="#">1</a></li>
+          <li class="page-item">
+            <a class="page-link" href="#" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
   </div>
 </template>
 
@@ -80,6 +97,10 @@ export default {
   text-align: center;
 }
 
+.unauthorized {
+  background-color: #e2e4e6;
+}
+
 .user-infos {
   cursor: pointer;
 }
@@ -94,5 +115,16 @@ export default {
 
 td span {
   margin-right: 1vw;
+}
+
+.btn {
+  background-color: #4ea1b5;
+  color: white;
+}
+
+.page-navi {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
 }
 </style>

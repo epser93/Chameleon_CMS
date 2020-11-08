@@ -1,27 +1,29 @@
 # REST API 명세서
 
-| url                                           | GET                 | POST               | PUT           | DELETE        |
-| --------------------------------------------- | ------------------- | ------------------ | ------------- | ------------- |
-| accounts/                                     | 자신의 정보         |                    |               |               |
-| accounts/search/?조건식                       | 유저 검색(필터링)   |                    |               |               |
-| accounts/department/                          | 부서 정보           |                    |               |               |
-| accounts/login/                               |                     | 로그인             |               |               |
-| accounts/signup/                              |                     | 회원가입           |               |               |
-| accounts/logout/                              |                     | 로그아웃           |               |               |
-| accounts/manage/<user_id>/                    |                     | 회원가입 승인      | 회원권한 수정 |               |
-| products/main/                                | 메인페이지 상세     |                    |               |               |
-| products/main/carousel/                       |                     | 대표페이지 등록    |               |               |
-| products/template/                            | 템플릿 정보         |                    |               |               |
-| products/category/                            | 카테고리 리스트     | 카테고리 생성      |               |               |
-| products/category/<category_id>/              | 카테고리 물품리스트 |                    | 카테고리 수정 | 카테고리 삭제 |
-| products/product/                             |                     | 제품생성(임시까지) |               |               |
-| products/product/<product_id>/                | 제품 상세정보       | 임시정보 생성      | 임시제품 적용 | 제품 삭제     |
-| products/serarch/?type=<>&content=<>&order=<> | 검색                |                    |               |               |
-| services/notices/                             | 공지사항 리스트     | 공지사항 생성      |               |               |
-| services/notices/<notices_id>/                | 공지사항 상세       |                    | 공지사항 수정 | 공지사항 삭제 |
-| services/event/                               | 이벤트 리스트       | 이벤트 생성        |               |               |
-| services/event/<event_id>/                    | 이벤트 상세         |                    | 이벤트 수정   | 이벤트 삭제   |
-| services/log/                                 | 로그데이터          |                    |               |               |
+| url                                           | GET                      | POST               | PUT           | DELETE            |
+| --------------------------------------------- | ------------------------ | ------------------ | ------------- | ----------------- |
+| accounts/                                     | 자신의 정보              |                    |               |                   |
+| accounts/search/?type=<>&content=<>           | 유저 검색(필터링)        |                    |               |                   |
+| accounts/validation/?type=<>&content=<>       | 아이디, 이메일 여부 확인 |                    |               |                   |
+| accounts/department/                          | 부서 정보                |                    |               |                   |
+| accounts/login/                               |                          | 로그인             |               |                   |
+| accounts/signup/                              |                          | 회원가입           |               |                   |
+| accounts/logout/                              |                          | 로그아웃           |               |                   |
+| accounts/manage/<user_id>/                    |                          | 회원가입 승인      | 회원권한 수정 |                   |
+| products/main/                                | 메인페이지 상세          |                    |               |                   |
+| products/main/carousel/                       |                          | 대표페이지 등록    |               |                   |
+| products/template/                            | 템플릿 정보              |                    |               |                   |
+| products/category/                            | 카테고리 리스트          | 카테고리 생성      |               |                   |
+| products/category/<category_id>/              | 카테고리 물품리스트      |                    | 카테고리 수정 | 카테고리 삭제     |
+| products/product/                             |                          | 제품생성(임시까지) |               |                   |
+| products/product/<product_id>/                | 제품 상세정보            | 제품 활성화        | 임시제품 적용 | 제품 비활성       |
+| products/temp_product/<product_id>/           | 제품 히스토리 조회       | 제품 임시정보 생성 |               |                   |
+| products/serarch/?type=<>&content=<>&order=<> | 검색                     |                    |               |                   |
+| services/notices/                             | 공지사항 리스트          | 공지사항 생성      |               |                   |
+| services/notices/<notices_id>/                | 공지사항 상세            | 공지사항 활성화    | 공지사항 수정 | 공지사항 비활성화 |
+| services/event/                               | 이벤트 리스트            | 이벤트 생성        |               |                   |
+| services/event/<event_id>/                    | 이벤트 상세              |                    | 이벤트 수정   | 이벤트 삭제       |
+| services/logs/                                | 로그데이터               |                    |               |                   |
 
 
 
@@ -847,95 +849,29 @@
 ```json
 [
     {
-        "id": 3,
-        "name": "오디세이(수정)",
-        "price": 1920000,
-        "is_temp": false,
-        "is_active": true,
-        "category": {
-            "id": 1,
-            "name": "노트북"
-        },
-        "template": 2,
-        "created_date": "2020-11-06T15:12:53.508331+09:00",
-        "update_date": "2020-11-06T15:12:53.550339+09:00",
-        "cms_user": {
-            "id": 2,
-            "username": "test",
-            "first_name": "김유기"
-        },
-        "copy_descriptions": [],
-        "copy_images": [
+        "id": 20,
+        "title": "이벤트",
+        "start_date": "2020-11-03T18:00:00+09:00",
+        "end_date": "2020-11-05T18:00:00+09:00",
+        "thumbnail_image": "/media/erd.png",
+        "create_date": "2020-11-03T20:59:53.770623+09:00",
+        "update_date": "2020-11-03T20:59:53.770623+09:00",
+        "priority": 1,
+        "user": 2,
+        "detail": [
             {
-                "id": 6,
-                "item_image": "/media/KakaoTalk_20200907_134019738.jpg",
-                "is_thumbnail": false,
-                "priority": 1,
-                "created_date": "2020-11-06T15:12:53.641773+09:00",
-                "update_date": "2020-11-06T15:12:53.641773+09:00"
-            }
-        ]
-    },
-    {
-        "id": 6,
-        "name": "오디세이",
-        "price": 192000,
-        "is_temp": false,
-        "is_active": true,
-        "category": {
-            "id": 1,
-            "name": "노트북"
-        },
-        "template": 2,
-        "created_date": "2020-11-06T16:20:21.701843+09:00",
-        "update_date": "2020-11-06T16:20:21.741099+09:00",
-        "cms_user": {
-            "id": 2,
-            "username": "test",
-            "first_name": "김유기"
-        },
-        "copy_descriptions": [],
-        "copy_images": [
+                "image": "/media/KakaoTalk_20201019_093205576.png",
+                "content": "테스트1",
+                "priority": 1
+            },
             {
-                "id": 7,
-                "item_image": "/media/erd.png",
-                "is_thumbnail": false,
-                "priority": 1,
-                "created_date": "2020-11-06T16:20:21.778874+09:00",
-                "update_date": "2020-11-06T16:20:21.778874+09:00"
+                "image": "/media/KakaoTalk_20200907_134019738.jpg",
+                "content": "테스트2",
+                "priority": 2
             }
-        ]
-    },
-    {
-        "id": 7,
-        "name": "오디세이_임시3",
-        "price": 152000,
-        "is_temp": false,
-        "is_active": true,
-        "category": {
-            "id": 1,
-            "name": "노트북"
-        },
-        "template": 2,
-        "created_date": "2020-11-06T16:22:54.925281+09:00",
-        "update_date": "2020-11-06T16:22:54.960288+09:00",
-        "cms_user": {
-            "id": 2,
-            "username": "test",
-            "first_name": "김유기"
-        },
-        "copy_descriptions": [],
-        "copy_images": [
-            {
-                "id": 8,
-                "item_image": "/media/erd_IjdJt6m.png",
-                "is_thumbnail": false,
-                "priority": 1,
-                "created_date": "2020-11-06T16:22:54.997536+09:00",
-                "update_date": "2020-11-06T16:22:54.997536+09:00"
-            }
-        ]
-    }
+        ],
+        "url": null
+	}
 ]
 ```
 
@@ -974,6 +910,7 @@
             "priority": 2
         }
     ],
+    "url": null
 }
 ```
 
@@ -990,11 +927,12 @@
 ```json
 {
     "thumbnail": "썸네일 이미지",
-    "title": "이벤트 이름",
+    "title": "이벤트",
+    "content": "이벤트 내용",
     "strat_date": "2020-11-03 18:00:00",
     "end_date": "2020-11-05 18:00:00",
     "images": ["디테일에 들어갈 여러 이미지"],
-    "contents": ["이미지와 같이들어갈 글"],
+    "url": "",
 }
 ```
 
@@ -1002,27 +940,25 @@
 
 ```json
 {
-    "id": 21,
-    "title": "이벤트 이름",
-    "start_date": "2020-11-03T18:00:00+09:00",
-    "end_date": "2020-11-05T18:00:00+09:00",
-    "thumbnail_image": "/media/erd_lnMaLcv.png",
-    "create_date": "2020-11-03T21:38:16.990359+09:00",
-    "update_date": "2020-11-03T21:38:16.990359+09:00",
+    "id": 2,
+    "title": "이벤트",
+    "content": "이벤트 내용",
+    "start_date": "2020-11-09T11:00:00+09:00",
+    "is_active": true,
+    "end_date": "2020-11-10T12:00:00+09:00",
+    "thumbnail_image": "/media/erd_RL2NJeG.png",
+    "create_date": "2020-11-07T20:55:43.037011+09:00",
+    "update_date": "2020-11-07T20:55:43.037011+09:00",
     "priority": 1,
     "user": 2,
     "detail": [
         {
-            "image": "/media/KakaoTalk_20201019_093205576_PxySHT2.png",
-            "content": "테스트1",
+            "id": 1,
+            "image": "/media/erd_uMjhx20.png",
             "priority": 1
-        },
-        {
-            "image": "/media/KakaoTalk_20200907_134019738_BqgSpGX.jpg",
-            "content": "테스트2",
-            "priority": 2
         }
-    ]
+    ],
+    "url": null
 }
 ```
 
@@ -1050,7 +986,7 @@
 
 
 
-## 이벤트 삭제
+## 이벤트 비활성화
 
 ```
 주소/api/services/event/<int:pk>/(DELETE)
@@ -1060,7 +996,7 @@
 
 ```json
 {
-    "message": "이벤트가 삭제되었습니다."
+    "message": "이벤트가 비활성화 되었습니다."
 }
 ```
 
@@ -1128,9 +1064,9 @@
 
 ```json
 {
-    "title": "제목",
-    "content": "내용",
-    "image": "이미지데이터"
+    "title": "공지",
+    "content": "공지내용",
+    "image": "이미지데이터",
 }
 ```
 
@@ -1138,71 +1074,161 @@
 
 ```json
 {
-    "id": 4,
-    "title": "테스트",
-    "content": "테스트1",
-    "create_date": "2020-11-03T22:39:28.063168+09:00",
-    "update_date": "2020-11-03T22:39:28.063168+09:00",
+    "id": 3,
+    "title": "공지",
+    "content": "공지 내용",
+    "start_date": "2020-11-09T11:00:00+09:00",
+    "end_date": "2020-11-10T12:00:00+09:00",
+    "create_date": "2020-11-07T21:00:31.419455+09:00",
+    "update_date": "2020-11-07T21:00:31.419455+09:00",
     "is_active": true,
+    "is_temp": true,
     "user": 2,
-    "image": "/media/KakaoTalk_20200907_134019738_CnpdyfJ.jpg"
+    "image": "/media/erd_q0JEL7H.png"
 }
 ```
 
 
 
-## 공지 수정(미완)
+## 공지 수정
 
 ```
-
+주소/api/services/notices/<int:pk>/
 ```
 
 - Body
 
 ```json
-
-```
-
-- Response
-
-```json
-
-```
-
-
-
-## 공지 삭제
-
-```
-주소/api/services/event/<int:pk>/(DELETE)
+{
+    "title": "공지 수정",
+    "content": "공지 수정 내용",
+    "image": "바꿀 이미지 없으면 안넣어도 무방함"
+}
 ```
 
 - Response
 
 ```json
 {
-    "message": "공지가 삭제되었습니다."
+    "id": 3,
+    "title": "공지 수정",
+    "content": "공지 내용수정",
+    "start_date": "2020-11-07T21:13:12.600386+09:00",
+    "end_date": null,
+    "create_date": "2020-11-07T21:00:31.419455+09:00",
+    "update_date": "2020-11-07T21:20:30.407538+09:00",
+    "is_active": true,
+    "is_temp": false,
+    "user": 2,
+    "image": "/media/erd_q0JEL7H.png"
+}
+```
+
+## 공지 활성화
+
+```
+주소/api/services/notices/<int:pk>/(POST)
+```
+
+> 활성화시 start_date가 자동으로 입력된다.
+>
+> 공지를 종료하지 않았기때문에 end가 null로 설정된다.
+>
+> 활성화시 is_temp가 True로 변경됨
+>
+> 활성화시 is_active가 True로 변경됨
+
+- Response
+
+```json
+{
+    "id": 3,
+    "title": "공지 수정",
+    "content": "공지 내용수정",
+    "start_date": "2020-11-07T21:27:28.459164+09:00",
+    "end_date": null,
+    "create_date": "2020-11-07T21:00:31.419455+09:00",
+    "update_date": "2020-11-07T21:27:28.468088+09:00",
+    "is_active": true,
+    "is_temp": false,
+    "user": 2,
+    "image": "/media/erd_q0JEL7H.png",
 }
 ```
 
 
 
-## 로그데이터 가져오기(미완)
+## 공지 비활성화
 
 ```
-
+주소/api/services/notices/<int:pk>/(DELETE)
 ```
 
-- Body
+> 비활성화시 end_date가 입력된다.
+>
+> is_active가 False로 입력된다.
+>
+> is_temp가 True일경우 공지가 삭제된다.
+
+- Response
 
 ```json
+{
+    "message": "공지가 비활성화 되었습니다."
+}
+```
 
+
+
+## 로그데이터
+
+```
+주소/api/accounts/logs/(GEt)
 ```
 
 - Response
 
 ```json
+[
+    {
+        "type": "회원가입",
+        "register_ip": "0.0.0.0",
+        "create_date": "2020-11-06T15:02:08.835470+09:00",
+        "cms_user": 2
+    },
+    {
+        "type": "로그인",
+        "register_ip": "0.0.0.0",
+        "create_date": "2020-11-06T15:02:39.444308+09:00",
+        "cms_user": 2
+    },
+    {
+        "type": "회원가입",
+        "register_ip": "0.0.0.0",
+        "create_date": "2020-11-06T15:04:58.221495+09:00",
+        "cms_user": 3
+    },
+    {
+        "type": "로그인",
+        "register_ip": "0.0.0.0",
+        "create_date": "2020-11-06T15:05:39.168803+09:00",
+        "cms_user": 3
+    },
+    {
+        "type": "로그아웃",
+        "register_ip": "0.0.0.0",
+        "create_date": "2020-11-06T15:12:48.820754+09:00",
+        "cms_user": 3
+    }
+]
+```
 
+- 실패 Response(403)
+
+```json
+{
+    "message": "권한이 없습니다."
+}
 ```
 
 
@@ -1210,7 +1236,7 @@
 ## 유저 필터링
 
 ```
-주소/api/accounts/search/?type=abc&content
+주소/api/accounts/search/?type=<>&content=<>
 ```
 
 > type 종류
@@ -1318,3 +1344,46 @@
     }
 ]
 ```
+
+
+
+## 이메일,아이디 여부
+
+```
+주소/api/accounts/validation/?type=<>&content=<>
+```
+
+- 성공 Response
+
+```json
+{
+    "message": "사용이 가능합니다."
+}
+```
+
+- 실패 Response(400)
+
+```json
+{
+    message: "너무 짧은 아이디 입니다.",
+    message: "존재하는 아이디 입니다.",
+    message: "존재하는 이메일 입니다."
+}
+```
+
+
+
+## 메인화면 아이템 설정
+
+
+
+
+
+
+
+## 메인화면 캐로셀 아이템 설정
+
+
+
+
+

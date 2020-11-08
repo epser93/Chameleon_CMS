@@ -3,18 +3,19 @@ from .models import Event, EventDetail, Notices, MainItem, MainCarouselItem
 # Register your models here.
 
 class EventAdmin(admin.ModelAdmin):
-    list_display = ['id', 'title', 'start_date', 'end_date', 'is_active', 'thumbnail_image', 'create_date', 'update_date', 'priority', 'user']
-    fields = ['title', 'start_date', 'end_date', 'is_active', 'thumbnail_image', 'priority', 'user']
+    list_display = ['id', 'title', 'content','start_date', 'end_date', 'is_active', 'thumbnail_image', 'create_date', 'update_date', 'priority', 'user', 'url']
+    fields = ['title', 'start_date', 'content','end_date', 'is_active', 'thumbnail_image', 'priority', 'user', 'url']
 
 
 class EventDetailAdmin(admin.ModelAdmin):
-    list_display = ['id', 'image', 'content', 'priority', 'event', 'user']
-    fields = ['image', 'content', 'priority', 'event', 'user']
+    list_display = ['id', 'image', 'priority', 'event', 'user']
+    fields = ['image', 'priority', 'event', 'user']
     
 
 class NoticesAdmin(admin.ModelAdmin):
-    list_display = ['id', 'title', 'content', 'create_date', 'update_date', 'is_active', 'user', 'image']
+    list_display = ['id', 'title', 'content', 'start_date', 'end_date','create_date', 'update_date', 'is_active', 'is_temp', 'user', 'image']
     fields = ['title', 'content', 'is_active', 'user', 'image']
+
 
 class MainItemAdmin(admin.ModelAdmin):
     list_display = ['id', 'priority', 'create_date', 'update_date', 'item', 'user', 'department']

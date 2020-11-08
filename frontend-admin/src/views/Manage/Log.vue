@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="table-container">
+    <div class="table-container mt-0">
       <table class="table">
         <thead>
           <tr>
@@ -42,6 +42,23 @@
           </tr>
         </tbody>
       </table>
+      <div class="page-navi">
+        <nav aria-label="Page navigation example justify-content-center">
+          <ul class="pagination">
+            <li class="page-item">
+              <a class="page-link" href="#" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+              </a>
+            </li>
+            <li class="page-item active"><a class="page-link" href="#">1</a></li>
+            <li class="page-item">
+              <a class="page-link" href="#" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
     </div>
   </div>
 </template>
@@ -57,5 +74,11 @@ export default {
   width: 100%;
   margin-top: 10vh; 
   text-align: center;
+}
+
+.page-navi {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
 }
 </style>

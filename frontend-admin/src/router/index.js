@@ -61,6 +61,11 @@ const routes = [
                 component: () => import('@/views/category/CategoryInfo.vue')
               },
               {
+                path: 'category/:cid/:update',
+                name: 'CGupdate',
+                component: () => import('@/views/category/CategoryInfo.vue')
+              },
+              {
                 path: 'category/:cid',
                 name: 'ItemMain',
                 component: () => import('@/views/Item/ItemMain.vue')

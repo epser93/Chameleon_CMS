@@ -1,6 +1,6 @@
 <template>
-<div class="container">
-  <h1>Product</h1>
+<div class="container" v-if="items">
+  <h1>속한 카테고리 넣으려면</h1>
   <div class="row justify-content-between">
     <div class="col-3">
       <button type="button" class="btn btn-info" @click="onRoute('Item')">
@@ -27,45 +27,31 @@
           <th scope="col"></th>
           <th scope="col">카테고리</th>
           <th scope="col">제품명</th>
-          <th scope="col">기타</th>
+          <th scope="col">수정날짜</th>
           <th scope="col">상태</th>
+          <th scope="col"></th>
         </tr>
       </thead>
       <tbody>
-        <tr>
+        <tr v-for="(item, index) in items" :key="index">
           <th scope="row"><input type="checkbox"></th>
-          <td>노트북</td>
-          <td>LG전자 2020 그램15</td>
-          <td>15ZD90N-VX50K</td>
-          <td>임시저장</td>
-        </tr>
-        <tr>
-          <th scope="row"><input type="checkbox"></th>
-          <td>노트북</td>
-          <td>LG전자 2020 그램15</td>
-          <td>15ZD90N-VX50K</td>
-          <td>임시저장</td>
-        </tr>
-        <tr>
-          <th scope="row"><input type="checkbox"></th>
-          <td>노트북</td>
-          <td>LG전자 2020 그램15</td>
-          <td>15ZD90N-VX50K</td>
-          <td>임시저장</td>
-        </tr>
-        <tr>
-          <th scope="row"><input type="checkbox"></th>
-          <td>노트북</td>
-          <td>LG전자 2020 그램15</td>
-          <td>15ZD90N-VX50K</td>
-          <td>임시저장</td>
-        </tr>
-        <tr>
-          <th scope="row"><input type="checkbox"></th>
-          <td>노트북</td>
-          <td>LG전자 2020 그램15</td>
-          <td>15ZD90N-VX50K</td>
-          <td>임시저장</td>
+          <td>카테고리 받아야함</td>
+          <td>{{ item.name }}</td>
+          <td>{{ item.update_date.slice(0,10) }}</td>
+          <td v-if="item.is_active">활성화
+            <div class="custom-control custom-switch">
+              <input type="checkbox" class="custom-control-input" :id="item.id" v-model="item.is_active" value="item.is_active" @click="changeActive(item.id)">
+              <label class="custom-control-label" :for="item.id"></label>
+            </div>
+          </td>
+          <td v-else>비활성화
+            <div class="custom-control custom-switch">
+              <input type="checkbox" class="custom-control-input" :id="item.id" v-model="item.is_active" value="item.is_active" @click="changeActive(item.id)">
+              <label class="custom-control-label" :for="item.id"></label>
+            </div>
+          </td>
+          <td><button type="button" class="btn btn-secondary">수정</button></td>
+           <!-- @click="onUpdate(item.id)" -->
         </tr>
 
       </tbody>
@@ -76,12 +62,50 @@
 </template>
 
 <script>
+import { mapActions, mapState } from 'vuex'
+
 export default {
+  computed: {
+    ...mapState('category', ['items'])
+  },
   methods: {
+    ...mapActions('category', ['getItem']),
+
     onRoute(name) {
 			this.$router.push({name:name}, () => {})
-		},
-  }
+    },
+
+    onUpdate(pid) {
+      this.$router.push({name:'ItemMain', params:{pid: pid}})
+    },
+    
+    changeActive(id){
+      console.log(id)
+      if (confirm("상태를 변경하시겠습니까?") == true){    //확인
+          // if (this.items[id-1].is_active) {
+          //   this.delCategory(id)
+          // }
+          // else {
+          //   this.postCategory(id)
+          // }
+      } else {   //취소
+        //여기 부분 수정 필요
+        return ;
+      }
+    }
+
+  },
+  watch :{
+    '$route' : function() {
+      const cid = this.$route.params.cid
+      this.getItem(cid)
+    }
+  },
+
+  created() {
+    const cid = this.$route.params.cid
+    this.getItem(cid)
+  },
 }
 </script>
 
