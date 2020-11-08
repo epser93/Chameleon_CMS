@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="logs">
     <div class="table-container mt-0">
       <table class="table">
         <thead>
@@ -13,8 +13,8 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(log, index) in logs" :key="index">
-            <th scope="row">{{ index + 1 }}</th>
+          <tr v-for="(log, index) in logsForList" :key="index">
+            <th scope="row">{{ (nowPage * perPage) + (index + 1) }}</th>
             <td>{{ log.type }}</td>
             <td>{{ log.cms_user.username }}</td>
             <td>{{ log.cms_user.first_name }}</td>
@@ -23,20 +23,14 @@
           </tr>
         </tbody>
       </table>
-      <div class="page-navi">
-        <nav aria-label="Page navigation example justify-content-center">
+      <div class="page-navi justify-content-center">
+        <nav aria-label="Page navigation example">
           <ul class="pagination">
-            <li class="page-item">
-              <a class="page-link" href="#" aria-label="Previous">
-                <span aria-hidden="true">&laquo;</span>
-              </a>
-            </li>
-            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-            <li class="page-item">
-              <a class="page-link" href="#" aria-label="Next">
-                <span aria-hidden="true">&raquo;</span>
-              </a>
-            </li>
+            <div v-for="(page, i) in pages" :key="i">
+              <li :class="(i == nowPage) ? 'page-item active':'page-item' ">
+                <a @click="onPage(i)" class="page-link" href="#">{{ page }}</a>
+              </li>
+            </div>
           </ul>
         </nav>
       </div>
@@ -50,14 +44,30 @@ export default {
   name: "Logs",
   data() {
     return {
-
+      perPage: 10,
+      nowPage: 0,
     }
   },
   computed: {
-    ...mapState('account', ['logs'])
+    ...mapState('account', ['logs']),
+    rows() {
+      return this.logs.length
+    },
+    pages() {
+      return Math.ceil(this.logs.length/this.perPage)
+    },
+    logsForList() {
+      return this.logs.slice(
+        (this.nowPage) * this.perPage,
+        (this.nowPage + 1) * this.perPage
+      )
+    },
   },
   methods: {
     ...mapActions('account', ['getLogs']),
+    onPage(page) {
+      this.nowPage = page
+    },
     calculateDate(time) {
       const tz = new Date(time)
       const arrDay = ['일','월','화','수','목','금','토']
@@ -66,7 +76,7 @@ export default {
   },
   created() {
     this.getLogs()
-  }
+  },
 }
 </script>
 
@@ -80,6 +90,6 @@ export default {
 .page-navi {
   position: absolute;
   bottom: 0;
-  left: 50%;
+  left: 40%;
 }
 </style>
