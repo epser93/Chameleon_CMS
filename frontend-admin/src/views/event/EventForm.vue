@@ -44,7 +44,7 @@
           <div class="row">
             <h4 class="ml-3">이벤트 썸네일</h4>
             <input ref="thumbnailImage" type="file" hidden @change="onChangeThumbnail">
-            <button type="button" class="btn btn-success btn-sm ml-3" @click="onUploadThumbnail">업로드</button>
+            <button type="button" class="btn btn-success btn-sm ml-3" @click="onUploadThumbnail">이미지 등록</button>
           </div>
           <div class="preview-img mt-2">
             <img id="inner-img" class="d-flex mx-auto" v-if="imageUrl.thumbnail" :src="imageUrl.thumbnail" alt="">
@@ -53,13 +53,13 @@
 
         <div class="content-part">
           <div class="row align-items-center">
-            <h1 class="mb-0 ml-3">상세 이미지</h1>
+            <h4 class="mb-0 ml-3">상세 이미지</h4>
           </div>
           <div v-if="!images.detail.length" class="file-upload-container">
             <div class="file-upload-example">
               <div class="notice-item">
                 <div class="image-box">
-                  <label for="file">이미지 등록</label>
+                  <label for="file" class="mt-2">이미지 등록</label>
                   <input type="file" id="file" ref="detailImages" @change="imageUpload" multiple />
                 </div>
               </div>
