@@ -13,7 +13,7 @@
       <img class="notice-image" :src="image" alt="">
     </div>
     <div>
-      <button type="button" class="btn btn-outline-warning" v-if="!notice.end_date">수정</button>
+      <button type="button" class="btn btn-outline-warning" v-if="!notice.end_date" @click="onUpdate()">수정</button>
       <button type="button" class="btn btn-outline-secondary" v-if="!notice.end_date" @click="endNotice()">종료</button>
     </div>
   </div>
@@ -33,6 +33,9 @@ export default {
   },
   methods: {
     ...mapActions('notice', ['getNotice', 'endNotice']),
+    onUpdate() {
+      this.$router.push({ name : 'NoticeUpdate', params: { id : this.$route.params.id }})
+    }
   },
   created() {
     this.getNotice(this.$route.params.id)
