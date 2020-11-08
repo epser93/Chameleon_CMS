@@ -86,7 +86,7 @@
         <!-- 뒤로가기, 미리보기, 임시저장 -->
         <div class="row justify-content-end mt-5 mb-5" id="content-btn">
           <div>
-            <button type="button" class="btn btn-dark btn-sm mr-2" @click="onRoute('Event')">뒤로가기</button>
+            <button type="button" class="btn btn-dark btn-sm mr-2" @click="$router.go(-1)">뒤로가기</button>
           </div>
           <div>
             <button type="button" class="btn btn-secondary btn-sm mr-2" @click="onClickWindows">미리보기</button>
@@ -245,9 +245,6 @@ export default {
       }
       eventData.append('url', 'test')
       this.postEvent(eventData)
-    },
-    onRoute(name) {
-      this.$router.push({name: name}, () => {})
     },
 
   },

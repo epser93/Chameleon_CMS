@@ -20,16 +20,16 @@
           <tr v-for="(event, index) in events" :key="index">
             <td>{{ event.title }}</td>
             <!-- 스위치 -->
-            <td v-if="event.is_active">활성화
+            <td v-if="event.is_active" class="row justify-content-center">활성화
               <div class="custom-control custom-switch">
                 <input type="checkbox" class="custom-control-input" :id="event.id" v-model="event.is_active" :value="event.is_active" @click="changeActive(event)">
-                <label class="custom-control-label" :for="event.id"></label>
+                <label class="custom-control-label ml-2" :for="event.id"></label>
               </div>
             </td>
-            <td v-else>비활성화
+            <td v-else class="row justify-content-center">비활성화
               <div class="custom-control custom-switch">
                 <input type="checkbox" class="custom-control-input" :id="event.id" v-model="event.is_active" :value="event.is_active" @click="changeActive(event)">
-                <label class="custom-control-label" :for="event.id"></label>
+                <label class="custom-control-label ml-2" :for="event.id"></label>
               </div>
             </td>
             <!-- 스위치 -->
@@ -140,5 +140,9 @@ td {
   position: absolute;
   bottom: 0;
   left: 50%;
+}
+
+.custom-control-label {
+  cursor: pointer;
 }
 </style>
