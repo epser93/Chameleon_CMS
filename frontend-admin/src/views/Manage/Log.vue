@@ -19,7 +19,7 @@
             <td>{{ log.cms_user.username }}</td>
             <td>{{ log.cms_user.first_name }}</td>
             <td>{{ log.register_ip }}</td>
-            <td>{{ log.create_date }}</td>
+            <td>{{ calculateDate(log.create_date) }}</td>
           </tr>
         </tbody>
       </table>
@@ -57,7 +57,12 @@ export default {
     ...mapState('account', ['logs'])
   },
   methods: {
-    ...mapActions('account', ['getLogs'])
+    ...mapActions('account', ['getLogs']),
+    calculateDate(time) {
+      const tz = new Date(time)
+      const arrDay = ['일','월','화','수','목','금','토']
+      return tz.toLocaleDateString() + '(' + arrDay[tz.getDay()] + ') ' + tz.getHours() + '시 ' + tz.getMinutes() + '분 ' + tz.getSeconds() + '초 '
+    }
   },
   created() {
     this.getLogs()
