@@ -62,17 +62,13 @@ class EventDetailAPI(APIView):
 class NoticesList(APIView):
     
     def get(self, request):
-        notices = Notices.objects.filter(is_active=True)
+        notices = Notices.objects.all()
         serializer = NoticesSerializer(notices, many=True)
         return Response(serializer.data)
 
     def post(self, request):
         notice = Notices()
-        try:
-            image = request.FILES['image']
-        except:
-            image = None
-        is_success, answer = notice.create(request.data, request.user, image)
+        is_success, answer = notice.create(request.data, request.user, request.FILES.get('image'))
         if is_success == False:
             return Response(answer, status=status.HTTP_400_BAD_REQUEST)
         serializer = NoticesSerializer(notice)
@@ -94,12 +90,7 @@ class NoticesDetail(APIView):
 
     def put(self, request, pk):
         notice = Notices.objects.get(pk=pk)
-        try:
-            image = request.FILES['image']
-        except:
-            image = None
-        notice.update(request.data, request.user, image)
-        
+        notice.update(request.data, request.user, request.FILES.get('image'))
         serializer = NoticesSerializer(notice)
         return Response(serializer.data)
 
