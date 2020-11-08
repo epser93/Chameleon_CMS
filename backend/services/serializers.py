@@ -1,10 +1,11 @@
+from accounts.serializers import UserSerializer
 from products.serializers import ItemSerializer
 from products.models import Item
 from django.db.models import Q
 from accounts.models import User
 from services.models import Event
 from rest_framework import serializers
-from .models import Event, EventDetail, Notices
+from .models import Event, EventDetail, MainCarouselItem, MainItem, Notices
 
 
 class EventDetailSerializer(serializers.ModelSerializer):
@@ -45,3 +46,18 @@ class SearchSerializer(serializers.ModelSerializer):
         items = Item.objects.filter(name__contains=content).exclude(is_temp=True).exclude(is_active=False)
         serializer = ItemSerializer(items, many=True).data
         return serializer
+
+
+class MainItemSerializer(serializers.ModelSerializer):
+    item = ItemSerializer()
+    user = UserSerializer()
+    class Meta:
+        model = MainItem
+        fields = ['id', 'priority', 'is_active','create_date', 'update_date', 'item', 'user']
+
+
+class MainCarouselItemSerializer(serializers.ModelSerializer):
+    user = UserSerializer()
+    class Meta:
+        model = MainCarouselItem
+        fields = ['id', 'priority', 'image', 'is_active', 'url', 'create_date', 'update_date', 'user']

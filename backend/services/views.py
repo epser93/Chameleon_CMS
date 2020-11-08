@@ -1,8 +1,9 @@
+from products.models import Item
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from .models import Event, EventDetail, Notices
-from .serializers import EventSerializer, NoticesSerializer, SearchSerializer
+from .models import Event, EventDetail, MainCarouselItem, MainItem, Notices
+from .serializers import EventSerializer, MainCarouselItemSerializer, MainItemSerializer, NoticesSerializer, SearchSerializer
 
 message = 'message'
 
@@ -16,7 +17,7 @@ class EventList(APIView):
 
     def post(self, request):
         event = Event()
-        is_success, answer = event.create(request.data, request.user, request.FILES['thumbnail'])
+        is_success, answer = event.create(request.data, request.user, request.FILES.get('thumbnail', None))
         if is_success == False:
             return Response(answer, status=status.HTTP_400_BAD_REQUEST)
         images = []
@@ -107,3 +108,88 @@ class CustomerSearchAPI(APIView):
     def get(self, request):
         serializer = SearchSerializer(request.user, context = {'content': request.GET.get('content', None)})
         return Response(serializer.data)
+
+
+class MainItemAPI(APIView):
+    def get(self, request):
+        main_items = MainItem.objects.all()
+        serializer = MainItemSerializer(main_items, many=True)
+        return Response(serializer.data)
+
+    def post(self, request):
+        priority = request.data['priority']
+        is_active = request.data.get('is_active', 'True') == 'True'
+        if is_active and MainItem.objects.filter(priority=priority).filter(is_active=True).exists():
+            answer = {message: '해당위치에 아이템이 등록되어 있습니다.'}
+            return Response(answer, status=status.HTTP_400_BAD_REQUEST)
+        item = Item.objects.get(pk=request.data['id'])
+        main_item = MainItem()
+        main_item.create(item, request.user, priority, is_active)
+        serializer = MainItemSerializer(main_item)
+        return Response(serializer.data)
+
+
+
+class MainItemDetailAPI(APIView):
+    def get(self, request, pk):
+        main_item = MainItem.objects.get(pk=pk)
+        serializer = MainItemSerializer(main_item)
+        return Response(serializer.data)
+
+    def post(self, request, pk):
+        main_item = MainItem.objects.get(pk=pk)
+        if MainItem.objects.filter(priority=main_item.priority).filter(is_active=True).exists():
+            answer = {message: '해당위치에 아이템이 등록되어 있습니다.'}
+            return Response(answer, status=status.HTTP_400_BAD_REQUEST)
+        main_item.activate()
+        serializer = MainItemSerializer(main_item)
+        return Response(serializer.data)
+
+    def put(self, request, pk):
+        main_item = MainItem.objects.get(pk=pk)
+        priority = request.data.get('priority', main_item.priority)
+        if priority != main_item.priority and MainItem.objects.filter(priority=priority).filter(is_active=True).exists():
+            answer = {message: '해당위치에 아이템이 등록되어 있습니다.'}
+            return Response(answer, status=status.HTTP_400_BAD_REQUEST)
+        item = None
+        if request.data.get('id', None):
+            item = Item.objects.get(pk=request.data['id'])
+        main_item.update(item, request.user, priority, request.data.get('is_active', main_item.is_active))
+        serializer = MainItemSerializer(main_item)
+        return Response(serializer.data)
+
+    def delete(self, request, pk):
+        main_item = MainItem.objects.get(pk=pk)
+        main_item.delete()
+        answer = {message: '해당 메인 아이템을 비활성화 했습니다.'}
+        return Response(answer)
+
+
+class MainCarouselItemAPI(APIView):
+    def get(self, request):
+        main_carousel_items = MainCarouselItem.objects.all()
+        serializer = MainCarouselItemSerializer(main_carousel_items, many=True)
+        return Response(serializer.data)
+
+    def post(self, request):
+        main_carousel_item = MainCarouselItem()
+        main_carousel_item.create(request.data, request.user, request.FILES.get('image', None))
+        serializer = MainCarouselItemSerializer(main_carousel_item)
+        return Response(serializer.data)
+
+
+class MainCarouselItemDetailAPI(APIView):
+    def get(self, reqeust):
+        pass
+
+
+    def post(self, request):
+        pass
+
+
+    def put(self, request):
+        pass
+
+
+    def delete(self, request):
+        pass

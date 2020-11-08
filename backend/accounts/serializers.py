@@ -24,7 +24,7 @@ class CMSUserSerializer(serializers.ModelSerializer):
 
 
 class TotalLogSerializer(serializers.ModelSerializer):
-    # cms_user = UserSerializer(read_only=True, required=False)
+    cms_user = UserSerializer(read_only=True, required=False)
     class Meta:
         model = TotalLog
         fields = ['type', 'register_ip', 'create_date', 'cms_user']
