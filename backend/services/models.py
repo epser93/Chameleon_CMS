@@ -96,7 +96,9 @@ class Notices(models.Model):
         self.title = data['title']
         self.content = data['content']
         self.user = user
-        self.is_temp = data.get('is_temp', self.is_temp)
+        self.is_temp = data.get('is_temp', 'True') == 'True'
+        if self.is_temp == False:
+            self.start_date = datetime.now().replace(tzinfo=KST)
         is_success, answer = get_imagefile(image)
         if is_success == False:
             return False, answer

@@ -1,9 +1,8 @@
-from django.http import request
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from .models import Event, EventDetail, Notices
-from .serializers import EventSerializer, NoticesSerializer
+from .serializers import EventSerializer, NoticesSerializer, SearchSerializer
 
 message = 'message'
 
@@ -11,7 +10,7 @@ message = 'message'
 class EventList(APIView):
     
     def get(self, request):
-        events = Event.objects.filter(is_active=True)
+        events = Event.objects.all()
         serializer = EventSerializer(events, many=True)
         return Response(serializer.data)
 
@@ -20,7 +19,10 @@ class EventList(APIView):
         is_success, answer = event.create(request.data, request.user, request.FILES['thumbnail'])
         if is_success == False:
             return Response(answer, status=status.HTTP_400_BAD_REQUEST)
-        images = request.FILES.getlist('images')
+        images = []
+        number = int(request.data['number'])
+        for i in range(number):
+            images.append(request.FILES['image{}'.format(i)])
         prioritys = request.data.getlist('prioritys')
         if len(prioritys) == 0:
             prioritys = [i+1 for i in range(len(images))]
@@ -62,17 +64,13 @@ class EventDetailAPI(APIView):
 class NoticesList(APIView):
     
     def get(self, request):
-        notices = Notices.objects.filter(is_active=True)
+        notices = Notices.objects.all()
         serializer = NoticesSerializer(notices, many=True)
         return Response(serializer.data)
 
     def post(self, request):
         notice = Notices()
-        try:
-            image = request.FILES['image']
-        except:
-            image = None
-        is_success, answer = notice.create(request.data, request.user, image)
+        is_success, answer = notice.create(request.data, request.user, request.FILES.get('image'))
         if is_success == False:
             return Response(answer, status=status.HTTP_400_BAD_REQUEST)
         serializer = NoticesSerializer(notice)
@@ -94,12 +92,7 @@ class NoticesDetail(APIView):
 
     def put(self, request, pk):
         notice = Notices.objects.get(pk=pk)
-        try:
-            image = request.FILES['image']
-        except:
-            image = None
-        notice.update(request.data, request.user, image)
-        
+        notice.update(request.data, request.user, request.FILES.get('image'))
         serializer = NoticesSerializer(notice)
         return Response(serializer.data)
 
@@ -108,3 +101,9 @@ class NoticesDetail(APIView):
         notice.delete()
         answer = {message: '공지가 비활성화 되었습니다.'}
         return Response(answer, status=status.HTTP_200_OK)
+
+
+class CustomerSearchAPI(APIView):
+    def get(self, request):
+        serializer = SearchSerializer(request.user, context = {'content': request.GET.get('content', None)})
+        return Response(serializer.data)

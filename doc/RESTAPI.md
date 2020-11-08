@@ -1,5 +1,7 @@
 # REST API 명세서
 
+## Admin url
+
 | url                                           | GET                      | POST               | PUT           | DELETE            |
 | --------------------------------------------- | ------------------------ | ------------------ | ------------- | ----------------- |
 | accounts/                                     | 자신의 정보              |                    |               |                   |
@@ -24,6 +26,14 @@
 | services/event/                               | 이벤트 리스트            | 이벤트 생성        |               |                   |
 | services/event/<event_id>/                    | 이벤트 상세              |                    | 이벤트 수정   | 이벤트 삭제       |
 | services/logs/                                | 로그데이터               |                    |               |                   |
+
+## customer url
+
+| url                                  | get                   |
+| ------------------------------------ | --------------------- |
+| services/customer/search/?content=<> | 아이템 및 이벤트 검색 |
+
+
 
 
 
@@ -410,6 +420,10 @@
 주소/api/products/product/(POST)
 ```
 
+> number는 이미지 개수이다.
+>
+> 이미지를 보낼때는 image 뒤에 넘버를 붙여서 보낸다.
+
 - Body
 
 ```json
@@ -422,9 +436,10 @@
     "is_thumbnails": [
         "True", "True", "False",
     ],
-    "images": [
-        이미지1, 이미지2, 이미지3
-    ],
+    "number": 3,
+    "image0": "이미지1",
+    "image1": "이미지2",
+    "image2": "이미지3",
     "descriptions": [
         {
             "id": 20,
@@ -757,13 +772,17 @@
 
 >  is_original : 변경하는 아이템정보가 원본기반인지 임시저장 기반인지
 >
-> 원본기반이라면 images_type에 원본 이미지 id를 넣어야 한다.
+>  원본기반이라면 images_type에 원본 이미지 id를 넣어야 한다.
 >
-> 임시저장 기반이라면 images_type에 임시저장 이미지 id를 넣어야 한다.
+>  임시저장 기반이라면 images_type에 임시저장 이미지 id를 넣어야 한다.
 >
-> 새로추가되는 이미지라면 -1로 입력한다.
+>  새로추가되는 이미지라면 -1로 입력한다.
 >
-> images_type과 is_thubnails의 길이는 같아야 한다.
+>  images_type과 is_thubnails의 길이는 같아야 한다.
+>
+>  이미지의 개수만큼 number에 입력한다.
+>
+>  image 뒤에는 넘버가 붙는다.
 
 - Body
 
@@ -781,9 +800,10 @@
     "is_thumbnails": [
       "True","False",
     ],
-    "images": [
-        이미지1, 이미지2
-    ],
+    "number": 3,
+    "image0": "이미지1",
+    "image1": "이미지2",
+    "image2": "이미지3",
     "descriptions": [
         {
             "id": 1,
@@ -922,6 +942,10 @@
 주소/api/services/event/<int:pk>/(POST)
 ```
 
+> number는 이미지 개수이다.
+>
+> 이미지를 보낼때는 image 뒤에 넘버를 붙여서 보낸다.
+
 - Body(form-data)
 
 ```json
@@ -931,7 +955,9 @@
     "content": "이벤트 내용",
     "strat_date": "2020-11-03 18:00:00",
     "end_date": "2020-11-05 18:00:00",
-    "images": ["디테일에 들어갈 여러 이미지"],
+    "number": 2,
+    "image0": "이미지",
+    "image1": "이미지"
     "url": "",
 }
 ```
@@ -967,7 +993,7 @@
 ## 이벤트 수정(미완)
 
 ```
-
+주소/api/services/event/<int:pk>/(PUT)
 ```
 
 - Body
@@ -980,6 +1006,40 @@
 
 ```json
 
+```
+
+
+
+## 이벤트 활성화
+
+```
+주소/api/services/event/<int:pk>/(POST)
+```
+
+- Response
+
+```json
+{
+    "id": 2,
+    "title": "이벤트",
+    "content": "이벤트 내용",
+    "start_date": "2020-11-09T11:00:00+09:00",
+    "is_active": true,
+    "end_date": "2020-11-10T12:00:00+09:00",
+    "thumbnail_image": "/media/erd_RL2NJeG.png",
+    "create_date": "2020-11-07T20:55:43.037011+09:00",
+    "update_date": "2020-11-07T20:55:43.037011+09:00",
+    "priority": 1,
+    "user": 2,
+    "detail": [
+        {
+            "id": 1,
+            "image": "/media/erd_uMjhx20.png",
+            "priority": 1
+        }
+    ],
+    "url": null
+}
 ```
 
 
@@ -1386,4 +1446,35 @@
 
 
 
+
+## customer search
+
+```
+주소/api/services/customer/search/?content=<>
+```
+
+- Response
+
+```json
+{
+    "items": [],
+    "events": [
+        {
+            "id": 1,
+            "title": "테스트",
+            "content": "테스트",
+            "start_date": "2020-11-06T15:06:40+09:00",
+            "is_active": true,
+            "end_date": "2020-11-06T15:06:43+09:00",
+            "thumbnail_image": "/media/KakaoTalk_20200817_204540152.png",
+            "create_date": "2020-11-06T15:06:54.617564+09:00",
+            "update_date": "2020-11-08T00:15:28.900265+09:00",
+            "priority": 1,
+            "user": 3,
+            "detail": [],
+            "url": "asdasd"
+        }
+    ]
+}
+```
 
