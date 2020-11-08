@@ -29,7 +29,7 @@ export default {
 			this.$router.push({name:name}, () => {})
 		},
 		onDetail(cid) {
-			console.log(cid)
+			//console.log(cid)
 			this.$router.push({name:'ProductItemMain', params:{cid: cid}}, () => {})
 		},
 		fixCategory () {
@@ -68,11 +68,23 @@ export default {
 		InnerCategory () {
 			for (let i=0; i<this.productCategories.length; i++) {
 			let className = '.' + this.productCategories[i].name
+<<<<<<< HEAD
+			//console.log(className)
 			let tmp = this.productCategories[i].id
+			//console.log(tmp)
+			//console.log(this.$route.params.cid)
+=======
+			let tmp = this.productCategories[i].id
+>>>>>>> 8b12f358557f205c8abd3a6da6df24130468552f
 
 			if (this.$route.params.cid == tmp) {
 				document.querySelector(className).classList.add('active')
 			} else {
+<<<<<<< HEAD
+				console.log(this.$route.name + "  else")
+				//console.log(tmp + "  else")
+=======
+>>>>>>> 8b12f358557f205c8abd3a6da6df24130468552f
 				document.querySelector(className).classList.remove('active')
 			}
 			}
@@ -80,6 +92,10 @@ export default {
 		OutCategory () {
 			for (let i=0; i<this.productCategories.length; i++) {
 			let className = '.' + this.productCategories[i].name
+<<<<<<< HEAD
+			//console.log(className)
+=======
+>>>>>>> 8b12f358557f205c8abd3a6da6df24130468552f
 			document.querySelector(className).classList.remove('active')
 			}
 		}
