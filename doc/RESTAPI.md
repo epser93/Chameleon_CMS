@@ -239,6 +239,7 @@
         "name": "노트북",
         "is_active": true,
         "priority": 1,
+        "image": "",
         "template": {
             "id": 1,
             "name": "카테고리 이미지 특화",
@@ -277,6 +278,7 @@
     "descriptions": [
         "제조사", "디스플레이", "CPU", "GPU", "RAM"
     ],
+    "image": "이미지 파일",
     "template": 1,
     "priority": 3
 }
@@ -290,11 +292,13 @@
     "name": "김치냉장고",
     "is_active": true,
     "priority": 3,
+    "image": "",
     "template": {
         "id": 1,
         "name": "카테고리 이미지 특화",
         "type": 1
     },
+    "image": "",
     "created_date": "2020-10-30T16:29:20.547623+09:00",
     "update_date": "2020-10-30T16:29:20.547623+09:00",
     "cms_user": {
@@ -322,11 +326,11 @@
 ```json
 {
     "name": "김치냉장고 v2",
-    "descriptions_update": [
-        {
-            "id": 25,
-            "name": "전력소모량"
-        }
+    "descriptions_update_id": [
+        25
+    ],
+    "descriptions_update_name": [
+        "전력소모량"
     ],
     "descriptions_delete": [
         23, 24
@@ -334,6 +338,7 @@
     "descriptions_add": [
         "테스트1234"
     ],
+    "image": "이미지 파일",
     "template": 1,
     "priority": 1
 }
@@ -347,6 +352,7 @@
     "name": "김치냉장고 v2",
     "is_active": true,
     "priority": 1,
+    "image": "",
     "template": {
         "id": 1,
         "name": "카테고리 이미지 특화",
