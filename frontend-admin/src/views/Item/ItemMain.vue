@@ -1,9 +1,9 @@
 <template>
-<div class="container" v-if="items">
-  <h1>속한 카테고리 넣으려면</h1>
+<div class="container" v-if="items != null && category != null">
+  <h1>{{ category.name }}</h1>
   <div class="row justify-content-between">
     <div class="col-3">
-      <button type="button" class="btn btn-info" @click="onRoute('Item')">
+      <button type="button" class="btn btn-info" @click="onRoute('ProductItem')">
         추가
       </button>
       <button type="button" class="btn btn-danger">
@@ -35,7 +35,7 @@
       <tbody>
         <tr v-for="(item, index) in items" :key="index">
           <th scope="row"><input type="checkbox"></th>
-          <td>카테고리 받아야함</td>
+          <td>{{ item.category.name }}</td>
           <td>{{ item.name }}</td>
           <td>{{ item.update_date.slice(0,10) }}</td>
           <td v-if="item.is_active">활성화
@@ -62,21 +62,28 @@
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex'
+import { mapMutations, mapActions, mapState, mapGetters } from 'vuex'
 
 export default {
+  data() {
+    return {
+      cid: ''
+    }
+  },
   computed: {
-    ...mapState('category', ['items'])
+    ...mapState('category', ['items']),
+    ...mapGetters('category', ['category'])
   },
   methods: {
     ...mapActions('category', ['getItem']),
+    ...mapMutations('category', ['SET_CATEGORY']),
 
     onRoute(name) {
 			this.$router.push({name:name}, () => {})
     },
 
     onUpdate(pid) {
-      this.$router.push({name:'ItemMain', params:{pid: pid}})
+      this.$router.push({name:'ProductItemMain', params:{pid: pid}})
     },
     
     changeActive(id){
@@ -99,12 +106,14 @@ export default {
     '$route' : function() {
       const cid = this.$route.params.cid
       this.getItem(cid)
+      this.SET_CATEGORY(cid)
     }
   },
 
   created() {
     const cid = this.$route.params.cid
     this.getItem(cid)
+    this.SET_CATEGORY(cid)
   },
 }
 </script>

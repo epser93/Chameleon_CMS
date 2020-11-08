@@ -14,7 +14,7 @@
 
 <script>
 import SideBar from '@/components/SideBar'
-import { mapActions, mapState } from 'vuex'
+import { mapActions, mapState} from 'vuex'
 
 export default {
   data() {
@@ -27,7 +27,7 @@ export default {
   },
   computed: {
     ...mapState('category', ['categories']),
-    
+    // ...mapMutations('category', ['SET_CATEGORY']),
     findActive() {
       const tmpCategory = []
       for(let i=0; i<this.categories.length; i++) {
@@ -44,8 +44,18 @@ export default {
   },
   created(){
     this.getCategoryList()
-  }
-  
+  },
+  // watch: {
+  //   '$route' : function() {
+	// 		for (let i=0; i<this.categories.length; i++) {
+	// 			if (this.$route.params.cid === this.categories[i].id) {
+  //         this.SET_CATEGORY(this.categories[i])
+  //         console.log(this.categories[i])
+  //       }
+  //       console.log(this.$route.params.cid)
+  //       }
+  //   }
+  // }
 
 }
 </script>
