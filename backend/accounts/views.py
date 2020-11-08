@@ -1,7 +1,3 @@
-import re
-from typing import ClassVar
-from django.http import response
-from django.http import request
 from rest_auth.registration.views import RegisterView
 from rest_auth.views import LoginView, LogoutView
 from rest_framework import status

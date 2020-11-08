@@ -1,4 +1,3 @@
-from django.http import request
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -20,7 +19,10 @@ class EventList(APIView):
         is_success, answer = event.create(request.data, request.user, request.FILES['thumbnail'])
         if is_success == False:
             return Response(answer, status=status.HTTP_400_BAD_REQUEST)
-        images = request.FILES.getlist('images')
+        images = []
+        number = int(request.data['number'])
+        for i in range(number):
+            images.append(request.FILES['image{}'.format(i)])
         prioritys = request.data.getlist('prioritys')
         if len(prioritys) == 0:
             prioritys = [i+1 for i in range(len(images))]
