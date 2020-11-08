@@ -6,7 +6,7 @@
       :productCategories="findActive"
       ></SideBar>
     </div>
-    <div class="col-9 pl-0">
+    <div class="col-9">
       <router-view></router-view>
     </div>
   </div>
