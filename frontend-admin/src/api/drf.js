@@ -15,6 +15,8 @@ export default{
       // user search
       usersearch : 'accounts/search/',
 
+      // event
+      event: 'services/event/',
       // category
       category : 'products/categories/', 
 

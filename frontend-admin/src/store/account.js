@@ -25,6 +25,15 @@ export default {
       }
     },
 
+    formconfig(state) {
+      return {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          'Authorization': `Token ${state.authToken}`
+        }
+      }
+    },
+
     // 미승인 회원 숫자 표시
     unAuthorizedUserCount(state) {
       return state.unAccessedUserInfos.length

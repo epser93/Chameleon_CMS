@@ -89,9 +89,14 @@ const routes = [
                 component: () => import('@/views/event/EventMain.vue')
               },
               {
-                path: 'form',
-                name: 'EventForm',
+                path: ':method',
+                name: 'EventCreate',
                 component: () => import('@/views/event/EventForm.vue')
+              },
+              {
+                path: ':method/:eid',
+                name: 'EventUpdate',
+                component: () => import('@/views/event/EventForm.vue'),
               },
             ]
           },
