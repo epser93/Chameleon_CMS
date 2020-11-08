@@ -41,13 +41,16 @@ export default {
 						this.InnerCategory()
 					}
 					else{
-						this.OutCategory()
+						if(this.categories.includes('Product')){
+							this.OutCategory()
+						}
 					}
 					document.querySelector(className).classList.add('active')
 				} else {
 					document.querySelector(className).classList.remove('active')
 				}
 			}
+			
 			// let category_list = [this.$refs.User, this.$refs.UserLog]
 			// for (let i=0; i<category_list.length; i++) {
 			// 	if (this.$route.name === category_list[i].innerHTML) {
@@ -118,17 +121,18 @@ export default {
 			// 	document.querySelector(className).classList.add('active')
 			// }
 			for (let i=0; i<this.categories.length; i++) {
-				let className = '.' + this.categories[i]
-				let tmp = this.categories[i]
+			let className = '.' + this.categories[i]
+			let tmp = this.categories[i]
 				if (this.$route.name.includes(tmp)) {
-
-					document.querySelector(className).classList.add('active')
-					if(tmp === 'Product'){
+					if(tmp == 'Product'){
 						this.InnerCategory()
 					}
 					else{
-						this.OutCategory()
+						if(this.categories.includes('Product')){
+							this.OutCategory()
+						}
 					}
+					document.querySelector(className).classList.add('active')
 				} else {
 					document.querySelector(className).classList.remove('active')
 				}

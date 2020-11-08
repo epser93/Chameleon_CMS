@@ -122,4 +122,9 @@ export default {
 .btn {
   margin-left: 10px
 }
+
+span {
+  cursor: pointer;
+  margin-top: 4px;
+}
 </style>
