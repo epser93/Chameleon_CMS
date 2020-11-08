@@ -117,7 +117,7 @@ const routes = [
             children : [
               {
                 path: '',
-                name: 'NoticeMain',
+                name: 'Notice',
                 component : () => import('@/views/notice/NoticeMain.vue')
               },
               {
