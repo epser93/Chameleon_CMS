@@ -62,7 +62,28 @@ export default {
       .catch((err) => {
         console.log(err)
       })
-   },
+    },
 
+    delEvent({ dispatch, rootGetters }, eid) {
+      axios.delete(SERVER.URL + SERVER.ROUTER.event + eid + '/', rootGetters['account/config'])
+      .then(() => {
+        alert("등록이 해제되었습니다.")
+        dispatch('getEvents')
+      })
+      .catch((err) => {
+        console.log(err)
+      })   
+    },
+  
+    actEvent({ dispatch, rootGetters }, eid) {
+      axios.post(SERVER.URL + SERVER.ROUTER.event + eid + '/', rootGetters['account/config'])
+      .then(() => {
+        alert("등록이 완료되었습니다.")
+        dispatch('getEvents')
+      })
+      .catch((err) => {
+        console.log(err)
+      })   
+    },
   },
 }

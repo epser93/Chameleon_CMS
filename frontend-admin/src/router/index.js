@@ -85,7 +85,7 @@ const routes = [
             children: [
               {
                 path: '',
-                name: 'EventMain',
+                name: 'Event',
                 component: () => import('@/views/event/EventMain.vue')
               },
               {
