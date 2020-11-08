@@ -93,7 +93,10 @@ class ProductsList(APIView):
             category_description = CategoryDescription.objects.get(pk=description['id'])
             item_description.create(description['content'], request.user, item, category_description)
             copy_item_description.create(description['content'], request.user, copy_of_item, category_description)
-        images = request.FILES.getlist('images')
+        images = []
+        number = int(request.data['number'])
+        for i in range(number):
+            images.append(request.FILES['image{}'.format(i)])
         is_thumbnails = request.data.get('is_thumbnails', [False for _ in range(len(images))])
         prioritys = request.data.get('prioritys', [i+1 for i in range(len(images))])
         for i in range(len(images)):
@@ -164,7 +167,10 @@ class CopyProduct(APIView):
             copy_item_description = CopyOfItemDescription()
             category_description = CategoryDescription.objects.get(pk=description['id'])
             copy_item_description.create(description['content'], request.user, copy_of_item, category_description)
-        images = request.FILES.getlist('images')
+        images = []
+        number = int(request.data['number'])
+        for i in range(number):
+            images.append(request.FILES['image{}'.format(i)])
         is_original = request.data.get('is_original', 'True') == 'True'
         images_type = list(map(int, request.data.getlist('images_type')))
         if not images_type:

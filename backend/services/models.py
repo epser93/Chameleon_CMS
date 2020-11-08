@@ -18,6 +18,7 @@ class Event(models.Model):
     create_date = models.DateTimeField(auto_now_add=True)
     update_date = models.DateTimeField(auto_now=True)
     priority = models.IntegerField(default=1)
+    url = models.TextField(default=None, null=True)
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.DO_NOTHING)
     def __str__(self) -> str:
@@ -29,17 +30,23 @@ class Event(models.Model):
         self.user = user
         self.start_date = datetime.strptime(data['start_date'], date_type).replace(tzinfo=KST)
         self.end_date = datetime.strptime(data['end_date'], date_type).replace(tzinfo=KST)
+        self.url = data.get('url', self.url)
         is_success, answer = get_imagefile(image)
         if is_success == False:
             return False, answer
         self.thumbnail_image = answer
         self.save()
         return True, None
+
+    def activate(self):
+        self.is_active = True
+        self.save()
     
     def update(self, data, user, image):
         self.title = data.get('title', self.title)
         self.content = data.get('content', self.content)
         self.user = user
+        self.url = data.get('url', self.url)
         if data.get('start_date', None):
             self.start_date = datetime.strptime(data['start_date'], date_type).replace(tzinfo=KST)
         if data.get('end_date', None):
@@ -89,7 +96,9 @@ class Notices(models.Model):
         self.title = data['title']
         self.content = data['content']
         self.user = user
-        self.is_temp = data.get('is_temp', self.is_temp)
+        self.is_temp = data.get('is_temp', 'True') == 'True'
+        if self.is_temp == False:
+            self.start_date = datetime.now().replace(tzinfo=KST)
         is_success, answer = get_imagefile(image)
         if is_success == False:
             return False, answer

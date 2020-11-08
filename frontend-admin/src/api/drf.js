@@ -20,6 +20,9 @@ export default{
       // log
       log : 'accounts/logs/',
 
+      // event
+      event: 'services/event/',
+      
       // category
       category : 'products/categories/', 
 
