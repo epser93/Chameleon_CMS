@@ -69,7 +69,7 @@
             <div class="file-preview-container">
               <div v-for="(file, index) in images.detail" :key="index" class="file-preview-wrapper">
                 <div class="file-close-button" @click="fileDeleteButton" :name="file.number">
-                  x
+                  <img src="@/assets/icons/x.svg" alt="delete button" width="20" height="20" title="x">
                 </div>
                 <img :src="file.preview" />
               </div>
@@ -327,7 +327,7 @@ input {
     top: 10px;
     color: #fff;
     font-weight: bold;
-    background-color: #666666;
+    background-color: #cbcbcb;
     width: 20px;
     height: 20px;
     text-align: center;
