@@ -2,14 +2,14 @@
 <div class="row">
   <ul class="nav-container">
 	<li class="nav-items" v-for="(category, index) in categories" :key="index">
-		<div :class="category" @click="onRoute(category)">
+		<div :class="category" id="category" @click="onRoute(category)">
 			{{ category }}
 		</div>
-		<span class="inner-item" v-if="category ==='Product'">
-			<div :class="product.name" v-for="(product, index) in productCategories" :key="index" @click="onDetail(product.id)">
+		<div class="inner-item mt-4" v-if="category ==='Product'">
+			<div :class="product.name" id="product-name" v-for="(product, index) in productCategories" :key="index" @click="onDetail(product.id)">
 			{{ product.name }}
 			</div>
-		</span>
+		</div>
 	</li>
   </ul>
  </div>
@@ -68,16 +68,11 @@ export default {
 		InnerCategory () {
 			for (let i=0; i<this.productCategories.length; i++) {
 			let className = '.' + this.productCategories[i].name
-			console.log(className)
 			let tmp = this.productCategories[i].id
-			console.log(tmp)
-			console.log(this.$route.params.cid)
 
 			if (this.$route.params.cid == tmp) {
 				document.querySelector(className).classList.add('active')
 			} else {
-				console.log(this.$route.name + "  else")
-				console.log(tmp + "  else")
 				document.querySelector(className).classList.remove('active')
 			}
 			}
@@ -85,7 +80,6 @@ export default {
 		OutCategory () {
 			for (let i=0; i<this.productCategories.length; i++) {
 			let className = '.' + this.productCategories[i].name
-			console.log(className)
 			document.querySelector(className).classList.remove('active')
 			}
 		}
@@ -154,9 +148,8 @@ export default {
 	margin-top: 30px;
 	margin-left: 50px;
 	margin-bottom: 30px;
-	font-size: 40px;
+	font-size: 36px;
 	list-style: none;
-
 }
 
 .nav-items div {
@@ -167,71 +160,68 @@ export default {
 	cursor: pointer;
 }
 
-.nav-items .product.name {
-	/* 여기 */
-	text-decoration: none;
-	color: red;
-	position: relative;
-	width: fit-content;
-	cursor: pointer;
-}
-.nav-items .product.name::before {
-	/* 여기 */
-	content: '';
-	height: 5px;
-	width: 0;
-	background-color:red;
-	border-radius: 10px;
-	transition: 0.3s;
-	position: absolute;
-	bottom: -10px;
-	left: 0;
-}
-
-.nav-items .product.name.active::before {
-	/* 여기 */
-	content: '';
-	height: 5px;
-	width: 120%;
-	background-color: black;
-	border-radius: 10px;
-	transition: 0.3s;
-	position: absolute;
-	bottom: -10px;
-	left: 0;
-}
-
-.nav-items div::before {
-	content: '';
-	height: 5px;
-	width: 0;
-	background-color: gray;
-	border-radius: 10px;
-	transition: 0.3s;
-	position: absolute;
-	bottom: -10px;
-	left: 0;
-}
-
-.nav-items div.active::before {
-	content: '';
-	height: 5px;
-	width: 120%;
-	background-color: gray;
-	border-radius: 10px;
-	transition: 0.3s;
-	position: absolute;
-	bottom: -10px;
-	left: 0;
-}
-
-.nav-items div:hover::before {
-	width: 120%;
-}
-
-.product-category {
-  margin-top: 20px;
+#product-name {
+  margin-top: 10px;
   margin-left: 20px;
-  font-size : 20px;
+}
+
+#product-name:hover::before {
+	width: 100%;
+}
+
+#product-name::before {
+	content: '';
+	height: 5px;
+	width: 0;
+	background-color:#4ea1b5;
+	border-radius: 10px;
+	transition: 0.3s;
+	position: absolute;
+	bottom: -10px;
+	left: 0;
+}
+
+#product-name.active::after {
+	content: '';
+	height: 5px;
+	width: 100%;
+	background-color: grey;
+	border-radius: 10px;
+	transition: 0.3s;
+	position: absolute;
+	bottom: -10px;
+	left: 0;
+}
+
+.nav-items #category:hover::before {
+	width: 100%;
+}
+
+.nav-items #category::before {
+	content: '';
+	height: 5px;
+	width: 0;
+	background-color: #4ea1b5;
+	border-radius: 10px;
+	transition: 0.3s;
+	position: absolute;
+	bottom: -10px;
+	left: 0;
+}
+
+.nav-items #category.active::after {
+	content: '';
+	height: 5px;
+	width: 100%;
+	background-color: gray;
+	border-radius: 10px;
+	transition: 0.3s;
+	position: absolute;
+	bottom: -10px;
+	left: 0;
+}
+
+.inner-item {
+	font-size: 20px;
 }
 </style>
