@@ -6,7 +6,8 @@
           <tr>
             <th scope="col">No</th>
             <th scope="col">분류</th>
-            <th scope="col">유저</th>
+            <th scope="col">유저ID</th>
+            <th scope="col">이름</th>
             <th scope="col">서버 IP</th>
             <th scope="col">생성일</th>
           </tr>
@@ -15,9 +16,10 @@
           <tr v-for="(log, index) in logsForList" :key="index">
             <th scope="row">{{ (nowPage * perPage) + (index + 1) }}</th>
             <td>{{ log.type }}</td>
+            <td>{{ log.cms_user.username }}</td>
             <td>{{ log.cms_user.first_name }}</td>
             <td>{{ log.register_ip }}</td>
-            <td>{{ log.create_date }}</td>
+            <td>{{ calculateDate(log.create_date) }}</td>
           </tr>
         </tbody>
       </table>
@@ -66,6 +68,11 @@ export default {
     onPage(page) {
       this.nowPage = page
     },
+    calculateDate(time) {
+      const tz = new Date(time)
+      const arrDay = ['일','월','화','수','목','금','토']
+      return tz.toLocaleDateString() + '(' + arrDay[tz.getDay()] + ') ' + tz.getHours() + '시 ' + tz.getMinutes() + '분 ' + tz.getSeconds() + '초 '
+    }
   },
   created() {
     this.getLogs()
