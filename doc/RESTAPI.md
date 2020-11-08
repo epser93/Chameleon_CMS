@@ -967,7 +967,7 @@
 ## 이벤트 수정(미완)
 
 ```
-
+주소/api/services/event/<int:pk>/(PUT)
 ```
 
 - Body
@@ -980,6 +980,40 @@
 
 ```json
 
+```
+
+
+
+## 이벤트 활성화
+
+```
+주소/api/services/event/<int:pk>/(POST)
+```
+
+- Response
+
+```json
+{
+    "id": 2,
+    "title": "이벤트",
+    "content": "이벤트 내용",
+    "start_date": "2020-11-09T11:00:00+09:00",
+    "is_active": true,
+    "end_date": "2020-11-10T12:00:00+09:00",
+    "thumbnail_image": "/media/erd_RL2NJeG.png",
+    "create_date": "2020-11-07T20:55:43.037011+09:00",
+    "update_date": "2020-11-07T20:55:43.037011+09:00",
+    "priority": 1,
+    "user": 2,
+    "detail": [
+        {
+            "id": 1,
+            "image": "/media/erd_uMjhx20.png",
+            "priority": 1
+        }
+    ],
+    "url": null
+}
 ```
 
 
