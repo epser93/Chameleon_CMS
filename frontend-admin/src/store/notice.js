@@ -25,11 +25,11 @@ export default {
     SET_NOTICE(state, payload) {
       state.notice = payload
     },
-
+    
     // 이미지 url 가공
     SET_IMAGEURL(state, payload) {
       state.image = payload
-    }
+    },
   },
 
   actions: {
@@ -57,9 +57,9 @@ export default {
     endNotice() {
       axios.delete(SERVER.URL + SERVER.ROUTER.notice + router.currentRoute.params.id)
       .then(() => {
-        router.push({ name : 'NoticeMain' })
+        router.push({ name : 'Notice' })
       })
       .catch(error => console.log(error.response))
-    }
+    },
   },
 }
