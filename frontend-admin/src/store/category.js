@@ -8,19 +8,30 @@ export default {
   state: {
     // data
     categories: '',
+    category: '',
     items: '',
 
   },
 
   getters: {
     // watch, computed
-
+    category(state) {
+      for (let i=0; i<state.categories.length; i++) {
+				if (state.category == state.categories[i].id) {
+					return state.categories[i]
+				}
+      }
+      return null
+    }
   },
 
   mutations: {
     // state 값을 변경 시켜주기 위한 함수
     SET_CATEGORIES(state, payload) {
       state.categories = payload
+    },
+    SET_CATEGORY(state, payload) {
+      state.category = payload
     },
     SET_ITEMS(state, payload) {
       state.items = payload

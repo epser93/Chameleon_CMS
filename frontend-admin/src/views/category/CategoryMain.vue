@@ -2,7 +2,7 @@
 <div class="container" v-if="categories">
   <div class="row justify-content-end" id="btn-add">
     <div class="col-4">
-      <button type="button" class="btn btn-info" @click="onRoute('Category')">
+      <button type="button" class="btn btn-info" @click="onRoute('ProductCG')">
         추가
       </button>
     </div>
@@ -24,6 +24,7 @@
       <tbody>
         <tr v-for="(category, index) in categories" :key="index">
           <th scope="row"></th>
+          <!-- {{ category }} -->
           <td>{{ category.name }}</td>
           <!-- 스위치 -->
           <td v-if="category.is_active">활성화
@@ -53,6 +54,8 @@
 import { mapActions, mapState } from 'vuex'
 
 export default {
+  props:[''],
+
   data() {
     return {
     }
@@ -64,14 +67,15 @@ export default {
 
   methods: {
     ...mapActions('category', ['delCategory', 'postCategory']),
+    // ...mapMutations('category', ['SET_CATEGORY']),
     onUpdate(cid) {
-      this.$router.push({name:'ItemMain', params:{cid: cid}})
+      this.$router.push({name:'ProductItemMain', params:{cid: cid}})
     },
     onRoute(name) {
 			this.$router.push({name:name}, () => {})
     },
     onDetail(cid) {
-      this.$router.push({name:'ItemMain', params:{cid: cid}})
+      this.$router.push({name:'ProductItemMain', params:{cid: cid}})
     },
     
     changeActive(id){

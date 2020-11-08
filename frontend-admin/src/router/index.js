@@ -57,24 +57,33 @@ const routes = [
               },
               {
                 path: 'category',
-                name: 'Category',
+                name: 'ProductCG',
                 component: () => import('@/views/category/CategoryInfo.vue')
               },
               {
                 path: 'category/:cid/:update',
-                name: 'CGupdate',
+                name: 'ProductCGupdate',
                 component: () => import('@/views/category/CategoryInfo.vue')
               },
               {
                 path: 'category/:cid',
-                name: 'ItemMain',
-                component: () => import('@/views/Item/ItemMain.vue')
+                name: 'ProductItemMain',
+                component: () => import('@/views/Contents/Category.vue'),
+                redirect: 'category/:cid',
+                children: [
+                  {
+                    path: '',
+                    name: 'ProductItem',
+                    component: () => import('@/views/Item/ItemMain.vue')
+                  },
+                  {
+                    path: 'item',
+                    name: 'ProductItemCreate',
+                    component: () => import('@/views/Item/ItemInfo.vue')
+                  }
+                ]
               },
-              {
-                path: 'item',
-                name: 'Item',
-                component: () => import('@/views/Item/ItemInfo.vue')
-              }
+             
             ]
           },
           {
