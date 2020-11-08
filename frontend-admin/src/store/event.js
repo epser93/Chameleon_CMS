@@ -27,7 +27,7 @@ export default {
    getEvents({ rootGetters, commit }) {
     axios.get(SERVER.URL + SERVER.ROUTER.event, rootGetters['account/config'])
       .then((res) => {
-       commit('SET_EVENTS', res.data)
+        commit('SET_EVENTS', res.data)
       })
       .catch((err) => {
         console.log(err)
@@ -35,16 +35,27 @@ export default {
    },
 
    postEvent({ rootGetters }, eventData) {
-    axios.get(SERVER.URL + SERVER.ROUTER.event, eventData, rootGetters['account/config'])
-      .then(() => {
+    // FormData의 key 확인
+    for (let key of eventData.keys()) {
+      console.log(key);
+    }
+
+    // FormData의 value 확인
+    for (let value of eventData.values()) {
+      console.log(value);
+    }
+    
+    axios.post(SERVER.URL + SERVER.ROUTER.event, eventData, rootGetters['account/formconfig'])
+      .then((res) => {
+        console.log(res.data)
       })
       .catch((err) => {
         console.log(err)
       })
    },
 
-  getEvent({ commit, rootGetters }, eid) {
-     axios.get(SERVER.URL + SERVER.ROUTER.event + eid + '/', rootGetters['account/config'])
+  getEvent({ rootGetters, commit }, eid) {
+    axios.get(SERVER.URL + SERVER.ROUTER.event + eid + '/', rootGetters['account/config'])
       .then((res) => {
         commit('SET_EVENT', res.data)
       })

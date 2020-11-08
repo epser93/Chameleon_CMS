@@ -8,16 +8,11 @@ export default {
   state: {
     // data
     authToken: cookies.get('auth-token'),
-<<<<<<< HEAD
-    userInfo: '',
-
-=======
     userInfo: '', // 특정 유저 정보
     accessUserInfos : '', // access 권한을 가진 유저들 정보
     unAccessedUserInfos : '', // access 권한을 가지지 못한 유저들 정보
     departments : '', // 부서 정보
     authorityModalUser: '', // 권한부여 창에 뿌려질 유저정보 (deep copy적용)
->>>>>>> 6d8b5a5adcd01c31fa1c54215c629a0b0db3d51c
   },
 
   getters: {
@@ -26,6 +21,15 @@ export default {
       return {
         headers: {
           'Authorization' : 'Token ' + state.authToken
+        }
+      }
+    },
+
+    formconfig(state) {
+      return {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          'Authorization': `Token ${state.authToken}`
         }
       }
     },
