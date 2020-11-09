@@ -6,7 +6,7 @@
       </a>
       <div class="row align-items-center mt-4">
         <p class="user-info">{{ user }}님 환영합니다.</p>
-        <button type="button" class="btn btn-secondary btn-sm" @click="logout()">로그아웃</button>
+        <button type="button" class="btn btn-secondary btn-sm ml-2" @click="logout()">로그아웃</button>
       </div>
     </div>
     <div class="nav-tabs-container">
