@@ -2022,60 +2022,63 @@
             "id": 1,
             "name": "노트북A",
             "price": 1280000,
-            "is_temp": false,
-            "is_active": true,
-            "category": {
-                "id": 1,
-                "name": "노트북"
-            },
-            "template": {
-                "id": 2,
-                "name": "카테고리 이미지 특화",
-                "type": 1
-            },
-            "created_date": "2020-11-09T10:39:27.052224+09:00",
-            "update_date": "2020-11-09T10:39:27.052224+09:00",
-            "cms_user": {
-                "id": 2,
-                "username": "test",
-                "first_name": "김유기"
-            },
-            "descriptions": [],
-            "images": []
+            "template": 2,
+            "images": [],
+            "descriptions": [
+                {
+                    "id": 1,
+                    "category_description": {
+                        "id": 14,
+                        "name": "제조사"
+                    },
+                    "content": "AMD"
+                }
+            ]
         },
         {
             "id": 2,
             "name": "노트북A",
             "price": 1280000,
-            "is_temp": false,
-            "is_active": true,
-            "category": {
-                "id": 1,
-                "name": "노트북"
-            },
-            "template": {
-                "id": 2,
-                "name": "카테고리 이미지 특화",
-                "type": 1
-            },
-            "created_date": "2020-11-09T10:39:44.786263+09:00",
-            "update_date": "2020-11-09T10:39:44.786263+09:00",
-            "cms_user": {
-                "id": 2,
-                "username": "test",
-                "first_name": "김유기"
-            },
-            "descriptions": [],
+            "template": 2,
             "images": [
                 {
                     "id": 1,
                     "item_image": "/media/KakaoTalk_20201019_093205576_ni0qpZF.png",
                     "is_thumbnail": true,
-                    "priority": 1,
-                    "created_date": "2020-11-09T10:39:44.898264+09:00",
-                    "update_date": "2020-11-09T10:39:44.898264+09:00"
+                    "priority": 1
                 }
-            ]
+            ],
+            "descriptions": []
+        }
+    ]
+}
+```
+
+
+
+### 아이템 상세정보
+
+```
+주소/products/customer/product/<int:pk>/ (GET)
+```
+
+- Response
+
+```json
+{
+    "id": 1,
+    "name": "노트북A",
+    "price": 1280000,
+    "template": 2,
+    "images": [],
+    "descriptions": [
+        {
+            "id": 1,
+            "category_description": {
+                "id": 14,
+                "name": "제조사"
+            },
+            "content": "AMD"
         }
     ]
 }

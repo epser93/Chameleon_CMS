@@ -5,6 +5,7 @@ import account from './account'
 import event from './event'
 import category from './category'
 import notice from './notice'
+import main from './main'
 
 Vue.use(Vuex)
 
@@ -13,6 +14,7 @@ export default new Vuex.Store({
     account,
     event,
     category,
-    notice
+    notice,
+    main,
   }
 })
