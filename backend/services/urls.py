@@ -9,7 +9,7 @@ urlpatterns = [
     path('main/', views.MainItemAPI().as_view()),
     path('main/<int:pk>/', views.MainItemDetailAPI().as_view()),
     path('carousel/', views.MainCarouselItemAPI().as_view()),
-    path('carousel/<int:pk/', views.MainCarouselItemDetailAPI().as_view()),
+    path('carousel/<int:pk>/', views.MainCarouselItemDetailAPI().as_view()),
     path('notices/', views.NoticesList().as_view()),
     path('notices/<int:pk>/', views.NoticesDetail().as_view()),
     path('customer/search/', views.CustomerSearchAPI().as_view()),

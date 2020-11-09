@@ -120,7 +120,7 @@ class MainItemAPI(APIView):
         priority = request.data['priority']
         is_active = request.data.get('is_active', 'True') == 'True'
         if is_active and MainItem.objects.filter(priority=priority).filter(is_active=True).exists():
-            answer = {message: '해당위치에 아이템이 등록되어 있습니다.'}
+            answer = {message: '해당위치에 아이템이 등록되어 있습니다. '}
             return Response(answer, status=status.HTTP_400_BAD_REQUEST)
         item = Item.objects.get(pk=request.data['id'])
         main_item = MainItem()
@@ -173,23 +173,34 @@ class MainCarouselItemAPI(APIView):
 
     def post(self, request):
         main_carousel_item = MainCarouselItem()
-        main_carousel_item.create(request.data, request.user, request.FILES.get('image', None))
+        main_carousel_item.update(request.data, request.user, request.FILES.get('image', None))
         serializer = MainCarouselItemSerializer(main_carousel_item)
         return Response(serializer.data)
 
 
 class MainCarouselItemDetailAPI(APIView):
-    def get(self, reqeust):
-        pass
+    def get(self, reqeust, pk):
+        main_carousel = MainCarouselItem.objects.get(pk=pk)
+        serializer = MainCarouselItemSerializer(main_carousel)
+        return Response(serializer.data)
 
 
-    def post(self, request):
-        pass
+    def post(self, request, pk):
+        main_carousel = MainCarouselItem.objects.get(pk=pk)
+        main_carousel.activate()
+        serializer = MainCarouselItemSerializer(main_carousel)
+        return Response(serializer.data)
 
 
-    def put(self, request):
-        pass
+    def put(self, request, pk):
+        main_carousel = MainCarouselItem.objects.get(pk=pk)
+        main_carousel.update(request.data, request.user, request.FILES.get('image', None))
+        serializer = MainCarouselItemSerializer(main_carousel)
+        return Response(serializer.data)
 
 
-    def delete(self, request):
-        pass
+    def delete(self, request, pk):
+        main_carousel = MainCarouselItem.objects.get(pk=pk)
+        main_carousel.delete()
+        answer = {message: '케로셀 아이템이 비활성화 되었습니다.'}
+        return Response(answer)
