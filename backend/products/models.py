@@ -125,6 +125,9 @@ class AbstractItem(models.Model):
 
     def delete(self):
         self.is_active = False
+        items = self.main.all()
+        for item in items:
+            item.delete()
         self.save()
 
     def activate(self):
