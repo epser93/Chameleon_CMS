@@ -27,6 +27,10 @@ export default{
       category : 'products/categories/', 
 
       // notice
-      notice : 'services/notices/'
+      notice : 'services/notices/',
+
+      // main
+      main : 'services/main/',
+      carousel: 'services/carousel/,'
     }
   }
