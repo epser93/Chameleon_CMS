@@ -1,13 +1,15 @@
 <template>
-  <div class="row">
-    <div class="col-3 nav-container scroll">
-      <SideBar
-      :categories="categoriess"
-      :productCategories="findActive"
-      ></SideBar>
-    </div>
-    <div class="contents-view col-9">
-      <router-view class="scroll"></router-view>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-3 nav-container scroll">
+        <SideBar
+        :categories="categoriess"
+        :productCategories="findActive"
+        ></SideBar>
+      </div>
+      <div class="contents-view col-9">
+        <router-view class="scroll"></router-view>
+      </div>
     </div>
   </div>
 </template>
