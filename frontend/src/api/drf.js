@@ -26,6 +26,9 @@ export default{
       // category
       category : 'products/categories/', 
 
+      // item
+      item : 'products/product/', 
+
       // notice
       notice : 'services/notices/',
 
