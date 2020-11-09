@@ -13,7 +13,7 @@
         </select>
         <input type="text" class="form-control" placeholder="회원 검색" v-model="searchedName" @keypress.enter="changeSearchToggle()">
         <div class="input-group-append">
-          <button class="btn btn-secondary" type="button" id="button-addon2" @click="changeSearchToggle()">검색</button>
+          <button class="btn btn-secondary ml-0" type="button" id="button-addon2" @click="changeSearchToggle()">검색</button>
         </div>
       </div>
       <UnauthorizedUser></UnauthorizedUser>
