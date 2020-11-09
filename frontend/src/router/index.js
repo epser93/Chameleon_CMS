@@ -166,21 +166,30 @@ const routes = [
                     component: () => import('@/views/main/MainImage.vue')
                   },
                   {
+                    path: 'image/:method',
+                    name: 'MainImageCreate',
+                    component: () => import('@/views/main/MainImageForm.vue')
+                  },
+                  {
+                    path: 'image/:method/:id',
+                    name: 'MainImageUpdate',
+                    component: () => import('@/views/main/MainImageForm.vue'),
+                  },
+                  {
                     path: 'product',
                     name: 'MainProduct',
                     component: () => import('@/views/main/MainProduct.vue')
                   },
-
-                  // {
-                  //   path: ':method',
-                  //   name: 'EventCreate',
-                  //   component: () => import('@/views/main/EventForm.vue')
-                  // },
-                  // {
-                  //   path: ':method/:eid',
-                  //   name: 'EventUpdate',
-                  //   component: () => import('@/views/main/EventForm.vue'),
-                  // },
+                  {
+                    path: 'product/:method',
+                    name: 'MainProductCreate',
+                    component: () => import('@/views/main/MainProductForm.vue')
+                  },
+                  {
+                    path: 'product/:method/:id',
+                    name: 'MainProductUpdate',
+                    component: () => import('@/views/main/MainProductForm.vue'),
+                  },
                 ]
               },
               {
