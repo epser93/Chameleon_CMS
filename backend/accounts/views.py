@@ -144,7 +144,7 @@ class USerSearchAPI(APIView):
         _type = request.GET.get('type', 'all')
         content = request.GET.get('content', '')
         if _type == 'all':
-            users = User.objects.filter(first_name=content).filter(is_active=True).exclude(is_superuser=True)
+            users = User.objects.filter(first_name__contains=content).filter(is_active=True).exclude(is_superuser=True)
         elif _type == 'is_access':
             users = User.objects.filter(is_access=False).exclude(is_superuser=True)
         else :

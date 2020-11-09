@@ -2,7 +2,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from .models import Item, ItemImage, ItemDescription, Category, CategoryDescription, Template, CopyOfItem, CopyOfItemDescription, CopyOfItemImage
-from .serializers import CopyItemSerializer, CustomerCategoryJoinSerializer, CustomerCategorySerializer, ItemSerializer, CategorySerializer, TemplateSerializer
+from .serializers import CopyItemSerializer, CustomerCategoryJoinSerializer, CustomerCategorySerializer, CustomerItemSerializer, ItemSerializer, CategorySerializer, TemplateSerializer
 
 class CategoryList(APIView):
     def get(self, request):
@@ -219,4 +219,11 @@ class CustomerCategoryDetailAPI(APIView):
     def get(self, request, pk):
         category = Category.objects.get(pk=pk)
         serializer = CustomerCategoryJoinSerializer(category)
+        return Response(serializer.data)
+
+
+class CustomerItemAPI(APIView):
+    def get(self, request, pk):
+        item = Item.objects.get(pk=pk)
+        serializer = CustomerItemSerializer(item)
         return Response(serializer.data)
