@@ -1339,12 +1339,14 @@
 
 > type 종류
 >
-> - all  - 전체유저 정보
-> - is_access - 승인 여부에 따라 유저 정보 검색 content에 True, False 입력
-> - name - content에 들어가있는 이름으로 검색
-> - department - content에 들어가있는 부서명으로 검색
+> - all  - 승인된 유저중에서 부서상관없이 이름으로 검색
+> - is_access - 승인되지 않은 유저들만 검색
 >
-> ex) `주소/api/accounts/search/?type=department&content=생산관리`
+> - 부서명 - 해당 부서명으로 검색, content가 필수이다.
+>
+> name - content에 들어가있는 이름으로 검색
+>
+> ex) `주소/api/accounts/search/?type=생산관리&content=은석`
 
 - Response
 
@@ -1946,7 +1948,9 @@
 
 
 
-## customer search
+## Custmoer API
+
+### item, event search
 
 ```
 주소/api/services/customer/search/?content=<>
@@ -1972,6 +1976,109 @@
             "user": 3,
             "detail": [],
             "url": "asdasd"
+        }
+    ]
+}
+```
+
+
+
+### 카테고리 리스트
+
+```
+주소/api/products/customer/categories/(GET)
+```
+
+- Response
+
+```json
+[
+    {
+        "id": 1,
+        "name": "노트북",
+        "image": null
+    }
+]
+```
+
+
+
+### 카테고리에 속한 아이템 리스트
+
+```
+주소/api/products/customer/categories/<int:pk>/ (GET)
+```
+
+- Response
+
+```json
+{
+    "id": 1,
+    "name": "노트북",
+    "image": null,
+    "template": 1,
+    "items": [
+        {
+            "id": 1,
+            "name": "노트북A",
+            "price": 1280000,
+            "template": 2,
+            "images": [],
+            "descriptions": [
+                {
+                    "id": 1,
+                    "category_description": {
+                        "id": 14,
+                        "name": "제조사"
+                    },
+                    "content": "AMD"
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "name": "노트북A",
+            "price": 1280000,
+            "template": 2,
+            "images": [
+                {
+                    "id": 1,
+                    "item_image": "/media/KakaoTalk_20201019_093205576_ni0qpZF.png",
+                    "is_thumbnail": true,
+                    "priority": 1
+                }
+            ],
+            "descriptions": []
+        }
+    ]
+}
+```
+
+
+
+### 아이템 상세정보
+
+```
+주소/products/customer/product/<int:pk>/ (GET)
+```
+
+- Response
+
+```json
+{
+    "id": 1,
+    "name": "노트북A",
+    "price": 1280000,
+    "template": 2,
+    "images": [],
+    "descriptions": [
+        {
+            "id": 1,
+            "category_description": {
+                "id": 14,
+                "name": "제조사"
+            },
+            "content": "AMD"
         }
     ]
 }

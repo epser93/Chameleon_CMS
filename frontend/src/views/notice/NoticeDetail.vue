@@ -1,12 +1,15 @@
 <template>
-  <div class="notice-container" v-if="notice && image">
-    <div class="division">
-      <p class="title">제목</p>
-      <div>{{ notice.title }}</div>
+  <div class="container" v-if="notice && image">
+    <div class="mt-4 mb-3">
+      <button type="button" class="btn btn-dark btn-sm" @click="$router.go(-1)">뒤로가기</button>
     </div>
-    <div class="division">
+    <div class="row division align-items-center pl-3">
+      <p class="title">제목</p>
+      <p class="notice-title ml-2">{{ notice.title }}</p>
+    </div>
+    <div class="row division align-items-center pl-3">
       <p class="contents">내용</p>
-      <div>{{ notice.content }}</div>
+      <p class="notice-content ml-2">{{ notice.content }}</p>
     </div>
     <div class="division">
       <p class="image">공지 이미지</p>
@@ -50,17 +53,25 @@ export default {
 }
 
 .title {
-  font-size: 30px;
+  font-size: 24px;
   font-weight: bold;
 }
 
 .contents {
-  font-size: 30px;
+  font-size: 24px;
   font-weight: bold;
 }
 
+.notice-title {
+  border-bottom: 2px solid grey;
+}
+
+.notice-content {
+  border-bottom: 2px solid grey;
+}
+
 .image {
-  font-size: 30px;
+  font-size: 24px;
   font-weight: bold;
 }
 

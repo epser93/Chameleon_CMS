@@ -78,6 +78,7 @@ import { mapActions, mapGetters, mapMutations } from 'vuex'
 export default {
   data() {
     return {
+        categoryIdx: null,
         categoryName: null,
         picked: 1,
         tags: [],
@@ -86,6 +87,10 @@ export default {
         imageUrl: null,
         update: false,
         image: null,
+        initTags: [],
+        initNums: [],
+        delTagIdx: [],
+        addTags: [],
 
     }
   },
@@ -95,9 +100,12 @@ export default {
   
   watch: {
     category(val) {
+      this.categoryIdx = val.id
       this.categoryName = val.name
       for(let i=0; i<val.description.length; i++) {
         this.tags.push(val.description[i].name)
+        this.initTags.push(val.description[i].name)
+        this.initNums.push(val.description[i].id)
       }
       this.picked = val.template.id
       this.imageUrl = 'http://k3c205.p.ssafy.io' + val.image
@@ -105,18 +113,10 @@ export default {
       // console.log(val)
     },
     
-    // '$route' : function() {
-    //   if(this.$route.params.update == 'update') {
-    //     const cid = this.$route.params.cid
-    //     this.SET_CATEGORY(cid)
-    //     this.update = true
-    //   }
-    // }
-
   },
 
   methods: {
-    ...mapActions('category', [ 'categoryRegister', '' ]),
+    ...mapActions('category', [ 'categoryRegister', 'categoryUpdate' ]),
     ...mapMutations('category', ['SET_CATEGORY']),
     onClickRegister(){
       const categoryData = new FormData()
@@ -128,20 +128,38 @@ export default {
       categoryData.append('template', this.picked)
       categoryData.append('priority', this.priority)
 
-      // const categoryData = {
-      //   name: this.categoryName,
-      //   descriptions: this.tags,
-      //   template: this.picked,
-      //   priority: this.priority,
-      //   images: this.imageUrl
-      // }
-      // console.log('카테고리 등록')
       this.categoryRegister(categoryData)
     },
   
     onClickUpdate(){
+      for(let i=0; i<this.initTags.length; i++) {
+        if(!this.tags.includes(this.initTags[i])) {
+          this.delTagIdx.push(this.initNums[i])
+        } 
+      }
+      for(let i=0; i<this.tags.length; i++) {
+        console.log(this.initTags)
+        console.log(this.tags[i])
+        if(!this.initTags.includes(this.tags[i])) {
+          this.addTags.push(this.tags[i])
+        } 
+      }
+      const categoryData = new FormData()
+      categoryData.append('name', this.categoryName)
+      for(let i=0; i<this.delTagIdx.length; i++) {
+        categoryData.append('descriptions_delete', this.delTagIdx[i])
+      }
+      
+      for(let i=0; i<this.addTags.length; i++) {
+        categoryData.append('descriptions_add', this.addTags[i])
+      }
+      
+      categoryData.append('image', this.image)
+      categoryData.append('template', this.picked)
+      categoryData.append('priority', this.priority)
 
-      console.log('모든 데이터를 보내면 됌')
+      this.categoryUpdate({cid : this.categoryIdx, categoryData : categoryData})
+
     },
     onClickWindows(){
       var url="test.html";
