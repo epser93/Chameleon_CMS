@@ -5,7 +5,7 @@
         <!-- 이벤트 제목 -->
         <div class="event-content">
           <h4>이벤트 제목</h4>
-          <input v-model="title" type="text" placeholder=" 제목을 입력해 주세요.">
+          <input v-model="title" class="form-control" type="text" placeholder=" 제목을 입력해 주세요.">
         </div>
         <!-- 이벤트 기간 -->
         <div class="event-content">
@@ -262,8 +262,8 @@ textarea {
 }
 
 input {
-  border: 1px solid grey;
-  border-radius: 10px;
+  border: 1px solid #cbcbcb;
+  border-radius: 5px;
 }
 
 .form-control {
