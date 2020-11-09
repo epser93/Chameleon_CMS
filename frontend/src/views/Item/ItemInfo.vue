@@ -70,24 +70,23 @@
         </div>  
       </div>
       <!-- history -->
-      <div class="col-4" id="history">
-        <div class="temp-part">
-          <h1>History</h1>
+      <div class="col-4 mt-4">
+      <div class="card text-center">
+        <div class="card-header">
+          <h3><img src="@/assets/icons/card-list.svg" alt="" width="32" height="32" title="card-list" class="mr-2">History</h3>
         </div>
-        <div class="temp-part-history">
+        <div class="card-body">
           <ul v-if="history.length">
             <li v-for="(his,index) in history.slice().reverse()" :key="index">
-              <div class="history-btn" :id="`history-${index}`" @click="onHistory(his), fixHistory(index)">
-                저장 {{ his.idx }}
+              <div class="history-btn row justify-content-around" :id="`history-${index}`" @click="onHistory(his), fixHistory(index)">
+                <strong>저장 {{ his.idx }}</strong>
                 <p>{{ his.date }}</p>
               </div>
             </li>
           </ul>
         </div>
-        <div>
-          <button type="button" class="btn btn-success btn-sm" @click="onClickRegister">등록</button> 
-        </div>
       </div>
+    </div>
 
     </div>
   </div>

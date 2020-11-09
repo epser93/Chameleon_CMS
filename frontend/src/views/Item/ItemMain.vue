@@ -3,12 +3,10 @@
   <h1>{{ category.name }}</h1>
   <div class="row justify-content-between">
     <div class="col-3">
-      <button type="button" class="btn btn-info" @click="onRoute('ProductItemCreate')">
+      <button type="button" class="btn btn-info" @click="onCreate('ProductItemCreate')">
         추가
       </button>
-      <button type="button" class="btn btn-danger">
-        삭제
-      </button>
+      
     </div>
     <div class="col-6">
       <div class="input-group mb-3">
@@ -34,7 +32,7 @@
       </thead>
       <tbody>
         <tr v-for="(item, index) in items" :key="index">
-          <th scope="row"><input type="checkbox"></th>
+          <th scope="row"></th>
           <td>{{ item.category.name }}</td>
           <td>{{ item.name }}</td>
           <td>{{ item.update_date.slice(0,10) }}</td>
@@ -72,8 +70,9 @@ export default {
     ...mapActions('category', ['getItem', 'delItem', 'postItem']),
     ...mapMutations('category', ['SET_CATEGORY']),
 
-    onRoute(name) {
-			this.$router.push({name:name}, () => {})
+    onCreate(cid) {
+      this.$router.push({name:'ProductCGupdate', params:{cid: cid, update: 'update'}})
+  
     },
 
     onUpdate(pid) {
