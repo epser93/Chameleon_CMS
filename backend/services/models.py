@@ -176,13 +176,13 @@ class MainCarouselItem(models.Model):
     create_date = models.DateTimeField(auto_now_add=True)
     update_date = models.DateTimeField(auto_now=True)
     priority = models.IntegerField(default=1)
-    is_active = models.BooleanField(default=True)
-    url = models.BooleanField(default=None, null=True)
+    is_active = models.BooleanField(default=False)
+    url = models.TextField(default=None, null=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.DO_NOTHING)
 
-    def create(self, data, user, image):
-        self.priority = data['priority']
-        self.is_active = data.get('is_active', 'True') == 'True'
+    def update(self, data, user, image):
+        self.priority = int(data.get('priority', self.priority))
+        self.is_active = data.get('is_active', 'False') == 'True'
         self.url = data.get('url', '')
         self.user = user
         if image != None:
@@ -193,10 +193,9 @@ class MainCarouselItem(models.Model):
         self.save()
 
     def activate(self):
-        pass
-
-    def update(self):
-        pass
+        self.is_active = True
+        self.save()
 
     def delete(self):
-        pass
+        self.is_active = False
+        self.save()

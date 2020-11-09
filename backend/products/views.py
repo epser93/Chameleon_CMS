@@ -85,18 +85,21 @@ class ProductsList(APIView):
         category = Category.objects.get(pk=request.data['category'])
         item.create(request.data, request.user, category, template)
         copy_of_item.copy_create(request.data, request.user, category, template, item)
-
-        for description in request.data.get('descriptions', []):
+        description_id = list(map(int, request.data.getlist('descriptions_id')))
+        descriptions_content = request.data.getlist('descriptions_content')
+        for i in range(len(descriptions_content)):
             item_description = ItemDescription()
             copy_item_description = CopyOfItemDescription()
-            category_description = CategoryDescription.objects.get(pk=description['id'])
-            item_description.create(description['content'], request.user, item, category_description)
-            copy_item_description.create(description['content'], request.user, copy_of_item, category_description)
+            category_description = CategoryDescription.objects.get(pk=description_id[i])
+            item_description.create(descriptions_content[i], request.user, item, category_description)
+            copy_item_description.create(descriptions_content[i], request.user, copy_of_item, category_description)
         images = []
         number = int(request.data['number'])
         for i in range(number):
             images.append(request.FILES['image{}'.format(i)])
-        is_thumbnails = request.data.get('is_thumbnails', [False for _ in range(len(images))])
+        is_thumbnails = request.data.getlist('is_thumbnails')
+        if len(is_thumbnails) == 0:
+            is_thumbnails = [False for _ in range(len(images))]
         prioritys = request.data.get('prioritys', [i+1 for i in range(len(images))])
         for i in range(len(images)):
             item_image = ItemImage()
@@ -116,7 +119,7 @@ class ProductDetail(APIView):
 
     def post(self, request, pk):
         item = Item.objects.get(pk=pk)
-        item.recovery()
+        item.activate()
         serializer = ItemSerializer(item)
         return Response(serializer.data)
     
@@ -162,10 +165,12 @@ class CopyProduct(APIView):
         template = Template.objects.get(pk=request.data['template'])
         category = Category.objects.get(pk=request.data['category'])
         copy_of_item.copy_create(request.data, request.user, category, template, item)
-        for description in request.data.get('descriptions', []):
+        description_id = list(map(int, request.data.getlist('descriptions_id')))
+        descriptions_content = request.data.getlist('descriptions_content')
+        for i in range(len(descriptions_content)):
             copy_item_description = CopyOfItemDescription()
-            category_description = CategoryDescription.objects.get(pk=description['id'])
-            copy_item_description.create(description['content'], request.user, copy_of_item, category_description)
+            category_description = CategoryDescription.objects.get(pk=description_id[i])
+            copy_item_description.create(descriptions_content[i], request.user, copy_of_item, category_description)
         images = []
         number = int(request.data['number'])
         for i in range(number):
