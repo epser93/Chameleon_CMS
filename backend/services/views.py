@@ -1,9 +1,10 @@
+from django.http import request
 from products.models import Item
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from .models import Event, EventDetail, MainCarouselItem, MainItem, Notices
-from .serializers import EventSerializer, MainCarouselItemSerializer, MainItemSerializer, NoticesSerializer, SearchSerializer
+from .serializers import CustomerCarouselSerializer, CustomerEventDetailSerializer, CustomerEventListSerializer, CustomerMainItemSerializer, EventSerializer, MainCarouselItemSerializer, MainItemSerializer, NoticesSerializer, SearchSerializer
 
 message = 'message'
 
@@ -204,3 +205,31 @@ class MainCarouselItemDetailAPI(APIView):
         main_carousel.delete()
         answer = {message: '케로셀 아이템이 비활성화 되었습니다.'}
         return Response(answer)
+
+
+class CustomerMainItemAPI(APIView):
+    def get(self, request):
+        main_item = MainItem.objects.filter(is_active=True).order_by('priority', '-update_date')
+        serializer = CustomerMainItemSerializer(main_item, many=True)
+        return Response(serializer.data)
+
+
+class CustomerCarouselAPI(APIView):
+    def get(self, request):
+        carousel_item = MainCarouselItem.objects.filter(is_active=True).order_by('priority', '-update_date')
+        serializer = CustomerCarouselSerializer(carousel_item, many=True)
+        return Response(serializer.data)
+
+
+class CustomerEventAPI(APIView):
+    def get(self, request):
+        events = Event.objects.filter(is_active=True).order_by('priority', 'update_date')
+        serializer = CustomerEventListSerializer(events, many=True)
+        return Response(serializer.data)
+
+
+class CustomerEventDetailAPI(APIView):
+    def get(self, request, pk):
+        event = Event.objects.get(pk=pk, is_active=True)
+        serializer = CustomerEventDetailSerializer(event)
+        return Response(serializer.data)

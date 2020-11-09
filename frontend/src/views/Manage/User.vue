@@ -1,8 +1,8 @@
 <template>
-  <div class="container-fluid p-0">
+  <div class="container p-0">
     <div class="table-container mt-0">
       <div class="unauthorized">
-        <button type="button" class="btn ml-3 mt-3 mb-3" data-toggle="modal" data-target="#unauthorizedUser">
+        <button type="button" class="btn ml-3 mt-3 mb-3" id="unauthorized-btn" data-toggle="modal" data-target="#unauthorizedUser">
           미승인 회원 <span class="badge badge-light ml-1">{{unAuthorizedUserCount}}</span>
         </button>
       </div>
@@ -13,7 +13,7 @@
         </select>
         <input type="text" class="form-control" placeholder="회원 검색" v-model="searchedName" @keypress.enter="changeSearchToggle()">
         <div class="input-group-append">
-          <button class="btn btn-outline-secondary" type="button" id="button-addon2" @click="changeSearchToggle()">검색</button>
+          <button class="btn btn-secondary ml-0" type="button" id="button-addon2" @click="changeSearchToggle()">검색</button>
         </div>
       </div>
       <UnauthorizedUser></UnauthorizedUser>
@@ -28,7 +28,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr class="user-infos" @click="authorityModalUser(userinfo)" v-for="(userinfo, idx) in accessUserInfos" :key="idx">
+          <tr class="user-infos" @click="authorityModalUser(userinfo)" v-for="(userinfo, idx) in accessUserInfosForList" :key="idx">
             <th scope="row">{{ idx+1 }} </th>
             <td>{{ userinfo.department.name }}</td>
             <td>{{ userinfo.first_name }}</td>
@@ -44,23 +44,17 @@
       </table>
     </div>
     <AuthorityModal/>
-    <div class="page-navi">
-      <nav aria-label="Page navigation example justify-content-center">
-        <ul class="pagination">
-          <li class="page-item">
-            <a class="page-link" href="#" aria-label="Previous">
-              <span aria-hidden="true">&laquo;</span>
-            </a>
-          </li>
-          <li class="page-item active"><a class="page-link" href="#">1</a></li>
-          <li class="page-item">
-            <a class="page-link" href="#" aria-label="Next">
-              <span aria-hidden="true">&raquo;</span>
-            </a>
-          </li>
-        </ul>
-      </nav>
-    </div>
+      <div class="page-navi justify-content-center">
+        <nav aria-label="Page navigation example">
+          <ul class="pagination">
+            <div v-for="(page, i) in pages" :key="i">
+              <li :class="(i == nowPage) ? 'page-item active':'page-item' ">
+                <a @click="onPage(i)" class="page-link" href="#">{{ page }}</a>
+              </li>
+            </div>
+          </ul>
+        </nav>
+      </div>
   </div>
 </template>
 
@@ -79,7 +73,9 @@ export default {
     return {
       selectedDepartment: 'all',
       searchedName: '',
-      searchToggle : false
+      searchToggle : false,
+      perPage: 10,
+      nowPage: 0,
     }
   },
   methods: {
@@ -96,7 +92,19 @@ export default {
   },
   computed : {
     ...mapState('account', ['accessUserInfos', 'departments']),
-    ...mapGetters('account', ['unAuthorizedUserCount'])
+    ...mapGetters('account', ['unAuthorizedUserCount']),
+    rows() {
+      return this.accessUserInfos.length
+    },
+    pages() {
+      return Math.ceil(this.accessUserInfos.length/this.perPage)
+    },
+    accessUserInfosForList() {
+      return this.accessUserInfos.slice(
+        (this.nowPage) * this.perPage,
+        (this.nowPage + 1) * this.perPage
+      )
+    },
   },
   created() {
     this.getAccessUserInfo()
@@ -138,7 +146,7 @@ td span {
   margin-right: 1vw;
 }
 
-.btn {
+#unauthorized-btn {
   background-color: #4ea1b5;
   color: white;
 }
@@ -147,5 +155,11 @@ td span {
   position: absolute;
   bottom: 0;
   left: 50%;
+}
+
+.input-group {
+  width: 97%;
+  margin-right: auto;
+  margin-left: auto;
 }
 </style>

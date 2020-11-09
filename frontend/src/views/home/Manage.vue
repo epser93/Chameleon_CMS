@@ -1,21 +1,23 @@
 <template>
-  <div class="row">
-    <ul class="col-3 nav-container">
-			<!-- <li class="nav-items">
-				<div ref="User" @click="onRoute('User')">User</div>
-			</li>
-			<li class="nav-items">
-				<div ref="UserLog" @click="onRoute('UserLog')">UserLog</div>
-			</li> -->
-			<!-- <li class="nav-items" v-for="(category, index) in categories" :key="index">
-				<div :class="category" @click="onRoute(category)">{{ category }}</div>
-			</li> -->
-			<SideBar :categories="categories"></SideBar>
-    </ul>
-    <div class="col-9 p-0">
-		<router-view></router-view>
-    </div>
-  </div>
+	<div class="container-fluid">
+		<div class="row">
+			<ul class="col-3 nav-container p-0 align-items-start">
+					<!-- <li class="nav-items">
+						<div ref="User" @click="onRoute('User')">User</div>
+					</li>
+					<li class="nav-items">
+						<div ref="UserLog" @click="onRoute('UserLog')">UserLog</div>
+					</li> -->
+					<!-- <li class="nav-items" v-for="(category, index) in categories" :key="index">
+						<div :class="category" @click="onRoute(category)">{{ category }}</div>
+					</li> -->
+					<SideBar :categories="categories"></SideBar>
+			</ul>
+			<div class="col-9 p-0">
+				<router-view></router-view>
+			</div>
+		</div>
+	</div>
 </template>
 
 <script>
@@ -112,8 +114,8 @@ export default {
 }
 
 .nav-container {
-	border-right: 1px gray solid;
+	border-right: 8px #eeeeee solid;
 	margin-bottom: 0;
-  height: calc(100vh - 115px);
+	height: calc(100vh - 115px);
 }
 </style>
