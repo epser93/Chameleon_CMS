@@ -2,14 +2,13 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from .models import Item, ItemImage, ItemDescription, Category, CategoryDescription, Template, CopyOfItem, CopyOfItemDescription, CopyOfItemImage
-from .serializers import CopyItemSerializer, ItemSerializer, CategorySerializer, TemplateSerializer
+from .serializers import CopyItemSerializer, CustomerCategoryJoinSerializer, CustomerCategorySerializer, ItemSerializer, CategorySerializer, TemplateSerializer
 
 class CategoryList(APIView):
     def get(self, request):
         categories = Category.objects.all()
         serializer = CategorySerializer(categories, many=True)
         return Response(serializer.data)
-
 
     def post(self, request):
         if Category.objects.filter(name=request.data['name']).exists():
@@ -206,4 +205,18 @@ class TemplateAPI(APIView):
     def get(self, request):
         templates = Template.objects.all()
         serializer = TemplateSerializer(templates, many=True)
+        return Response(serializer.data)
+
+
+class CustomerCategoryAPI(APIView):
+    def get(self, request):
+        categories = Category.objects.all().order_by('priority', '-update_date')
+        serializer = CustomerCategorySerializer(categories, many=True)
+        return Response(serializer.data)
+
+
+class CustomerCategoryDetailAPI(APIView):
+    def get(self, request, pk):
+        category = Category.objects.get(pk=pk)
+        serializer = CustomerCategoryJoinSerializer(category)
         return Response(serializer.data)
