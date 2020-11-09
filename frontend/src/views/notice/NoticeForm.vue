@@ -1,7 +1,11 @@
 <template>
   <div class="container form-root">
-    <div class="row title-division">
+    <div class="title-division">
       <div class="col-8">
+        <div class="form-title mt-5">
+          <h3>Add Notice</h3>
+          <hr>
+        </div>
         <!-- Notice 제목 -->
         <div class="notice-content">
           <h4>공지사항 제목</h4>
@@ -150,6 +154,15 @@ export default {
 </script>
 
 <style scoped>
+.form-title {
+  display: inline-block;
+}
+
+hr {
+  border: 3px solid grey;
+  border-radius: 3px;
+}
+
 .notice-content {
   margin-top: 30px;
 }

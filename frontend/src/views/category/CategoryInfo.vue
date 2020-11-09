@@ -2,6 +2,11 @@
   <div class="container">
     <div class="category">
       <div class="col-8">
+        <div class="form-title mt-5">
+          <h3 v-if="update">Edit Product Category</h3>
+          <h3 v-else>Add Product Category</h3>
+          <hr>
+        </div>
         <div class="category-content">
           <h4>제품군</h4>
           <!-- {{category}} -->
@@ -212,6 +217,15 @@ export default {
 <style>
 .form-control {
   width: auto;
+}
+
+.form-title {
+  display: inline-block;
+}
+
+hr {
+  border: 3px solid grey;
+  border-radius: 3px;
 }
 
 .template-table {
