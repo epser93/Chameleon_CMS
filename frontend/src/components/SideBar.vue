@@ -5,6 +5,11 @@
 		<div :class="category" id="category" @click="onRoute(category)">
 			{{ category }}
 		</div>
+		<div class="inner-item mt-4" v-if="category ==='Main'">
+			<div :class="main.name" id="product-name" v-for="(main, index) in mainCategories" :key="index" @click="onDetail(product.id)">
+			{{ main }}
+			</div>
+		</div>
 		<div class="inner-item mt-4" v-if="category ==='Product'">
 			<div :class="product.name" id="product-name" v-for="(product, index) in productCategories" :key="index" @click="onDetail(product.id)">
 			{{ product.name }}
@@ -18,10 +23,11 @@
 <script>
 export default {
   data() {
-	return {
-		cate : this.categories,
-		productdCate : this.productCategories
-	}
+		return {
+			cate : this.categories,
+			productdCate : this.productCategories,
+			mainCategories: ["대표 이미지", "추천 제품"]
+		}
   },
   props: ['categories', 'productCategories'],
 	methods: {
