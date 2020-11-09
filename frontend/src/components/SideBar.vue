@@ -6,9 +6,8 @@
 			{{ category }}
 		</div>
 		<div class="inner-item mt-4" v-if="category ==='Main'">
-			<div :class="main.name" id="product-name" v-for="(main, index) in mainCategories" :key="index" @click="onDetail(product.id)">
-			{{ main }}
-			</div>
+			<div class="대표이미지" id="product-name" @click="onRoute('MainImage')">대표 이미지</div>
+			<div class="추천제품" id="product-name" @click="onRoute('MainProduct')">추천 제품</div>
 		</div>
 		<div class="inner-item mt-4" v-if="category ==='Product'">
 			<div :class="product.name" id="product-name" v-for="(product, index) in productCategories" :key="index" @click="onDetail(product.id)">
@@ -26,7 +25,7 @@ export default {
 		return {
 			cate : this.categories,
 			productdCate : this.productCategories,
-			mainCategories: ["대표 이미지", "추천 제품"]
+			mainCategories: ["대표이미지", "추천제품"]
 		}
   },
   props: ['categories', 'productCategories'],
@@ -73,7 +72,6 @@ export default {
 			// 	this.$refs.UserLog.classList.add('active')
 			// }
 		},
-
 		InnerCategory () {
 			for (let i=0; i<this.productCategories.length; i++) {
 			let className = '.' + this.productCategories[i].name

@@ -152,7 +152,36 @@ const routes = [
               {
                 path: 'main',
                 name: 'Main',
-                component: () => import('@/views/Contents/Main.vue')
+                component: () => import('@/views/Contents/Main.vue'),
+                redirect: 'main',
+                children: [
+                  {
+                    path: '',
+                    name: 'Main',
+                    component: () => import('@/views/main/Main.vue')
+                  },
+                  {
+                    path: 'image',
+                    name: 'MainImage',
+                    component: () => import('@/views/main/MainImage.vue')
+                  },
+                  {
+                    path: 'product',
+                    name: 'MainProduct',
+                    component: () => import('@/views/main/MainProduct.vue')
+                  },
+
+                  // {
+                  //   path: ':method',
+                  //   name: 'EventCreate',
+                  //   component: () => import('@/views/main/EventForm.vue')
+                  // },
+                  // {
+                  //   path: ':method/:eid',
+                  //   name: 'EventUpdate',
+                  //   component: () => import('@/views/main/EventForm.vue'),
+                  // },
+                ]
               },
               {
                 path: 'product',
