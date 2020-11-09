@@ -2,30 +2,32 @@
 
 ## Admin url
 
-| url                                           | GET                      | POST               | PUT           | DELETE            |
-| --------------------------------------------- | ------------------------ | ------------------ | ------------- | ----------------- |
-| accounts/                                     | 자신의 정보              |                    |               |                   |
-| accounts/search/?type=<>&content=<>           | 유저 검색(필터링)        |                    |               |                   |
-| accounts/validation/?type=<>&content=<>       | 아이디, 이메일 여부 확인 |                    |               |                   |
-| accounts/department/                          | 부서 정보                |                    |               |                   |
-| accounts/login/                               |                          | 로그인             |               |                   |
-| accounts/signup/                              |                          | 회원가입           |               |                   |
-| accounts/logout/                              |                          | 로그아웃           |               |                   |
-| accounts/manage/<user_id>/                    |                          | 회원가입 승인      | 회원권한 수정 |                   |
-| products/main/                                | 메인페이지 상세          |                    |               |                   |
-| products/main/carousel/                       |                          | 대표페이지 등록    |               |                   |
-| products/template/                            | 템플릿 정보              |                    |               |                   |
-| products/category/                            | 카테고리 리스트          | 카테고리 생성      |               |                   |
-| products/category/<category_id>/              | 카테고리 물품리스트      |                    | 카테고리 수정 | 카테고리 삭제     |
-| products/product/                             |                          | 제품생성(임시까지) |               |                   |
-| products/product/<product_id>/                | 제품 상세정보            | 제품 활성화        | 임시제품 적용 | 제품 비활성       |
-| products/temp_product/<product_id>/           | 제품 히스토리 조회       | 제품 임시정보 생성 |               |                   |
-| products/serarch/?type=<>&content=<>&order=<> | 검색                     |                    |               |                   |
-| services/notices/                             | 공지사항 리스트          | 공지사항 생성      |               |                   |
-| services/notices/<notices_id>/                | 공지사항 상세            | 공지사항 활성화    | 공지사항 수정 | 공지사항 비활성화 |
-| services/event/                               | 이벤트 리스트            | 이벤트 생성        |               |                   |
-| services/event/<event_id>/                    | 이벤트 상세              |                    | 이벤트 수정   | 이벤트 삭제       |
-| services/logs/                                | 로그데이터               |                    |               |                   |
+| url                                           | GET                      | POST               | PUT             | DELETE              |
+| --------------------------------------------- | ------------------------ | ------------------ | --------------- | ------------------- |
+| accounts/                                     | 자신의 정보              |                    |                 |                     |
+| accounts/search/?type=<>&content=<>           | 유저 검색(필터링)        |                    |                 |                     |
+| accounts/validation/?type=<>&content=<>       | 아이디, 이메일 여부 확인 |                    |                 |                     |
+| accounts/department/                          | 부서 정보                |                    |                 |                     |
+| accounts/login/                               |                          | 로그인             |                 |                     |
+| accounts/signup/                              |                          | 회원가입           |                 |                     |
+| accounts/logout/                              |                          | 로그아웃           |                 |                     |
+| accounts/manage/<user_id>/                    |                          | 회원가입 승인      | 회원권한 수정   |                     |
+| accounts/logs/                                | 로그데이터               |                    |                 |                     |
+| products/template/                            | 템플릿 정보              |                    |                 |                     |
+| products/category/                            | 카테고리 리스트          | 카테고리 생성      |                 |                     |
+| products/category/<category_id>/              | 카테고리 물품리스트      |                    | 카테고리 수정   | 카테고리 삭제       |
+| products/product/                             |                          | 제품생성(임시까지) |                 |                     |
+| products/product/<product_id>/                | 제품 상세정보            | 제품 활성화        | 임시제품 적용   | 제품 비활성         |
+| products/temp_product/<product_id>/           | 제품 히스토리 조회       | 제품 임시정보 생성 |                 |                     |
+| products/serarch/?type=<>&content=<>&order=<> | 검색                     |                    |                 |                     |
+| services/notices/                             | 공지사항 리스트          | 공지사항 생성      |                 |                     |
+| services/notices/<notices_id>/                | 공지사항 상세            | 공지사항 활성화    | 공지사항 수정   | 공지사항 비활성화   |
+| services/event/                               | 이벤트 리스트            | 이벤트 생성        |                 |                     |
+| services/event/<event_id>/                    | 이벤트 상세              |                    | 이벤트 수정     | 이벤트 삭제         |
+| servicies/main/                               | 메인아이템 모든 정보     | 메인 아이템 생성   |                 |                     |
+| servicies/main/<main_id>                      | 메인아이템 상세정보      | 메인아이템 활성화  | 메인아이템 수정 | 메인아이템 비활성화 |
+| servicies/carousel/                           | 케로셀 모든정보          | 케로셀 생성        |                 |                     |
+| servicies/carousel/<carousel_id>              | 캐로셀 상세정보          | 케로셀 활성화      | 케로셀 수정     | 케로셀 비활성화     |
 
 ## customer url
 
@@ -466,11 +468,11 @@
     "image0": "이미지1",
     "image1": "이미지2",
     "image2": "이미지3",
-    "descriptions": [
-        {
-            "id": 20,
-            "content": "AMD"
-        }
+    "descriptions_id": [
+        20
+    ],
+    "descriptions_content": [
+        "AMD"
     ]
 }
 ```
@@ -1469,7 +1471,295 @@
 
 
 
-## 메인화면 아이템 설정
+## 메인화면 아이템 모든 정보
+
+```
+주소/api/services/main/(GET)
+```
+
+- Response
+
+```json
+[
+    {
+        "id": 1,
+        "priority": 1,
+        "is_active": false,
+        "create_date": "2020-11-09T11:14:39.523350+09:00",
+        "update_date": "2020-11-09T11:14:39.523350+09:00",
+        "item": {
+            "id": 1,
+            "name": "노트북A",
+            "price": 1280000,
+            "is_temp": false,
+            "is_active": true,
+            "category": {
+                "id": 1,
+                "name": "노트북"
+            },
+            "template": {
+                "id": 2,
+                "name": "카테고리 이미지 특화",
+                "type": 1
+            },
+            "created_date": "2020-11-09T10:39:27.052224+09:00",
+            "update_date": "2020-11-09T10:39:27.052224+09:00",
+            "cms_user": {
+                "id": 2,
+                "username": "test",
+                "first_name": "김유기"
+            },
+            "descriptions": [],
+            "images": []
+        },
+        "user": {
+            "id": 2,
+            "username": "test",
+            "first_name": "김유기"
+        }
+    }
+]
+```
+
+
+
+
+
+## 메인화면 아이템 생성
+
+```
+주소/api/services/main/(POST)
+```
+
+> id는 아이템의 id 이다.
+
+- Body
+
+```json
+{
+    "priority": 1,
+    "is_active": "False",
+    "id": 1
+}
+```
+
+- Response
+
+```json
+{
+    "id": 1,
+    "priority": 1,
+    "is_active": false,
+    "create_date": "2020-11-09T11:14:39.523350+09:00",
+    "update_date": "2020-11-09T11:14:39.523350+09:00",
+    "item": {
+        "id": 1,
+        "name": "노트북A",
+        "price": 1280000,
+        "is_temp": false,
+        "is_active": true,
+        "category": {
+            "id": 1,
+            "name": "노트북"
+        },
+        "template": {
+            "id": 2,
+            "name": "카테고리 이미지 특화",
+            "type": 1
+        },
+        "created_date": "2020-11-09T10:39:27.052224+09:00",
+        "update_date": "2020-11-09T10:39:27.052224+09:00",
+        "cms_user": {
+            "id": 2,
+            "username": "test",
+            "first_name": "김유기"
+        },
+        "descriptions": [],
+        "images": []
+    },
+    "user": {
+        "id": 2,
+        "username": "test",
+        "first_name": "김유기"
+    }
+}
+```
+
+
+
+## 메인화면 아이템 상세 정보
+
+```
+주소/api/services/main/<int:pk>/(GET)
+```
+
+- Response
+
+```json
+{
+    "id": 1,
+    "priority": 1,
+    "is_active": false,
+    "create_date": "2020-11-09T11:14:39.523350+09:00",
+    "update_date": "2020-11-09T11:14:39.523350+09:00",
+    "item": {
+        "id": 1,
+        "name": "노트북A",
+        "price": 1280000,
+        "is_temp": false,
+        "is_active": true,
+        "category": {
+            "id": 1,
+            "name": "노트북"
+        },
+        "template": {
+            "id": 2,
+            "name": "카테고리 이미지 특화",
+            "type": 1
+        },
+        "created_date": "2020-11-09T10:39:27.052224+09:00",
+        "update_date": "2020-11-09T10:39:27.052224+09:00",
+        "cms_user": {
+            "id": 2,
+            "username": "test",
+            "first_name": "김유기"
+        },
+        "descriptions": [],
+        "images": []
+    },
+    "user": {
+        "id": 2,
+        "username": "test",
+        "first_name": "김유기"
+    }
+}
+```
+
+
+
+## 메인화면 아이템 활성화
+
+```
+주소/api/services/main/<int:pk>/(POST)
+```
+
+- Response
+
+```json
+{
+    "id": 1,
+    "priority": 1,
+    "is_active": true,
+    "create_date": "2020-11-09T11:14:39.523350+09:00",
+    "update_date": "2020-11-09T11:17:47.976566+09:00",
+    "item": {
+        "id": 1,
+        "name": "노트북A",
+        "price": 1280000,
+        "is_temp": false,
+        "is_active": true,
+        "category": {
+            "id": 1,
+            "name": "노트북"
+        },
+        "template": {
+            "id": 2,
+            "name": "카테고리 이미지 특화",
+            "type": 1
+        },
+        "created_date": "2020-11-09T10:39:27.052224+09:00",
+        "update_date": "2020-11-09T10:39:27.052224+09:00",
+        "cms_user": {
+            "id": 2,
+            "username": "test",
+            "first_name": "김유기"
+        },
+        "descriptions": [],
+        "images": []
+    },
+    "user": {
+        "id": 2,
+        "username": "test",
+        "first_name": "김유기"
+    }
+}
+```
+
+
+
+## 메인화면 아이템 수정
+
+```
+주소/api/services/main/<int:pk>/(PUT)
+```
+
+- Body
+
+```json
+{
+    "priority": 2,
+    "is_active": "False",
+    "id": 1
+}
+```
+
+- Response
+
+```json
+{
+    "id": 1,
+    "priority": 2,
+    "is_active": false,
+    "create_date": "2020-11-09T11:14:39.523350+09:00",
+    "update_date": "2020-11-09T11:18:06.654806+09:00",
+    "item": {
+        "id": 1,
+        "name": "노트북A",
+        "price": 1280000,
+        "is_temp": false,
+        "is_active": true,
+        "category": {
+            "id": 1,
+            "name": "노트북"
+        },
+        "template": {
+            "id": 2,
+            "name": "카테고리 이미지 특화",
+            "type": 1
+        },
+        "created_date": "2020-11-09T10:39:27.052224+09:00",
+        "update_date": "2020-11-09T10:39:27.052224+09:00",
+        "cms_user": {
+            "id": 2,
+            "username": "test",
+            "first_name": "김유기"
+        },
+        "descriptions": [],
+        "images": []
+    },
+    "user": {
+        "id": 2,
+        "username": "test",
+        "first_name": "김유기"
+    }
+}
+```
+
+
+
+## 메인화면 아이템 비활성화
+
+```
+주소/api/services/main/<int:pk>/(DELETE)
+```
+
+- Response
+
+```json
+{
+    "message": "해당 메인 아이템을 비활성화 했습니다."
+}
+```
 
 
 
@@ -1477,7 +1767,180 @@
 
 
 
-## 메인화면 캐로셀 아이템 설정
+## 케로셀 아이템 모든 정보
+
+```
+주소/api/services/carousel/(GET)
+```
+
+- Response
+
+```json
+[
+    {
+        "id": 1,
+        "priority": 1,
+        "image": "/media/KakaoTalk_20201019_093205576_0AlpIJQ.png",
+        "is_active": true,
+        "url": "naver.com",
+        "create_date": "2020-11-09T10:44:02.906764+09:00",
+        "update_date": "2020-11-09T10:44:02.906764+09:00",
+        "user": {
+            "id": 2,
+            "username": "test",
+            "first_name": "김유기"
+        }
+    }
+]
+```
+
+
+
+## 케로셀 아이템 생성
+
+```
+주소/api/services/carousel/(POST)
+```
+
+- Body
+
+```json
+{
+    "image": "이미지 파일",
+    "url": "입력 url",
+    "is_active": "True",
+    "priority": 1
+}
+```
+
+- Response
+
+```json
+{
+    "id": 1,
+    "priority": 1,
+    "image": "/media/KakaoTalk_20201019_093205576_0AlpIJQ.png",
+    "is_active": true,
+    "url": "naver.com",
+    "create_date": "2020-11-09T10:44:02.906764+09:00",
+    "update_date": "2020-11-09T10:44:02.906764+09:00",
+    "user": {
+        "id": 2,
+        "username": "test",
+        "first_name": "김유기"
+    }
+}
+```
+
+
+
+## 케로셀 아이템 상세조회
+
+```
+주소/api/services/carousel/<int:pk>/(GET)
+```
+
+- Response
+
+```json
+{
+    "id": 1,
+    "priority": 1,
+    "image": "/media/KakaoTalk_20201019_093205576_0AlpIJQ.png",
+    "is_active": true,
+    "url": "naver.com",
+    "create_date": "2020-11-09T10:44:02.906764+09:00",
+    "update_date": "2020-11-09T10:44:02.906764+09:00",
+    "user": {
+        "id": 2,
+        "username": "test",
+        "first_name": "김유기"
+    }
+}
+```
+
+
+
+## 케로셀 아이템 활성화
+
+```
+주소/api/services/carousel/<int:pk>/(POST)
+```
+
+- Response
+
+```json
+{
+    "id": 1,
+    "priority": 1,
+    "image": "/media/KakaoTalk_20201019_093205576_0AlpIJQ.png",
+    "is_active": true,
+    "url": "naver.com",
+    "create_date": "2020-11-09T10:44:02.906764+09:00",
+    "update_date": "2020-11-09T11:00:31.064391+09:00",
+    "user": {
+        "id": 2,
+        "username": "test",
+        "first_name": "김유기"
+    }
+}
+```
+
+
+
+## 케로셀 아이템 수정
+
+```
+주소/api/services/carousel/<int:pk>/(PUT)
+```
+
+- Body
+
+```json
+{
+    "image": "이미지 파일",
+    "url": "입력 url",
+    "is_active": "True",
+    "priority": 1
+}
+```
+
+- Response
+
+```json
+{
+    "id": 1,
+    "priority": 1,
+    "image": "/media/KakaoTalk_20201019_093205576_0AlpIJQ.png",
+    "is_active": true,
+    "url": "naver.com",
+    "create_date": "2020-11-09T10:44:02.906764+09:00",
+    "update_date": "2020-11-09T11:00:31.064391+09:00",
+    "user": {
+        "id": 2,
+        "username": "test",
+        "first_name": "김유기"
+    }
+}
+```
+
+
+
+
+
+## 케로셀 아이템 비활성화
+
+```
+주소/api/services/carousel/<int:pk>/(DELETE)
+```
+
+- Response
+
+```json
+{
+    "message": "케로셀 아이템이 비활성화 되었습니다."
+}
+```
 
 
 

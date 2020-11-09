@@ -105,8 +105,8 @@ class AbstractItem(models.Model):
         return self.name
 
     def create(self, data, user, category, template):
-        self.name = data['name']
-        self.price = data['price']
+        self.name = data.get('name', "")
+        self.price = int(data.get('price', self.price))
         self.is_temp = data.get('is_temp', False)
         self.cms_user = user
         self.category = category
@@ -127,7 +127,7 @@ class AbstractItem(models.Model):
         self.is_active = False
         self.save()
 
-    def recovery(self):
+    def activate(self):
         self.is_active = True
         self.save()
 
