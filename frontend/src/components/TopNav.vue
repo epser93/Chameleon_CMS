@@ -41,9 +41,9 @@ export default {
       this.$router.push({name: name}, () => {})
     },
     fixTabs() {
-      if (this.$route.matched[1].name === "Manage") {
+      if (this.$route.matched[2].name === "Manage") {
         this.$refs.Manage.classList.add('active')
-      } else if (this.$route.matched[1].name === "Data") {
+      } else if (this.$route.matched[2].name === "Data") {
         this.$refs.Data.classList.add('active')
       } else {
         this.$refs.Contents.classList.add('active')
