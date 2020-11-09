@@ -67,7 +67,7 @@ class Event(models.Model):
 class EventDetail(models.Model):
     image = models.ImageField()
     priority = models.IntegerField(default=1)
-    event = models.ForeignKey(Event, on_delete=models.SET_NULL, related_name='detail', null=True)
+    event = models.ForeignKey(Event, on_delete=models.SET_NULL, related_name='images', null=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.DO_NOTHING)
 
     def create(self, image, priority, event, user):
@@ -172,6 +172,7 @@ class MainItem(models.Model):
 
 
 class MainCarouselItem(models.Model):
+    title = models.CharField(max_length=200, default=None, null=True)
     image = models.ImageField(default=None, null=True)
     create_date = models.DateTimeField(auto_now_add=True)
     update_date = models.DateTimeField(auto_now=True)
@@ -181,6 +182,7 @@ class MainCarouselItem(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.DO_NOTHING)
 
     def update(self, data, user, image):
+        self.title = data.get('title', self.title)
         self.priority = int(data.get('priority', self.priority))
         self.is_active = data.get('is_active', 'False') == 'True'
         self.url = data.get('url', '')

@@ -13,4 +13,8 @@ urlpatterns = [
     path('notices/', views.NoticesList.as_view()),
     path('notices/<int:pk>/', views.NoticesDetail.as_view()),
     path('customer/search/', views.CustomerSearchAPI.as_view()),
+    path('customer/main/', views.CustomerMainItemAPI.as_view()),
+    path('customer/carousel/', views.CustomerCarouselAPI.as_view()),
+    path('customer/event/', views.CustomerEventAPI.as_view()),
+    path('customer/event/<int:pk>/', views.CustomerEventDetailAPI.as_view())
 ]

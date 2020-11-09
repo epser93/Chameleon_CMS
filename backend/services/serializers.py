@@ -1,5 +1,5 @@
 from accounts.serializers import UserSerializer
-from products.serializers import ItemSerializer
+from products.serializers import CustomerItemSerializer, ItemSerializer
 from products.models import Item
 from django.db.models import Q
 from accounts.models import User
@@ -15,10 +15,10 @@ class EventDetailSerializer(serializers.ModelSerializer):
 
 
 class EventSerializer(serializers.ModelSerializer):
-    detail = EventDetailSerializer(required=False, many=True)
+    images = EventDetailSerializer(required=False, many=True)
     class Meta:
         model = Event
-        fields = ['id', 'title', 'content','start_date', 'is_active', 'end_date', 'thumbnail_image', 'create_date', 'update_date', 'priority', 'user', 'detail', 'url']
+        fields = ['id', 'title', 'content','start_date', 'is_active', 'end_date', 'thumbnail_image', 'create_date', 'update_date', 'priority', 'user', 'images', 'url']
 
 
 class NoticesSerializer(serializers.ModelSerializer):
@@ -38,14 +38,14 @@ class SearchSerializer(serializers.ModelSerializer):
     def get_events(self, obj):
         content = self.context.get('content', '0000')
         events = Event.objects.filter(Q(title__contains=content) | Q(content__contains=content)).exclude(is_active=False)
-        serializer = EventSerializer(events, many=True).data
-        return serializer
+        serializer = EventSerializer(events, many=True)
+        return serializer.data
     
     def get_items(self, obj):
         content = self.context.get('content', '0000')
         items = Item.objects.filter(name__contains=content).exclude(is_temp=True).exclude(is_active=False)
-        serializer = ItemSerializer(items, many=True).data
-        return serializer
+        serializer = ItemSerializer(items, many=True)
+        return serializer.data
 
 
 class MainItemSerializer(serializers.ModelSerializer):
@@ -60,4 +60,30 @@ class MainCarouselItemSerializer(serializers.ModelSerializer):
     user = UserSerializer()
     class Meta:
         model = MainCarouselItem
-        fields = ['id', 'priority', 'image', 'is_active', 'url', 'create_date', 'update_date', 'user']
+        fields = ['id', 'title', 'priority', 'image', 'is_active', 'url', 'create_date', 'update_date', 'user']
+
+
+class CustomerMainItemSerializer(serializers.ModelSerializer):
+    item = CustomerItemSerializer()
+    class Meta:
+        model = MainItem
+        fields = ['id', 'priority', 'item']
+
+
+class CustomerCarouselSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = MainCarouselItem
+        fields = ['id', 'image', 'url']
+
+
+class CustomerEventListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Event
+        fields = ['id', 'title', 'start_date', 'end_date', 'thumbnail_image', 'priority']
+
+
+class CustomerEventDetailSerializer(serializers.ModelSerializer):
+    images = EventDetailSerializer(required=False, many=True)
+    class Meta:
+        model = Event
+        fields = ['id', 'title', 'start_date', 'end_date', 'thumbnail_image', 'priority', 'content', 'url', 'images']

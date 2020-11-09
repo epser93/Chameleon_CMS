@@ -916,15 +916,15 @@
         "update_date": "2020-11-03T20:59:53.770623+09:00",
         "priority": 1,
         "user": 2,
-        "detail": [
+        "images": [
             {
+                "id": 1,
                 "image": "/media/KakaoTalk_20201019_093205576.png",
-                "content": "테스트1",
                 "priority": 1
             },
             {
+                "id": 2,
                 "image": "/media/KakaoTalk_20200907_134019738.jpg",
-                "content": "테스트2",
                 "priority": 2
             }
         ],
@@ -956,15 +956,15 @@
     "update_date": "2020-11-03T20:59:53.770623+09:00",
     "priority": 1,
     "user": 2,
-    "detail": [
+    "images": [
         {
+            "id": 1,
             "image": "/media/KakaoTalk_20201019_093205576.png",
-            "content": "테스트1",
             "priority": 1
         },
         {
+            "id": 2,
             "image": "/media/KakaoTalk_20200907_134019738.jpg",
-            "content": "테스트2",
             "priority": 2
         }
     ],
@@ -995,7 +995,7 @@
     "end_date": "2020-11-05 18:00:00",
     "number": 2,
     "image0": "이미지",
-    "image1": "이미지"
+    "image1": "이미지",
     "url": "",
 }
 ```
@@ -1015,7 +1015,7 @@
     "update_date": "2020-11-07T20:55:43.037011+09:00",
     "priority": 1,
     "user": 2,
-    "detail": [
+    "images": [
         {
             "id": 1,
             "image": "/media/erd_uMjhx20.png",
@@ -1069,7 +1069,7 @@
     "update_date": "2020-11-07T20:55:43.037011+09:00",
     "priority": 1,
     "user": 2,
-    "detail": [
+    "images": [
         {
             "id": 1,
             "image": "/media/erd_uMjhx20.png",
@@ -2079,6 +2079,102 @@
                 "name": "제조사"
             },
             "content": "AMD"
+        }
+    ]
+}
+```
+
+
+
+### 메인아이템 조회
+
+```
+주소/api/services/customer/event/(GET)
+```
+
+- Response
+
+```json
+[
+    {
+        "id": 1,
+        "title": "테스트",
+        "start_date": "2020-11-04T00:00:00+09:00",
+        "end_date": "2020-11-04T23:59:59+09:00",
+        "thumbnail_image": "/media/KakaoTalk_20200807_125333367_IjSlCrP.png",
+        "priority": 1
+    }
+]
+```
+
+
+
+### 케로셀 아이템 조회
+
+```
+주소/api/services/customer/carousel/(GET)
+```
+
+- Response
+
+```json
+[
+    {
+        "id": 1,
+        "image": "/media/KakaoTalk_20201019_093205576_0AlpIJQ.png",
+        "url": "naver.com"
+    }
+]
+```
+
+
+
+### 이벤트 리스트 조회
+
+```
+주소/api/services/customer/event/(GET)
+```
+
+- Response
+
+```json
+[
+    {
+        "id": 1,
+        "title": "테스트",
+        "start_date": "2020-11-04T00:00:00+09:00",
+        "end_date": "2020-11-04T23:59:59+09:00",
+        "thumbnail_image": "/media/KakaoTalk_20200807_125333367_IjSlCrP.png",
+        "priority": 1
+    }
+]
+```
+
+
+
+### 이벤트 상세 조회
+
+```
+주소/api/services/customer/event/<int:pk>/(GET)
+```
+
+- Response
+
+```json
+{
+    "id": 1,
+    "title": "테스트",
+    "start_date": "2020-11-04T00:00:00+09:00",
+    "end_date": "2020-11-04T23:59:59+09:00",
+    "thumbnail_image": "/media/KakaoTalk_20200807_125333367_IjSlCrP.png",
+    "priority": 1,
+    "content": "테스트",
+    "url": "test",
+    "images": [
+        {
+            "id": 1,
+            "image": "/media/KakaoTalk_20200807_125333367_urZx5Yl.png",
+            "priority": 1
         }
     ]
 }
