@@ -54,6 +54,9 @@
 
       <div class="row justify-content-end" id="content-btn">
         <div>
+            <button type="button" class="btn btn-dark btn-sm mr-2" @click="$router.go(-1)">뒤로가기</button>
+        </div>
+        <div>
           <button type="button" class="btn btn-secondary btn-sm" @click="onClickWindows">미리보기</button>
         </div>
         <div v-if="update">
@@ -105,6 +108,13 @@ export default {
     ...mapActions('category', [ 'categoryRegister', '' ]),
     ...mapMutations('category', ['SET_CATEGORY']),
     onClickRegister(){
+      const categoryData = new FormData()
+      categoryData.append('name', this.this.categoryName)
+      categoryData.append('descriptions', this.tags)
+      categoryData.append('image')
+      categoryData.append('template', this.picked)
+      categoryData.append('priority', this.priority)
+
       const categoryData = {
         name: this.categoryName,
         descriptions: this.tags,
