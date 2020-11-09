@@ -1960,22 +1960,48 @@
 
 ```json
 {
-    "items": [],
+    "items": [
+        {
+            "id": 1,
+            "name": "노트북A",
+            "price": 1280000,
+            "template": 2,
+            "images": [],
+            "descriptions": [
+                {
+                    "id": 1,
+                    "category_description": {
+                        "id": 14,
+                        "name": "제조사"
+                    },
+                    "content": "AMD"
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "name": "노트북A",
+            "price": 1280000,
+            "template": 2,
+            "images": [
+                {
+                    "id": 1,
+                    "item_image": "/media/KakaoTalk_20201019_093205576_ni0qpZF.png",
+                    "is_thumbnail": true,
+                    "priority": 1
+                }
+            ],
+            "descriptions": []
+        }
+    ],
     "events": [
         {
             "id": 1,
             "title": "테스트",
-            "content": "테스트",
-            "start_date": "2020-11-06T15:06:40+09:00",
-            "is_active": true,
-            "end_date": "2020-11-06T15:06:43+09:00",
-            "thumbnail_image": "/media/KakaoTalk_20200817_204540152.png",
-            "create_date": "2020-11-06T15:06:54.617564+09:00",
-            "update_date": "2020-11-08T00:15:28.900265+09:00",
-            "priority": 1,
-            "user": 3,
-            "detail": [],
-            "url": "asdasd"
+            "start_date": "2020-11-04T00:00:00+09:00",
+            "end_date": "2020-11-04T23:59:59+09:00",
+            "thumbnail_image": "/media/KakaoTalk_20200807_125333367_IjSlCrP.png",
+            "priority": 1
         }
     ]
 }
