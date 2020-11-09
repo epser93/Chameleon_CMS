@@ -50,6 +50,16 @@ export default {
         .catch(error => {console.log(error.response)})
     },
 
+    categoryUpdate({ rootGetters, dispatch }, {cid, categoryData}) {
+      axios.put(SERVER.URL + SERVER.ROUTER.category + cid + '/', categoryData, rootGetters['account/config'])
+        .then(() => {
+            console.log("수정완료")
+            dispatch('getCategoryList')
+            router.push({ name : 'Product'})
+        })
+        .catch(error => {console.log(error.response)})
+    },
+
     getCategoryList({ rootGetters, commit }) {
         axios.get(SERVER.URL + SERVER.ROUTER.category, rootGetters['account/config'])
         .then((res) => {
