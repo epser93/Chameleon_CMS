@@ -1,13 +1,13 @@
 <template>
   <div class="row">
-    <div class="col-3 nav-container">
+    <div class="col-3 nav-container scroll">
       <SideBar
       :categories="categoriess"
       :productCategories="findActive"
       ></SideBar>
     </div>
     <div class="contents-view col-9">
-      <router-view></router-view>
+      <router-view class="scroll"></router-view>
     </div>
   </div>
 </template>
@@ -71,7 +71,22 @@ export default {
   height: calc(100vh - 115px);
 }
 
-.contents-view {
-	border-left: 1px gray solid;
+.scroll {
+  overflow: scroll;
+  overflow-x: hidden;
+  height: calc(100vh - 135px);
+}
+
+.scroll::-webkit-scrollbar {
+    width: 8px;
+}
+.scroll::-webkit-scrollbar-track {
+    background:#eee;
+}
+.scroll::-webkit-scrollbar-thumb {
+    background:lightgray;
+}
+.scroll::-webkit-scrollbar-thumb:hover {
+    background:gray;
 }
 </style>

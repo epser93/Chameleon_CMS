@@ -116,7 +116,7 @@ export default {
 
     // access 권한을 가진 모든 유저 조회
     getAccessUserInfo({ getters, commit }) {
-      axios.get(SERVER.URL + SERVER.ROUTER.usersearch + '?type=is_access&content=True', getters.config)
+      axios.get(SERVER.URL + SERVER.ROUTER.usersearch + "?type=all&content=", getters.config)
         .then(res => {
           commit('SET_ACCESSUSERINFOS', res.data)
         })
@@ -125,10 +125,20 @@ export default {
 
     // access 권한을 못 가진 유저들 조회
     getUnAccessUserInfo({ getters, commit }) {
-      axios.get(SERVER.URL + SERVER.ROUTER.usersearch + "?type=is_access&content=False", getters.config)
+      axios.get(SERVER.URL + SERVER.ROUTER.usersearch + "?type=is_access", getters.config)
         .then(res => {
           commit('SET_UNACCESSUSERINFOS', res.data)
           })
+        .catch(error => console.log(error.response))
+    },
+
+    // 유저 필터링
+    filterUser({ getters, commit }, {department, name}) {
+      console.log(SERVER.URL + SERVER.ROUTER.usersearch + `?type=${department}&content=${name}`)
+      axios.get(SERVER.URL + SERVER.ROUTER.usersearch + `?type=${department}&content=${name}`, getters.config)
+        .then(res => {
+          commit('SET_ACCESSUSERINFOS', res.data)
+        })
         .catch(error => console.log(error.response))
     },
 

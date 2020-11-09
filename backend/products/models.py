@@ -135,7 +135,7 @@ class AbstractItem(models.Model):
         abstract = True
 
 class Item(AbstractItem):
-    pass
+    category = models.ForeignKey(Category, on_delete=models.SET_NULL, related_name='items', null=True)
 
 
 class AbstractItemImage(models.Model):

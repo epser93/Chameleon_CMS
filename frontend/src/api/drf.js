@@ -30,6 +30,10 @@ export default{
       item : 'products/product/', 
 
       // notice
-      notice : 'services/notices/'
+      notice : 'services/notices/',
+
+      // main
+      main : 'services/main/',
+      carousel: 'services/carousel/,'
     }
   }
