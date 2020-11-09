@@ -1,11 +1,13 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="logo-section">
+    <div class="row logo-section">
       <a class="navbar-brand" @click="onRoute('Main')">
         <img src="@/assets/logo.png" width="200" height="100%" class="d-inline-block align-top" alt="" loading="lazy">
       </a>
-      <div class="user-info">{{ user }}님 환영합니다.</div>
-      <div class="logout-btn" @click="logout()">로그아웃</div>
+      <div class="row align-items-center mt-4">
+        <p class="user-info">{{ user }}님 환영합니다.</p>
+        <button type="button" class="btn btn-secondary btn-sm" @click="logout()">로그아웃</button>
+      </div>
     </div>
     <div class="nav-tabs-container">
       <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -108,7 +110,7 @@ nav {
 }
 
 .nav-tabs {
-  font-size: 30px;
+  font-size: 26px;
   color: black;
   height : 80%;
   margin-right: 3vw;
@@ -131,15 +133,6 @@ nav {
 }
 
 .user-info {
-  font-size: 25px;
-  margin-left: 3vw;
-  margin-right: 2vw
-}
-
-.logout-btn {
-  cursor: pointer;
-  /* padding: 15px; */
-  /* border: 1px black solid; */
-  /* border-radius: 10px; */
+  margin-bottom: 0;
 }
 </style>
