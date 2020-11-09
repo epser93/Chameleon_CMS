@@ -58,6 +58,9 @@
         </div>
 
         <div class="row justify-content-end" id="content-btn">
+          <div>
+            <button type="button" class="btn btn-dark btn-sm mr-2" @click="$router.go(-1)">뒤로가기</button>
+          </div>
           <div >
             <button type="button" class="btn btn-secondary btn-sm" @click="onClickWindows">미리보기</button>
           </div>

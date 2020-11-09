@@ -38,17 +38,11 @@
           <td>{{ item.category.name }}</td>
           <td>{{ item.name }}</td>
           <td>{{ item.update_date.slice(0,10) }}</td>
-          <td v-if="item.is_active">활성화
-            <div class="custom-control custom-switch">
-              <input type="checkbox" class="custom-control-input" :id="item.id" v-model="item.is_active" value="item.is_active" @click="changeActive(item.id)">
-              <label class="custom-control-label" :for="item.id"></label>
-            </div>
+          <td v-if="item.is_active">
+            <span class="badge badge-success" @click="changeActive(item)">활성화</span>
           </td>
-          <td v-else>비활성화
-            <div class="custom-control custom-switch">
-              <input type="checkbox" class="custom-control-input" :id="item.id" v-model="item.is_active" value="item.is_active" @click="changeActive(item.id)">
-              <label class="custom-control-label" :for="item.id"></label>
-            </div>
+          <td v-else>
+            <span class="badge badge-danger" @click="changeActive(item)">비활성화</span>
           </td>
           <td><button type="button" class="btn btn-secondary">수정</button></td>
            <!-- @click="onUpdate(item.id)" -->
@@ -75,7 +69,7 @@ export default {
     ...mapGetters('category', ['category'])
   },
   methods: {
-    ...mapActions('category', ['getItem']),
+    ...mapActions('category', ['getItem', 'delItem', 'postItem']),
     ...mapMutations('category', ['SET_CATEGORY']),
 
     onRoute(name) {
@@ -86,18 +80,14 @@ export default {
       this.$router.push({name:'ProductItemMain', params:{pid: pid}})
     },
     
-    changeActive(id){
-      console.log(id)
+    changeActive(item){
       if (confirm("상태를 변경하시겠습니까?") == true){    //확인
-          // if (this.items[id-1].is_active) {
-          //   this.delCategory(id)
-          // }
-          // else {
-          //   this.postCategory(id)
-          // }
-      } else {   //취소
-        //여기 부분 수정 필요
-        return ;
+        if (item.is_active) {
+          this.delItem({ cid: this.category.id, pid: item.id, })
+        }
+        else {
+          this.postItem({ cid: this.category.id, pid: item.id, })
+        }
       }
     }
 
