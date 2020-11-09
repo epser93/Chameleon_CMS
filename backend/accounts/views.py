@@ -20,7 +20,6 @@ class UserAPI(APIView):
         return Response(serializer.data)
 
 
-
 class Signup(RegisterView):
     def create(self, request, *args, **kwargs):
         if len(request.data.get('first_name', '')) == 0:
@@ -106,7 +105,7 @@ class ManagementAPI(APIView):
             answer = {message : '승인이 완료되었습니다.'}
             return Response(answer)
         else:
-            answer = {message : '권한이 없습니다.'}
+            answer = {message : '권한이 없습니다. '}
             return Response(answer, status=status.HTTP_403_FORBIDDEN)
 
     def put(self, request, pk):
@@ -143,25 +142,18 @@ class USerSearchAPI(APIView):
             answer = {message: "권한이 없습니다."}
             return Response(answer, status=status.HTTP_400_BAD_REQUEST)
         _type = request.GET.get('type', 'all')
-        print(_type)
         content = request.GET.get('content', '')
-        print(content)
         if _type == 'all':
-            users = User.objects.exclude(is_superuser=True)
+            users = User.objects.filter(first_name=content).filter(is_active=True).exclude(is_superuser=True)
         elif _type == 'is_access':
-            if content == 'False':
-                content = False
-            else:
-                content = True
-            users = User.objects.filter(is_access=content).exclude(is_superuser=True)
-        elif _type == 'name':
-            users = User.objects.filter(first_name__contains=content).exclude(is_superuser=True)
-        elif _type == 'department':
-            department = Department.objects.get(name=content)
-            users = User.objects.filter(department=department).exclude(is_superuser=True)
-        else:
-            answer = {message: '잘못된 요청입니다.'}
-            return Response(answer, status=status.HTTP_400_BAD_REQUEST)
+            users = User.objects.filter(is_access=False).exclude(is_superuser=True)
+        else :
+            department = Department.objects.filter(name=_type)
+            if not department:
+                answer = {message: '잘못된 요청입니다.'}
+                return Response(answer, status=status.HTTP_400_BAD_REQUEST)
+            department = department[0]
+            users = User.objects.filter(department=department).filter(first_name__contains=content).exclude(is_superuser=True)
         serializer = CMSUserSerializer(users, many=True)
         return Response(serializer.data)
 
@@ -174,6 +166,7 @@ class TotalLogAPI(APIView):
         logs = TotalLog.objects.all()
         serializer = TotalLogSerializer(logs, many=True)
         return Response(serializer.data)
+
 
 class ValidationAPI(APIView):
     def get(self, request):
