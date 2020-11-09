@@ -1339,12 +1339,14 @@
 
 > type 종류
 >
-> - all  - 전체유저 정보
-> - is_access - 승인 여부에 따라 유저 정보 검색 content에 True, False 입력
-> - name - content에 들어가있는 이름으로 검색
-> - department - content에 들어가있는 부서명으로 검색
+> - all  - 승인된 유저중에서 부서상관없이 이름으로 검색
+> - is_access - 승인되지 않은 유저들만 검색
 >
-> ex) `주소/api/accounts/search/?type=department&content=생산관리`
+> - 부서명 - 해당 부서명으로 검색, content가 필수이다.
+>
+> name - content에 들어가있는 이름으로 검색
+>
+> ex) `주소/api/accounts/search/?type=생산관리&content=은석`
 
 - Response
 
