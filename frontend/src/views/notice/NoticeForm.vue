@@ -1,38 +1,39 @@
 <template>
-  <div class="form-root">
-    <div class="title-division">
-      <div class="title">
-        제목
-      </div>
-      <div>
-        <input class="title-input" type="text" v-model="title">
-      </div>
-    </div>
-    <div class="contents-division">
-      <div class="contents">
-        내용
-      </div>
-      <div>
-        <textarea class="contents-input" name="contents" id="noticeContents" cols="30" rows="10" v-model="contents"></textarea>
-      </div>
-    </div>
-    <div class="image-division">
-      <p class="image">공지사항 이미지 업로드</p>
-      <input ref="imageInput" type="file" hidden @change="onChangeImages">
-      <button type="button" class="btn btn-success btn-sm" @click="onClickImageUpload">업로드</button>
-      <div class="preview-img">
-        <img id="inner-img" v-if="imageUrl" :src="imageUrl">
-      </div>
-    </div>  
-    <div class="row justify-content-end btn-division">
-      <div >
-        <button type="button" class="btn btn-secondary btn-sm" @click="onClickWindows">미리보기</button>
-      </div>
-      <div v-if="!noticeInfo || noticeInfo.is_temp">
-        <button type="button" class="btn btn-secondary btn-sm" @click="onClickTemp">임시저장</button>
-      </div>
-      <div>
-        <button type="button" class="btn btn-success btn-sm" @click="onActivate">등록</button> 
+  <div class="container form-root">
+    <div class="row title-division">
+      <div class="col-8">
+        <!-- Notice 제목 -->
+        <div class="notice-content">
+          <h4>공지사항 제목</h4>
+          <input v-model="title" type="text" placeholder=" 제목을 입력해 주세요.">
+        </div>
+        <!-- Notice 내용 -->
+        <div class="notice-content">
+          <h4>공지사항 내용</h4>
+          <textarea class="form-control contents-input" name="contents" id="noticeContents" rows="5" cols="40" v-model="contents"></textarea>
+        </div>        
+        <!-- Notice 이미지 -->
+        <div class="notice-content">
+          <div class="row">
+            <h4 class="ml-3">공지사항 이미지 업로드</h4>
+            <input ref="imageInput" type="file" hidden @change="onChangeImages">
+            <button type="button" class="btn btn-success btn-sm ml-3" @click="onClickImageUpload">이미지 등록</button>
+          </div>
+          <div class="preview-img mt-2">
+            <img id="inner-img" class="d-flex mx-auto" v-if="imageUrl" :src="imageUrl" alt="">
+          </div>
+        </div>
+        <div class="row btn-division justify-content-end mt-5 mb-5">
+          <div>
+            <button type="button" class="btn btn-info btn-sm mr-2" @click="onClickWindows">미리보기</button>
+          </div>
+          <div v-if="!noticeInfo || noticeInfo.is_temp">
+            <button type="button" class="btn btn-secondary btn-sm mr-2" @click="onClickTemp">임시저장</button>
+          </div>
+          <div>
+            <button type="button" class="btn btn-primary btn-sm" @click="onActivate">등록하기</button>
+          </div>
+        </div> 
       </div>
     </div>
   </div>
@@ -149,60 +150,33 @@ export default {
 </script>
 
 <style scoped>
-#inner-img{
-  width: 400px;
-  text-align: center;
-    
-}
-.question{
-  cursor: pointer;
-}
-.btn{
-  width: 80px
+input {
+  border: 1px solid grey;
+  border-radius: 10px;
 }
 
-.form-root {
-  display: flex;
-  flex-direction: column;
-  width: 50%;
-}
-
-.title-input {
-  width: 100%;
+.notice-content {
+  margin-top: 30px;
 }
 
 .contents-input {
-  width: 100%;
+  width: auto;
+  border: 1px solid #ced4da;
+  border-radius: 10px;
 }
 
-.title {
-  font-size :30px;
-  font-weight: bold;
+.preview-img {
+  width: 360px;
+  height: 150px;
+  background-color: ghostwhite;
+  border: 1px solid #ced4da;
+  border-radius: 10px;
 }
 
-.contents {
-  font-size: 30px;
-  font-weight: bold;
-}
-
-.image {
-  font-size: 30px;
-  font-weight: bold;
-}
-
-.title-division {
-  margin-bottom: 30px;
-}
-
-.contents-division {
-  margin-bottom: 30px;
-}
-
-.image-division {
-  margin-bottom: 30px;
-}
-
-.btn-division {
-  margin-bottom: 30px;
+#inner-img {
+  width : 300px;
+  height: 125px;
+  right: 50%;
+  top: 50%;
 }
 </style>
