@@ -102,7 +102,7 @@ export default {
       this.picked = val.template.id
       this.imageUrl = 'http://k3c205.p.ssafy.io' + val.image
 
-      console.log(val)
+      // console.log(val)
     },
     
     // '$route' : function() {

@@ -100,7 +100,7 @@ export default {
     }
   },
 
-  created() {
+  mounted() {
     const cid = this.$route.params.cid
     this.getItem(cid)
     this.SET_CATEGORY(cid)
