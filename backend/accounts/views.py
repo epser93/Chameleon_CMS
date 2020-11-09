@@ -106,7 +106,7 @@ class ManagementAPI(APIView):
             answer = {message : '승인이 완료되었습니다.'}
             return Response(answer)
         else:
-            answer = {message : '권한이 없습니다.'}
+            answer = {message : '권한이 없습니다. '}
             return Response(answer, status=status.HTTP_403_FORBIDDEN)
 
     def put(self, request, pk):

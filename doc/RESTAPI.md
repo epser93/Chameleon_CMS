@@ -1946,7 +1946,9 @@
 
 
 
-## customer search
+## Custmoer API
+
+### item, event search
 
 ```
 주소/api/services/customer/search/?content=<>
@@ -1972,6 +1974,106 @@
             "user": 3,
             "detail": [],
             "url": "asdasd"
+        }
+    ]
+}
+```
+
+
+
+### 카테고리 리스트
+
+```
+주소/api/products/customer/categories/(GET)
+```
+
+- Response
+
+```json
+[
+    {
+        "id": 1,
+        "name": "노트북",
+        "image": null
+    }
+]
+```
+
+
+
+### 카테고리에 속한 아이템 리스트
+
+```
+주소/api/products/customer/categories/<int:pk>/ (GET)
+```
+
+- Response
+
+```json
+{
+    "id": 1,
+    "name": "노트북",
+    "image": null,
+    "template": 1,
+    "items": [
+        {
+            "id": 1,
+            "name": "노트북A",
+            "price": 1280000,
+            "is_temp": false,
+            "is_active": true,
+            "category": {
+                "id": 1,
+                "name": "노트북"
+            },
+            "template": {
+                "id": 2,
+                "name": "카테고리 이미지 특화",
+                "type": 1
+            },
+            "created_date": "2020-11-09T10:39:27.052224+09:00",
+            "update_date": "2020-11-09T10:39:27.052224+09:00",
+            "cms_user": {
+                "id": 2,
+                "username": "test",
+                "first_name": "김유기"
+            },
+            "descriptions": [],
+            "images": []
+        },
+        {
+            "id": 2,
+            "name": "노트북A",
+            "price": 1280000,
+            "is_temp": false,
+            "is_active": true,
+            "category": {
+                "id": 1,
+                "name": "노트북"
+            },
+            "template": {
+                "id": 2,
+                "name": "카테고리 이미지 특화",
+                "type": 1
+            },
+            "created_date": "2020-11-09T10:39:44.786263+09:00",
+            "update_date": "2020-11-09T10:39:44.786263+09:00",
+            "cms_user": {
+                "id": 2,
+                "username": "test",
+                "first_name": "김유기"
+            },
+            "descriptions": [],
+            "images": [
+                {
+                    "id": 1,
+                    "item_image": "/media/KakaoTalk_20201019_093205576_ni0qpZF.png",
+                    "is_thumbnail": true,
+                    "priority": 1,
+                    "created_date": "2020-11-09T10:39:44.898264+09:00",
+                    "update_date": "2020-11-09T10:39:44.898264+09:00"
+                }
+            ]
         }
     ]
 }

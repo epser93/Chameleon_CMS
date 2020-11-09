@@ -76,3 +76,28 @@ class CopyItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = Item
         fields = ['id', 'name', 'price', 'is_temp', 'is_active', 'category','template','created_date', 'update_date', 'cms_user', 'copy_descriptions', 'copy_images']
+
+
+class CustomerItemSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Item
+        fields = []
+
+
+class CustomerItemImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Item
+        fields = []
+
+
+class CustomerCategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = ['id', 'name', 'image']
+
+
+class CustomerCategoryJoinSerializer(serializers.ModelSerializer):
+    items = ItemSerializer(required=False, many=True)
+    class Meta:
+        model = Category
+        fields = ['id', 'name', 'image', 'template', 'items']
