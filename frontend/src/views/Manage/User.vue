@@ -6,6 +6,16 @@
           미승인 회원 <span class="badge badge-light ml-1">{{unAuthorizedUserCount}}</span>
         </button>
       </div>
+      <div class="input-group mb-3">
+        <select name="" id="" v-model="selectedDepartment">
+          <option value="all">All</option>
+          <option v-for="(department, index) in departments" :key="index" :value="department.name">{{department.name}}</option>
+        </select>
+        <input type="text" class="form-control" placeholder="회원 검색" v-model="searchedName" @keypress.enter="changeSearchToggle()">
+        <div class="input-group-append">
+          <button class="btn btn-outline-secondary" type="button" id="button-addon2" @click="changeSearchToggle()">검색</button>
+        </div>
+      </div>
       <UnauthorizedUser></UnauthorizedUser>
       <table class="table">
         <thead>
@@ -67,24 +77,39 @@ export default {
   },
   data() {
     return {
-
+      selectedDepartment: 'all',
+      searchedName: '',
+      searchToggle : false
     }
   },
   methods: {
-    ...mapActions('account', ['getAccessUserInfo']),
+    ...mapActions('account', ['getAccessUserInfo', 'getDepartments', 'filterUser']),
     ...mapMutations('account', ['SET_USER']),
     authorityModalUser(userdata) {
       const copydata = JSON.parse(JSON.stringify(userdata))
       this.SET_USER(copydata)
       $('#authorityModal').modal('show')
+    },
+    changeSearchToggle() {
+      this.searchToggle = !this.searchToggle
     }
   },
   computed : {
-    ...mapState('account', ['accessUserInfos']),
+    ...mapState('account', ['accessUserInfos', 'departments']),
     ...mapGetters('account', ['unAuthorizedUserCount'])
   },
   created() {
     this.getAccessUserInfo()
+    this.getDepartments()
+  },
+  watch : {
+    selectedDepartment: function() {
+      this.filterUser({ department : this.selectedDepartment, name : ''})
+    },
+    searchToggle: function() {
+      this.filterUser({ department : this.selectedDepartment, name: this.searchedName })
+      this.searchedName = ''
+    }
   }
 
 }
