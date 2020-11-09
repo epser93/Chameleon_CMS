@@ -140,15 +140,15 @@ export default {
       this.date.start = val.start_date,
       this.date.end = val.end_date
       this.linkUrl = val.url
-      for (let i = 0; i < val.images.length; i++) {
+      for (let i = 0; i < val.detail.length; i++) {
         const imageData = {
-          file: val.images[i].id,
+          file: val.detail[i].id,
           number: i,
-          preview: 'http://k3c205.p.ssafy.io' + val.images[i].image
+          preview: 'http://k3c205.p.ssafy.io' + val.detail[i].image
         }
-        this.images.images.push(imageData)
+        this.images.detail.push(imageData)
       }
-      this.uploadImageIndex = val.images.length
+      this.uploadImageIndex = val.detail.length
       console.log(val.detail)
       console.log(this.images.detail)
 
