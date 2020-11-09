@@ -82,19 +82,38 @@ export default {
           console.log(err)
         })   
     },
-
-    putCategory(){
-
+   
+    getItem({ rootGetters, commit }, id) {
+      // console.log(SERVER.URL + SERVER.ROUTER.category + id + '/')
+      axios.get(SERVER.URL + SERVER.ROUTER.category + id + '/', rootGetters['account/config'])
+      .then((res) => {
+        commit('SET_ITEMS', res.data)
+      })
+      .catch(() => {console.log('왜에러남')})
     },
 
-
-    getItem({ rootGetters, commit }, id) {
-      console.log(SERVER.URL + SERVER.ROUTER.category + id + '/')
-      axios.get(SERVER.URL + SERVER.ROUTER.category + id + '/', rootGetters['account/config'])
-        .then((res) => {
-            commit('SET_ITEMS', res.data)
+    delItem({ dispatch, rootGetters }, {cid, pid}) {
+        axios.delete(SERVER.URL + SERVER.ROUTER.item + pid + '/', rootGetters['account/config'])
+        .then(() => {
+          router.push({name:'ProductItem'}, () => {})
+          alert("등록이 해제되었습니다.")
+          dispatch('getItem', cid)
         })
-        .catch(() => {console.log('왜에러남')})
+        .catch((err) => {
+          console.log(err)
+        })   
+    },
+
+    postItem({ dispatch, rootGetters }, {cid, pid}) {
+        axios.post(SERVER.URL + SERVER.ROUTER.item + pid + '/', rootGetters['account/config'])
+        .then(() => {
+          router.push({name:'ProductItem'}, () => {})
+          alert("등록이 완료되었습니다.")
+          dispatch('getItem', cid)
+        })
+        .catch((err) => {
+          console.log(err)
+        })   
     },
   }
 }
