@@ -54,7 +54,7 @@
 
       <div class="row justify-content-end" id="content-btn">
         <div>
-            <button type="button" class="btn btn-dark btn-sm mr-2" @click="$router.go(-1)">뒤로가기</button>
+            <button type="button" class="btn btn-dark btn-sm mr-2" @click="$router.go(-1);">뒤로가기</button>
         </div>
         <div>
           <button type="button" class="btn btn-secondary btn-sm" @click="onClickWindows">미리보기</button>
@@ -85,6 +85,7 @@ export default {
         tag: null,
         imageUrl: null,
         update: false,
+        image: null,
 
     }
   },
@@ -99,9 +100,19 @@ export default {
         this.tags.push(val.description[i].name)
       }
       this.picked = val.template.id
+      this.imageUrl = 'http://k3c205.p.ssafy.io' + val.image
 
       console.log(val)
-    }
+    },
+    
+    // '$route' : function() {
+    //   if(this.$route.params.update == 'update') {
+    //     const cid = this.$route.params.cid
+    //     this.SET_CATEGORY(cid)
+    //     this.update = true
+    //   }
+    // }
+
   },
 
   methods: {
@@ -109,19 +120,21 @@ export default {
     ...mapMutations('category', ['SET_CATEGORY']),
     onClickRegister(){
       const categoryData = new FormData()
-      categoryData.append('name', this.this.categoryName)
-      categoryData.append('descriptions', this.tags)
-      categoryData.append('image')
+      categoryData.append('name', this.categoryName)
+      for(let i=0; i<this.tags.length; i++) {
+        categoryData.append('descriptions', this.tags[i])
+      }
+      categoryData.append('image', this.image)
       categoryData.append('template', this.picked)
       categoryData.append('priority', this.priority)
 
-      const categoryData = {
-        name: this.categoryName,
-        descriptions: this.tags,
-        template: this.picked,
-        priority: this.priority,
-        // images: this.imageUrl
-      }
+      // const categoryData = {
+      //   name: this.categoryName,
+      //   descriptions: this.tags,
+      //   template: this.picked,
+      //   priority: this.priority,
+      //   images: this.imageUrl
+      // }
       // console.log('카테고리 등록')
       this.categoryRegister(categoryData)
     },
@@ -140,8 +153,8 @@ export default {
     },
     onChangeImages(e) {
         console.log(e.target.files)
-        const file = e.target.files[0];
-        this.imageUrl = URL.createObjectURL(file);
+        this.image = e.target.files[0];
+        this.imageUrl = URL.createObjectURL(this.image);
     },
     deleteTag(index) {
       this.tags.splice(index,1)
@@ -169,6 +182,9 @@ export default {
       this.SET_CATEGORY(cid)
       this.update = true
     }
+  },
+  destroyed() {
+    this.SET_CATEGORY('');
   }
 }
 </script>
