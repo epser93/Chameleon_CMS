@@ -122,6 +122,11 @@ const routes = [
             redirect: 'manage/user',
             children: [
               {
+                path: 'departments',
+                name: 'Departments',
+                component: () => import('@/views/Manage/Departments.vue')
+              },
+              {
                 path: 'user',
                 name: 'User',
                 component: () => import('@/views/Manage/User.vue')

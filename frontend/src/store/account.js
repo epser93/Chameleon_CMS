@@ -132,6 +132,15 @@ export default {
         .catch(error => console.log(error.response))
     },
 
+    // 부서 필터링
+    filterUserAsDeparment({ getters, commit }, value) {
+      axios.get(SERVER.URL + SERVER.ROUTER.usersearch + `?type=department&content=${value}`, getters.config)
+        .then(res => {
+          commit('SET_ACCESSUSERINFOS', res.data)
+        })
+        .catch(error => console.log(error.response))
+    },
+
     // access 권한 부여 
     approveAccess({ getters, dispatch }, userPk) {
       axios.post(SERVER.URL + SERVER.ROUTER.usermanage + `${userPk}/`, null, getters.config)
