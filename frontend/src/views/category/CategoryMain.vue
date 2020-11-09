@@ -18,7 +18,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(category, index) in categories" :key="index">
+            <tr v-for="(category, index) in categoriesForList" :key="index">
               <th scope="row align-items-center"></th>
               <!-- {{ category }} -->
               <td>{{ category.name }}</td>
@@ -31,11 +31,22 @@
               </td>
               <!-- 스위치 -->
               <td>{{ category.update_date.slice(0,10) }}</td>
-              <td><button type="button" class="btn btn-info" @click="onDetail(category.id)">보기</button></td>
-              <td><button type="button" class="btn btn-secondary" @click="onUpdate(category.id)">수정</button></td>
+              <td><button type="button" class="btn btn-secondary btn-sm" @click="onDetail(category.id)">보기</button></td>
+              <td><button type="button" class="btn btn-warning btn-sm" @click="onUpdate(category.id)">수정</button></td>
             </tr>
           </tbody>
         </table>
+      </div>
+      <div class="page-navi justify-content-center">
+        <nav aria-label="Page navigation example">
+          <ul class="pagination">
+            <div v-for="(page, i) in pages" :key="i">
+              <li :class="(i == nowPage) ? 'page-item active':'page-item' ">
+                <a @click="onPage(i)" class="page-link" href="#">{{ page }}</a>
+              </li>
+            </div>
+          </ul>
+        </nav>
       </div>
     </div>
   </div>
@@ -49,11 +60,25 @@ export default {
 
   data() {
     return {
+      perPage: 10,
+      nowPage: 0,
     }
   },
 
   computed: {
-    ...mapState('category', ['categories'])
+    ...mapState('category', ['categories']),
+    rows() {
+      return this.categories.length
+    },
+    pages() {
+      return Math.ceil(this.categories.length/this.perPage)
+    },
+    categoriesForList() {
+      return this.categories.slice(
+        (this.nowPage) * this.perPage,
+        (this.nowPage + 1) * this.perPage
+      )
+    },
   },
 
   methods: {
@@ -112,5 +137,11 @@ td {
 span {
   cursor: pointer;
   margin-top: 4px;
+}
+
+.page-navi {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
 }
 </style>

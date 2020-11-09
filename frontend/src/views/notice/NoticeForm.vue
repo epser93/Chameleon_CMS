@@ -5,7 +5,7 @@
         <!-- Notice 제목 -->
         <div class="notice-content">
           <h4>공지사항 제목</h4>
-          <input v-model="title" type="text" placeholder=" 제목을 입력해 주세요.">
+          <input v-model="title" class="form-control" type="text" placeholder=" 제목을 입력해 주세요.">
         </div>
         <!-- Notice 내용 -->
         <div class="notice-content">
@@ -150,11 +150,6 @@ export default {
 </script>
 
 <style scoped>
-input {
-  border: 1px solid grey;
-  border-radius: 10px;
-}
-
 .notice-content {
   margin-top: 30px;
 }
