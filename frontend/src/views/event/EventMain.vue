@@ -1,5 +1,5 @@
 <template>
-  <div v-if="events" class="container-fluid pl-0">
+  <div v-if="events" class="container pl-0">
     <div v-if="events" class="table-container">
       <div class="btn-background">
         <div class="event-btn ml-3 mt-3 mb-3">
@@ -17,7 +17,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(event, index) in events" :key="index">
+          <tr v-for="(event, index) in eventsForList" :key="index">
             <td>{{ event.title }}</td>
             <!-- 스위치 -->
             <td v-if="event.is_active" class="row justify-content-center">
@@ -32,20 +32,14 @@
           </tr>
         </tbody>
       </table>
-      <div class="page-navi">
-        <nav aria-label="Page navigation example justify-content-center">
+      <div class="page-navi justify-content-center">
+        <nav aria-label="Page navigation example">
           <ul class="pagination">
-            <li class="page-item">
-              <a class="page-link" href="#" aria-label="Previous">
-                <span aria-hidden="true">&laquo;</span>
-              </a>
-            </li>
-            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-            <li class="page-item">
-              <a class="page-link" href="#" aria-label="Next">
-                <span aria-hidden="true">&raquo;</span>
-              </a>
-            </li>
+            <div v-for="(page, i) in pages" :key="i">
+              <li :class="(i == nowPage) ? 'page-item active':'page-item' ">
+                <a @click="onPage(i)" class="page-link" href="#">{{ page }}</a>
+              </li>
+            </div>
           </ul>
         </nav>
       </div>
@@ -72,11 +66,25 @@ export default {
         dateList.push(date)
       }
       return dateList
-    }
+    },
+    rows() {
+      return this.events.length
+    },
+    pages() {
+      return Math.ceil(this.events.length/this.perPage)
+    },
+    eventsForList() {
+      return this.events.slice(
+        (this.nowPage) * this.perPage,
+        (this.nowPage + 1) * this.perPage
+      )
+    },
   },
   data() {
     return {
       checked: [],
+      perPage: 10,
+      nowPage: 0,
     }
   },
   methods: {
