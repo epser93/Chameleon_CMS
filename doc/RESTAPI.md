@@ -229,7 +229,7 @@
 ## 카테고리 리스트(수정필요, 관리자, 사용자 분리)
 
 ```
-주소/api/proudcts/categories/
+주소/api/products/categories/
 ```
 
 - Response
@@ -240,24 +240,146 @@
         "id": 1,
         "name": "노트북",
         "is_active": true,
+        "image": null,
         "priority": 1,
-        "image": "",
         "template": {
             "id": 1,
-            "name": "카테고리 이미지 특화",
+            "name": "카테고리 아이템 특화",
             "type": 1
         },
-        "created_date": "2020-10-28T17:44:41.924474+09:00",
-        "update_date": "2020-10-28T17:44:41.924474+09:00",
+        "created_date": "2020-11-09T10:18:57.056219+09:00",
+        "update_date": "2020-11-09T13:10:28.686958+09:00",
         "cms_user": {
             "id": 1,
             "username": "admin",
-            "is_access": false,
-            "is_eventer": false,
-            "is_producter": false,
-            "is_marketer": false,
-            "department": null
-        }
+            "first_name": ""
+        },
+        "description": [
+            {
+                "id": 14,
+                "name": "제조사"
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "name": "마우스",
+        "is_active": true,
+        "image": null,
+        "priority": 1,
+        "template": {
+            "id": 1,
+            "name": "카테고리 아이템 특화",
+            "type": 1
+        },
+        "created_date": "2020-11-09T12:52:14.675112+09:00",
+        "update_date": "2020-11-09T13:53:14.170752+09:00",
+        "cms_user": {
+            "id": 3,
+            "username": "test930",
+            "first_name": "임선빈"
+        },
+        "description": [
+            {
+                "id": 1,
+                "name": "크기,무게,블루투스"
+            }
+        ]
+    },
+    {
+        "id": 3,
+        "name": "스마트폰",
+        "is_active": true,
+        "image": "/media/202005071135281269924.jpg",
+        "priority": 1,
+        "template": {
+            "id": 2,
+            "name": "카테고리 이미지 특화",
+            "type": 1
+        },
+        "created_date": "2020-11-09T12:57:33.931910+09:00",
+        "update_date": "2020-11-09T14:36:28.438922+09:00",
+        "cms_user": {
+            "id": 3,
+            "username": "test930",
+            "first_name": "임선빈"
+        },
+        "description": [
+            {
+                "id": 15,
+                "name": "화소"
+            },
+            {
+                "id": 16,
+                "name": "화소"
+            },
+            {
+                "id": 17,
+                "name": "화소"
+            }
+        ]
+    },
+    {
+        "id": 4,
+        "name": "키보드",
+        "is_active": true,
+        "image": "/media/NISI20191010_0015689491.jpg",
+        "priority": 1,
+        "template": {
+            "id": 2,
+            "name": "카테고리 이미지 특화",
+            "type": 1
+        },
+        "created_date": "2020-11-09T14:36:57.686405+09:00",
+        "update_date": "2020-11-09T16:46:46.044283+09:00",
+        "cms_user": {
+            "id": 3,
+            "username": "test930",
+            "first_name": "임선빈"
+        },
+        "description": [
+            {
+                "id": 18,
+                "name": "크기"
+            },
+            {
+                "id": 20,
+                "name": "크기"
+            }
+        ]
+    },
+    {
+        "id": 5,
+        "name": "한꺼번에수정",
+        "is_active": true,
+        "image": "/media/%EB%A7%88%EC%9A%B0%EC%8A%A4.jpg",
+        "priority": 1,
+        "template": {
+            "id": 2,
+            "name": "카테고리 이미지 특화",
+            "type": 1
+        },
+        "created_date": "2020-11-09T14:41:05.917856+09:00",
+        "update_date": "2020-11-09T16:46:56.865772+09:00",
+        "cms_user": {
+            "id": 3,
+            "username": "test930",
+            "first_name": "임선빈"
+        },
+        "description": [
+            {
+                "id": 24,
+                "name": "굿굿"
+            },
+            {
+                "id": 25,
+                "name": "라면"
+            },
+            {
+                "id": 26,
+                "name": "왜"
+            }
+        ]
     }
 ]
 ```
@@ -276,13 +398,13 @@
 
 ```json
 {
-    "name": "김치냉장고",
+    "name": "노트북",
     "descriptions": [
-        "제조사", "디스플레이", "CPU", "GPU", "RAM"
+        "제조사",
     ],
     "image": "이미지 파일",
     "template": 1,
-    "priority": 3
+    "priority": 1
 }
 ```
 
@@ -290,29 +412,30 @@
 
 ```json
 {
-    "id": 6,
-    "name": "김치냉장고",
+    "id": 1,
+    "name": "노트북",
     "is_active": true,
-    "priority": 3,
-    "image": "",
+    "image": null,
+    "priority": 1,
     "template": {
         "id": 1,
-        "name": "카테고리 이미지 특화",
+        "name": "카테고리 아이템 특화",
         "type": 1
     },
-    "image": "",
-    "created_date": "2020-10-30T16:29:20.547623+09:00",
-    "update_date": "2020-10-30T16:29:20.547623+09:00",
+    "created_date": "2020-11-09T10:18:57.056219+09:00",
+    "update_date": "2020-11-09T13:10:28.686958+09:00",
     "cms_user": {
-        "id": 2,
-        "username": "test",
-        "is_access": false,
-        "is_eventer": false,
-        "is_producter": false,
-        "is_marketer": false,
-        "department": null
-    }
-}
+        "id": 1,
+        "username": "admin",
+        "first_name": ""
+    },
+    "description": [
+        {
+            "id": 14,
+            "name": "제조사"
+        }
+    ]
+},
 ```
 
 
@@ -350,28 +473,30 @@
 
 ```json
 {
-    "id": 6,
-    "name": "김치냉장고 v2",
+    "id": 1,
+    "name": "노트북",
     "is_active": true,
+    "image": null,
     "priority": 1,
-    "image": "",
     "template": {
         "id": 1,
-        "name": "카테고리 이미지 특화",
+        "name": "카테고리 아이템 특화",
         "type": 1
     },
-    "created_date": "2020-10-30T16:29:20.547623+09:00",
-    "update_date": "2020-10-30T16:34:14.215469+09:00",
+    "created_date": "2020-11-09T10:18:57.056219+09:00",
+    "update_date": "2020-11-09T13:10:28.686958+09:00",
     "cms_user": {
-        "id": 2,
-        "username": "test",
-        "is_access": false,
-        "is_eventer": false,
-        "is_producter": false,
-        "is_marketer": false,
-        "department": null
-    }
-}
+        "id": 1,
+        "username": "admin",
+        "first_name": ""
+    },
+    "description": [
+        {
+            "id": 14,
+            "name": "제조사"
+        }
+    ]
+},
 ```
 
 
@@ -408,32 +533,67 @@
         "price": 1280000,
         "is_temp": false,
         "is_active": true,
-        "created_date": "2020-11-04T00:28:57.816001+09:00",
-        "update_date": "2020-11-04T00:28:57.816001+09:00",
+        "category": {
+            "id": 1,
+            "name": "노트북"
+        },
+        "template": {
+            "id": 2,
+            "name": "카테고리 이미지 특화",
+            "type": 1
+        },
+        "created_date": "2020-11-09T10:39:27.052224+09:00",
+        "update_date": "2020-11-09T16:32:06.213925+09:00",
         "cms_user": {
             "id": 2,
             "username": "test",
-            "first_name": ""
+            "first_name": "김유기"
         },
         "descriptions": [
             {
                 "content": "AMD",
                 "item": 1,
                 "category_description": {
-                    "id": 1,
+                    "id": 14,
                     "name": "제조사"
                 }
             }
         ],
+        "images": []
+    },
+    {
+        "id": 2,
+        "name": "노트북A",
+        "price": 1280000,
+        "is_temp": false,
+        "is_active": true,
+        "category": {
+            "id": 1,
+            "name": "노트북"
+        },
         "template": {
             "id": 2,
-            "name": "아이템 이미지 특화",
-            "type": 2
+            "name": "카테고리 이미지 특화",
+            "type": 1
         },
-        "images": [],
-        "category": {
-            
-        }
+        "created_date": "2020-11-09T10:39:44.786263+09:00",
+        "update_date": "2020-11-09T16:32:01.078872+09:00",
+        "cms_user": {
+            "id": 2,
+            "username": "test",
+            "first_name": "김유기"
+        },
+        "descriptions": [],
+        "images": [
+            {
+                "id": 1,
+                "item_image": "/media/KakaoTalk_20201019_093205576_ni0qpZF.png",
+                "is_thumbnail": true,
+                "priority": 1,
+                "created_date": "2020-11-09T10:39:44.898264+09:00",
+                "update_date": "2020-11-09T10:39:44.898264+09:00"
+            }
+        ]
     }
 ]
 ```
@@ -481,41 +641,45 @@
 
 ```json
 {
-    "id": 1,
+    "id": 2,
     "name": "노트북A",
     "price": 1280000,
     "is_temp": false,
     "is_active": true,
-    "created_date": "2020-11-04T00:28:57.816001+09:00",
-    "update_date": "2020-11-04T00:28:57.816001+09:00",
+    "category": {
+        "id": 1,
+        "name": "노트북"
+    },
+    "template": {
+        "id": 2,
+        "name": "카테고리 이미지 특화",
+        "type": 1
+    },
+    "created_date": "2020-11-09T10:39:44.786263+09:00",
+    "update_date": "2020-11-09T16:32:01.078872+09:00",
     "cms_user": {
         "id": 2,
         "username": "test",
-        "first_name": ""
+        "first_name": "김유기"
     },
     "descriptions": [
         {
             "content": "AMD",
             "item": 1,
             "category_description": {
-                "id": 1,
+                "id": 14,
                 "name": "제조사"
             }
         }
     ],
-    "template": {
-        "id": 2,
-        "name": "아이템 이미지 특화",
-        "type": 2
-    },
     "images": [
         {
-            "id": 18,
-            "item_image": "/media/KakaoTalk_20200907_134019738.jpg",
-            "is_thumbnail": false,
+            "id": 1,
+            "item_image": "/media/KakaoTalk_20201019_093205576_ni0qpZF.png",
+            "is_thumbnail": true,
             "priority": 1,
-            "created_date": "2020-11-06T15:12:53.601044+09:00",
-            "update_date": "2020-11-06T15:12:53.601044+09:00"
+            "created_date": "2020-11-09T10:39:44.898264+09:00",
+            "update_date": "2020-11-09T10:39:44.898264+09:00"
         }
     ]
 }
@@ -533,41 +697,45 @@
 
 ```json
 {
-    "id": 1,
+    "id": 2,
     "name": "노트북A",
     "price": 1280000,
     "is_temp": false,
     "is_active": true,
-    "created_date": "2020-11-04T00:28:57.816001+09:00",
-    "update_date": "2020-11-04T00:28:57.816001+09:00",
+    "category": {
+        "id": 1,
+        "name": "노트북"
+    },
+    "template": {
+        "id": 2,
+        "name": "카테고리 이미지 특화",
+        "type": 1
+    },
+    "created_date": "2020-11-09T10:39:44.786263+09:00",
+    "update_date": "2020-11-09T16:32:01.078872+09:00",
     "cms_user": {
         "id": 2,
         "username": "test",
-        "first_name": ""
+        "first_name": "김유기"
     },
     "descriptions": [
         {
             "content": "AMD",
             "item": 1,
             "category_description": {
-                "id": 1,
+                "id": 14,
                 "name": "제조사"
             }
         }
     ],
-    "template": {
-        "id": 2,
-        "name": "아이템 이미지 특화",
-        "type": 2
-    },
     "images": [
         {
-            "id": 18,
-            "item_image": "/media/KakaoTalk_20200907_134019738.jpg",
-            "is_thumbnail": false,
+            "id": 1,
+            "item_image": "/media/KakaoTalk_20201019_093205576_ni0qpZF.png",
+            "is_thumbnail": true,
             "priority": 1,
-            "created_date": "2020-11-06T15:12:53.601044+09:00",
-            "update_date": "2020-11-06T15:12:53.601044+09:00"
+            "created_date": "2020-11-09T10:39:44.898264+09:00",
+            "update_date": "2020-11-09T10:39:44.898264+09:00"
         }
     ]
 }
@@ -597,36 +765,45 @@
 
 ```json
 {
-    "id": 1,
+    "id": 2,
     "name": "노트북A",
     "price": 1280000,
     "is_temp": false,
     "is_active": true,
-    "created_date": "2020-11-04T00:28:57.816001+09:00",
-    "update_date": "2020-11-04T00:28:57.816001+09:00",
+    "category": {
+        "id": 1,
+        "name": "노트북"
+    },
+    "template": {
+        "id": 2,
+        "name": "카테고리 이미지 특화",
+        "type": 1
+    },
+    "created_date": "2020-11-09T10:39:44.786263+09:00",
+    "update_date": "2020-11-09T16:32:01.078872+09:00",
     "cms_user": {
         "id": 2,
         "username": "test",
-        "first_name": ""
+        "first_name": "김유기"
     },
     "descriptions": [
         {
             "content": "AMD",
             "item": 1,
             "category_description": {
-                "id": 1,
+                "id": 14,
                 "name": "제조사"
             }
         }
     ],
     "images": [
         {
-            "id": 18,
-            "item_image": "/media/KakaoTalk_20200907_134019738.jpg",
-            "is_thumbnail": false,
+            "id": 1,
+            "item_image": "/media/KakaoTalk_20201019_093205576_ni0qpZF.png",
+            "is_thumbnail": true,
             "priority": 1,
-            "created_date": "2020-11-06T15:12:53.601044+09:00",
-            "update_date": "2020-11-06T15:12:53.601044+09:00"
+            "created_date": "2020-11-09T10:39:44.898264+09:00",
+            "update_date": "2020-11-09T10:39:44.898264+09:00"
         }
     ]
 }
@@ -660,36 +837,45 @@
 
 ```json
 {
-    "id": 1,
+    "id": 2,
     "name": "노트북A",
     "price": 1280000,
     "is_temp": false,
     "is_active": true,
-    "created_date": "2020-11-04T00:28:57.816001+09:00",
-    "update_date": "2020-11-04T00:28:57.816001+09:00",
+    "category": {
+        "id": 1,
+        "name": "노트북"
+    },
+    "template": {
+        "id": 2,
+        "name": "카테고리 이미지 특화",
+        "type": 1
+    },
+    "created_date": "2020-11-09T10:39:44.786263+09:00",
+    "update_date": "2020-11-09T16:32:01.078872+09:00",
     "cms_user": {
         "id": 2,
         "username": "test",
-        "first_name": ""
+        "first_name": "김유기"
     },
     "descriptions": [
         {
             "content": "AMD",
             "item": 1,
             "category_description": {
-                "id": 1,
+                "id": 14,
                 "name": "제조사"
             }
         }
     ],
     "images": [
         {
-            "id": 18,
-            "item_image": "/media/KakaoTalk_20200907_134019738.jpg",
-            "is_thumbnail": false,
+            "id": 1,
+            "item_image": "/media/KakaoTalk_20201019_093205576_ni0qpZF.png",
+            "is_thumbnail": true,
             "priority": 1,
-            "created_date": "2020-11-06T15:12:53.601044+09:00",
-            "update_date": "2020-11-06T15:12:53.601044+09:00"
+            "created_date": "2020-11-09T10:39:44.898264+09:00",
+            "update_date": "2020-11-09T10:39:44.898264+09:00"
         }
     ]
 }
@@ -708,9 +894,9 @@
 ```json
 [
     {
-        "id": 3,
-        "name": "오디세이(수정)",
-        "price": 1920000,
+        "id": 2,
+        "name": "노트북A",
+        "price": 1280000,
         "is_temp": false,
         "is_active": true,
         "category": {
@@ -718,8 +904,8 @@
             "name": "노트북"
         },
         "template": 2,
-        "created_date": "2020-11-06T15:12:53.508331+09:00",
-        "update_date": "2020-11-06T15:12:53.550339+09:00",
+        "created_date": "2020-11-09T10:39:44.821264+09:00",
+        "update_date": "2020-11-09T10:39:44.855303+09:00",
         "cms_user": {
             "id": 2,
             "username": "test",
@@ -728,72 +914,12 @@
         "copy_descriptions": [],
         "copy_images": [
             {
-                "id": 6,
-                "item_image": "/media/KakaoTalk_20200907_134019738.jpg",
-                "is_thumbnail": false,
+                "id": 1,
+                "item_image": "/media/KakaoTalk_20201019_093205576_ni0qpZF.png",
+                "is_thumbnail": true,
                 "priority": 1,
-                "created_date": "2020-11-06T15:12:53.641773+09:00",
-                "update_date": "2020-11-06T15:12:53.641773+09:00"
-            }
-        ]
-    },
-    {
-        "id": 6,
-        "name": "오디세이",
-        "price": 192000,
-        "is_temp": false,
-        "is_active": true,
-        "category": {
-            "id": 1,
-            "name": "노트북"
-        },
-        "template": 2,
-        "created_date": "2020-11-06T16:20:21.701843+09:00",
-        "update_date": "2020-11-06T16:20:21.741099+09:00",
-        "cms_user": {
-            "id": 2,
-            "username": "test",
-            "first_name": "김유기"
-        },
-        "copy_descriptions": [],
-        "copy_images": [
-            {
-                "id": 7,
-                "item_image": "/media/erd.png",
-                "is_thumbnail": false,
-                "priority": 1,
-                "created_date": "2020-11-06T16:20:21.778874+09:00",
-                "update_date": "2020-11-06T16:20:21.778874+09:00"
-            }
-        ]
-    },
-    {
-        "id": 7,
-        "name": "오디세이_임시3",
-        "price": 152000,
-        "is_temp": false,
-        "is_active": true,
-        "category": {
-            "id": 1,
-            "name": "노트북"
-        },
-        "template": 2,
-        "created_date": "2020-11-06T16:22:54.925281+09:00",
-        "update_date": "2020-11-06T16:22:54.960288+09:00",
-        "cms_user": {
-            "id": 2,
-            "username": "test",
-            "first_name": "김유기"
-        },
-        "copy_descriptions": [],
-        "copy_images": [
-            {
-                "id": 8,
-                "item_image": "/media/erd_IjdJt6m.png",
-                "is_thumbnail": false,
-                "priority": 1,
-                "created_date": "2020-11-06T16:22:54.997536+09:00",
-                "update_date": "2020-11-06T16:22:54.997536+09:00"
+                "created_date": "2020-11-09T10:39:44.932300+09:00",
+                "update_date": "2020-11-09T10:39:44.932300+09:00"
             }
         ]
     }
@@ -907,29 +1033,26 @@
 ```json
 [
     {
-        "id": 20,
-        "title": "이벤트",
-        "start_date": "2020-11-03T18:00:00+09:00",
-        "end_date": "2020-11-05T18:00:00+09:00",
-        "thumbnail_image": "/media/erd.png",
-        "create_date": "2020-11-03T20:59:53.770623+09:00",
-        "update_date": "2020-11-03T20:59:53.770623+09:00",
+        "id": 1,
+        "title": "테스트",
+        "content": "테스트",
+        "start_date": "2020-11-04T00:00:00+09:00",
+        "is_active": true,
+        "end_date": "2020-11-04T23:59:59+09:00",
+        "thumbnail_image": "/media/KakaoTalk_20200807_125333367_IjSlCrP.png",
+        "create_date": "2020-11-09T12:31:22.526031+09:00",
+        "update_date": "2020-11-09T13:46:16.542326+09:00",
         "priority": 1,
-        "user": 2,
-        "detail": [
+        "user": 3,
+        "images": [
             {
-                "image": "/media/KakaoTalk_20201019_093205576.png",
-                "content": "테스트1",
+                "id": 1,
+                "image": "/media/KakaoTalk_20200807_125333367_urZx5Yl.png",
                 "priority": 1
-            },
-            {
-                "image": "/media/KakaoTalk_20200907_134019738.jpg",
-                "content": "테스트2",
-                "priority": 2
             }
         ],
-        "url": null
-	}
+        "url": "test"
+    }
 ]
 ```
 
@@ -956,15 +1079,15 @@
     "update_date": "2020-11-03T20:59:53.770623+09:00",
     "priority": 1,
     "user": 2,
-    "detail": [
+    "images": [
         {
+            "id": 1,
             "image": "/media/KakaoTalk_20201019_093205576.png",
-            "content": "테스트1",
             "priority": 1
         },
         {
+            "id": 2,
             "image": "/media/KakaoTalk_20200907_134019738.jpg",
-            "content": "테스트2",
             "priority": 2
         }
     ],
@@ -995,7 +1118,7 @@
     "end_date": "2020-11-05 18:00:00",
     "number": 2,
     "image0": "이미지",
-    "image1": "이미지"
+    "image1": "이미지",
     "url": "",
 }
 ```
@@ -1004,25 +1127,25 @@
 
 ```json
 {
-    "id": 2,
-    "title": "이벤트",
-    "content": "이벤트 내용",
-    "start_date": "2020-11-09T11:00:00+09:00",
+    "id": 1,
+    "title": "테스트",
+    "content": "테스트",
+    "start_date": "2020-11-04T00:00:00+09:00",
     "is_active": true,
-    "end_date": "2020-11-10T12:00:00+09:00",
-    "thumbnail_image": "/media/erd_RL2NJeG.png",
-    "create_date": "2020-11-07T20:55:43.037011+09:00",
-    "update_date": "2020-11-07T20:55:43.037011+09:00",
+    "end_date": "2020-11-04T23:59:59+09:00",
+    "thumbnail_image": "/media/KakaoTalk_20200807_125333367_IjSlCrP.png",
+    "create_date": "2020-11-09T12:31:22.526031+09:00",
+    "update_date": "2020-11-09T13:46:16.542326+09:00",
     "priority": 1,
-    "user": 2,
-    "detail": [
+    "user": 3,
+    "images": [
         {
             "id": 1,
-            "image": "/media/erd_uMjhx20.png",
+            "image": "/media/KakaoTalk_20200807_125333367_urZx5Yl.png",
             "priority": 1
         }
     ],
-    "url": null
+    "url": "test"
 }
 ```
 
@@ -1058,25 +1181,25 @@
 
 ```json
 {
-    "id": 2,
-    "title": "이벤트",
-    "content": "이벤트 내용",
-    "start_date": "2020-11-09T11:00:00+09:00",
+    "id": 1,
+    "title": "테스트",
+    "content": "테스트",
+    "start_date": "2020-11-04T00:00:00+09:00",
     "is_active": true,
-    "end_date": "2020-11-10T12:00:00+09:00",
-    "thumbnail_image": "/media/erd_RL2NJeG.png",
-    "create_date": "2020-11-07T20:55:43.037011+09:00",
-    "update_date": "2020-11-07T20:55:43.037011+09:00",
+    "end_date": "2020-11-04T23:59:59+09:00",
+    "thumbnail_image": "/media/KakaoTalk_20200807_125333367_IjSlCrP.png",
+    "create_date": "2020-11-09T12:31:22.526031+09:00",
+    "update_date": "2020-11-09T13:46:16.542326+09:00",
     "priority": 1,
-    "user": 2,
-    "detail": [
+    "user": 3,
+    "images": [
         {
             "id": 1,
-            "image": "/media/erd_uMjhx20.png",
+            "image": "/media/KakaoTalk_20200807_125333367_urZx5Yl.png",
             "priority": 1
         }
     ],
-    "url": null
+    "url": "test"
 }
 ```
 
@@ -1960,22 +2083,48 @@
 
 ```json
 {
-    "items": [],
+    "items": [
+        {
+            "id": 1,
+            "name": "노트북A",
+            "price": 1280000,
+            "template": 2,
+            "images": [],
+            "descriptions": [
+                {
+                    "id": 1,
+                    "category_description": {
+                        "id": 14,
+                        "name": "제조사"
+                    },
+                    "content": "AMD"
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "name": "노트북A",
+            "price": 1280000,
+            "template": 2,
+            "images": [
+                {
+                    "id": 1,
+                    "item_image": "/media/KakaoTalk_20201019_093205576_ni0qpZF.png",
+                    "is_thumbnail": true,
+                    "priority": 1
+                }
+            ],
+            "descriptions": []
+        }
+    ],
     "events": [
         {
             "id": 1,
             "title": "테스트",
-            "content": "테스트",
-            "start_date": "2020-11-06T15:06:40+09:00",
-            "is_active": true,
-            "end_date": "2020-11-06T15:06:43+09:00",
-            "thumbnail_image": "/media/KakaoTalk_20200817_204540152.png",
-            "create_date": "2020-11-06T15:06:54.617564+09:00",
-            "update_date": "2020-11-08T00:15:28.900265+09:00",
-            "priority": 1,
-            "user": 3,
-            "detail": [],
-            "url": "asdasd"
+            "start_date": "2020-11-04T00:00:00+09:00",
+            "end_date": "2020-11-04T23:59:59+09:00",
+            "thumbnail_image": "/media/KakaoTalk_20200807_125333367_IjSlCrP.png",
+            "priority": 1
         }
     ]
 }
@@ -2079,6 +2228,115 @@
                 "name": "제조사"
             },
             "content": "AMD"
+        }
+    ]
+}
+```
+
+
+
+### 메인아이템 조회
+
+```
+주소/api/services/customer/event/(GET)
+```
+
+- Response
+
+```json
+[
+    {
+        "id": 1,
+        "priority": 2,
+        "item": {
+            "id": 1,
+            "name": "노트북A",
+            "price": 1280000,
+            "template": 2,
+            "images": [],
+            "descriptions": [
+                {
+                    "id": 1,
+                    "category_description": {
+                        "id": 14,
+                        "name": "제조사"
+                    },
+                    "content": "AMD"
+                }
+            ]
+        }
+    }
+]
+```
+
+
+
+### 케로셀 아이템 조회
+
+```
+주소/api/services/customer/carousel/(GET)
+```
+
+- Response
+
+```json
+[
+    {
+        "id": 1,
+        "image": "/media/KakaoTalk_20201019_093205576_0AlpIJQ.png",
+        "url": "naver.com"
+    }
+]
+```
+
+
+
+### 이벤트 리스트 조회
+
+```
+주소/api/services/customer/event/(GET)
+```
+
+- Response
+
+```json
+[
+    {
+        "id": 1,
+        "title": "테스트",
+        "start_date": "2020-11-04T00:00:00+09:00",
+        "end_date": "2020-11-04T23:59:59+09:00",
+        "thumbnail_image": "/media/KakaoTalk_20200807_125333367_IjSlCrP.png",
+        "priority": 1
+    }
+]
+```
+
+
+
+### 이벤트 상세 조회
+
+```
+주소/api/services/customer/event/<int:pk>/(GET)
+```
+
+- Response
+
+```json
+{
+    "id": 1,
+    "title": "테스트",
+    "start_date": "2020-11-04T00:00:00+09:00",
+    "end_date": "2020-11-04T23:59:59+09:00",
+    "thumbnail_image": "/media/KakaoTalk_20200807_125333367_IjSlCrP.png",
+    "priority": 1,
+    "content": "테스트",
+    "url": "test",
+    "images": [
+        {
+            "id": 1,
+            "image": "/media/KakaoTalk_20200807_125333367_urZx5Yl.png",
+            "priority": 1
         }
     ]
 }

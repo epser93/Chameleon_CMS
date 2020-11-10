@@ -1,16 +1,11 @@
 <template>
   <div class="container">
-    <div class="event">
+    <div class="event row">
       <div class="col-8">
-        <div class="form-title mt-5">
-          <h3 v-if="update">Edit Event</h3>
-          <h3 v-else>Add Event</h3>
-          <hr>
-        </div>
         <!-- 이벤트 제목 -->
         <div class="event-content">
           <h4>이벤트 제목</h4>
-          <input v-model="title" class="form-control" type="text" placeholder=" 제목을 입력해 주세요.">
+          <input v-model="title" type="text" placeholder=" 제목을 입력해 주세요.">
         </div>
         <!-- 이벤트 기간 -->
         <div class="event-content">
@@ -132,7 +127,6 @@ export default {
       },
       linkUrl: '',
       uploadImageIndex: 0,
-      update: false
     }
   },
   computed: {
@@ -146,15 +140,15 @@ export default {
       this.date.start = val.start_date,
       this.date.end = val.end_date
       this.linkUrl = val.url
-      for (let i = 0; i < val.images.length; i++) {
+      for (let i = 0; i < val.detail.length; i++) {
         const imageData = {
-          file: val.images[i].id,
+          file: val.detail[i].id,
           number: i,
-          preview: 'http://k3c205.p.ssafy.io' + val.images[i].image
+          preview: 'http://k3c205.p.ssafy.io' + val.detail[i].image
         }
-        this.images.images.push(imageData)
+        this.images.detail.push(imageData)
       }
-      this.uploadImageIndex = val.images.length
+      this.uploadImageIndex = val.detail.length
       console.log(val.detail)
       console.log(this.images.detail)
 
@@ -257,7 +251,6 @@ export default {
   created() {
     if (this.$route.params.method == 'update') {
       this.getEvent(this.$route.params.eid)
-      this.update = true
     }
   }
 }
@@ -269,21 +262,12 @@ textarea {
 }
 
 input {
-  border: 1px solid #cbcbcb;
-  border-radius: 5px;
+  border: 1px solid grey;
+  border-radius: 10px;
 }
 
 .form-control {
   width: auto;
-}
-
-.form-title {
-  display: inline-block;
-}
-
-hr {
-  border: 3px solid grey;
-  border-radius: 3px;
 }
 
 .template-table {

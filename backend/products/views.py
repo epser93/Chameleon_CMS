@@ -210,20 +210,20 @@ class TemplateAPI(APIView):
 
 class CustomerCategoryAPI(APIView):
     def get(self, request):
-        categories = Category.objects.all().order_by('priority', '-update_date')
+        categories = Category.objects.filter(is_active=True).order_by('priority', '-update_date')
         serializer = CustomerCategorySerializer(categories, many=True)
         return Response(serializer.data)
 
 
 class CustomerCategoryDetailAPI(APIView):
     def get(self, request, pk):
-        category = Category.objects.get(pk=pk)
+        category = Category.objects.get(pk=pk, is_active=True)
         serializer = CustomerCategoryJoinSerializer(category)
         return Response(serializer.data)
 
 
 class CustomerItemAPI(APIView):
     def get(self, request, pk):
-        item = Item.objects.get(pk=pk)
+        item = Item.objects.get(pk=pk, is_active=True, is_temp=False)
         serializer = CustomerItemSerializer(item)
         return Response(serializer.data)

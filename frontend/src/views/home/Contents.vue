@@ -1,4 +1,5 @@
 <template>
+<<<<<<< HEAD
   <div class="row">
     <div class="col-3 nav-container scroll">
       <SideBar v-if="productCategories"
@@ -9,6 +10,19 @@
     </div>
     <div class="contents-view col-9">
       <router-view class="scroll"></router-view>
+=======
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-3 nav-container scroll">
+        <SideBar
+        :categories="categoriess"
+        :productCategories="findActive"
+        ></SideBar>
+      </div>
+      <div class="contents-view col-9">
+        <router-view class="scroll"></router-view>
+      </div>
+>>>>>>> 5c7be035428a5744c6e1b241e498bbb848b2f295
     </div>
   </div>
 </template>

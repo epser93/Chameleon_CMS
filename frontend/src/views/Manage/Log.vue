@@ -90,6 +90,6 @@ export default {
 .page-navi {
   position: absolute;
   bottom: 0;
-  left: 40%;
+  left: 50%;
 }
 </style>

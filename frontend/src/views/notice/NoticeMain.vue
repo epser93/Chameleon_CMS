@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <div class="container pl-0">
     <div class="table-container">
-      <div class="btn">
-        <button type="button" class="btn btn-outline-success" @click="makeNotice()">생성</button>
+      <div class="btn ml-3 mt-3 mb-3 p-0">
+        <button type="button" class="btn btn-info ml-3" @click="makeNotice()">생성</button>
       </div>
       <table class="table">
         <thead>
@@ -14,8 +14,8 @@
           </tr>
         </thead>
         <tbody>
-          <tr class="notice" v-for="(notice, index) in notices" :key="index" @click="goDetail(notice)">
-            <td>{{ index + 1 }}</td>
+          <tr class="notice" v-for="(notice, index) in noticesForList" :key="index" @click="goDetail(notice)">
+            <td>{{ (nowPage * perPage) + (index + 1) }}</td>
             <td>{{ notice.title }}</td>
             <td v-if="notice.start_date">{{ refactoringDate(notice.start_date) }} ~ {{ refactoringDate(notice.end_date) }}</td>
             <td v-else>-</td>
@@ -25,6 +25,17 @@
           </tr>
         </tbody>
       </table>
+      <div class="page-navi justify-content-center">
+        <nav aria-label="Page navigation example">
+          <ul class="pagination">
+            <div v-for="(page, i) in pages" :key="i">
+              <li :class="(i == nowPage) ? 'page-item active':'page-item' ">
+                <a @click="onPage(i)" class="page-link" href="#">{{ page }}</a>
+              </li>
+            </div>
+          </ul>
+        </nav>
+      </div>
     </div> 
   </div>
 </template>
@@ -34,11 +45,24 @@ import { mapActions, mapState } from 'vuex'
 export default {
   data() {
     return {
-
+      perPage: 10,
+      nowPage: 0,
     }
   },
   computed: {
-    ...mapState('notice', ['notices'])
+    ...mapState('notice', ['notices']),
+    rows() {
+      return this.notices.length
+    },
+    pages() {
+      return Math.ceil(this.notices.length/this.perPage)
+    },
+    noticesForList() {
+      return this.notices.slice(
+        (this.nowPage) * this.perPage,
+        (this.nowPage + 1) * this.perPage
+      )
+    },
   },
   methods: {
     ...mapActions('notice', ['getNotices']),
@@ -80,5 +104,11 @@ export default {
 
 .table {
   text-align: center;
+}
+
+.page-navi {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
 }
 </style>

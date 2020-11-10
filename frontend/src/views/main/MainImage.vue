@@ -82,10 +82,10 @@ export default {
   methods: {
     ...mapActions('event', ['getEvents', 'delEvent', 'actEvent']),
     onCreate() {
-			this.$router.push({name: 'EventCreate', params: {method: 'create'}}, () => {})
+			this.$router.push({name: 'MainImageCreate', params: {method: 'create'}}, () => {})
     },
-    onUpdate(eid) {
-			this.$router.push({name: 'EventUpdate', params: {method: 'update', eid: eid}}, () => {})
+    onUpdate(id) {
+			this.$router.push({name: 'MainImageUpdate', params: {method: 'update', id: id}}, () => {})
 		},
     checkAll(events) {
       if (this.checked.length !== this.events.length){
