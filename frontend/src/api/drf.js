@@ -34,6 +34,6 @@ export default{
 
       // main
       main : 'services/main/',
-      carousel: 'services/carousel/,'
+      carousel: 'services/carousel/'
     }
   }
