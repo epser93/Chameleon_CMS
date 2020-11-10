@@ -185,23 +185,18 @@ const routes = [
               },
               {
                 path: 'product',
-                name: 'CategoryMain',
+                name: 'Product',
                 component: () => import('@/views/Contents/Product.vue'),
                 redirect: 'product',
                 children: [
                   {
                     path: '',
-                    name: 'Product',
+                    name: 'CategoryMain',
                     component: () => import('@/views/category/CategoryMain.vue')
                   },
                   {
                     path: 'category',
                     name: 'ProductCG',
-                    component: () => import('@/views/category/CategoryInfo.vue')
-                  },
-                  {
-                    path: 'category/:cid/:update',
-                    name: 'ProductCGupdate',
                     component: () => import('@/views/category/CategoryInfo.vue')
                   },
                   {
@@ -219,6 +214,11 @@ const routes = [
                         path: 'item',
                         name: 'ProductItemCreate',
                         component: () => import('@/views/Item/ItemInfo.vue')
+                      },
+                      {
+                        path: 'category/:cid/:update',
+                        name: 'ProductCGupdate',
+                        component: () => import('@/views/category/CategoryInfo.vue')
                       }
                     ]
                   },

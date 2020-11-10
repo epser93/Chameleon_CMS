@@ -2,15 +2,14 @@
 <div class="row">
   <ul class="nav-container">
 	<li class="nav-items" v-for="(category, index) in categories" :key="index">
-		<div :class="category" id="category" @click="onRoute(category)">
+		<div :class="`p${category}`" id="category" @click="onRoute(category)">
 			{{ category }}
 		</div>
 		<div class="inner-item mt-4" v-if="category ==='Main'">
-			<div class="대표이미지" id="product-name" @click="onRoute('MainImage')">대표 이미지</div>
-			<div class="추천제품" id="product-name" @click="onRoute('MainProduct')">추천 제품</div>
+			<div :class="`p${mainCategory.pathName}`" id="product-name" v-for="(mainCategory, index) in mainCategories" :key="index" @click="onRoute(mainCategory.pathName)">{{ mainCategory.name }}</div>
 		</div>
 		<div class="inner-item mt-4" v-if="category ==='Product'">
-			<div :class="product.name" id="product-name" v-for="(product, index) in productCategories" :key="index" @click="onDetail(product.id)">
+			<div :class="`p${product.id}`" id="product-name" v-for="(product, index) in productCategories" :key="index" @click="onDetail(product.id)">
 			{{ product.name }}
 			</div>
 		</div>
@@ -23,130 +22,30 @@
 export default {
   data() {
 		return {
-			cate : this.categories,
-			productdCate : this.productCategories,
-			mainCategories: ["대표이미지", "추천제품"]
+
 		}
   },
-  props: ['categories', 'productCategories'],
+  props: ['categories', 'productCategories', 'mainCategories'],
 	methods: {
 		onRoute(name) {
 			this.$router.push({name:name}, () => {})
 		},
 		onDetail(cid) {
-			//console.log(cid)
 			this.$router.push({name:'ProductItemMain', params:{cid: cid}}, () => {})
 		},
 		fixCategory () {
-			for (let i=0; i<this.categories.length; i++) {
-			let className = '.' + this.categories[i]
-			let tmp = this.categories[i]
-				if (this.$route.name.includes(tmp)) {
-					if(tmp == 'Product'){
-						this.InnerCategory()
-					}
-					else{
-						if(this.categories.includes('Product')){
-							this.OutCategory()
-						}
-					}
-					document.querySelector(className).classList.add('active')
-				} else {
-					document.querySelector(className).classList.remove('active')
-				}
-			}
-			
-			// let category_list = [this.$refs.User, this.$refs.UserLog]
-			// for (let i=0; i<category_list.length; i++) {
-			// 	if (this.$route.name === category_list[i].innerHTML) {
-			// 		category_list[i].classList.add('active')
-			// 	} else {
-			// 		category_list[i].classList.remove('active')
-			// 	}
-			// }
-			// if (this.$route.name === 'User') {
-			// 	this.$refs.UserLog.classList.remove('active')
-			// 	this.$refs.User.classList.add('active')
-			// } else {
-			// 	this.$refs.User.classList.remove('active')
-			// 	this.$refs.UserLog.classList.add('active')
-			// }
-		},
-		InnerCategory () {
-			for (let i=0; i<this.productCategories.length; i++) {
-			let className = '.' + this.productCategories[i].name
-			let tmp = this.productCategories[i].id
-			if (this.$route.params.cid == tmp) {
-				document.querySelector(className).classList.add('active')
-			} else {
-				document.querySelector(className).classList.remove('active')
-			}
-			}
-		},
-		OutCategory () {
-			for (let i=0; i<this.productCategories.length; i++) {
-			let className = '.' + this.productCategories[i].name
-			document.querySelector(className).classList.remove('active')
-			}
-		}
+      document.querySelector('.p' + this.$route.matched[3].name).classList.add('active')
+    },
 	},
 	watch: {
-		// '$route' (to, from) {
-		// 	console.log(to)
-		// 	console.log(from)
-		// 	let category_list = [this.$refs.User, this.$refs.UserLog]
-		// 	let before = null
-		// 	let after = null
-		// 	for (let i=0; i<category_list.length; i++) {
-		// 		if (before !== null && after !== null) {
-		// 			break
-		// 		}
-		// 		if (category_list[i].innerHTML === from.name) {
-		// 			before = category_list[i]
-		// 		} else if (category_list[i].innerHTML === to.name) {
-		// 			after = category_list[i]
-		// 		}
-		// 	}
-		// 	before.classList.remove('active')
-		// 	after.classList.add('active')
-		// }
-		// '$route' : function() {
-		// 	if (this.$route.name === 'User') {
-		// 		this.$refs.UserLog.classList.remove('active')
-		// 		this.$refs.User.classList.add('active')
-		// 	} else {
-		// 		this.$refs.User.classList.remove('active')
-		// 		this.$refs.UserLog.classList.add('active')
-		// 	}
-		// },
-		'$route' : function() {
-			// if('Main' in this.$route.name) {
-			// 	let className = '.main'
-			// 	document.querySelector(className).classList.add('active')
-			// }
-			for (let i=0; i<this.categories.length; i++) {
-			let className = '.' + this.categories[i]
-			let tmp = this.categories[i]
-				if (this.$route.name.includes(tmp)) {
-					if(tmp == 'Product'){
-						this.InnerCategory()
-					}
-					else{
-						if(this.categories.includes('Product')){
-							this.OutCategory()
-						}
-					}
-					document.querySelector(className).classList.add('active')
-				} else {
-					document.querySelector(className).classList.remove('active')
-				}
-			}
-		},
-
+    '$route' (to, from) {
+      document.querySelector('.p' + from.matched[3].name).classList.remove('active')
+      document.querySelector('.p' + to.matched[3].name).classList.add('active')
+    }
 	},
 	mounted() {
-		this.fixCategory()
-	}
+    this.fixCategory()
+  },
 }
 </script>
 

@@ -1,9 +1,10 @@
 <template>
   <div class="row">
     <div class="col-3 nav-container scroll">
-      <SideBar
+      <SideBar v-if="productCategories"
       :categories="categoriess"
-      :productCategories="findActive"
+      :productCategories="productCategories"
+      :mainCategories="mainCategories"
       ></SideBar>
     </div>
     <div class="contents-view col-9">
@@ -20,6 +21,8 @@ export default {
   data() {
     return {
       categoriess: ['Main', 'Product', 'Event', 'Notice'],
+      mainCategories : [{ name: "대표 이미지", pathName : 'MainImage' }, { name: "추천제품", pathName : 'MainProduct' }],
+      productCategories : null,
     }
   },
   components: {
@@ -27,17 +30,17 @@ export default {
   },
   computed: {
     ...mapState('category', ['categories']),
-    // ...mapMutations('category', ['SET_CATEGORY']),
-    findActive() {
+  },
+  watch: {
+    categories (val) {
       const tmpCategory = []
-      for(let i=0; i<this.categories.length; i++) {
-        if(this.categories[i].is_active) {
-          tmpCategory.push(this.categories[i])
+      for(let i=0; i<val.length; i++) {
+        if(val[i].is_active) {
+          tmpCategory.push(val[i])
         }
       }
-      return tmpCategory
+     this.productCategories = tmpCategory
     }
-    
   },
   methods: {
     ...mapActions('category', ['getCategoryList'])
@@ -45,18 +48,6 @@ export default {
   created(){
     this.getCategoryList()
   },
-  // watch: {
-  //   '$route' : function() {
-	// 		for (let i=0; i<this.categories.length; i++) {
-	// 			if (this.$route.params.cid === this.categories[i].id) {
-  //         this.SET_CATEGORY(this.categories[i])
-  //         console.log(this.categories[i])
-  //       }
-  //       console.log(this.$route.params.cid)
-  //       }
-  //   }
-  // }
-
 }
 </script>
 
