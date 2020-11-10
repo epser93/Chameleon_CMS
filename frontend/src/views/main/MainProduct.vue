@@ -1,6 +1,6 @@
 <template>
-  <div v-if="events" class="container-fluid pl-0">
-    <div v-if="events" class="table-container">
+  <div class="container-fluid pl-0">
+    <div class="table-container">
       <div class="btn-background">
         <div class="event-btn ml-3 mt-3 mb-3">
           <!-- <button type="button" class="btn btn-danger">삭제</button> -->
@@ -10,13 +10,13 @@
       <table class="table">
         <thead class="">
           <tr>
-            <th scope="col">제목</th>
+            <th scope="col">제품명</th>
             <th scope="col">상태</th>
-            <th scope="col">기간</th>
-            <th scope="col">상세보기</th>
+            <th scope="col">제품보기</th>
+            <th scope="col">변경</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody v-if="events">
           <tr v-for="(event, index) in events" :key="index">
             <td>{{ event.title }}</td>
             <!-- 스위치 -->
@@ -54,25 +54,11 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapActions } from 'vuex'
 
 export default {
   computed: {
-    ...mapState('event',['events']),
-    eventDate() {
-      const dateList = new Array()
-      for (let i=0; i<this.events.length; i++) {
-        const SD = new Date(this.events[i].start_date)
-        const ED = new Date(this.events[i].end_date)
-        var arrDayStr = ['일','월','화','수','목','금','토']
-        const date = { 
-          start: SD.toLocaleDateString() + ' (' + arrDayStr[SD.getDay()] + ')', 
-          end: ED.toLocaleDateString() + ' (' + arrDayStr[ED.getDay()] + ')'
-        }
-        dateList.push(date)
-      }
-      return dateList
-    }
+
   },
   data() {
     return {
