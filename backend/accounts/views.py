@@ -122,8 +122,7 @@ class ManagementAPI(APIView):
             
 
 class DepartmentAPI(APIView):
-    permission_classes = [IsAuthenticated]
-
+    
     def get(self, request):
         departments = Department.objects.all()
         serializer = DepartmentSerializer(departments, many=True)
