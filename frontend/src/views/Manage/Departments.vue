@@ -1,9 +1,15 @@
 <template>
-  <div>
-    <div>부서관리</div>
-    <div>
-      <input type="text" v-model="departmentName">
-      <button type="button" class="btn btn-outline-primary" @click="makeDepartments()">부서 생성</button>
+  <div class="container">
+    <div class="table-container mt-0">
+      <div class="d-flex align-items-center justify-content-between">
+        <h5 class="mb-0">부서 관리</h5>
+        <div class="input-group mb-3 mt-3">
+          <input type="text" v-model="departmentName" class="form-control" placeholder="부서명을 입력하세요." aria-label="Recipient's username" aria-describedby="button-addon2">
+          <div class="input-group-append">
+            <button @click="makeDepartments()" class="btn btn-secondary" type="button" id="button-addon2">부서 생성</button>
+          </div>
+        </div>
+      </div>
     </div>
     <table class="table">
       <thead>
@@ -50,6 +56,11 @@ export default {
 </script>
 
 <style scoped>
+.input-group {
+  float: right;
+  width: 40%;
+}
+
 .departments {
   cursor: pointer;
 }
