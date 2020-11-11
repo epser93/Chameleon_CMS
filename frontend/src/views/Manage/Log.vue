@@ -9,7 +9,7 @@
             <th scope="col">유저ID</th>
             <th scope="col">이름</th>
             <th scope="col">서버 IP</th>
-            <th scope="col">생성일</th>
+            <th scope="col" @click="test">생성일</th>
           </tr>
         </thead>
         <tbody>
@@ -40,6 +40,8 @@
 
 <script>
 import { mapActions, mapState } from 'vuex'
+// import $ from 'jquery'
+
 export default {
   name: "Logs",
   data() {
@@ -62,6 +64,14 @@ export default {
         (this.nowPage + 1) * this.perPage
       )
     },
+    paginationLength() {
+      let pagination = document.querySelector('.page-navi')
+      let paginationLength = pagination.clientWidth
+      let tableContainer = document.querySelector('.table-container')
+      let tableConatinerLength = (tableContainer.clientWidth - paginationLength) / 2
+      document.querySelector('.page-navi').style.left = String(tableConatinerLength) + 'px'
+      return tableConatinerLength
+    },
   },
   methods: {
     ...mapActions('account', ['getLogs']),
@@ -72,10 +82,14 @@ export default {
       const tz = new Date(time)
       const arrDay = ['일','월','화','수','목','금','토']
       return tz.toLocaleDateString() + '(' + arrDay[tz.getDay()] + ') ' + tz.getHours() + '시 ' + tz.getMinutes() + '분 ' + tz.getSeconds() + '초 '
+    },
+    test() {
+      console.log(this.paginationLength)
     }
   },
   created() {
     this.getLogs()
+    // this.paginationLength()
   },
 }
 </script>
@@ -90,6 +104,5 @@ export default {
 .page-navi {
   position: absolute;
   bottom: 0;
-  left: 50%;
 }
 </style>
