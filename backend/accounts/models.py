@@ -48,8 +48,6 @@ class User(AbstractUser):
         if self.is_access == False:
             self.is_access = True
             self.save()
-            log = TotalLog()
-            log.update('회원가입 승인', None, self)
 
             
 
@@ -68,5 +66,6 @@ class TotalLog(models.Model):
         self.type = type
         self.register_ip = '0.0.0.0'
         self.cms_user = user
-        self.department = user.department
+        department = Department.objects.using('master').get(pk=user.department.pk)
+        self.department = department
         self.save()
