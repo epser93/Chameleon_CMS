@@ -228,7 +228,12 @@ const routes = [
                         path: 'item',
                         name: 'ProductItemCreate',
                         component: () => import('@/views/Item/ItemInfo.vue')
-                      }
+                      },
+                      {
+                        path: 'item/:pid/:update',
+                        name: 'ProducItemUpdate',
+                        component: () => import('@/views/Item/ItemInfo.vue')
+                      },
                     ]
                   },
                 
