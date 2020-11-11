@@ -7,13 +7,10 @@
     <div v-if="events">
       <div class="row mt-4 mb-4 ml-auto mr-auto" v-for="(event, index) in events" :key="index">
         <div class="col-sm-12 col-md-8">
-          <img :src="'http://k3c205.p.ssafy.io'+event.thumbnail_image" class="event-img" alt="" @click="onDetail(event.id)">
+          <img :src="'http://k3c205.p.ssafy.io'+event.thumbnail_image" class="thumbnail-img" alt="" @click="onDetail(event.id)">
         </div>
         <div class="col-sm-12 col-md-4">
           <h4 class="event-name" @click="onDetail(event.id)">{{ event.title }}</h4>
-          <!-- <div class="event-spec m-0">
-            <p>이벤트 설명</p>
-          </div> -->
           <p class="date">기간: {{ event.start_date.slice(0,10) }} ~ {{ event.end_date.slice(0,10) }}</p>
         </div>
       </div>
@@ -54,7 +51,7 @@ p {
 }
 
 @media screen and (max-width: 960px) {
-  .event-img {
+  .thumbnail-img {
    width: 100%;
    height: auto;
   }
@@ -72,7 +69,7 @@ p {
 }
 
 @media screen and (max-width: 576px) {  
-  .event-img {
+  .thumbnail-img {
     width: 100%;
   }
   

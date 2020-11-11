@@ -7,19 +7,18 @@
     </div>
     <hr>
     <!-- event image -->
-    <div class="row justify-content-center mt-4">
-      <div class="mb-4">
-        <img :src="'http://k3c205.p.ssafy.io'+event.thumbnail_image" class="event-img w-100" alt="">
+    <div class="row event-img justify-content-center mt-4">
+      <div class="d-flex mb-4">
+        <img :src="'http://k3c205.p.ssafy.io'+event.thumbnail_image" class="w-100" alt="">
       </div>
       <!-- event detail image -->
       <div class="d-flex event-detail-img mb-4" v-for="(image, index) in event.images" :key="index">
-
-        <img :src="'http://k3c205.p.ssafy.io'+image.image" class="event-img w-100" alt="">
+        <img :src="'http://k3c205.p.ssafy.io'+image.image" class="w-100" alt="">
       </div>
     </div>
 
-    <div class="d-flex flexbox_wrapping justify-content-between mt-4">
-      <button type="button" class="btn btn-secondary btn-sm" @click="onClickWindows(image.image)">관련 상품 보러가기</button>
+    <div class="d-flex flexbox_wrapping justify-content-center mt-4 mb-4">
+      <button type="button" class="btn btn-dark" @click="onClickWindows(image.image)">관련 상품 보러가기</button>
     </div>
   </div>
 </template>
@@ -49,9 +48,12 @@ export default {
   flex-wrap: wrap;
 }
 
+.event-img {
+  width: 80vw;
+}
+
 .event-detail-img {
   width: 100vw;
-  height: 100vh;
-  border: 2px solid grey;
+  height: auto;
 }
 </style>
