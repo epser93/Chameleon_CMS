@@ -11,6 +11,7 @@ export default {
     category: '',
     items: '',
     item: '',
+    history: '',
 
   },
 
@@ -41,7 +42,10 @@ export default {
     },
     SET_ITEM(state, payload) {
       state.item = payload
-    }
+    },
+    SET_HISTORY(state, payload) {
+      state.history = payload
+    },
   },
 
   actions: {
@@ -145,7 +149,6 @@ export default {
         })   
     },
 
-    
     getItemDetail({ rootGetters, commit }, id) {
       // console.log(SERVER.URL + SERVER.ROUTER.category + id + '/')
       axios.get(SERVER.URL + SERVER.ROUTER.item + id + '/', rootGetters['account/config'])
@@ -154,5 +157,40 @@ export default {
       })
       .catch(() => {console.log('왜에러')})
     },
+
+    getItemHistory({ rootGetters, commit }, id) {
+      // console.log(SERVER.URL + SERVER.ROUTER.category + id + '/')
+      axios.get(SERVER.URL + SERVER.ROUTER.itemhistory + id + '/', rootGetters['account/config'])
+      .then((res) => {
+        commit('SET_HISTORY', res.data)
+      })
+      .catch(() => {console.log('왜에')})
+    },
+
+    // 히스토리에 있는 내역으로 변경
+    putItemHistory({ rootGetters, dispatch }, {cid, hid, hisData}) {
+      axios.put(SERVER.URL + SERVER.ROUTER.item + hid + '/', hisData, rootGetters['account/config'])
+        .then(() => {
+            console.log("수정완료")
+            router.push({name:'ProductItem'}, () => {})
+            dispatch('getItem', cid)
+        })
+        .catch(error => {console.log(error.response)})
+    },
+    
+
+    postTempItem({ dispatch, rootGetters }, {cid, pid, tmpData}) {
+      axios.post(SERVER.URL + SERVER.ROUTER.itemhistory + pid + '/', tmpData, rootGetters['account/config'])
+      .then(() => {
+        alert("수정이 완료되었습니다.")
+        router.push({name:'ProductItem'}, () => {})
+        dispatch('getItem', cid)
+      })
+      .catch((err) => {
+        console.log(err)
+      })   
+    },
+
+
   }
 }

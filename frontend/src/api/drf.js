@@ -28,7 +28,9 @@ export default{
       category : 'products/categories/', 
 
       // item
-      item : 'products/product/', 
+      item : 'products/product/',
+      itemhistory : 'products/temp_product/',
+      history: 'products/',
 
       // notice
       notice : 'services/notices/',
