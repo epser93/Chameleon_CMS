@@ -13,7 +13,10 @@ SECRET_KEY = env('SECRET_KEY')
 DEBUG = env('DEBUG')
 
 ALLOWED_HOSTS = ['*']
-
+DEFAULT_FILE_STORAGE = 'cms_pjt.storages.MediaStorage'
+STATICFILES_STORAGE = 'cms_pjt.storages.StaticStorage'
+MEDIAFILES_LOCATION = 'media'
+STATICFILES_LOCATION = 'static'
 
 # Application definition
 
@@ -41,6 +44,9 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'rest_auth.registration',
+    
+    # S3 설정
+    'storages',
 
     # my_app
     'accounts',
@@ -82,9 +88,6 @@ TEMPLATES = [
 WSGI_APPLICATION = 'cms_pjt.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/2.1/ref/settings/#databases
-
 ENGINE = 'django.db.backends.mysql'
 init_command = 'SET sql_mode="STRICT_TRANS_TABLES"'
 
@@ -102,30 +105,29 @@ DATABASES = {
     },
     'master': {
         'ENGINE': ENGINE,
-        'NAME': env('NAME'),
-        'USER': env('DB_USER'),
-        'PASSWORD': env('PASSWORD'),
-        'HOST': env('HOST'),
-        'PORT': env('PORT'),
+        'NAME': env('MASTER_NAME'),
+        'USER': env('MASTER_USER'),
+        'PASSWORD': env('MASTER_PASSWORD'),
+        'HOST': env('MASTER_HOST'),
+        'PORT': env('MASTER_PORT'),
         'OPTIONS': {
             'init_command': init_command
         }
     },
     'slave': {
         'ENGINE': ENGINE,
-        'NAME': env('NAME'),
-        'USER': env('DB_USER'),
-        'PASSWORD': env('PASSWORD'),
-        'HOST': env('HOST'),
+        'NAME': env('SLAVE_NAME'),
+        'USER': env('SLAVE_USER'),
+        'PASSWORD': env('SLAVE_PASSWORD'),
+        'HOST': env('SLAVE_HOST'),
         'PORT': env('SLAVE_PORT'),
         'OPTIONS': {
             'init_command': init_command
         }
     }
-
 }
 
-DATABASE_ROUTERS = ['cms_pjt.routers.MasterSlaveRouter']
+# DATABASE_ROUTERS = ['cms_pjt.routers.MasterSlaveRouter']
 
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -160,10 +162,14 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-if DEBUG:
-    STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
-else:
-    STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+STATIC_DIR = os.path.join(BASE_DIR, 'static')
+STATICFILES_DIRS = [
+    STATIC_DIR,
+]
+
+# if DEBUG:
+# else:
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 
 
 # 유저모델은 accounts.의 User로 설정
@@ -204,3 +210,13 @@ OLD_PASSWORD_FIELD_ENABLED = True
 # 이메일 인증
 ACCOUNT_ADAPTER = 'accounts.adapter.DefaultAccountAdapterCustom'
 URL_FRONT = 'https://i3c205.p.ssafy.io/'
+
+
+# AWS 관련
+
+AWS_REGION = env('AWS_REGION')
+AWS_STORAGE_BUCKET_NAME = env('AWS_STORAGE_BUCKET_NAME')
+AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY')
+AWS_S3_CUSTOM_DOMAIN = '{}.s3.{}.amazonaws.com'.format(AWS_STORAGE_BUCKET_NAME, AWS_REGION)
+AWS_DEFAULT_ACL = env('AWS_DEFAULT_ACL')

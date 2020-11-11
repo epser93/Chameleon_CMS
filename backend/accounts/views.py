@@ -45,7 +45,7 @@ class Signup(RegisterView):
             return Response(answer, status=status.HTTP_400_BAD_REQUEST)
         # 비밀번호 조건 체크
         password = set(request.data['password1'])
-        length = len(password)
+        length = len(request.data['password1'])
         if length < 8 or length > 12 or not (password & number and password & en and password & s_chr) :
             answer = {message: '비밀번호가 조건에 부합하지 않습니다.'}
             return Response(answer, status=status.HTTP_400_BAD_REQUEST)
