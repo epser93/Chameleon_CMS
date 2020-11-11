@@ -3,12 +3,10 @@
   <h1>{{ category.name }}</h1>
   <div class="row justify-content-between">
     <div class="col-3">
-      <button type="button" class="btn btn-info" @click="onRoute('ProductItemCreate')">
+      <button type="button" class="btn btn-info" @click="onCreate('ProductItemCreate')">
         추가
       </button>
-      <button type="button" class="btn btn-danger">
-        삭제
-      </button>
+      
     </div>
     <div class="col-6">
       <div class="input-group mb-3">
@@ -27,6 +25,7 @@
           <th scope="col"></th>
           <th scope="col">카테고리</th>
           <th scope="col">제품명</th>
+          <th scope="col">가격</th>
           <th scope="col">수정날짜</th>
           <th scope="col">상태</th>
           <th scope="col"></th>
@@ -34,9 +33,10 @@
       </thead>
       <tbody>
         <tr v-for="(item, index) in items" :key="index">
-          <th scope="row"><input type="checkbox"></th>
+          <th scope="row"></th>
           <td>{{ item.category.name }}</td>
           <td>{{ item.name }}</td>
+          <td>{{ item.price }}</td>
           <td>{{ item.update_date.slice(0,10) }}</td>
           <td v-if="item.is_active">
             <span class="badge badge-success" @click="changeActive(item)">활성화</span>
@@ -44,8 +44,7 @@
           <td v-else>
             <span class="badge badge-danger" @click="changeActive(item)">비활성화</span>
           </td>
-          <td><button type="button" class="btn btn-secondary">수정</button></td>
-           <!-- @click="onUpdate(item.id)" -->
+          <td><button type="button" class="btn btn-secondary" @click="onUpdate(category.id, item.id)">수정</button></td>
         </tr>
 
       </tbody>
@@ -72,12 +71,14 @@ export default {
     ...mapActions('category', ['getItem', 'delItem', 'postItem']),
     ...mapMutations('category', ['SET_CATEGORY']),
 
-    onRoute(name) {
-			this.$router.push({name:name}, () => {})
+    onCreate(name) {
+      this.$router.push({name:name}, () => {})
     },
 
-    onUpdate(pid) {
-      this.$router.push({name:'ProductItemMain', params:{pid: pid}})
+    onUpdate(cid, pid) {
+      console.log(cid)
+      console.log(pid)
+      this.$router.push({name:'ProducItemUpdate', params:{cid: cid, pid: pid, update: 'update'}})
     },
     
     changeActive(item){
@@ -100,7 +101,7 @@ export default {
     }
   },
 
-  mounted() {
+  created() {
     const cid = this.$route.params.cid
     this.getItem(cid)
     this.SET_CATEGORY(cid)

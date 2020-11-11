@@ -134,7 +134,6 @@ export default {
       categoryData.append('image', this.image)
       categoryData.append('template', this.picked)
       categoryData.append('priority', this.priority)
-
       this.categoryRegister(categoryData)
     },
   
