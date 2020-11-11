@@ -106,14 +106,19 @@ class CustomerItemSerializer(serializers.ModelSerializer):
 
 
 class CustomerCategorySerializer(serializers.ModelSerializer):
+    items = serializers.SerializerMethodField()
     class Meta:
         model = Category
-        fields = ['id', 'name', 'image']
+        fields = ['id', 'name', 'image', 'items']
+
+    def get_items(self, obj):
+        items = Item.objects.filter(is_active=True).filter(is_temp=False).filter(category=obj)[:4]
+        serializer = CustomerItemSerializer(items, many=True)
+        return serializer.data
 
 
 class CustomerCategoryJoinSerializer(serializers.ModelSerializer):
     items = serializers.SerializerMethodField()
-    # items = CustomerItemSerializer(required=False, many=True)
     class Meta:
         model = Category
         fields = ['id', 'name', 'image', 'template', 'items']

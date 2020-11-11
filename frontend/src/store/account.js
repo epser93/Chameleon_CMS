@@ -162,6 +162,18 @@ export default {
         .catch(error => console.log(error.response))
     },
 
+    // 부서 생성
+    makeDepartment({ getters, dispatch }, departmentData) {
+      if (confirm(departmentData.name + '을 생성하시겠나요??')) {
+        axios.post(SERVER.URL + SERVER.ROUTER.department, departmentData, getters.config)
+          .then(() => {
+            alert(departmentData.name + '이 생성되었습니다')
+            dispatch('getDepartments')
+          })
+          .catch(error => alert(error.response.data.message))
+      }
+    },
+
     // 권한 부여 
     giveAuthorities({ getters, state, dispatch }, authorityInfo) {
       axios.put(SERVER.URL + SERVER.ROUTER.usermanage + state.authorityModalUser.id + '/', authorityInfo, getters.config)
