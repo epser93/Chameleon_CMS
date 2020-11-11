@@ -73,8 +73,8 @@
           <div v-else class="file-preview-content-container">
             <div class="file-preview-container">
               <div v-for="(file, index) in images.detail" :key="index" class="file-preview-wrapper">
-                <div class="file-close-button" @click="fileDeleteButton" :name="file.number">
-                  <img src="@/assets/icons/x.svg" alt="delete button" width="20" height="20" title="x">
+                <div class="file-close-button" @click="fileDeleteButton">
+                  <img src="@/assets/icons/x.svg" alt="delete button" width="20" height="20" title="x" :name="file.number">
                 </div>
                 <img :src="file.preview" />
               </div>
@@ -152,7 +152,7 @@ export default {
           number: i,
           preview: 'http://k3c205.p.ssafy.io' + val.images[i].image
         }
-        this.images.images.push(imageData)
+        this.images.detail.push(imageData)
       }
       this.uploadImageIndex = val.images.length
       console.log(val.detail)
@@ -179,58 +179,39 @@ export default {
       this.imageUrl.thumbnail = URL.createObjectURL(file)
     },
     imageUpload() {
-      // this.images.detail = [...this.images.detail, this.$refs.detailImages.images.detail];
-      //하나의 배열로 넣기
-      let num = -1;
+      const num = this.$refs.detailImages.files.length
       for (let i = 0; i < this.$refs.detailImages.files.length; i++) {
-        this.images.detail = [
-          ...this.images.detail,
-            //이미지 업로드
-            {
-                //실제 파일
-                file: this.$refs.detailImages.files[i],
-                //이미지 프리뷰
-                preview: URL.createObjectURL(this.$refs.detailImages.files[i]),
-                //삭제및 관리를 위한 number
-                number: i
-            }
-        ];
-        num = i;
-              //이미지 업로드용 프리뷰
-              // this.imageUrl.detail = [
-              //   ...this.imageUrl.detail,
-              //   { file: URL.createObjectURL(this.$refs.detailImages.images.detail[i]), number: i }
-              // ];
+        const image = {
+          //실제 파일
+          file: this.$refs.detailImages.files[i],
+          //이미지 프리뷰
+          preview: URL.createObjectURL(this.$refs.detailImages.files[i]),
+          //삭제및 관리를 위한 number
+          number: i
+        }
+        this.images.detail.push(image)
       }
-      this.uploadImageIndex = num + 1; //이미지 index의 마지막 값 + 1 저장
+      this.uploadImageIndex = num; //이미지 index의 마지막 값 + 1 저장
       },
 
     imageAddUpload() {
-
-      // this.images.detail = [...this.images.detail, this.$refs.detailImages.images.detail];
-      //하나의 배열로 넣기c
-      let num = -1;
-      for (let i = 0; i < this.$refs.detailImages.files.length; i++) {
-        console.log(this.uploadImageIndex);
-        this.images.detail = [
-          ...this.images.detail,
-          //이미지 업로드
-          {
-            //실제 파일
-            file: this.$refs.detailImages.files[i],
-            //이미지 프리뷰
-            preview: URL.createObjectURL(this.$refs.detailImages.files[i]),
-            //삭제및 관리를 위한 number
-            number: i + this.uploadImageIndex
-          }
-        ];
-        num = i;
+      const num = this.$refs.detailImages.files.length
+      for (let i = 0; i < num; i++) {
+        const image = {
+          //실제 파일
+          file: this.$refs.detailImages.files[i],
+          //이미지 프리뷰
+          preview: URL.createObjectURL(this.$refs.detailImages.files[i]),
+          //삭제및 관리를 위한 number
+          number: this.uploadImageIndex + i
+        }
+        this.images.detail.push(image)
       }
-      this.uploadImageIndex = this.uploadImageIndex + num + 1;
-
+      this.uploadImageIndex = this.uploadImageIndex + num;
     },
     fileDeleteButton(e) {
       const name = e.target.getAttribute('name');
+      console.log(name)
       this.images.detail = this.images.detail.filter(data => data.number !== Number(name));
     },
     onRegister() {
