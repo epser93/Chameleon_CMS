@@ -1,29 +1,45 @@
+from accounts.models import TotalLog, User
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from .models import Item, ItemImage, ItemDescription, Category, CategoryDescription, Template, CopyOfItem, CopyOfItemDescription, CopyOfItemImage
 from .serializers import CopyItemSerializer, CustomerCategoryJoinSerializer, CustomerCategorySerializer, CustomerItemSerializer, ItemSerializer, CategorySerializer, TemplateSerializer
+from rest_framework.permissions import IsAuthenticated
+from accounts.views import forbidden_message
+
+
+message = 'message'
+existing_category_message = {message: '존재하는 카테고리 입니다.'}
 
 class CategoryList(APIView):
+    permission_classes = [IsAuthenticated]
+
     def get(self, request):
         categories = Category.objects.all()
         serializer = CategorySerializer(categories, many=True)
         return Response(serializer.data)
 
     def post(self, request):
+        if request.user.is_superuser == False and request.user.is_producter == False :
+            return Response(forbidden_message, status=status.HTTP_403_FORBIDDEN)
+        user = User.objects.using('master').get(username=request.user.username)
         if Category.objects.filter(name=request.data['name']).exists():
-            return Response('존재하는 카테고리 입니다.', status=status.HTTP_400_BAD_REQUEST)
+            return Response(existing_category_message, status=status.HTTP_400_BAD_REQUEST)
         category = Category()
-        template = Template.objects.get(pk=int(request.data['template']))
-        category.create(request.data, request.user, template, request.FILES.get('image', None))
+        template = Template.objects.using('master').get(pk=int(request.data['template']))
+        category.create(request.data, user, template, request.FILES.get('image', None))
         for description in request.data.getlist('descriptions'):
             category_description = CategoryDescription()
             category_description.create(description, category)
+        log = TotalLog()
+        log.update('\'{}\' 카테고리 생성'.format(category.name), None, user)
+        category = Category.objects.get(pk=category.pk)
         serializer = CategorySerializer(category)
         return Response(serializer.data)
 
 
 class CategoryDetail(APIView):
+    permission_classes = [IsAuthenticated]
 
     def get(self, request, pk):
         category = Category.objects.get(pk=pk)
@@ -32,27 +48,47 @@ class CategoryDetail(APIView):
         return Response(serializer.data)
 
     def post(self, request, pk):
-        category = Category.objects.get(pk=pk)
+        if request.user.is_superuser == False and request.user.is_producter == False :
+            return Response(forbidden_message, status=status.HTTP_403_FORBIDDEN)
+        user = User.objects.using('master').get(username=request.user.username)
+        category = Category.objects.using('master').get(pk=pk)
         category.activate()
+        log = TotalLog()
+        log.update('\'{}\' 카테고리 활성화'.format(category.name), None, user)
+        category = Category.objects.get(pk=pk)
         serializer = CategorySerializer(category)
         return Response(serializer.data)
 
     # 테스트
     def put(self, request, pk):
-        template = Template.objects.get(pk=int(request.data['template']))
-        category = Category.objects.get(pk=pk)
-        category.update(request.data, template, request.FILES.get('image', None))
+        if request.user.is_superuser == False and request.user.is_producter == False :
+            return Response(forbidden_message, status=status.HTTP_403_FORBIDDEN)
+        if request.data.get('name', None) and Category.objects.filter(name=request.data['name']).exclude(pk=pk).exists():
+            return Response(existing_category_message, status=status.HTTP_400_BAD_REQUEST)
+        user = User.objects.using('master').get(username=request.user.username)
+        template = Template.objects.using('master').get(pk=int(request.data['template']))
+        category = Category.objects.using('master').get(pk=pk)
+        before_name = category.name
+        category.update(request.data, user, template, request.FILES.get('image', None))
         self.descriptions_add(request.data, category)
         self.descriptions_update(request.data, category)
         self.descriptions_delete(request.data)
+        log = TotalLog()
+        log.update('\'{} -> {}\' 카테고리 수정'.format(before_name, category.name), None, user)
+        category = Category.objects.get(pk=pk)
         serializer = CategorySerializer(category)
         return Response(serializer.data)
 
     
     def delete(self, request, pk):
+        if request.user.is_superuser == False and request.user.is_producter == False :
+            return Response(forbidden_message, status=status.HTTP_403_FORBIDDEN)
+        user = User.objects.using('master').get(username=request.user.username)
         category = Category.objects.get(pk=pk)
         category.delete()
-        answer = {'message': "비활성화 되었습니다."}
+        log = TotalLog()
+        log.update('\'{}\' 카테고리 비활성화'.format(category.name), None, user)
+        answer = {message: "비활성화 되었습니다."}
         return Response(answer)
 
     
@@ -60,7 +96,7 @@ class CategoryDetail(APIView):
         descriptions_update_id = list(map(int, data.getlist('descriptions_update_id')))
         descriptions_update_name = data.getlist('descriptions_update_name')
         for i in range(len(descriptions_update_id)):
-            category_description = CategoryDescription.objects.get(pk=descriptions_update_id[i])
+            category_description = CategoryDescription.objects.using('master').get(pk=descriptions_update_id[i])
             category_description.update(descriptions_update_name[i]) 
 
     # 위에 코드와 중복됨 나중에 리팩토링
@@ -71,27 +107,31 @@ class CategoryDetail(APIView):
 
     def descriptions_delete(self, data):
         for description in data.getlist('descriptions_delete'):
-            category_description = CategoryDescription.objects.get(pk=int(description))
+            category_description = CategoryDescription.objects.using('master').get(pk=int(description))
             category_description.delete()
 
 
 class ProductsList(APIView):
-    
-    def post(self, request, format=None):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        if request.user.is_superuser == False and request.user.is_producter == False :
+            return Response(forbidden_message, status=status.HTTP_403_FORBIDDEN)
         item = Item()
         copy_of_item = CopyOfItem()
-        template = Template.objects.get(pk=request.data['template'])
-        category = Category.objects.get(pk=request.data['category'])
-        item.create(request.data, request.user, category, template)
-        copy_of_item.copy_create(request.data, request.user, category, template, item)
+        user = User.objects.using('master').get(username=request.user.username)
+        template = Template.objects.using('master').get(pk=request.data['template'])
+        category = Category.objects.using('master').get(pk=request.data['category'])
+        item.create(request.data, user, category, template)
+        copy_of_item.copy_create(request.data, user, category, template, item)
         description_id = list(map(int, request.data.getlist('descriptions_id')))
         descriptions_content = request.data.getlist('descriptions_content')
         for i in range(len(descriptions_content)):
             item_description = ItemDescription()
             copy_item_description = CopyOfItemDescription()
-            category_description = CategoryDescription.objects.get(pk=description_id[i])
-            item_description.create(descriptions_content[i], request.user, item, category_description)
-            copy_item_description.create(descriptions_content[i], request.user, copy_of_item, category_description)
+            category_description = CategoryDescription.objects.using('master').get(pk=description_id[i])
+            item_description.create(descriptions_content[i], user, item, category_description)
+            copy_item_description.create(descriptions_content[i], user, copy_of_item, category_description)
         images = []
         number = int(request.data['number'])
         for i in range(number):
@@ -105,11 +145,16 @@ class ProductsList(APIView):
             copy_item_image = CopyOfItemImage()
             item_image.create(images[i], item, is_thumbnails[i], prioritys[i])
             copy_item_image.copy(item_image, copy_of_item)
+        log = TotalLog()
+        log.update('\'{}\' 아이템 생성'.format(item.name), None, user)
+        item = Item.objects.get(pk=item.pk)
         serializer = ItemSerializer(item)
         return Response(serializer.data)
 
 
 class ProductDetail(APIView):
+    permission_classes = [IsAuthenticated]
+
     def get(self, request, pk):
         item = Item.objects.get(pk=pk)
         serializer = ItemSerializer(item)
@@ -117,16 +162,26 @@ class ProductDetail(APIView):
 
 
     def post(self, request, pk):
-        item = Item.objects.get(pk=pk)
+        if request.user.is_superuser == False and request.user.is_producter == False :
+            return Response(forbidden_message, status=status.HTTP_403_FORBIDDEN)
+        item = Item.objects.using('master').get(pk=pk)
+        user = User.objects.using('master').get(username=request.user.username)
         item.activate()
+        log = TotalLog()
+        log.update('\'{}\' 아이템 활성화'.format(item.name), None, user)
+        item = Item.objects.get(pk=pk)
         serializer = ItemSerializer(item)
         return Response(serializer.data)
     
 
     def put(self, request, pk):
-        item = Item.objects.get(pk=pk)
-        images = ItemImage.objects.filter(item=item)
-        descriptions = ItemDescription.objects.filter(item=item)
+        if request.user.is_superuser == False and request.user.is_producter == False :
+            return Response(forbidden_message, status=status.HTTP_403_FORBIDDEN)
+        user = User.objects.using('master').get(username=request.user.username)
+        item = Item.objects.using('master').get(pk=pk)
+        before_name = item.name
+        images = ItemImage.objects.using('master').filter(item=item)
+        descriptions = ItemDescription.objects.using('master').filter(item=item)
         images.delete()
         descriptions.delete()
         copy_of_item = CopyOfItem.objects.get(pk=request.data['id'], item=item)
@@ -139,17 +194,26 @@ class ProductDetail(APIView):
         for copy_description in copy_descriptions:
             description = ItemDescription()
             description.copy(copy_description, item)
+        log = TotalLog()
+        log.update('\'{} -> {}\' 아이템 수정'.format(before_name, item.name), None, user)
+        item = Item.objects.get(pk=pk)
         serializer = ItemSerializer(item)
         return Response(serializer.data)
 
-    def delete(self, reqeust, pk):
+    def delete(self, request, pk):
+        if request.user.is_superuser == False and request.user.is_producter == False :
+            return Response(forbidden_message, status=status.HTTP_403_FORBIDDEN)
+        user = User.objects.using('master').get(pk=request.user.pk)
         item = Item.objects.get(pk=pk)
         item.delete()
+        log = TotalLog()
+        log.update('\'{}\' 아이템 비활성화'.format(item.name), None, user)
         answer = {'message': "비활성화 되었습니다."}
         return Response(answer)
 
 
 class CopyProduct(APIView):
+    permission_classes = [IsAuthenticated]
 
     def get(self, request, pk):
         item = Item.objects.get(pk=pk)
@@ -158,18 +222,20 @@ class CopyProduct(APIView):
         return Response(serializer.data)
 
     def post(self, request, pk):
-        print(request.data)
-        item = Item.objects.get(pk=pk)
+        if request.user.is_superuser == False and request.user.is_producter == False :
+            return Response(forbidden_message, status=status.HTTP_403_FORBIDDEN)
+        user = User.objects.using('master').get(pk=request.user.pk)
+        item = Item.objects.using('master').get(pk=pk)
         copy_of_item = CopyOfItem()
-        template = Template.objects.get(pk=request.data['template'])
-        category = Category.objects.get(pk=request.data['category'])
-        copy_of_item.copy_create(request.data, request.user, category, template, item)
+        template = Template.objects.using('master').get(pk=request.data['template'])
+        category = Category.objects.using('master').get(pk=request.data['category'])
+        copy_of_item.copy_create(request.data, user, category, template, item)
         description_id = list(map(int, request.data.getlist('descriptions_id')))
         descriptions_content = request.data.getlist('descriptions_content')
         for i in range(len(descriptions_content)):
             copy_item_description = CopyOfItemDescription()
-            category_description = CategoryDescription.objects.get(pk=description_id[i])
-            copy_item_description.create(descriptions_content[i], request.user, copy_of_item, category_description)
+            category_description = CategoryDescription.objects.using('master').get(pk=description_id[i])
+            copy_item_description.create(descriptions_content[i], user, copy_of_item, category_description)
         images = []
         number = int(request.data['number'])
         for i in range(number):
@@ -196,7 +262,9 @@ class CopyProduct(APIView):
                 else:
                     item_image = CopyOfItemImage.objects.get(pk=i)
                 copy_item_image.copy(item_image, copy_of_item)
-
+        log = TotalLog()
+        log.update('\'{}\' 아이템 히스토리 생성'.format(item.name), None, user)
+        copy_of_item = CopyOfItem.objects.using('master').get(pk=copy_of_item.pk)
         serializer = ItemSerializer(copy_of_item)
         return Response(serializer.data)
 

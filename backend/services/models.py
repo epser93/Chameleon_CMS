@@ -12,7 +12,7 @@ class Event(models.Model):
     title = models.CharField(max_length=500)
     start_date = models.DateTimeField()
     end_date = models.DateTimeField()
-    is_active = models.BooleanField(default=True)
+    is_active = models.BooleanField(default=False)
     thumbnail_image = models.ImageField(default=None, null=True)
     content = models.TextField(default=None, null=True)
     create_date = models.DateTimeField(auto_now_add=True)
@@ -25,12 +25,13 @@ class Event(models.Model):
         return self.title
 
     def create(self, data, user, image):
-        self.title = data['title']
-        self.content = data['content']
+        self.title = data.get('title', '')
+        self.content = data.get('content', '')
         self.user = user
-        self.start_date = datetime.strptime(data['start_date'], date_type).replace(tzinfo=KST)
-        self.end_date = datetime.strptime(data['end_date'], date_type).replace(tzinfo=KST)
+        self.start_date = datetime.strptime(data.get('start_date', '2020-11-01 00:00:00'), date_type).replace(tzinfo=KST)
+        self.end_date = datetime.strptime(data.get('end_date', '2020-11-01 00:00:00'), date_type).replace(tzinfo=KST)
         self.url = data.get('url', self.url)
+        self.is_active = data.get('is_active', self.is_active)
         if image != None:
             is_success, answer = get_imagefile(image)
             if is_success == False:
@@ -94,8 +95,8 @@ class Notices(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.DO_NOTHING)
 
     def create(self, data, user, image):
-        self.title = data['title']
-        self.content = data['content']
+        self.title = data.get('title', '')
+        self.content = data.get('content', '')
         self.user = user
         self.is_temp = data.get('is_temp', 'True') == 'True'
         if self.is_temp == False:

@@ -85,19 +85,47 @@ WSGI_APPLICATION = 'cms_pjt.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
+ENGINE = 'django.db.backends.mysql'
+init_command = 'SET sql_mode="STRICT_TRANS_TABLES"'
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
+        'ENGINE': ENGINE,
         'NAME': env('NAME'),
         'USER': env('DB_USER'),
         'PASSWORD': env('PASSWORD'),
         'HOST': env('HOST'),
         'PORT': env('PORT'),
         'OPTIONS': {
-            'init_command': 'SET sql_mode="STRICT_TRANS_TABLES"'
+            'init_command': init_command
+        }
+    },
+    'master': {
+        'ENGINE': ENGINE,
+        'NAME': env('NAME'),
+        'USER': env('DB_USER'),
+        'PASSWORD': env('PASSWORD'),
+        'HOST': env('HOST'),
+        'PORT': env('PORT'),
+        'OPTIONS': {
+            'init_command': init_command
+        }
+    },
+    'slave': {
+        'ENGINE': ENGINE,
+        'NAME': env('NAME'),
+        'USER': env('DB_USER'),
+        'PASSWORD': env('PASSWORD'),
+        'HOST': env('HOST'),
+        'PORT': env('SLAVE_PORT'),
+        'OPTIONS': {
+            'init_command': init_command
         }
     }
+
 }
+
+DATABASE_ROUTERS = ['cms_pjt.routers.MasterSlaveRouter']
 
 
 AUTH_PASSWORD_VALIDATORS = [
