@@ -31,7 +31,7 @@ class User(AbstractUser):
     department = models.ForeignKey(Department, on_delete=models.SET_NULL, related_name='users', null=True)
 
     def __str__(self):
-        return self.username
+        return '{}({})'.format(self.username, self.first_name)
 
     def update(self, department, data):
         if department != None:
