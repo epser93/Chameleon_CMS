@@ -400,7 +400,7 @@
 {
     "name": "노트북",
     "descriptions": [
-        "제조사",
+        "제조사"
     ],
     "image": "이미지 파일",
     "template": 1,

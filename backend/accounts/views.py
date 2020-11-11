@@ -74,7 +74,7 @@ class Login(LoginView):
         self.login()
         answer = self.get_response()
         user = User.objects.using('master').get(username=request.data['username'])
-        if user.is_access == False:
+        if user.is_access == False and user.is_superuser == False:
             return Response(forbidden_message, status=status.HTTP_403_FORBIDDEN)
         log = TotalLog()
         log.update('\'{}({})\' 로그인'.format(user.first_name, user.username), request.data, user)
@@ -150,7 +150,7 @@ class UserSearchAPI(APIView):
         _type = request.GET.get('type', 'all')
         content = request.GET.get('content', '')
         if _type == 'all':
-            users = User.objects.filter(first_name__contains=content).filter(is_active=True).exclude(is_superuser=True)
+            users = User.objects.filter(first_name__contains=content).filter(is_access=True).exclude(is_superuser=True)
         elif _type == 'is_access':
             users = User.objects.filter(is_access=False).exclude(is_superuser=True)
         else :
@@ -170,7 +170,7 @@ class TotalLogAPI(APIView):
     def get(self, request):
         if request.user.is_superuser == False and request.user.is_logger == False:
             return Response(forbidden_message, status=status.HTTP_403_FORBIDDEN)
-        logs = TotalLog.objects.all()
+        logs = TotalLog.objects.all().order_by('-pk')
         serializer = TotalLogSerializer(logs, many=True)
         return Response(serializer.data)
 
@@ -179,7 +179,7 @@ class ValidationAPI(APIView):
     def get(self, request):
         _type = request.GET.get('type', 'id')
         content = request.GET.get('content', '')
-        if len(content) < 6:
+        if len(content) < 5:
             answer = {message: '너무 짧은 길이 입니다.'}
             return Response(answer, status=status.HTTP_400_BAD_REQUEST)
         if _type == 'id':
