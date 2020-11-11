@@ -33,9 +33,12 @@
             <div>
               아이디
               <span class="validate-fail" v-if="idValidate == 1">아이디는 영문,숫자 6~12자이내입니다.</span>
-              <span class="validate-success" v-if="idValidate == 2">가능한 아이디입니다.</span> 
+              <span class="validate-temp" v-if="idValidate == 2">중복체크를 해주세요.</span> 
+              <span class="validate-success" v-if="idValidate == 3">사용가능한 아이디입니다.</span>
+              <span class="validate-fail" v-if="idValidate == 4">중복된 아이디입니다.</span>
             </div>
             <input v-model="id" type="text">
+            <button type="button" class="btn btn-outline-primary" @click="isDuplicate(id)">중복확인</button>
           </div>
           <div>
             <div>
@@ -83,7 +86,8 @@ export default {
       id: '',
       pwValidate1: 0, // 0 : nothing / 1 : 사용불가 비밀번호 / 2 : 사용가능 비밀번호
       pwValidate2: 0, // 0 : nothing / 1 : 비밀번호 일치x / 2 : 비밀번호 일치 
-      idValidate: 0 // 0: nothing / 1: id검증 실패 / 2: id검증 성공
+      idValidate: 0, // 0: nothing / 1: id검증 실패 / 2: id검증 성공 / 3: id 중복 pass / 4 : id 중복 fail
+      isDuplicateId: null
     }
   },
   methods: {
@@ -127,8 +131,33 @@ export default {
           alert(error.response.data.message)
         })
     },
+    isDuplicate(account) {
+      axios.get(SERVER.URL + SERVER.ROUTER.accountvalidation + `?type=id&content=${account}`)
+        .then(res => {
+          alert(res.data.message)
+          this.isDuplicateId = false
+        })
+        .catch(error => {
+          alert(error.response.data.message)
+          if (error.response.data.message === '존재하는 아이디 입니다.') {
+            this.isDuplicateId = true
+          }
+        })
+    }
   },
   watch: {
+    isDuplicateId: function() {
+      if (this.isDuplicateId === false) {
+        this.idValidate = 3
+      } else if (this.isDuplicateId === true) {
+        this.idValidate = 4
+      }
+    },
+    idValidate: function() {
+      if (this.idValidate !== (3 || 4)) {
+        this.isDuplicateId = null
+      }
+    },
     id: function() {
       if (this.id.length === 0) {
         this.idValidate = 0
@@ -214,6 +243,10 @@ input:focus {
 
 .validate-success {
   color: green;
+}
+
+.validate-temp {
+  color: orange;
 }
 
 .modal-footer {

@@ -10,6 +10,7 @@ export default{
       signup: 'accounts/signup/',
       logout: 'accounts/logout/',
       usermanage : 'accounts/manage/',
+      accountvalidation: 'accounts/validation',
       
       // department
       department : 'accounts/department/',
@@ -34,6 +35,6 @@ export default{
 
       // main
       main : 'services/main/',
-      carousel: 'services/carousel/,'
+      carousel: 'services/carousel/'
     }
   }
