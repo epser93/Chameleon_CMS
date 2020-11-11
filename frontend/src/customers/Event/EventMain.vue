@@ -5,12 +5,12 @@
     <hr>
 
     <div v-if="events">
-      <div class="row mt-4 mb-4 ml-auto mr-auto" v-for="(event, index) in events" :key="index">
+      <div class="events row mt-4 mb-4 ml-auto mr-auto" v-for="(event, index) in events" :key="index" @click="onDetail(event.id)">
         <div class="col-sm-12 col-md-8">
-          <img :src="'http://k3c205.p.ssafy.io'+event.thumbnail_image" class="event-img" alt="" @click="onDetail(event.id)">
+          <img :src="'http://k3c205.p.ssafy.io'+event.thumbnail_image" class="event-img" alt="">
         </div>
         <div class="col-sm-12 col-md-4">
-          <h4 class="event-name" @click="onDetail(event.id)">{{ event.title }}</h4>
+          <h4 class="event-name">{{ event.title }}</h4>
           <!-- <div class="event-spec m-0">
             <p>이벤트 설명</p>
           </div> -->
@@ -86,5 +86,13 @@ p {
     position: relative;
     font-size: 0.5rem;
   }
+}
+
+.events {
+  cursor: pointer;
+}
+
+.events:hover {
+  background-color: #e9e9e9;
 }
 </style>
