@@ -225,10 +225,10 @@ const routes = [
                         component: () => import('@/views/Item/ItemInfo.vue')
                       },
                       {
-                        path: 'category/:cid/:update',
-                        name: 'ProductCGupdate',
-                        component: () => import('@/views/category/CategoryInfo.vue')
-                      }
+                        path: 'item/:pid/:update',
+                        name: 'ProducItemUpdate',
+                        component: () => import('@/views/Item/ItemInfo.vue')
+                      },
                     ]
                   },
                 

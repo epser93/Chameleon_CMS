@@ -120,7 +120,6 @@ export default {
         first_name: this.name,
         employee_number : this.employeeNumber
       }
-      console.log(signUpData)
       axios.post(SERVER.URL + SERVER.ROUTER.signup, signUpData)
         .then(() => {
           this.onRoute("Login")

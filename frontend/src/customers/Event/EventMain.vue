@@ -5,7 +5,7 @@
     <hr>
 
     <div v-if="events">
-      <div class="row mt-4 mb-4 ml-auto mr-auto" v-for="(event, index) in events" :key="index">
+      <div class="events row mt-4 mb-4 ml-auto mr-auto" v-for="(event, index) in events" :key="index" @click="onDetail(event.id)">
         <div class="col-sm-12 col-md-8">
           <img :src="'http://k3c205.p.ssafy.io'+event.thumbnail_image" class="thumbnail-img" alt="" @click="onDetail(event.id)">
         </div>
@@ -83,5 +83,13 @@ p {
     position: relative;
     font-size: 0.5rem;
   }
+}
+
+.events {
+  cursor: pointer;
+}
+
+.events:hover {
+  background-color: #e9e9e9;
 }
 </style>

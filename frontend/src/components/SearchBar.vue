@@ -1,7 +1,7 @@
 <template>
   <div id="searchMain">
     <div class="input-group pt-2 pb-4 mx-auto" id="searchContent">
-      <input v-model="search" type="text" class="form-control" placeholder="Search Content" aria-label="Recipient's username" aria-describedby="basic-addon2">
+      <input v-model="search" type="text" class="form-control" placeholder="Search Content" aria-label="Recipient's username" aria-describedby="basic-addon2" @keydown.enter="onSearch()">
       <div class="input-group-append">
         <button class="btn btn-outline-light" type="button" @click="onSearch()">Search</button>
       </div>
@@ -19,8 +19,7 @@ export default {
   },
   methods: {
     onSearch() {
-      this.$router.push({name:'Search', params:{text: this.search}})
-      this.search = ''
+      this.$router.push({name:'CustomerSearch', params:{text: this.search}}, () => {})
 		},
   },
   created() {
