@@ -125,29 +125,41 @@
           <div >
             <button type="button" class="btn btn-secondary btn-sm" @click="onClickWindows">미리보기</button>
           </div>
-          <div >
-            <button type="button" class="btn btn-secondary btn-sm" @click="onClickTemp">임시저장</button>
+          <div v-if="update">
+            <button type="button" class="btn btn-primary btn-sm" @click="onClickTemp">임시저장</button>
+          </div>
+          <div v-else>
+            <button type="button" class="btn btn-secondary btn-sm" @click="onClickSave">저장</button>
           </div >
         </div>  
       </div>
       <!-- history -->
-      <div class="col-4 mt-4">
-      <div class="card text-center">
-        <div class="card-header">
-          <h3><img src="@/assets/icons/card-list.svg" alt="" width="32" height="32" title="card-list" class="mr-2">History</h3>
-        </div>
-        <div class="card-body">
-          <ul v-if="history.length">
-            <li v-for="(his,index) in history.slice().reverse()" :key="index">
-              <div class="history-btn row justify-content-around" :id="`history-${index}`" @click="onHistory(his), fixHistory(index)">
-                <strong>저장 {{ his.idx }}</strong>
-                <p>{{ his.date }}</p>
-              </div>
-            </li>
-          </ul>
+      <div class="col-4 mt-4" v-if="history"> 
+        <div class="card text-center">
+          <div class="card-header">
+            <h3><img src="@/assets/icons/card-list.svg" alt="" width="32" height="32" title="card-list" class="mr-2">History</h3>
+          </div>
+          <div class="card-body">
+            <!-- {{ history }} -->
+            <ul v-if="history.length">
+              <li v-for="(his,index) in history.slice().reverse()" :key="index">             
+                <div :class="(update_date.slice(0,19) == his.update_date.slice(0,19)) ? 'history-btn row justify-content-around on' : 'history-btn row justify-content-around'" :id="`history-${index}`" @click="fixHistory(index)">
+                  <strong>저장 {{ index }}</strong>
+                  <!-- {{update_date.slice(0,19)}}
+                  {{his.update_date.slice(0,19)}} -->
+                  <p>{{ his.update_date.slice(0,19) }}</p>
+
+                </div>
+                <div v-if="update">
+                  <button type="button" class="btn btn-primary btn-sm" @click="onClickUpdate(his.id)">등록하기</button>
+                  <!-- 나는 여기서 하고 싶은게 클릭했을때, 그 부분만 등록하기 버튼이 활성화 되었으면 좋겠다. -->
+                </div>
+              </li>
+            </ul>
+          </div>
+          
         </div>
       </div>
-    </div>
 
     </div>
   </div>
@@ -172,9 +184,6 @@ export default {
         
         numOfImg: null,
 
-        history: [],
-
-
         imageOfThumb: [],
         imageOfIntro: [],
         is_thumbnails: [],
@@ -182,11 +191,15 @@ export default {
 
         uploadImageIndex: 0,
         uploadIntroIndex: 0,
+
+        update: false,
+
+        hisUpdate: '',
     }
   },
 
   computed: {
-    ...mapState('category', ['item']),
+    ...mapState('category', ['item', 'history']),
     ...mapGetters('category', ['category']),
   },
 
@@ -228,7 +241,7 @@ export default {
   },
 
   methods: {
-    ...mapActions('category', ['itemRegister', 'getItemDetail']),
+    ...mapActions('category', ['itemRegister', 'getItemDetail', 'getItemHistory', 'putItemHistory']),
 
     fixHistory(idx) {
       for (let i=0; i<this.history.length; i++) {
@@ -241,10 +254,21 @@ export default {
         }
       }
     },
-    onHistory(his){
-      console.log(his)
+
+    onClickTemp() {
+
     },
-    onClickTemp(){
+
+    onClickUpdate(hid) {
+      console.log(hid)
+      const hisData = {
+        id : hid
+      } 
+      this.putItemHistory({cid : this.category.id, hid : hid, hisData: hisData})
+    },
+
+
+    onClickSave(){
       const itemData = new FormData()
       itemData.append('name', this.itemName)
       itemData.append('price', this.itemPrice)
@@ -408,6 +432,7 @@ export default {
     if(this.$route.params.update == 'update') {
       const pid = this.$route.params.pid
       this.getItemDetail(pid)
+      this.getItemHistory(pid)
       this.update = true
     }
   }
@@ -516,9 +541,39 @@ export default {
   margin-top: 5px;
   color: grey;
 }
+
 #history {
   border: 1px solid gray;
   padding: 10px;
 }
+
+.history-view{
+  cursor: pointer;
+}
+
+ul,li {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  font-size: 20px;
+}
+
+.clear{
+  clear: both;
+}
+
+.history-btn {
+  cursor: pointer;
+}
+
+.history-btn.on {
+  color:white;
+  background-color:lightgray;
+}
+
+
 
 </style>
