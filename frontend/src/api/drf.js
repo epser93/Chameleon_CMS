@@ -34,6 +34,25 @@ export default{
 
       // main
       main : 'services/main/',
-      carousel: 'services/carousel/'
+      carousel : 'services/carousel/',
+
+      // customer
+      customer : {
+
+        // main
+        main : 'services/customer/main/',
+        carousel : 'services/customer/carousel/',
+
+        // product
+        category : 'products/customer/categories/',
+        item : 'products/customer/product/',
+
+        // event
+        event : 'services/customer/event/',
+
+        // search
+        search : 'services/customer/search/?content=',
+        
+      }
     }
   }
