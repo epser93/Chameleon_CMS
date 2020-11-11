@@ -34,18 +34,17 @@ export default {
 
   actions: {
     // 공지 리스트 조회
-    getNotices({ commit }) {
-      axios.get(SERVER.URL + SERVER.ROUTER.notice)
+    getNotices({ commit, rootGetters }) {
+      axios.get(SERVER.URL + SERVER.ROUTER.notice, rootGetters['account/config'])
         .then (res => {
-          console.log(res)
           commit('SET_NOTICES', res.data)
         })
         .catch (error => console.log(error.response))
     },
 
     // 특정 공지 조회
-    getNotice({ commit }, id) {
-      axios.get(SERVER.URL + SERVER.ROUTER.notice + id)
+    getNotice({ commit, rootGetters }, id) {
+      axios.get(SERVER.URL + SERVER.ROUTER.notice + id, rootGetters['account/config'])
         .then(res => {
           commit('SET_NOTICE', res.data)
           commit('SET_IMAGEURL', SERVER.URL.slice(0,SERVER.URL.length-4) + res.data.image.substr(1))
@@ -54,8 +53,8 @@ export default {
     },
 
     // 공지 종료
-    endNotice() {
-      axios.delete(SERVER.URL + SERVER.ROUTER.notice + router.currentRoute.params.id)
+    endNotice({ rootGetters }) {
+      axios.delete(SERVER.URL + SERVER.ROUTER.notice + router.currentRoute.params.id, rootGetters['account/config'])
       .then(() => {
         router.push({ name : 'Notice' })
       })

@@ -10,6 +10,7 @@ export default{
       signup: 'accounts/signup/',
       logout: 'accounts/logout/',
       usermanage : 'accounts/manage/',
+      accountvalidation: 'accounts/validation',
       
       // department
       department : 'accounts/department/',
@@ -34,6 +35,25 @@ export default{
 
       // main
       main : 'services/main/',
-      carousel: 'services/carousel/,'
+      carousel : 'services/carousel/',
+
+      // customer
+      customer : {
+
+        // main
+        main : 'services/customer/main/',
+        carousel : 'services/customer/carousel/',
+
+        // product
+        category : 'products/customer/categories/',
+        item : 'products/customer/product/',
+
+        // event
+        event : 'services/customer/event/',
+
+        // search
+        search : 'services/customer/search/?content=',
+        
+      }
     }
   }

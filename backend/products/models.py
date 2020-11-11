@@ -1,3 +1,4 @@
+from accounts.models import User
 from django.db import models
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
@@ -40,7 +41,7 @@ class Category(models.Model):
             if is_success == False:
                 return False, answer
             self.image = answer
-        self.name = data['name']
+        self.name = data.get('name', '')
         is_active = data.get('is_active', 'False') == 'True'
         self.is_active = is_active
         self.priority = int(data.get('priority', self.priority))
@@ -48,7 +49,7 @@ class Category(models.Model):
         self.template = template
         self.save()
 
-    def update(self, data, template, image):
+    def update(self, data, user,template, image):
         if image != None:
             is_success, answer = get_imagefile(image)
             if is_success == False:
@@ -57,6 +58,7 @@ class Category(models.Model):
         self.name = data.get('name', self.name)
         self.priority = data.get('priority', self.priority)
         self.template = template
+        self.cms_user = user
         self.save()
 
     def delete(self):
@@ -74,7 +76,7 @@ class Category(models.Model):
 class CategoryDescription(models.Model):
     name = models.CharField(max_length=200)   
     
-    category = models.ForeignKey(Category, on_delete=models.SET_NULL, related_name='description', null=True)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='description', null=True)
 
     def __str__(self) -> str:
         return self.name
@@ -119,9 +121,9 @@ class AbstractItem(models.Model):
         self.is_temp = item.is_temp
         self.created_date = item.created_date
         self.update_date = item.update_date
-        self.cms_user = item.cms_user
-        self.category = item.category
-        self.template = item.template
+        self.cms_user = User.objects.using('master').get(pk=item.cms_user.pk) 
+        self.category = Category.objects.using('master').get(pk=item.category.pk) 
+        self.template = Template.objects.using('master').get(pk=item.template.pk) 
 
     def delete(self):
         self.is_active = False
@@ -195,8 +197,8 @@ class AbstractItemDescription(models.Model):
     
     def copy(self, item_description, item):
         self.content = item_description.content
-        self.category_description = item_description.category_description
-        self.cms_user = item_description.cms_user
+        self.category_description = CategoryDescription.objects.using('master').get(pk=item_description.category_description.pk)
+        self.cms_user =  User.objects.using('master').get(pk=item_description.cms_user.pk)
         self.item = item
         self.save()
 
