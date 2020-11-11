@@ -108,19 +108,26 @@ export default {
       $('#searchBar').collapse('hide')
     },
     onSearch() {
-      this.$router.push({name:'CustomerSearch', params:{text: this.search}})
-      this.search = ''
+      if (this.search == '') {
+        alert('검색어가 없습니다.')
+      } else {
+        this.$router.push({name:'CustomerSearch', params:{text: this.search}}, () => {})
+        this.search = ''
+      }
     },
     getNavInfo() {
       axios.get(SERVER.URL + SERVER.ROUTER.customer.category)
         .then(res => {
           this.categories = res.data
-          console.log(res)
+          // console.log(res)
         })
         .catch(error => console.log(error.response))
     },
     getImage(src) {
-      return SERVER.domain + src
+      if (src) {
+        return SERVER.domain + src
+      }
+      return ''
     }
   },
   created() {

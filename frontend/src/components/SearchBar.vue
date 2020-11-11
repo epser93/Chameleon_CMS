@@ -19,7 +19,11 @@ export default {
   },
   methods: {
     onSearch() {
-      this.$router.push({name:'CustomerSearch', params:{text: this.search}}, () => {})
+      if (this.search == '') {
+        alert('검색어가 없습니다.')
+      } else {
+        this.$router.push({name:'CustomerSearch', params:{text: this.search}}, () => {})
+      }
 		},
   },
   created() {
