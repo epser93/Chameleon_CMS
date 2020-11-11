@@ -1,11 +1,15 @@
 <template>
   <div class="container form-root">
-    <div class="row title-division">
+    <div class="title-division">
       <div class="col-8">
+        <div class="form-title mt-5">
+          <h3>Add Notice</h3>
+          <hr>
+        </div>
         <!-- Notice 제목 -->
         <div class="notice-content">
           <h4>공지사항 제목</h4>
-          <input v-model="title" type="text" placeholder=" 제목을 입력해 주세요.">
+          <input v-model="title" class="form-control" type="text" placeholder=" 제목을 입력해 주세요.">
         </div>
         <!-- Notice 내용 -->
         <div class="notice-content">
@@ -42,6 +46,7 @@
 <script>
 import axios from 'axios'
 import SERVER from '@/api/drf'
+import { mapGetters } from 'vuex'
 export default {
   data() {
     return {
@@ -51,6 +56,9 @@ export default {
       imageFile : null,
       noticeInfo : null,
     }
+  },
+  computed : {
+    ...mapGetters('account', ['config', 'formconfig'])
   },
   methods: {
     onClickImageUpload() {
@@ -62,12 +70,6 @@ export default {
       this.imageUrl = URL.createObjectURL(file)
     },
     onActivate(){
-      const config = {
-        headers: {
-          'Authorization' : 'Token ' + this.$cookies.get('auth-token'),
-          'Content-Type' : 'multipart/form-data',
-        }
-      }
       let formdata = new FormData()
       if (this.imageFile) {
         formdata.append("image", this.imageFile)
@@ -76,16 +78,16 @@ export default {
       formdata.append("content", this.contents)
       if (!this.$route.params.id) { // 바로 등록의 경우 
         formdata.append("is_temp", 'False')  
-        axios.post(SERVER.URL + SERVER.ROUTER.notice, formdata, config)
+        axios.post(SERVER.URL + SERVER.ROUTER.notice, formdata, this.formconfig)
           .then(res => {
             console.log(res)
             this.$router.push({ name : 'Notice'})
           })
           .catch(error => console.log(error.response))
       } else { // 임시저장후 등록의 경우 수정 + 활성이 한번에 이루어짐
-        axios.put(SERVER.URL + SERVER.ROUTER.notice + this.$route.params.id, formdata, config)
+        axios.put(SERVER.URL + SERVER.ROUTER.notice + this.$route.params.id, formdata, this.formconfig)
           .then(() =>{
-            axios.post(SERVER.URL + SERVER.ROUTER.notice + this.$route.params.id + '/')
+            axios.post(SERVER.URL + SERVER.ROUTER.notice + this.$route.params.id + '/', null, this.config)
               .then(res => {
                 console.log('활성', res)
                 this.$router.push({ name : 'Notice' })
@@ -95,12 +97,6 @@ export default {
       }
     },
     onClickTemp(){
-      const config = {
-        headers: {
-          'Authorization' : 'Token ' + this.$cookies.get('auth-token'),
-          'Content-Type' : 'multipart/form-data',
-        }
-      }
       let formdata = new FormData()
       if (this.imageFile) {
         formdata.append("image", this.imageFile)
@@ -108,13 +104,13 @@ export default {
       formdata.append("title", this.title)
       formdata.append("content", this.contents)
       if (!this.$route.params.id) { // 첫글 바로 임시등록할 때
-        axios.post(SERVER.URL + SERVER.ROUTER.notice, formdata, config)
+        axios.post(SERVER.URL + SERVER.ROUTER.notice, formdata, this.formconfig)
           .then(() => {
             this.$router.push({ name : 'Notice' })
           })
           .catch(error => console.log(error.response))
       } else { // 임시 등록 후 다시 임시등록을 할 때
-        axios.put(SERVER.URL + SERVER.ROUTER.notice + this.$route.params.id, formdata, config)
+        axios.put(SERVER.URL + SERVER.ROUTER.notice + this.$route.params.id, formdata, this.formconfig)
           .then(res => {
             console.log(res)
             this.$router.push({ name : 'Notice' })
@@ -128,7 +124,7 @@ export default {
     },
     init() {
       if (this.$route.params.id) {
-        axios.get(SERVER.URL + SERVER.ROUTER.notice + this.$route.params.id)
+        axios.get(SERVER.URL + SERVER.ROUTER.notice + this.$route.params.id, this.config)
           .then(res => {
             console.log(res.data)
             this.noticeInfo = res.data
@@ -150,9 +146,13 @@ export default {
 </script>
 
 <style scoped>
-input {
-  border: 1px solid grey;
-  border-radius: 10px;
+.form-title {
+  display: inline-block;
+}
+
+hr {
+  border: 3px solid grey;
+  border-radius: 3px;
 }
 
 .notice-content {

@@ -27,27 +27,6 @@ class NoticesSerializer(serializers.ModelSerializer):
         fields = ['id','title', 'content', 'start_date', 'end_date','create_date', 'update_date', 'is_active', 'is_temp','user', 'image']
 
 
-class SearchSerializer(serializers.ModelSerializer):
-    events = serializers.SerializerMethodField()
-    items = serializers.SerializerMethodField()
-    
-    class Meta:
-        model = User
-        fields = ['items', 'events']
-
-    def get_events(self, obj):
-        content = self.context.get('content', '0000')
-        events = Event.objects.filter(Q(title__contains=content) | Q(content__contains=content)).exclude(is_active=False)
-        serializer = EventSerializer(events, many=True)
-        return serializer.data
-    
-    def get_items(self, obj):
-        content = self.context.get('content', '0000')
-        items = Item.objects.filter(name__contains=content).exclude(is_temp=True).exclude(is_active=False)
-        serializer = ItemSerializer(items, many=True)
-        return serializer.data
-
-
 class MainItemSerializer(serializers.ModelSerializer):
     item = ItemSerializer()
     user = UserSerializer()
@@ -87,3 +66,25 @@ class CustomerEventDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Event
         fields = ['id', 'title', 'start_date', 'end_date', 'thumbnail_image', 'priority', 'content', 'url', 'images']
+
+
+
+class SearchSerializer(serializers.ModelSerializer):
+    events = serializers.SerializerMethodField()
+    items = serializers.SerializerMethodField()
+    
+    class Meta:
+        model = User
+        fields = ['items', 'events']
+
+    def get_events(self, obj):
+        content = self.context.get('content', '')
+        events = Event.objects.filter(Q(title__contains=content) | Q(content__contains=content)).exclude(is_active=False)
+        serializer = CustomerEventListSerializer(events, many=True)
+        return serializer.data
+    
+    def get_items(self, obj):
+        content = self.context.get('content', '')
+        items = Item.objects.filter(name__contains=content).exclude(is_temp=True).exclude(is_active=False)
+        serializer = CustomerItemSerializer(items, many=True)
+        return serializer.data

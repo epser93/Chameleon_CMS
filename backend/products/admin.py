@@ -3,8 +3,8 @@ from .models import Category, CategoryDescription, Item, ItemImage, ItemDescript
 # Register your models here.
 
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ['id', 'name', 'is_active', 'priority', 'created_date', 'update_date', 'cms_user', 'template']
-    fields = ['name', 'is_active', 'priority', 'cms_user', 'template']
+    list_display = ['id', 'name', 'image', 'is_active', 'priority', 'created_date', 'update_date', 'cms_user', 'template']
+    fields = ['name', 'image', 'is_active', 'priority', 'cms_user', 'template']
 
 
 class CategoryDescriptionAdmin(admin.ModelAdmin):
