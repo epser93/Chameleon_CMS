@@ -56,7 +56,7 @@ p {
 }
 
 @media screen and (max-width: 960px) {
-  .event-img {
+  .thumbnail-img {
    width: 100%;
    height: auto;
   }
@@ -74,7 +74,7 @@ p {
 }
 
 @media screen and (max-width: 576px) {  
-  .event-img {
+  .thumbnail-img {
     width: 100%;
   }
   
