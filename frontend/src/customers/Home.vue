@@ -1,22 +1,14 @@
 <template>
   <div>
     <!-- 대표 이미지 Carousel -->
-    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" v-if="carousels">
       <ol class="carousel-indicators">
-        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+        <li data-target="#carouselExampleIndicators" :class="(index === 0) ? 'active' : ''" :data-slide-to="index"  v-for="(carousel, index) in carousels" :key="index"></li>
       </ol>
       <div class="carousel-inner">
-        <div class="carousel-item active">
-          <img src="@/assets/dummy-img.png" class="d-block w-100" alt="main image1">
-        </div>
-        <div class="carousel-item">
-          <img src="@/assets/dummy-img.png" class="d-block w-100" alt="main image2">
-        </div>
-        <div class="carousel-item">
-          <img src="@/assets/dummy-img.png" class="d-block w-100" alt="main image3">
-        </div>
+          <div :class="(index === 0) ? 'active carousel-item' : 'carousel-item'"  v-for="(carousel, index) in carousels" :key="index">
+            <img :src="'http://k3c205.p.ssafy.io'+carousel.image" class="d-block w-100" :alt="'main-image-'+index" @click="onClickWindows(carousel.url)">
+          </div>
       </div>
       <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -40,32 +32,24 @@
       </div>
     </div>
     <!-- 이벤트 Carousel --> 
-    <div class="container mb-5">
+    <div class="container mb-5" v-if="events">
       <div class="row mb-4">
         <h2 class="mr-auto ml-auto">이벤트</h2>
       </div>
-      <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+      <div id="eventCarouselIndicators" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
-          <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-          <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-          <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+          <li data-target="#eventCarouselIndicators" :class="(index === 0) ? 'active' : ''" :data-slide-to="index"  v-for="(event, index) in events" :key="index"></li>
         </ol>
         <div class="carousel-inner">
-          <div class="carousel-item active">
-            <img src="@/assets/dummy-1200.png" class="d-block w-100" alt="main image1">
-          </div>
-          <div class="carousel-item">
-            <img src="@/assets/dummy-1200.png" class="d-block w-100" alt="main image2">
-          </div>
-          <div class="carousel-item">
-            <img src="@/assets/dummy-1200.png" class="d-block w-100" alt="main image3">
+          <div :class="(index === 0) ? 'active carousel-item' : 'carousel-item'"  v-for="(event, index) in events" :key="index">
+            <img :src="'http://k3c205.p.ssafy.io'+event.thumbnail_image" class="d-block w-100" :alt="'main-image-'+index" @click="onDetail(event.id)">
           </div>
         </div>
-        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+        <a class="carousel-control-prev" href="#eventCarouselIndicators" role="button" data-slide="prev">
           <span class="carousel-control-prev-icon" aria-hidden="true"></span>
           <span class="sr-only">Previous</span>
         </a>
-        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+        <a class="carousel-control-next" href="#eventCarouselIndicators" role="button" data-slide="next">
           <span class="carousel-control-next-icon" aria-hidden="true"></span>
           <span class="sr-only">Next</span>
         </a>
@@ -76,12 +60,31 @@
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex'
+
 export default {
   name: 'Home',
+  computed: {
+    ...mapState('customer', ['carousels', 'events']),
+  },
+  methods: {
+    ...mapActions('customer', ['getCarousels', 'getEvents']),
+    onClickWindows(url) {
+      if (url) {
+        window.open(url) 
+      }
+    },
+    onDetail(eid) {
+      let routeData = this.$router.resolve({name:'CustomerEventDetail', params:{eid: eid}})
+      window.open(routeData.href)
+		},
+  },
   created() {
     if (!this.$cookies.get("DontOpenNotice")) {
       window.open("http://localhost:8080/notice", "", "width=305,height=332,left=200,top=200")
     }
+    this.getCarousels()
+    this.getEvents()
   }
 }
 </script>

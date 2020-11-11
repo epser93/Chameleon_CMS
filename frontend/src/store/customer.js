@@ -5,8 +5,12 @@ export default {
   namespaced: true,
 
   state: {
+    carousels: '',
+
     events: '',
     event: '',
+
+    search: '',
   },
 
   getters: {
@@ -14,19 +18,37 @@ export default {
   },
 
   mutations: {
+    SET_CAROUSELS(state, payload) {
+      state.carousels = payload
+    },
+
     SET_EVENTS(state, payload) {
       state.events = payload
     },
     SET_EVENT(state, payload) {
       state.event = payload
     },
+
+    SET_SEARCH(state, payload) {
+      state.search = payload
+    },
   },
 
   actions: {
 
+    getCarousels({ commit }) {
+      axios.get(SERVER.URL + SERVER.ROUTER.customer.carousel)
+      .then((res) => {
+        commit('SET_CAROUSELS', res.data)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+    },
 
-    getEvents({ rootGetters, commit }) {
-      axios.get(SERVER.URL + SERVER.ROUTER.customer.event, rootGetters['account/config'])
+
+    getEvents({ commit }) {
+      axios.get(SERVER.URL + SERVER.ROUTER.customer.event)
       .then((res) => {
         commit('SET_EVENTS', res.data)
       })
@@ -35,8 +57,8 @@ export default {
       })
     },
 
-    getEvent({ rootGetters, commit }, eid) {
-      axios.get(SERVER.URL + SERVER.ROUTER.customer.event + eid + '/', rootGetters['account/config'])
+    getEvent({ commit }, eid) {
+      axios.get(SERVER.URL + SERVER.ROUTER.customer.event + eid + '/')
       .then((res) => {
         commit('SET_EVENT', res.data)
       })
@@ -45,5 +67,14 @@ export default {
       })
     },
 
+    getSearch({ commit }, text) {
+      axios.get(SERVER.URL + SERVER.ROUTER.customer.search + text)
+      .then((res) => {
+        commit('SET_SEARCH', res.data)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+    },
   }
 }
