@@ -1,5 +1,6 @@
 import os
 import environ
+import boto3
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -7,6 +8,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 env = environ.Env(DEBUG=(bool, False),)
 environ.Env.read_env()
 
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+MEDIAFILES_LOCATION = 'media'
+STATICFILES_LOCATION = 'static'
 
 SECRET_KEY = env('SECRET_KEY')
 
@@ -91,32 +96,32 @@ init_command = 'SET sql_mode="STRICT_TRANS_TABLES"'
 DATABASES = {
     'default': {
         'ENGINE': ENGINE,
-        'NAME': env('NAME'),
-        'USER': env('DB_USER'),
-        'PASSWORD': env('PASSWORD'),
-        'HOST': env('HOST'),
-        'PORT': env('PORT'),
+        'NAME': env('MASTER_NAME'),
+        'USER': env('MASTER_USER'),
+        'PASSWORD': env('MASTER_PASSWORD'),
+        'HOST': env('MASTER_HOST'),
+        'PORT': env('MASTER_PORT'),
         'OPTIONS': {
             'init_command': init_command
         }
     },
     'master': {
         'ENGINE': ENGINE,
-        'NAME': env('NAME'),
-        'USER': env('DB_USER'),
-        'PASSWORD': env('PASSWORD'),
-        'HOST': env('HOST'),
-        'PORT': env('PORT'),
+        'NAME': env('MASTER_NAME'),
+        'USER': env('MASTER_USER'),
+        'PASSWORD': env('MASTER_PASSWORD'),
+        'HOST': env('MASTER_HOST'),
+        'PORT': env('MASTER_PORT'),
         'OPTIONS': {
             'init_command': init_command
         }
     },
     'slave': {
         'ENGINE': ENGINE,
-        'NAME': env('NAME'),
-        'USER': env('DB_USER'),
-        'PASSWORD': env('PASSWORD'),
-        'HOST': env('HOST'),
+        'NAME': env('SLAVE_NAME'),
+        'USER': env('SLAVE_USER'),
+        'PASSWORD': env('SLAVE_PASSWORD'),
+        'HOST': env('SLAVE_HOST'),
         'PORT': env('SLAVE_PORT'),
         'OPTIONS': {
             'init_command': init_command
@@ -127,6 +132,19 @@ DATABASES = {
 
 DATABASE_ROUTERS = ['cms_pjt.routers.MasterSlaveRouter']
 
+SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
+SESSION_CACHE_ALIAS = 'default'
+
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": env('LOCATION'),
+        "OPTIONS": {
+            "PASSWORD": env('PASSWORD'),
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    }
+}
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -159,6 +177,16 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
+
+AWS_REGION = env('AWS_REGION')
+AWS_STORAGE_BUCKET_NAME = env('AWS_STORAGE_BUCKET_NAME')
+AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY')
+AWS_DEFAULT_ACL = env('AWS_DEFAULT_ACL')
 
 if DEBUG:
     STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
