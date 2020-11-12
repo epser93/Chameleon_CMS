@@ -1,7 +1,7 @@
 <template>
   <div v-if="logs">
     <div class="table-container mt-0">
-      <table class="table">
+      <table class="table">        
         <thead>
           <tr>
             <th scope="col">No</th>
@@ -23,14 +23,18 @@
           </tr>
         </tbody>
       </table>
-      <div class="page-navi justify-content-center">
+      <div class="page-navi">
         <nav aria-label="Page navigation example">
           <ul class="pagination">
-            <div v-for="(page, i) in pages" :key="i">
-              <li :class="(i == nowPage) ? 'page-item active':'page-item' ">
-                <a @click="onPage(i)" class="page-link" href="#">{{ page }}</a>
-              </li>
-            </div>
+            <li class="page-item">
+              <img v-if="nowPage == 0" src="@/assets/icons/caret-left.svg" width="26" height="26" title="caret-left" @click="prevPage()">
+              <img v-else src="@/assets/icons/caret-left-fill.svg" width="26" height="26" title="caret-left-fill" @click="prevPage()">
+            </li>
+            <p> {{ nowPage + 1 }}  / {{ pages }} </p>
+            <li class="page-item">
+              <img v-if="nowPage == (pages-1)" src="@/assets/icons/caret-right.svg" width="26" height="26" title="caret-right" @click="nextPage()">
+              <img v-else src="@/assets/icons/caret-right-fill.svg" width="26" height="26" title="caret-right-fill" @click="nextPage()">
+            </li>
           </ul>
         </nav>
       </div>
@@ -40,6 +44,8 @@
 
 <script>
 import { mapActions, mapState } from 'vuex'
+// import $ from 'jquery'
+
 export default {
   name: "Logs",
   data() {
@@ -72,11 +78,30 @@ export default {
       const tz = new Date(time)
       const arrDay = ['일','월','화','수','목','금','토']
       return tz.toLocaleDateString() + '(' + arrDay[tz.getDay()] + ') ' + tz.getHours() + '시 ' + tz.getMinutes() + '분 ' + tz.getSeconds() + '초 '
+    },
+    test() {
+      console.log(this.paginationLength)
+    },
+    prevPage() {
+      if (this.nowPage > 0) {
+        this.nowPage -= 1
+      }
+    },
+    nextPage() {
+      if (this.nowPage < this.pages-1) {
+        this.nowPage += 1
+      }
     }
   },
   created() {
     this.getLogs()
   },
+  // updated() {
+  //   let pagination = document.querySelector('.page-navi')
+  //   let tableContainer = document.querySelector('.table-container')
+  //   let tableConatinerLength = (tableContainer.clientWidth - pagination.clientWidth) / 2
+  //   document.querySelector('.page-navi').style.left = String(tableConatinerLength) + 'px'
+  // }
 }
 </script>
 
@@ -90,6 +115,11 @@ export default {
 .page-navi {
   position: absolute;
   bottom: 0;
+  margin-bottom: 10px;
   left: 50%;
+}
+
+img {
+  cursor: pointer;
 }
 </style>

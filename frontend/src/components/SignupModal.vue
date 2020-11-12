@@ -31,14 +31,16 @@
           </div>
           <div>
             <div>
-              아이디
+              <p>아이디</p>
               <span class="validate-fail" v-if="idValidate == 1">아이디는 영문,숫자 6~12자이내입니다.</span>
               <span class="validate-temp" v-if="idValidate == 2">중복체크를 해주세요.</span> 
               <span class="validate-success" v-if="idValidate == 3">사용가능한 아이디입니다.</span>
               <span class="validate-fail" v-if="idValidate == 4">중복된 아이디입니다.</span>
+              <div class="d-flex">
+                <input v-model="id" type="text">
+                <button type="button" class="isduplicate-btn btn btn-outline-secondary" @click="isDuplicate(id)">중복확인</button>
+              </div>
             </div>
-            <input v-model="id" type="text">
-            <button type="button" class="btn btn-outline-primary" @click="isDuplicate(id)">중복확인</button>
           </div>
           <div>
             <div>
@@ -59,7 +61,7 @@
       </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" @click="signup()">회원가입</button>
+        <button type="button" class="signup-btn btn btn-primary" @click="signup()">회원가입</button>
       </div>
     </div>
   </div>
@@ -120,7 +122,6 @@ export default {
         first_name: this.name,
         employee_number : this.employeeNumber
       }
-      console.log(signUpData)
       axios.post(SERVER.URL + SERVER.ROUTER.signup, signUpData)
         .then(() => {
           this.onRoute("Login")
@@ -257,7 +258,14 @@ input:focus {
   margin-bottom: 30px;
 }
 
-.btn {
+.isduplicate-btn {
+  width: 25%;
+  margin-bottom: 14px;
+  margin-right: 0px;
+  border: 2px solid grey;
+}
+
+.signup-btn {
   background-color: #56b596;
   border: none;
 }

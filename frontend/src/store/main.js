@@ -77,7 +77,7 @@ export default {
     },
     
     actImage({ dispatch, rootGetters }, id) {
-      axios.post(SERVER.URL + SERVER.ROUTER.carousel + id + '/', rootGetters['account/config'])
+      axios.post(SERVER.URL + SERVER.ROUTER.carousel + id + '/', null, rootGetters['account/config'])
       .then(() => {
         alert("등록이 완료되었습니다.")
         dispatch('getImages')

@@ -2,10 +2,12 @@
   <div @mouseleave="onHideWide()">
     <nav class="navbar fixed-top navbar-expand-md navbar-light bg-light">
       
+      <!-- logo -->
       <a class="navbar-brand" @click="onRoute('CustomerHome'); onHideWide(); onHideCollapse();" >
-        <img src="@/assets/icons/bootstrap.svg" width="42" height="42" class="d-inline-block align-top" alt="" loading="lazy">
+        <img src="@/assets/logo.png" width="100" height="42" class="d-inline-block align-top" alt="" loading="lazy">
       </a>
 
+      <!-- searchbar -->
       <a class="nav-item ml-auto mr-4 d-md-none" @click="onHideCollapse();" data-toggle="collapse" data-target="#searchBar" aria-controls="searchBar" aria-expanded="false">
         <img src="@/assets/icons/search.svg" width="30" height="30" class="d-inline-block align-top" alt="" loading="lazy">
       </a>
@@ -14,22 +16,14 @@
         <span class="navbar-toggler-icon"></span>
       </button>
 
+      <!-- topbar -->
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mx-auto">
           <li class="nav-item mx-4">
             <a class="nav-link" @click="onRoute('CustomerAbout'); onHideWide(); onHideCollapse();">About</a>
           </li>
           <li class="nav-item mx-4">
-            <a class="nav-link" @click="onHideSearch()" data-toggle="collapse" data-target=".productContent" aria-controls="productContent" aria-expanded="false"  >Product</a>
-            <div class="collapse d-md-none productContent" id="productToggle">
-              <div class="card card-body">
-                <div class="nav nav-pills flex-column" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                  <a class="nav-link active" @click="onRoute('DesignTemplate'); onHideCollapse();" data-toggle="tab"  role="tab" aria-selected="true">DesignTemplate</a>
-                  <a class="nav-link" @click="onRoute('SpecTemplate'); onHideCollapse();" data-toggle="tab" role="tab" aria-selected="false">SpecTemplate</a>
-                  <a class="nav-link" data-toggle="tab" role="tab" aria-selected="false">categoryC</a>
-                </div>
-              </div>
-            </div>
+            <a class="nav-link" @click="onHideSearch()" data-toggle="collapse" data-target=".productContent" aria-controls="productContent" aria-expanded="false">Product</a>
           </li>
           <li class="nav-item mx-4">
             <a class="nav-link" @click="onRoute('CustomerEvent'); onHideWide(); onHideCollapse();">Event</a>
@@ -40,65 +34,34 @@
         </ul>
       </div>
 
+      <!-- searchbar 누르면 나오는 section-->
       <a class="nav-item ml-auto mr-4 d-none d-md-block" @click="onHideWide();" data-toggle="collapse" data-target="#searchBar" aria-controls="searchBar" aria-expanded="false">
         <img src="@/assets/icons/search.svg" width="30" height="30" class="d-inline-block align-top" alt="" loading="lazy">
       </a>
-      
     </nav>
 
+    <!-- product dropdown -->
     <div class="d-none d-md-block" id="dropDown">
       <div class="collapse bg-light productContent" id="productWide">
         <div class="row mx-4 pt-2 pb-4 float-top">
           <div class="nav nav-pills flex-column col-2 bg-light" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-            <a class="nav-link active" id="v-pills-home-tab" data-toggle="tab" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">DesignTemplate</a>
-            <a class="nav-link" id="v-pills-profile-tab" data-toggle="tab" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">SpecTemplate</a>
-            <a class="nav-link" id="v-pills-messages-tab" data-toggle="tab" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">categoryC</a>
+            <a v-for="(category, index) in categories" :key="index" :class="(index===0) ? 'nav-link active' : 'nav-link'" :id="`v-pills-${category.name}-tab`" data-toggle="tab" :href="`#v-pills-${category.name}`" role="tab" :aria-controls="`v-pills-${category.name}`" :aria-selected="true">{{ category.name }} </a>
           </div>
-          <div class="tab-content col-10 bg-light" id="v-pills-tabContent">
-            <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
-              <div class="card card-body">
-                <div class="row">
-                  <div class="nav nav-pills col-3 flex-column" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                    <a class="nav-link active" @click="onRoute('vCarouselTemplate')" data-toggle="tab"  role="tab" aria-selected="true">itemA</a>
-                    <a class="nav-link" @click="onRoute('MovingImageTemplate')" data-toggle="tab" role="tab" aria-selected="false">itemB</a>
-                    <a class="nav-link" data-toggle="tab" role="tab" aria-selected="false">itemC</a>
-                    <a class="nav-link" @click="onRoute('DesignTemplate'); onHideWide();" data-toggle="tab" role="tab" aria-selected="false">더 알아보기</a>
-                  </div>
-                  <div class="col-9">
-                    <img class="category-thumbanil" src="https://picsum.photos/500/500" alt="dummy">
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
-              <div class="card card-body">
-                <div class="row">
-                  <div class="nav nav-pills col-3 flex-column" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                    <a class="nav-link active" data-toggle="tab"  role="tab" aria-selected="true">itemA</a>
-                    <a class="nav-link" data-toggle="tab" role="tab" aria-selected="false">itemB</a>
-                    <a class="nav-link" @click="onRoute('SpecTemplate'); onHideWide();" data-toggle="tab" role="tab" aria-selected="false">더 알아보기</a>
-                  </div>
-                  <div class="col-9">
-                    <img class="category-thumbanil" src="https://picsum.photos/500/500" alt="dummy">
+            <div class="tab-content col-10 bg-light" id="v-pills-tabContent">
+              <div v-for="(category, index) in categories" :key="index" :class="index === 0 ? 'tab-pane fade show active' : 'tab-pane fade'" :id="`v-pills-${category.name}`" role="tabpanel" :aria-labelledby="`v-pills-${category.name}-tab`">
+                <div class="card card-body">
+                  <div class="row">
+                    <div class="nav nav-pills col-3 flex-column" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                      <a :class="(index === 0) ? 'nav-link active' : 'nav-link'" v-for="(item, index) in category.items" :key="index" @click="onRoute('vCarouselTemplate')" data-toggle="tab"  role="tab" :aria-selected="(index) ? true : false">{{ item.name }}</a>
+                      <a class="nav-link" @click="onRoute('DesignTemplate'); onHideWide();" data-toggle="tab" role="tab" aria-selected="false">더 알아보기</a>
+                    </div>
+                    <div class="col-9">
+                      <img class="category-thumbanil" :src="getImage(category.image)" alt="dummy">
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-            <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
-              <div class="card card-body">
-                <div class="row">
-                  <div class="nav nav-pills col-3 flex-column" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                    <a class="nav-link active" data-toggle="tab"  role="tab" aria-selected="true">itemA</a>
-                    <a class="nav-link" data-toggle="tab" role="tab" aria-selected="false">itemB</a>
-                    <a class="nav-link" data-toggle="tab" role="tab" aria-selected="false">itemC</a>
-                  </div>
-                  <div class="col-9">
-                    <img class="category-thumbanil" src="https://picsum.photos/500/500" alt="dummy">
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+            </div>  
         </div>
       </div>
     </div>
@@ -106,7 +69,7 @@
     
     <div class="collapse bg-light" id="searchBar">
       <div class="input-group pt-2 pb-4 mx-auto" id="searchContent">
-        <input v-model="search" type="text" class="form-control" placeholder="Search Content" aria-label="Recipient's username" aria-describedby="basic-addon2">
+        <input v-model="search" @keypress.enter="onSearch(); onHideSearch()" type="text" class="form-control" placeholder="Search Content" aria-label="Recipient's username" aria-describedby="basic-addon2">
         <div class="input-group-append">
           <button class="btn btn-outline-secondary" type="button" @click="onSearch(); onHideSearch();">Search</button>
         </div>
@@ -118,12 +81,14 @@
 
 <script>
 import $ from 'jquery'
-
+import SERVER from '@/api/drf'
+import axios from 'axios'
 export default {
   name: 'CustomerTopNav',
   data() {
     return {
-      search: ''
+      categories: '',
+      search: '',
     }
   },
   methods: {
@@ -143,9 +108,30 @@ export default {
       $('#searchBar').collapse('hide')
     },
     onSearch() {
-      this.$router.push({name:'CustomerSearch', params:{text: this.search}})
-      this.search = ''
-		},
+      if (this.search == '') {
+        alert('검색어가 없습니다.')
+      } else {
+        this.$router.push({name:'CustomerSearch', params:{text: this.search}}, () => {})
+        this.search = ''
+      }
+    },
+    getNavInfo() {
+      axios.get(SERVER.URL + SERVER.ROUTER.customer.category)
+        .then(res => {
+          this.categories = res.data
+          // console.log(res)
+        })
+        .catch(error => console.log(error.response))
+    },
+    getImage(src) {
+      if (src) {
+        return SERVER.domain + src
+      }
+      return ''
+    }
+  },
+  created() {
+    this.getNavInfo()
   }
 }
 </script>

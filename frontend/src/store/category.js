@@ -10,6 +10,8 @@ export default {
     categories: '',
     category: '',
     items: '',
+    item: '',
+    history: '',
 
   },
 
@@ -17,12 +19,14 @@ export default {
     // watch, computed
     category(state) {
       for (let i=0; i<state.categories.length; i++) {
+        console.log(state.categories[i])
 				if (state.category == state.categories[i].id) {
-					return state.categories[i]
+          return state.categories[i]
+          
 				}
       }
       return null
-    }
+    },
   },
 
   mutations: {
@@ -35,12 +39,19 @@ export default {
     },
     SET_ITEMS(state, payload) {
       state.items = payload
-    }
+    },
+    SET_ITEM(state, payload) {
+      state.item = payload
+    },
+    SET_HISTORY(state, payload) {
+      state.history = payload
+    },
   },
 
   actions: {
     // API 함수
     categoryRegister({ rootGetters, dispatch }, categoryData) {
+      console.log(categoryData)
       axios.post(SERVER.URL + SERVER.ROUTER.category, categoryData, rootGetters['account/config'])
         .then(() => {
             console.log("등록완료")
@@ -82,7 +93,7 @@ export default {
     },
 
     postCategory({ dispatch, rootGetters }, id) {
-        axios.post(SERVER.URL + SERVER.ROUTER.category + id + '/', rootGetters['account/config'])
+        axios.post(SERVER.URL + SERVER.ROUTER.category + id + '/', null, rootGetters['account/config'])
         .then(() => {
           router.push({name:'Product'}, () => {})
           alert("등록이 완료되었습니다.")
@@ -92,6 +103,18 @@ export default {
           console.log(err)
         })   
     },
+
+    itemRegister({ rootGetters, dispatch }, {cid, itemData}) {
+      axios.post(SERVER.URL + SERVER.ROUTER.item, itemData, rootGetters['account/config'])
+        .then(() => {
+            console.log("등록완료")
+            router.push({name:'ProductItem'}, () => {})
+            dispatch('getItem', cid)
+        })
+        .catch(error => {console.log(error.response)})
+    },
+
+
    
     getItem({ rootGetters, commit }, id) {
       // console.log(SERVER.URL + SERVER.ROUTER.category + id + '/')
@@ -115,7 +138,7 @@ export default {
     },
 
     postItem({ dispatch, rootGetters }, {cid, pid}) {
-        axios.post(SERVER.URL + SERVER.ROUTER.item + pid + '/', rootGetters['account/config'])
+        axios.post(SERVER.URL + SERVER.ROUTER.item + pid + '/', null, rootGetters['account/config'])
         .then(() => {
           router.push({name:'ProductItem'}, () => {})
           alert("등록이 완료되었습니다.")
@@ -125,5 +148,49 @@ export default {
           console.log(err)
         })   
     },
+
+    getItemDetail({ rootGetters, commit }, id) {
+      // console.log(SERVER.URL + SERVER.ROUTER.category + id + '/')
+      axios.get(SERVER.URL + SERVER.ROUTER.item + id + '/', rootGetters['account/config'])
+      .then((res) => {
+        commit('SET_ITEM', res.data)
+      })
+      .catch(() => {console.log('왜에러')})
+    },
+
+    getItemHistory({ rootGetters, commit }, id) {
+      // console.log(SERVER.URL + SERVER.ROUTER.category + id + '/')
+      axios.get(SERVER.URL + SERVER.ROUTER.itemhistory + id + '/', rootGetters['account/config'])
+      .then((res) => {
+        commit('SET_HISTORY', res.data)
+      })
+      .catch(() => {console.log('왜에')})
+    },
+
+    // 히스토리에 있는 내역으로 변경
+    putItemHistory({ rootGetters, dispatch }, {cid, hid, hisData}) {
+      axios.put(SERVER.URL + SERVER.ROUTER.item + hid + '/', hisData, rootGetters['account/config'])
+        .then(() => {
+            console.log("수정완료")
+            router.push({name:'ProductItem'}, () => {})
+            dispatch('getItem', cid)
+        })
+        .catch(error => {console.log(error.response)})
+    },
+    
+
+    postTempItem({ dispatch, rootGetters }, {cid, pid, tmpData}) {
+      axios.post(SERVER.URL + SERVER.ROUTER.itemhistory + pid + '/', tmpData, rootGetters['account/config'])
+      .then(() => {
+        alert("수정이 완료되었습니다.")
+        router.push({name:'ProductItem'}, () => {})
+        dispatch('getItem', cid)
+      })
+      .catch((err) => {
+        console.log(err)
+      })   
+    },
+
+
   }
 }

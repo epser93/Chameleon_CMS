@@ -1,5 +1,6 @@
 import os
 import environ
+import boto3
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -7,6 +8,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 env = environ.Env(DEBUG=(bool, False),)
 environ.Env.read_env()
 
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+MEDIAFILES_LOCATION = 'media'
+STATICFILES_LOCATION = 'static'
 
 SECRET_KEY = env('SECRET_KEY')
 
@@ -94,22 +99,22 @@ init_command = 'SET sql_mode="STRICT_TRANS_TABLES"'
 DATABASES = {
     'default': {
         'ENGINE': ENGINE,
-        'NAME': env('NAME'),
-        'USER': env('DB_USER'),
-        'PASSWORD': env('PASSWORD'),
-        'HOST': env('HOST'),
-        'PORT': env('PORT'),
+        'NAME': env('MASTER_NAME'),
+        'USER': env('MASTER_USER'),
+        'PASSWORD': env('MASTER_PASSWORD'),
+        'HOST': env('MASTER_HOST'),
+        'PORT': env('MASTER_PORT'),
         'OPTIONS': {
             'init_command': init_command
         }
     },
     'master': {
         'ENGINE': ENGINE,
-        'NAME': env('NAME'),
-        'USER': env('DB_USER'),
-        'PASSWORD': env('PASSWORD'),
-        'HOST': env('HOST'),
-        'PORT': env('PORT'),
+        'NAME': env('MASTER_NAME'),
+        'USER': env('MASTER_USER'),
+        'PASSWORD': env('MASTER_PASSWORD'),
+        'HOST': env('MASTER_HOST'),
+        'PORT': env('MASTER_PORT'),
         'OPTIONS': {
             'init_command': init_command
         }
@@ -160,7 +165,6 @@ CACHES = {
         "LOCATION": env('LOCATION'),
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
-            # "SERIALIZER": "django_redis.serializers.json.JSONSerializer",
             "PASSWORD": env('REDIS_PASSWORD'),
         }
     }

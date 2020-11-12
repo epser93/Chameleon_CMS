@@ -66,7 +66,7 @@ export default {
     },
   
     actEvent({ dispatch, rootGetters }, eid) {
-      axios.post(SERVER.URL + SERVER.ROUTER.event + eid + '/', rootGetters['account/config'])
+      axios.post(SERVER.URL + SERVER.ROUTER.event + eid + '/', null, rootGetters['account/config'])
       .then(() => {
         alert("등록이 완료되었습니다.")
         dispatch('getEvents')
