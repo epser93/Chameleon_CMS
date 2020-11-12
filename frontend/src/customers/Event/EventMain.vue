@@ -6,11 +6,11 @@
 
     <div v-if="events">
       <div v-for="(event, index) in events" :key="index">
-        <div class="events row mt-4 mb-4 ml-auto mr-auto">
-          <div class="col-sm-12 col-md-8">
+        <div class="events row mt-4 mb-4">
+          <div class="event-img-box col-sm-12 col-md-8">
             <img :src="'http://k3c205.p.ssafy.io'+event.thumbnail_image" class="event-img" alt=""  @click="onDetail(event.id)">
           </div>
-          <div class="col-sm-12 col-md-4">
+          <div class="event-text-box col-sm-12 col-md-4">
             <h4 class="event-name"  @click="onDetail(event.id)">{{ event.title }}</h4>
             <div class="event-spec m-0">
               <p>이벤트 설명</p>
@@ -70,23 +70,25 @@ p {
    margin-bottom: 10px;
   }
   .event-spec {
-    font-size: 1rem;
+    font-size: 0.8rem;
   }
   .date {
-    position: relative;
-    font-size: 1rem;
+    font-size: 0.8rem;
   }
 }
 
-@media screen and (max-width: 576px) {  
-  .thumbnail-img {
-    width: 100%;
+@media screen and (max-width: 768px) {  
+  .events {
+    display: flex;
+    flex-direction: column;
+    align-self: center;
   }
-  
+
   .event-spec {
     font-size: 0.5rem;
   }
   .event-name {
+    margin-top: 10px;
     margin-bottom: 5px;
   }
   .date {

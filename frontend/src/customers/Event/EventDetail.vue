@@ -1,9 +1,9 @@
 <template>
   <div class="container" v-if="event">
     <!-- event detail head -->
-    <div class="d-flex flexbox_wrapping justify-content-between mt-4">
-      <h3 class="">{{ event.title }}</h3>
-      <p class="mt-2 mb-0">이벤트 기간: {{ event.start_date.slice(0,10) }} ~ {{ event.end_date.slice(0,10) }}</p>
+    <div class="event-detail d-flex flexbox_wrapping justify-content-between mt-4">
+      <h3 class="event-title">{{ event.title }}</h3>
+      <p class="event-date mt-2 mb-0">이벤트 기간: {{ event.start_date.slice(0,10) }} ~ {{ event.end_date.slice(0,10) }}</p>
     </div>
     <hr>
     <!-- event image -->
@@ -44,4 +44,10 @@ export default {
 </script>
 
 <style>
+@media screen and (max-width: 576px) {  
+  .event-detail {
+    display: flex;
+    flex-direction: column;
+  }
+}
 </style>
