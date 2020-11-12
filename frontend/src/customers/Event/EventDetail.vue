@@ -7,7 +7,7 @@
     </div>
     <hr>
     <!-- event image -->
-    <div class="row event-img justify-content-center mt-4">
+    <div class="column justify-content-center mt-4">
       <div class="d-flex mb-4">
         <img :src="'http://k3c205.p.ssafy.io'+event.thumbnail_image" class="w-100" alt="">
       </div>
@@ -44,16 +44,4 @@ export default {
 </script>
 
 <style>
-.flexbox_wrapping {
-  flex-wrap: wrap;
-}
-
-.event-img {
-  width: 80vw;
-}
-
-.event-detail-img {
-  width: 100vw;
-  height: auto;
-}
 </style>

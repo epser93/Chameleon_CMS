@@ -55,6 +55,11 @@ p {
   bottom: 0px;
 }
 
+.event-img {
+  height: 20vh;
+  width: auto;
+}
+
 @media screen and (max-width: 960px) {
   .thumbnail-img {
    width: 100%;
