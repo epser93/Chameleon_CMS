@@ -105,29 +105,66 @@ DATABASES = {
     },
     'master': {
         'ENGINE': ENGINE,
-        'NAME': env('MASTER_NAME'),
-        'USER': env('MASTER_USER'),
-        'PASSWORD': env('MASTER_PASSWORD'),
-        'HOST': env('MASTER_HOST'),
-        'PORT': env('MASTER_PORT'),
+        'NAME': env('NAME'),
+        'USER': env('DB_USER'),
+        'PASSWORD': env('PASSWORD'),
+        'HOST': env('HOST'),
+        'PORT': env('PORT'),
         'OPTIONS': {
             'init_command': init_command
         }
     },
     'slave': {
         'ENGINE': ENGINE,
-        'NAME': env('SLAVE_NAME'),
-        'USER': env('SLAVE_USER'),
-        'PASSWORD': env('SLAVE_PASSWORD'),
-        'HOST': env('SLAVE_HOST'),
-        'PORT': env('SLAVE_PORT'),
+        'NAME': env('NAME'),
+        'USER': env('DB_USER'),
+        'PASSWORD': env('PASSWORD'),
+        'HOST': env('HOST'),
+        'PORT': 3307,
         'OPTIONS': {
             'init_command': init_command
         }
-    }
+    },
+    # 'master': {
+    #     'ENGINE': ENGINE,
+    #     'NAME': env('MASTER_NAME'),
+    #     'USER': env('MASTER_USER'),
+    #     'PASSWORD': env('MASTER_PASSWORD'),
+    #     'HOST': env('MASTER_HOST'),
+    #     'PORT': env('MASTER_PORT'),
+    #     'OPTIONS': {
+    #         'init_command': init_command
+    #     }
+    # },
+    # 'slave': {
+    #     'ENGINE': ENGINE,
+    #     'NAME': env('SLAVE_NAME'),
+    #     'USER': env('SLAVE_USER'),
+    #     'PASSWORD': env('SLAVE_PASSWORD'),
+    #     'HOST': env('SLAVE_HOST'),
+    #     'PORT': env('SLAVE_PORT'),
+    #     'OPTIONS': {
+    #         'init_command': init_command
+    #     }
+    # }
 }
 
-# DATABASE_ROUTERS = ['cms_pjt.routers.MasterSlaveRouter']
+DATABASE_ROUTERS = ['cms_pjt.routers.MasterSlaveRouter']
+
+SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
+SESSION_CACHE_ALIAS = 'default'
+
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": env('LOCATION'),
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+            # "SERIALIZER": "django_redis.serializers.json.JSONSerializer",
+            "PASSWORD": env('REDIS_PASSWORD'),
+        }
+    }
+}
 
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -166,11 +203,6 @@ STATIC_DIR = os.path.join(BASE_DIR, 'static')
 STATICFILES_DIRS = [
     STATIC_DIR,
 ]
-
-# if DEBUG:
-# else:
-# STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
-
 
 # 유저모델은 accounts.의 User로 설정
 AUTH_USER_MODEL = 'accounts.User'

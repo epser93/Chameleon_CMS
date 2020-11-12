@@ -6,6 +6,8 @@ from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from .models import Department, User, TotalLog
 from .serializers import CMSUserSerializer, DepartmentSerializer, TotalLogSerializer
+from django.core.cache import cache
+from cms_pjt.redis_key import RedisKey
 
 message = 'message'
 number = set('1234567890')
@@ -122,10 +124,13 @@ class ManagementAPI(APIView):
             
 
 class DepartmentAPI(APIView):
-    
     def get(self, request):
+        key = RedisKey.departemt
+        if cache.has_key(key):
+            return Response(cache.get(key))
         departments = Department.objects.all()
         serializer = DepartmentSerializer(departments, many=True)
+        cache.set(key, serializer.data)
         return Response(serializer.data)
 
     def post(self, request):
@@ -137,6 +142,7 @@ class DepartmentAPI(APIView):
         department = Department()
         department.create(request.data['name'])
         serializer = DepartmentSerializer(department)
+        cache.delete(RedisKey.departemt)
         return Response(serializer.data)
         
 
