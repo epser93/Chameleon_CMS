@@ -99,10 +99,10 @@ init_command = 'SET sql_mode="STRICT_TRANS_TABLES"'
 DATABASES = {
     'default': {
         'ENGINE': ENGINE,
-        'NAME': env('MASTER_NAME'),
-        'USER': env('MASTER_USER'),
-        'PASSWORD': env('MASTER_PASSWORD'),
-        'HOST': env('MASTER_HOST'),
+        'NAME': env('NAME'),
+        'USER': env('DB_USER'),
+        'PASSWORD': env('PASSWORD'),
+        'HOST': env('HOST'),
         'PORT': env('MASTER_PORT'),
         'OPTIONS': {
             'init_command': init_command
@@ -110,10 +110,10 @@ DATABASES = {
     },
     'master': {
         'ENGINE': ENGINE,
-        'NAME': env('MASTER_NAME'),
-        'USER': env('MASTER_USER'),
-        'PASSWORD': env('MASTER_PASSWORD'),
-        'HOST': env('MASTER_HOST'),
+        'NAME': env('NAME'),
+        'USER': env('DB_USER'),
+        'PASSWORD': env('PASSWORD'),
+        'HOST': env('HOST'),
         'PORT': env('MASTER_PORT'),
         'OPTIONS': {
             'init_command': init_command
