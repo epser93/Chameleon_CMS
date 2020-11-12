@@ -285,8 +285,8 @@ hr {
 }
 
 #inner-img {
-  width : 300px;
-  height: 125px;
+  width : auto;
+  height: 149px;
   right: 50%;
   top: 50%;
 }

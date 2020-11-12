@@ -9,7 +9,7 @@
             <th scope="col">유저ID</th>
             <th scope="col">이름</th>
             <th scope="col">서버 IP</th>
-            <th scope="col" @click="test">생성일</th>
+            <th scope="col">생성일</th>
           </tr>
         </thead>
         <tbody>
@@ -23,14 +23,18 @@
           </tr>
         </tbody>
       </table>
-      <div class="page-navi justify-content-center">
+      <div class="page-navi">
         <nav aria-label="Page navigation example">
           <ul class="pagination">
-            <div v-for="(page, i) in pages" :key="i">
-              <li :class="(i == nowPage) ? 'page-item active':'page-item' ">
-                <a @click="onPage(i)" class="page-link" href="#">{{ page }}</a>
-              </li>
-            </div>
+            <li class="page-item">
+              <img v-if="nowPage == 0" src="@/assets/icons/caret-left.svg" width="26" height="26" title="caret-left" @click="prevPage()">
+              <img v-else src="@/assets/icons/caret-left-fill.svg" width="26" height="26" title="caret-left-fill" @click="prevPage()">
+            </li>
+            <p> {{ nowPage + 1 }}  / {{ pages }} </p>
+            <li class="page-item">
+              <img v-if="nowPage == (pages-1)" src="@/assets/icons/caret-right.svg" width="26" height="26" title="caret-right" @click="nextPage()">
+              <img v-else src="@/assets/icons/caret-right-fill.svg" width="26" height="26" title="caret-right-fill" @click="nextPage()">
+            </li>
           </ul>
         </nav>
       </div>
@@ -77,17 +81,27 @@ export default {
     },
     test() {
       console.log(this.paginationLength)
+    },
+    prevPage() {
+      if (this.nowPage > 0) {
+        this.nowPage -= 1
+      }
+    },
+    nextPage() {
+      if (this.nowPage < this.pages-1) {
+        this.nowPage += 1
+      }
     }
   },
   created() {
     this.getLogs()
   },
-  updated() {
-    let pagination = document.querySelector('.page-navi')
-    let tableContainer = document.querySelector('.table-container')
-    let tableConatinerLength = (tableContainer.clientWidth - pagination.clientWidth) / 2
-    document.querySelector('.page-navi').style.left = String(tableConatinerLength) + 'px'
-  }
+  // updated() {
+  //   let pagination = document.querySelector('.page-navi')
+  //   let tableContainer = document.querySelector('.table-container')
+  //   let tableConatinerLength = (tableContainer.clientWidth - pagination.clientWidth) / 2
+  //   document.querySelector('.page-navi').style.left = String(tableConatinerLength) + 'px'
+  // }
 }
 </script>
 
@@ -101,5 +115,11 @@ export default {
 .page-navi {
   position: absolute;
   bottom: 0;
+  margin-bottom: 10px;
+  left: 50%;
+}
+
+img {
+  cursor: pointer;
 }
 </style>
