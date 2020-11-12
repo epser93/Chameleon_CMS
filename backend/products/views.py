@@ -247,7 +247,9 @@ class CopyProduct(APIView):
         images_type = list(map(int, request.data.getlist('images_type')))
         if not images_type:
             images_type = [-1 for _ in range(len(images))]
-        is_thumbnails = list(map(bool, request.data.getlist('is_thumbnails')))
+        is_thumbnails = request.data.getlist('is_thumbnails')
+        for i in range(len(is_thumbnails)):
+            is_thumbnails[i] = is_thumbnails[i] == 'True'
         if not is_thumbnails:
             is_thumbnails = [False for _ in range(len(images))]
         prioritys = list(map(int, request.data.getlist('prioritys')))
@@ -258,6 +260,7 @@ class CopyProduct(APIView):
             copy_item_image = CopyOfItemImage()
             if i == -1:
                 copy_item_image.create(images[idx], copy_of_item, is_thumbnails[idx], prioritys[idx])
+                print(copy_item_image)
                 idx += 1
             else:
                 if is_original:
@@ -268,7 +271,7 @@ class CopyProduct(APIView):
         log = TotalLog()
         log.update('\'{}\' 아이템 히스토리 생성'.format(item.name), None, user)
         copy_of_item = CopyOfItem.objects.get(pk=copy_of_item.pk)
-        serializer = ItemSerializer(copy_of_item)
+        serializer = CopyItemSerializer(copy_of_item)
         return Response(serializer.data)
 
 
