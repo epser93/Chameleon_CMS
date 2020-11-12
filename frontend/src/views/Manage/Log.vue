@@ -1,7 +1,7 @@
 <template>
   <div v-if="logs">
     <div class="table-container mt-0">
-      <table class="table">
+      <table class="table">        
         <thead>
           <tr>
             <th scope="col">No</th>
@@ -64,14 +64,6 @@ export default {
         (this.nowPage + 1) * this.perPage
       )
     },
-    paginationLength() {
-      let pagination = document.querySelector('.page-navi')
-      let paginationLength = pagination.clientWidth
-      let tableContainer = document.querySelector('.table-container')
-      let tableConatinerLength = (tableContainer.clientWidth - paginationLength) / 2
-      document.querySelector('.page-navi').style.left = String(tableConatinerLength) + 'px'
-      return tableConatinerLength
-    },
   },
   methods: {
     ...mapActions('account', ['getLogs']),
@@ -89,8 +81,13 @@ export default {
   },
   created() {
     this.getLogs()
-    // this.paginationLength()
   },
+  updated() {
+    let pagination = document.querySelector('.page-navi')
+    let tableContainer = document.querySelector('.table-container')
+    let tableConatinerLength = (tableContainer.clientWidth - pagination.clientWidth) / 2
+    document.querySelector('.page-navi').style.left = String(tableConatinerLength) + 'px'
+  }
 }
 </script>
 
