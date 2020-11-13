@@ -121,7 +121,7 @@
             <button type="button" class="btn btn-outline-primary btn-sm" @click="onClickWindows">미리보기</button>
           </div>
           <div v-if="update">
-            <button type="button" class="btn btn-primary btn-sm" @click="onClickTemp">임시저장</button>
+            <button type="button" class="btn btn-primary btn-sm" @click="onClickTemp">저장</button>
           </div>
           <div v-else>
             <button type="button" class="btn btn-primary btn-sm" @click="onClickSave">추가</button>
