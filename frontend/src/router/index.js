@@ -24,21 +24,14 @@ const routes = [
         component: () => import('@/customers/About.vue')
       },
       {
-        path: 'product',
+        path: 'category/:cid',
+        name: 'CustomerCategory',
+        component: () => import('@/customers/Category.vue'),
+      },
+      {
+        path: 'product/:cid',
         name: 'CustomerProduct',
         component: () => import('@/customers/Product.vue'),
-        children: [
-          {
-            path: 'design',
-            name: 'DesignTemplate',
-            component: () => import('@/customers/Category/DesignTemplate.vue')
-          },
-          {
-            path: 'spec',
-            name: 'SpecTemplate',
-            component: () => import('@/customers/Category/SpecTemplate.vue')
-          },
-        ]
       },
       {
         path: 'event',
@@ -85,16 +78,6 @@ const routes = [
             component: () => import('@/customers/Search/SearchEvent.vue')
           },
         ]
-      },
-      {
-        path: 'carousel',
-        name: 'CarouselTemplate',
-        component: () => import('@/customers/ProductDetail/CarouselTemplate.vue')
-      },
-      {
-        path: 'movingimage',
-        name: 'MovingImageTemplate',
-        component: () => import('@/customers/ProductDetail/MovingImageTemplate.vue')
       },
     ]
   },

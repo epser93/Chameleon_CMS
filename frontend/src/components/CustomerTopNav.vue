@@ -52,8 +52,8 @@
                 <div class="card card-body">
                   <div class="row">
                     <div class="nav nav-pills col-3 flex-column" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                      <a :class="(index === 0) ? 'nav-link active' : 'nav-link'" v-for="(item, index) in category.items" :key="index" @click="onRoute('vCarouselTemplate')" data-toggle="tab"  role="tab" :aria-selected="(index) ? true : false">{{ item.name }}</a>
-                      <a class="nav-link" @click="onRoute('DesignTemplate'); onHideWide();" data-toggle="tab" role="tab" aria-selected="false">더 알아보기</a>
+                      <a :class="(index === 0) ? 'nav-link active' : 'nav-link'" v-for="(item, index) in category.items" :key="index" @click="onRoute('CarouselTemplate')" data-toggle="tab"  role="tab" :aria-selected="(index) ? true : false">{{ item.name }}</a>
+                      <a class="nav-link" @click="onDetail(category.id); onHideWide();" data-toggle="tab" role="tab" aria-selected="false">더 알아보기</a>
                     </div>
                     <div class="col-9">
                       <img class="category-thumbanil" :src="getImage(category.image)" alt="dummy">
@@ -94,6 +94,9 @@ export default {
   methods: {
     onRoute(name) {
       this.$router.push({name: name}, () => {})
+    },
+    onDetail(cid) {
+      this.$router.push({name: 'CustomerCategory', params:{ cid: cid }}, () => {})
     },
     onHideCollapse() {
       $('.collapse').collapse('hide')

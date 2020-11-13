@@ -3,6 +3,7 @@
     <!-- This is Design Template of Product category -->
     <h3 class="mt-4">선택 제품군 이름</h3>
     <hr>
+    {{ datas }}
     <!-- 상품 리스트 (연동후 for문으로 돌리기) -->
     <div class="row col-12 mt-4">
       <div class="vertical col-12 col-sm-6 col-md-4">
@@ -34,6 +35,7 @@
 <script>
 export default {
     name: 'DesignTemplate.vue',
+    props: ['datas']
 }
 </script>
 

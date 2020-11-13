@@ -7,6 +7,8 @@ export default {
   state: {
     carousels: '',
 
+    itemList: '',
+
     events: '',
     event: '',
 
@@ -20,6 +22,10 @@ export default {
   mutations: {
     SET_CAROUSELS(state, payload) {
       state.carousels = payload
+    },
+
+    SET_ITEMLIST(state, payload) {
+      state.itemList = payload
     },
 
     SET_EVENTS(state, payload) {
@@ -46,6 +52,15 @@ export default {
       })
     },
 
+    getItemList({ commit }, cid) {
+      axios.get(SERVER.URL + SERVER.ROUTER.customer.category + cid + '/')
+      .then((res) => {
+        commit('SET_ITEMLIST', res.data)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+    },
 
     getEvents({ commit }) {
       axios.get(SERVER.URL + SERVER.ROUTER.customer.event)

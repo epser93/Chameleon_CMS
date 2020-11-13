@@ -3,6 +3,7 @@
     <!-- This is Spec Template of Product category -->
     <h3 class="mt-4">선택 제품군 이름</h3>
     <hr>
+    {{ datas }}
     <!-- 상품 리스트 (연동후 for문으로 돌리기) -->
     <div class="row mt-4 mb-4 ml-4">
       <div class="col-5">
@@ -43,6 +44,7 @@
 <script>
 export default {
   name: 'SpecTemplate',
+  props: ['datas']
 }
 </script>
 
