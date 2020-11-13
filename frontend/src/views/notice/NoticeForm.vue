@@ -29,8 +29,11 @@
           </div>
         </div>
         <div class="row btn-division justify-content-end mt-5 mb-5">
+          <div>
+            <button type="button" class="btn btn-dark btn-sm mr-2" @click="onRoute('Notice')">뒤로가기</button>
+          </div>
           <div v-if="!noticeInfo || noticeInfo.is_temp">
-            <button type="button" class="btn btn-secondary btn-sm mr-2" @click="onClickTemp">임시저장</button>
+            <button type="button" class="btn btn-warning btn-sm mr-2" @click="onClickTemp">임시저장</button>
           </div>
           <div>
             <button type="button" class="btn btn-primary btn-sm" @click="onActivate">등록하기</button>
@@ -129,7 +132,10 @@ export default {
           })
           .catch(error => console.log(error.response))
       }
-    }
+    },
+    onRoute(name) {
+      this.$router.push({name: name}, () => {})
+    },
   },
   created() {
     this.init()
