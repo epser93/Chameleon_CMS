@@ -76,7 +76,7 @@ export default {
     // 로그 데이터 상태 변경
     SET_LOGS(state, payload) {
       state.logs = payload
-    }
+    },
   },
 
   actions: {
@@ -87,15 +87,16 @@ export default {
           cookies.set('auth-token', res.data.key)
           commit('SET_TOKEN', res.data.key)
           dispatch('loginRoute')
-          dispatch('getUserInfo')
+          // dispatch('getUserInfo')
         })
         .catch(error => {alert(error.response.data.message)})
     },
 
     // 로그인- 관리자 유무 판단 후 라우팅
-    loginRoute({ getters }) {
+    loginRoute({ getters, commit }) {
       axios.get(SERVER.URL + SERVER.ROUTER.userinfo, getters.config)
         .then(res => {
+          commit('SET_USERINFO', res.data)
           if (res.data.is_superuser ){
             router.push({ name : 'Manage'})
           } else {
