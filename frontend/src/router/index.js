@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import account from '@/store/account'
+import store from '@/store'
 
 Vue.use(VueRouter)
 
@@ -113,23 +115,55 @@ const routes = [
         path: '',
         name: 'Home',
         component: () => import('@/views/Home.vue'),
-        redirect: 'login',
+        redirect: '',
+        beforeEnter(to, from, next) {
+          if (!account.state.authToken) {
+            alert('로그인이 필요합니다.')
+            next({ name: 'Login'})
+          } else {
+            store.dispatch('account/getUserInfo')  
+            setTimeout(function() {
+              next()
+            }, 1000)
+          }
+        },
         children: [
           {
             path: 'manage',
             name: 'Manage',
             component: () => import('@/views/home/Manage.vue'),
-            redirect: 'manage/user',
+            redirect: 'manage/log',
+            beforeEnter(to, from, next) {
+              if (account.state.userInfo.is_superuser || account.state.userInfo.is_logger) {
+                next()
+              } else {
+                alert('권한이 없습니다.')
+              }
+            },
             children: [
               {
                 path: 'departments',
                 name: 'Departments',
-                component: () => import('@/views/Manage/Departments.vue')
+                component: () => import('@/views/Manage/Departments.vue'),
+                beforeEnter(to, from, next) {
+                  if (account.state.userInfo.is_superuser) {
+                    next()
+                  } else {
+                    alert('권한이 없습니다.')
+                  }
+                }
               },
               {
                 path: 'user',
                 name: 'User',
-                component: () => import('@/views/Manage/User.vue')
+                component: () => import('@/views/Manage/User.vue'),
+                beforeEnter(to, from, next) {
+                  if (account.state.userInfo.is_superuser) {
+                    next()
+                  } else {
+                    alert('권한이 없습니다.')
+                  }
+                }
               },
               {
                 path: 'log',
@@ -154,6 +188,15 @@ const routes = [
                 name: 'Main',
                 component: () => import('@/views/Contents/Main.vue'),
                 redirect: 'main',
+                beforeEnter(to, from, next) {
+                  if (account.state.userInfo.is_superuser || account.state.userInfo.is_marketer) {
+                    next()
+                  } else if (account.state.userInfo.is_producter) {
+                    next({ name : 'Product'})
+                  } else if (account.state.userInfo.is_eventer) {
+                    next({ name : 'Event'})
+                  } 
+                },
                 children: [
                   {
                     path: '',
@@ -197,6 +240,13 @@ const routes = [
                 name: 'Product',
                 component: () => import('@/views/Contents/Product.vue'),
                 redirect: 'product',
+                beforeEnter(to, from, next) {
+                  if (account.state.userInfo.is_superuser || account.state.userInfo.is_producter) {
+                    next()
+                  } else {
+                    alert('권한이 없습니다.')
+                  }
+                },
                 children: [
                   {
                     path: '',
@@ -234,10 +284,8 @@ const routes = [
                         name: 'ProducItemUpdate',
                         component: () => import('@/views/Item/ItemInfo.vue')
                       },
-                      
                     ]
                   },
-                
                 ]
               },
               {
@@ -245,6 +293,13 @@ const routes = [
                 name: 'Event',
                 component: () => import('@/views/Contents/Event.vue'),
                 redirect: 'event',
+                beforeEnter(to, from, next) {
+                  if (account.state.userInfo.is_superuser || account.state.userInfo.is_eventer) {
+                    next()
+                  } else {
+                    alert('권한이 없습니다.')
+                  }
+                },
                 children: [
                   {
                     path: '',
@@ -268,6 +323,13 @@ const routes = [
                 name: 'Notice',
                 component: () => import('@/views/Contents/Notice.vue'),
                 redirect : 'notice',
+                beforeEnter(to, from, next) {
+                  if (account.state.userInfo.is_superuser || account.state.userInfo.is_marketer) {
+                    next()
+                  } else {
+                    alert('권한이 없습니다.')
+                  }
+                },
                 children : [
                   {
                     path: '',

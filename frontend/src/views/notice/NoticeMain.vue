@@ -99,7 +99,6 @@ export default {
   },
   created() {
     this.getNotices()
-    console.log(this.notices)
   }
   
 }
