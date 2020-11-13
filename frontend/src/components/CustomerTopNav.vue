@@ -174,6 +174,7 @@ export default {
   position: absolute;
   z-index: 999999;
   width: 100vw;
+  margin-top: -18px;
 }
 
 #searchBar {
