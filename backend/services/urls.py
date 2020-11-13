@@ -16,5 +16,6 @@ urlpatterns = [
     path('customer/main/', views.CustomerMainItemAPI.as_view()),
     path('customer/carousel/', views.CustomerCarouselAPI.as_view()),
     path('customer/event/', views.CustomerEventAPI.as_view()),
-    path('customer/event/<int:pk>/', views.CustomerEventDetailAPI.as_view())
+    path('customer/event/<int:pk>/', views.CustomerEventDetailAPI.as_view()),
+    path('customer/notices/', views.CustomerNoticeListAPI.as_view())
 ]

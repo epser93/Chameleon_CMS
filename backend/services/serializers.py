@@ -58,7 +58,7 @@ class CustomerCarouselSerializer(serializers.ModelSerializer):
 class CustomerEventListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Event
-        fields = ['id', 'title', 'start_date', 'end_date', 'thumbnail_image', 'priority']
+        fields = ['id', 'title', 'content', 'start_date', 'end_date', 'thumbnail_image', 'priority']
 
 
 class CustomerEventDetailSerializer(serializers.ModelSerializer):
@@ -88,3 +88,9 @@ class SearchSerializer(serializers.ModelSerializer):
         items = Item.objects.filter(name__contains=content).exclude(is_temp=True).exclude(is_active=False)
         serializer = CustomerItemSerializer(items, many=True)
         return serializer.data
+
+
+class CustomerNoticeListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Notices
+        fields = ['id', 'title', 'content', 'start_date', 'image']
