@@ -3,6 +3,7 @@ export default{
     domain : 'http://k3c205.p.ssafy.io',
     // URL: 'http://127.0.0.1:8000/api/',
     URL: 'http://k3c205.p.ssafy.io/api/',
+    // URL: 'http://121.147.32.186:8000/api/',
     ROUTER: {
       //user
       userinfo: 'accounts/',
@@ -30,7 +31,6 @@ export default{
       // item
       item : 'products/product/',
       itemhistory : 'products/temp_product/',
-      history: 'products/',
 
       // notice
       notice : 'services/notices/',
