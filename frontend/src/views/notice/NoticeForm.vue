@@ -79,7 +79,8 @@ export default {
       formdata.append("title", this.title)
       formdata.append("content", this.contents)
       if (!this.$route.params.id) { // 바로 등록의 경우 
-        formdata.append("is_temp", 'False')  
+        formdata.append("is_temp", 'False')
+        formdata.append("is_active", 'True')  
         axios.post(SERVER.URL + SERVER.ROUTER.notice, formdata, this.formconfig)
           .then(res => {
             console.log(res)
@@ -105,6 +106,8 @@ export default {
       } 
       formdata.append("title", this.title)
       formdata.append("content", this.contents)
+      formdata.append('is_active', "True")
+      formdata.append('is_temp', 'True')
       if (!this.$route.params.id) { // 첫글 바로 임시등록할 때
         axios.post(SERVER.URL + SERVER.ROUTER.notice, formdata, this.formconfig)
           .then(() => {

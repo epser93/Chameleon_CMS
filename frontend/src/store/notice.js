@@ -37,6 +37,7 @@ export default {
     getNotices({ commit, rootGetters }) {
       axios.get(SERVER.URL + SERVER.ROUTER.notice, rootGetters['account/config'])
         .then (res => {
+          console.log(res.data)
           commit('SET_NOTICES', res.data)
         })
         .catch (error => console.log(error.response))

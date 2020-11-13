@@ -5,12 +5,7 @@
       <div class="d-none d-sm-none d-md-block col-2 px-0">
         <ol class="carousel-indicators-img mb-0" data-interval="false">
           <div class="direction column mt-5">
-            <img src="@/assets/250.png" data-target="#carouselExampleCaptions" data-slide-to="0" class="active preview-img" alt="">
-            <img src="@/assets/250.png" data-target="#carouselExampleCaptions" data-slide-to="1" class="preview-img" alt="">
-            <img src="@/assets/250.png" data-target="#carouselExampleCaptions" data-slide-to="2" class="preview-img" alt="">
-            <img src="@/assets/250.png" data-target="#carouselExampleCaptions" data-slide-to="3" class="preview-img" alt="">
-            <img src="@/assets/250.png" data-target="#carouselExampleCaptions" data-slide-to="4" class="preview-img" alt="">
-            <img src="@/assets/250.png" data-target="#carouselExampleCaptions" data-slide-to="5" class="preview-img" alt="">
+            <img v-for="(thumbnail, index) in thumbnails" :key="index" :src="getImage(thumbnail.item_image)" data-target="#carouselExampleCaptions" :data-slide-to="index" :class="(index === 0) ? 'active preview-img' : 'preview-img'" alt="">
           </div>
         </ol>
       </div>
@@ -19,28 +14,8 @@
         <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel" data-interval="false">
           <div class="carousel-inner">
             <!-- Image1 -->
-            <div class="carousel-item active">
-              <img src="@/assets/250.png" class="d-block" alt="...">
-            </div>
-            <!-- Image2 -->
-            <div class="carousel-item">
-              <img src="@/assets/250.png" class="d-block" alt="...">
-            </div>
-            <!-- Image3 -->
-            <div class="carousel-item">
-              <img src="@/assets/250.png" class="d-block" alt="...">
-            </div>
-            <!-- Image4 -->
-            <div class="carousel-item">
-              <img src="@/assets/250.png" class="d-block" alt="...">
-            </div>
-            <!-- Image5 -->
-            <div class="carousel-item">
-              <img src="@/assets/250.png" class="d-block" alt="...">
-            </div>
-            <!-- Image6 -->
-            <div class="carousel-item">
-              <img src="@/assets/250.png" class="d-block" alt="...">
+            <div v-for="(thumbnail, index) in thumbnails" :key="index" :src="getImage(thumbnail.item_image)" :class="(index === 0) ? 'carousel-item active' : 'carousel-item'">
+              <img :src="getImage(thumbnail.item_image)" class="d-block" alt="...">
             </div>
           </div>
         </div>
@@ -48,28 +23,17 @@
       <!-- col-sm일 때 나오는 하단 캐로우셀 -->
       <div class="d-block d-sm-block d-md-none col-12 mb-4">
         <ol class="carousel-indicators">
-          <li data-target="#carouselExampleCaptions" data-slide-to="0" class="preview-btn"></li>
-          <li data-target="#carouselExampleCaptions" data-slide-to="1" class="preview-btn"></li>
-          <li data-target="#carouselExampleCaptions" data-slide-to="2" class="preview-btn"></li>
-          <li data-target="#carouselExampleCaptions" data-slide-to="3" class="preview-btn"></li>
-          <li data-target="#carouselExampleCaptions" data-slide-to="4" class="preview-btn"></li>
-          <li data-target="#carouselExampleCaptions" data-slide-to="5" class="preview-btn"></li>
+          <li v-for="(thumbnail, index) in thumbnails" :key="index" data-target="#carouselExampleCaptions" :data-slide-to="index" class="preview-btn"></li>
         </ol>
       </div>
       <!-- col-md 이상일 때 Item Info -->
       <div class="itm-info-md d-none d-sm-none d-md-block col-5">
         <div class="d-flex mt-2">
           <div class="column itm-info-box mr-auto ml-auto">
-            <h3>제품 이름</h3>
-            <p>제품 No.</p>
-            <h5>000,000원</h5>
+            <h3>{{ itemInfo.name }}</h3>
+            <h5>{{ itemInfo.price }}원</h5>
             <div class="itm-info-detail">
-              <p>Item Detail Information 1</p>
-              <p>Item Detail Information 2</p>
-              <p>Item Detail Information 3</p>
-              <p>Item Detail Information 4</p>
-              <p>Item Detail Information 5</p>
-              <p>Item Detail Information 6</p>
+              <p v-for="(spec, index) in itemInfo.descriptions" :key="index">{{ spec.category_description.name }} : {{ spec.content}}</p>
             </div>
           </div>
         </div>
@@ -79,27 +43,50 @@
     <div class="item-info-sm d-block d-sm-block d-md-none col-12">
       <div class="item-info-sm-detail mx-1 row justify-content-between">
         <h4>판매가</h4>
-        <h4>000,000원</h4>
+        <h4>{{ itemInfo.price }}원</h4>
       </div>
     </div>
     <div class="d-block d-sm-block d-md-none col-12 column mx-2">
-      <p>Item Detail Information 1</p>
-      <p>Item Detail Information 2</p>
-      <p>Item Detail Information 3</p>
-      <p>Item Detail Information 4</p>
-      <p>Item Detail Information 5</p>
-      <p>Item Detail Information 6</p>   
+      <p v-for="(spec, index) in itemInfo.descriptions" :key="index">{{ spec.category_description.name }} : {{ spec.content}}</p> 
     </div>
     <!-- Item deatil image ara -->
     <div class="bottom mb-4">
       <h1>Item detail image Area</h1>
+      <div v-for="(detailImage, index) in detailImages" :key="index" :src="getImage(detailImage.item_image)">
+        <img :src="getImage(detailImage.item_image)" class="d-block" alt="...">
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import SERVER from '@/api/drf'
 export default {
   name: 'CarouselTemplate',
+  props: ['itemInfo'],
+  data() {
+    return {
+      thumbnails: [],
+      detailImages: []
+    }
+  },
+  methods: {
+    divideImage() {
+      for (let i=0; i<this.itemInfo.images.length; i++) {
+        if (this.itemInfo.images[i].is_thumbnail) {
+          this.thumbnails.push(this.itemInfo.images[i])
+        } else {
+          this.detailImages.push(this.itemInfo.images[i])
+        }
+      }
+    },
+    getImage(src) {
+      return SERVER.domain + src.slice(56, src.length)
+    }
+  },
+  created() {
+    this.divideImage()
+  }
 }
 </script>
 

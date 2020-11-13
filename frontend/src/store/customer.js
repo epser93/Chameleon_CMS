@@ -13,6 +13,9 @@ export default {
     event: '',
 
     search: '',
+
+    // 아이템 detail 정보
+    itemInfo: '',
   },
 
   getters: {
@@ -38,6 +41,11 @@ export default {
     SET_SEARCH(state, payload) {
       state.search = payload
     },
+
+    // 아이템 detail 상태 변경
+    SET_ITEMINFO(state, payload) {
+      state.itemInfo = payload
+    }
   },
 
   actions: {
@@ -91,5 +99,15 @@ export default {
         console.log(err)
       })
     },
+
+    // 아이템 detail 조회
+    getItemInfo({ commit }, cid) {
+      axios.get(SERVER.URL + SERVER.ROUTER.customer.item + cid)
+        .then(res => {
+          console.log(res)
+          commit('SET_ITEMINFO', res.data)
+        })
+        .catch(error => console.log(error.response))
+    }
   }
 }
