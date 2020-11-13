@@ -28,9 +28,6 @@
           </div>
         </div>
         <div class="row btn-division justify-content-end mt-5 mb-5">
-          <div>
-            <button type="button" class="btn btn-info btn-sm mr-2" @click="onClickWindows">미리보기</button>
-          </div>
           <div v-if="!noticeInfo || noticeInfo.is_temp">
             <button type="button" class="btn btn-secondary btn-sm mr-2" @click="onClickTemp">임시저장</button>
           </div>
@@ -118,21 +115,14 @@ export default {
           .catch(error => console.log(error.response))
       }
     },
-    onClickWindows(){
-      var url="test.html";
-      window.open(url,"",);
-    },
     init() {
       if (this.$route.params.id) {
         axios.get(SERVER.URL + SERVER.ROUTER.notice + this.$route.params.id, this.config)
           .then(res => {
-            console.log(res.data)
             this.noticeInfo = res.data
-            console.log('인포', this.noticeInfo)
             this.title = res.data.title
             this.contents = res.data.content
-            this.imageUrl = SERVER.domain + res.data.image
-            console.log(this.imageUrl)
+            this.imageUrl = SERVER.domain + res.data.image.slice(56, res.data.image.length)
           })
           .catch(error => console.log(error.response))
       }
