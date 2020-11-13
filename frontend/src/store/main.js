@@ -1,5 +1,6 @@
 import axios from 'axios'
 import SERVER from '@/api/drf'
+import router from '@/router'
 
 export default {
   namespaced: true,
@@ -8,6 +9,8 @@ export default {
     images: '',
     image: '',
 
+    products: '',
+    allProducts: ''
   },
 
   getters: {
@@ -21,7 +24,14 @@ export default {
 
     SET_IMAGE(state, payload) {
       state.image = payload
-    }
+    },
+
+    SET_PRODUCTS(state, payload) {
+      state.products = payload
+    },
+    SET_ALL_PRODUCTS(state, payload) {
+      state.allProducts = payload
+    },
   },
 
   actions: {
@@ -35,10 +45,11 @@ export default {
         })
     },
 
-    postImage({ rootGetters }, mainImageData) {
+    postImage({ rootGetters, dispatch }, mainImageData) {
       axios.post(SERVER.URL + SERVER.ROUTER.carousel, mainImageData, rootGetters['account/formconfig'])
-        .then((res) => {
-          console.log(res.data)
+        .then(() => {
+          dispatch('getImages')
+          router.push({ name : 'MainImage'})
         })
         .catch((err) => {
           console.log(err)
@@ -55,10 +66,11 @@ export default {
         })
       },
 
-    putImage({ rootGetters }, {id, mainImageData}) {
+    putImage({ rootGetters, dispatch }, {id, mainImageData}) {
       axios.put(SERVER.URL + SERVER.ROUTER.carousel + id + '/', mainImageData, rootGetters['account/config'])
-        .then((res) => {
-          console.log(res.data)
+        .then(() => {
+          dispatch('getImages')
+          router.push({ name : 'MainImage'})
         })
         .catch((err) => {
           console.log(err)
@@ -85,6 +97,26 @@ export default {
       .catch((err) => {
         console.log(err)
       })   
+    },
+
+    getProducts({ rootGetters, commit }) {
+      axios.get(SERVER.URL + SERVER.ROUTER.main, rootGetters['account/config'])
+        .then((res) => {
+          commit('SET_PRODUCTS', res.data)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    },
+
+    getAllProducts({ rootGetters, commit }) {
+      axios.get(SERVER.URL + SERVER.ROUTER.search, rootGetters['account/config'])
+        .then((res) => {
+          commit('SET_ALL_PRODUCTS', res.data)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
     },
 
   }

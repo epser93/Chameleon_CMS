@@ -1,8 +1,9 @@
 <template>
   <div class="container pl-0">
     <div class="table-container">
-      <div class="btn ml-3 mt-3 mb-3 p-0">
-        <button type="button" class="btn btn-info ml-3" @click="makeNotice()">생성</button>
+      <div class="notice-btn row align-items-center mt-3 mb-3">
+        <h5 class="mb-0 ml-3">공지</h5>
+        <button type="button" class="btn btn-info btn-sm" @click="makeNotice()">추가</button>
       </div>
       <table class="table">
         <thead>
@@ -58,7 +59,7 @@ import { mapActions, mapState } from 'vuex'
 export default {
   data() {
     return {
-      perPage: 10,
+      perPage: 7,
       nowPage: 0,
     }
   },
@@ -95,6 +96,16 @@ export default {
       } else {
         this.$router.push({name : 'NoticeDetail', params : { id : notice.id }})
       }
+    },
+    prevPage() {
+      if (this.nowPage > 0) {
+        this.nowPage -= 1
+      }
+    },
+    nextPage() {
+      if (this.nowPage < this.pages-1) {
+        this.nowPage += 1
+      }
     }
   },
   created() {
@@ -122,5 +133,9 @@ export default {
   position: absolute;
   bottom: 0;
   left: 50%;
+}
+
+.page-item {
+  cursor: pointer;
 }
 </style>

@@ -38,6 +38,7 @@ export default{
       // main
       main : 'services/main/',
       carousel : 'services/carousel/',
+      search : 'products/search/?content=',
 
       // customer
       customer : {
@@ -55,6 +56,9 @@ export default{
 
         // search
         search : 'services/customer/search/?content=',
+
+        // notice
+        notice : 'services/customer/notices/'
         
       }
     }

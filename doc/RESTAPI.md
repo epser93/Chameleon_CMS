@@ -2,44 +2,86 @@
 
 ## Admin url
 
-| url                                           | GET                      | POST               | PUT             | DELETE              |
-| --------------------------------------------- | ------------------------ | ------------------ | --------------- | ------------------- |
-| accounts/                                     | 자신의 정보              |                    |                 |                     |
-| accounts/search/?type=<>&content=<>           | 유저 검색(필터링)        |                    |                 |                     |
-| accounts/validation/?type=<>&content=<>       | 아이디, 이메일 여부 확인 |                    |                 |                     |
-| accounts/department/                          | 부서 정보                |                    |                 |                     |
-| accounts/login/                               |                          | 로그인             |                 |                     |
-| accounts/signup/                              |                          | 회원가입           |                 |                     |
-| accounts/logout/                              |                          | 로그아웃           |                 |                     |
-| accounts/manage/<user_id>/                    |                          | 회원가입 승인      | 회원권한 수정   |                     |
-| accounts/logs/                                | 로그데이터               |                    |                 |                     |
-| products/template/                            | 템플릿 정보              |                    |                 |                     |
-| products/category/                            | 카테고리 리스트          | 카테고리 생성      |                 |                     |
-| products/category/<category_id>/              | 카테고리 물품리스트      |                    | 카테고리 수정   | 카테고리 삭제       |
-| products/product/                             |                          | 제품생성(임시까지) |                 |                     |
-| products/product/<product_id>/                | 제품 상세정보            | 제품 활성화        | 임시제품 적용   | 제품 비활성         |
-| products/temp_product/<product_id>/           | 제품 히스토리 조회       | 제품 임시정보 생성 |                 |                     |
-| products/serarch/?type=<>&content=<>&order=<> | 검색                     |                    |                 |                     |
-| services/notices/                             | 공지사항 리스트          | 공지사항 생성      |                 |                     |
-| services/notices/<notices_id>/                | 공지사항 상세            | 공지사항 활성화    | 공지사항 수정   | 공지사항 비활성화   |
-| services/event/                               | 이벤트 리스트            | 이벤트 생성        |                 |                     |
-| services/event/<event_id>/                    | 이벤트 상세              |                    | 이벤트 수정     | 이벤트 삭제         |
-| servicies/main/                               | 메인아이템 모든 정보     | 메인 아이템 생성   |                 |                     |
-| servicies/main/<main_id>                      | 메인아이템 상세정보      | 메인아이템 활성화  | 메인아이템 수정 | 메인아이템 비활성화 |
-| servicies/carousel/                           | 케로셀 모든정보          | 케로셀 생성        |                 |                     |
-| servicies/carousel/<carousel_id>              | 캐로셀 상세정보          | 케로셀 활성화      | 케로셀 수정     | 케로셀 비활성화     |
+| url                                     | GET                      | POST               | PUT             | DELETE              |
+| --------------------------------------- | ------------------------ | ------------------ | --------------- | ------------------- |
+| accounts/                               | 자신의 정보              |                    |                 |                     |
+| accounts/login/                         |                          | 로그인             |                 |                     |
+| accounts/logout/                        |                          | 로그아웃           |                 |                     |
+| accounts/signup/                        |                          | 회원가입           |                 |                     |
+| accounts/manage/<user_id>/              |                          | 회원가입 승인      | 회원권한 수정   |                     |
+| accounts/department/                    | 부서 정보                |                    |                 |                     |
+| accounts/search/?type=<>&content=<>     | 유저 검색(필터링)        |                    |                 |                     |
+| accounts/validation/?type=<>&content=<> | 아이디, 이메일 여부 확인 |                    |                 |                     |
+| accounts/logs/                          | 로그데이터               |                    |                 |                     |
+| products/category/                      | 카테고리 리스트          | 카테고리 생성      |                 |                     |
+| products/category/<category_id>/        | 카테고리 물품리스트      | 카테고리 활성화    | 카테고리 수정   | 카테고리 비활성화   |
+| products/product/                       |                          | 제품생성(임시까지) |                 |                     |
+| products/product/<product_id>/          | 제품 상세정보            | 제품 활성화        | 임시제품 적용   | 제품 비활성화       |
+| products/temp_product/<product_id>/     | 제품 히스토리 조회       | 제품 임시정보 생성 |                 |                     |
+| products/template/                      | 템플릿 정보              |                    |                 |                     |
+| products/search/?content=<>             | 물건 검색                |                    |                 |                     |
+| services/event/                         | 이벤트 리스트            | 이벤트 생성        |                 |                     |
+| services/event/<event_id>/              | 이벤트 상세              | 이벤트 활성화      | 이벤트 수정     | 이벤트 비활성화     |
+| services/notices/                       | 공지사항 리스트          | 공지사항 생성      |                 |                     |
+| services/notices/<notices_id>/          | 공지사항 상세            | 공지사항 활성화    | 공지사항 수정   | 공지사항 비활성화   |
+| servicies/main/                         | 메인아이템 모든 정보     | 메인 아이템 생성   |                 |                     |
+| servicies/main/<main_id>                | 메인아이템 상세정보      | 메인아이템 활성화  | 메인아이템 수정 | 메인아이템 비활성화 |
+| servicies/carousel/                     | 케로셀 모든정보          | 케로셀 생성        |                 |                     |
+| servicies/carousel/<carousel_id>        | 캐로셀 상세정보          | 케로셀 활성화      | 케로셀 수정     | 케로셀 비활성화     |
 
-## customer url
+## Customer url
 
-| url                                  | get                   |
-| ------------------------------------ | --------------------- |
-| services/customer/search/?content=<> | 아이템 및 이벤트 검색 |
+| url                                              | get                   |
+| ------------------------------------------------ | --------------------- |
+| services/customer/search/?content=<>             | 아이템 및 이벤트 검색 |
+| products/customer/categories/                    | 카테고리 리스트       |
+| /api/products/customer/categories/<category_id>/ | 카테고리 속한 아이템  |
+| products/customer/product/<product_id>/          | 아이템 상세정보       |
+| services/customer/event/                         | 메인 아이템 조회      |
+| services/customer/carousel/                      | 케로셀 아이템 조회    |
+| services/customer/event/                         | 이벤트 리스트 조회    |
+| services/customer/event/<event_id>/              | 이벤트 디테일 조회    |
+| services/customer/notices/                       | 공지리스트 조회       |
+
+
+
+## Admin API
+
+### 자기 정보 얻기
+
+```
+주소/api/accounts/ (GET)
+```
+
+- Response
+
+```json
+{
+    "id": 2,
+    "username": "test",
+    "first_name": "김유기",
+    "is_superuser": true,
+    "is_access": true,
+    "is_logger": false,
+    "is_eventer": false,
+    "is_producter": false,
+    "is_marketer": false,
+    "department": {
+        "id": 1,
+        "name": "인사과"
+    },
+    "last_login": "2020-11-13T09:51:31.532713+09:00",
+    "employee_number": 0
+}
+```
 
 
 
 
 
-## 로그인
+
+
+### 로그인
 
 ```
 주소/api/accounts/login/(post)
@@ -74,7 +116,7 @@
 
 
 
-## 로그아웃
+### 로그아웃
 
 ```
 주소/api/accounts/login/(post)
@@ -106,7 +148,7 @@
 
 
 
-## 회원가입
+### 회원가입
 
 ```
 주소/api/accounts/signup/(post)
@@ -149,7 +191,7 @@
 
 
 
-## 회원가입 승인
+### 회원가입 승인
 
 ```
 주소/api/accounts/manage/<int:user_id>/(post)
@@ -175,7 +217,7 @@
 
 
 
-## 회원 권한 변경
+### 회원 권한 변경
 
 ```
 주소/api/accounts/manage/<int:user_id>/(put)
@@ -226,7 +268,180 @@
 
 
 
-## 카테고리 리스트(수정필요, 관리자, 사용자 분리)
+### 부서 정보
+
+```
+주소/api/accounts/department/
+```
+
+- Response
+
+```json
+[
+    {
+        "id": 1,
+        "name": "인사과"
+    },
+    {
+        "id": 2,
+        "name": "기획과"
+    },
+    {
+        "id": 3,
+        "name": "생산관리"
+    }
+]
+```
+
+
+
+### 유저 필터링
+
+```
+주소/api/accounts/search/?type=<>&content=<>
+```
+
+> type 종류
+>
+> - all  - 승인된 유저중에서 부서상관없이 이름으로 검색
+> - is_access - 승인되지 않은 유저들만 검색
+>
+> - 부서명 - 해당 부서명으로 검색, content가 필수이다.
+>
+> name - content에 들어가있는 이름으로 검색
+>
+> ex) `주소/api/accounts/search/?type=생산관리&content=은석`
+
+- Response
+
+```json
+[
+    {
+        "id": 7,
+        "username": "songsong",
+        "first_name": "송은석",
+        "is_superuser": false,
+        "is_access": false,
+        "is_logger": false,
+        "is_eventer": false,
+        "is_producter": false,
+        "is_marketer": false,
+        "department": {
+            "id": 3,
+            "name": "생산관리"
+        },
+        "last_login": "2020-11-04T11:22:32.481028+09:00",
+        "employee_number": 123414141
+    },
+    {
+        "id": 9,
+        "username": "test6",
+        "first_name": "은석",
+        "is_superuser": false,
+        "is_access": false,
+        "is_logger": false,
+        "is_eventer": false,
+        "is_producter": false,
+        "is_marketer": false,
+        "department": {
+            "id": 3,
+            "name": "생산관리"
+        },
+        "last_login": "2020-11-04T11:31:24.566257+09:00",
+        "employee_number": 749172
+    }
+]
+```
+
+
+
+### 이메일,아이디 여부
+
+```
+주소/api/accounts/validation/?type=<>&content=<>
+```
+
+> type
+>
+> - id - content에 사용할 id를 입력한다.
+> - email - content에 사용할 email을 입력한다.
+
+- 성공 Response
+
+```json
+{
+    "message": "사용이 가능합니다."
+}
+```
+
+- 실패 Response(400)
+
+```json
+{
+    message: "너무 짧은 아이디 입니다.",
+    message: "존재하는 아이디 입니다.",
+    message: "존재하는 이메일 입니다."
+}
+```
+
+
+
+### 로그데이터
+
+```
+주소/api/accounts/logs/(GET)
+```
+
+- Response
+
+```json
+[
+    {
+        "type": "회원가입",
+        "register_ip": "0.0.0.0",
+        "create_date": "2020-11-06T15:02:08.835470+09:00",
+        "cms_user": 2
+    },
+    {
+        "type": "로그인",
+        "register_ip": "0.0.0.0",
+        "create_date": "2020-11-06T15:02:39.444308+09:00",
+        "cms_user": 2
+    },
+    {
+        "type": "회원가입",
+        "register_ip": "0.0.0.0",
+        "create_date": "2020-11-06T15:04:58.221495+09:00",
+        "cms_user": 3
+    },
+    {
+        "type": "로그인",
+        "register_ip": "0.0.0.0",
+        "create_date": "2020-11-06T15:05:39.168803+09:00",
+        "cms_user": 3
+    },
+    {
+        "type": "로그아웃",
+        "register_ip": "0.0.0.0",
+        "create_date": "2020-11-06T15:12:48.820754+09:00",
+        "cms_user": 3
+    }
+]
+```
+
+- 실패 Response(403)
+
+```json
+{
+    "message": "권한이 없습니다."
+}
+```
+
+
+
+
+
+### 카테고리 리스트
 
 ```
 주소/api/products/categories/
@@ -388,7 +603,7 @@
 
 
 
-## 카테고리 생성
+### 카테고리 생성
 
 ```
 주소/api/products/categories/(POST)
@@ -440,7 +655,7 @@
 
 
 
-## 카테고리 수정
+### 카테고리 수정
 
 ```
 주소/api/products/categories/<int:pk>/(PUT)
@@ -501,7 +716,49 @@
 
 
 
-## 카테고리 삭제
+### 카테고리 활성화
+
+```
+주소/api/products/categories/<int:pk>/(POST)
+```
+
+- Response
+
+```json
+{
+    "id": 1,
+    "name": "노트북",
+    "is_active": true,
+    "image": "https://ssafycmss3bucket.s3.ap-northeast-2.amazonaws.com/media/KakaoTalk_20200921_091027148_BpDjCOu.png",
+    "priority": 1,
+    "template": {
+        "id": 1,
+        "name": "카테고리 이미지 특화",
+        "type": 1
+    },
+    "created_date": "2020-11-13T11:44:09.394979+09:00",
+    "update_date": "2020-11-13T11:53:47.055341+09:00",
+    "cms_user": {
+        "id": 2,
+        "username": "test",
+        "first_name": "김유기"
+    },
+    "description": [
+        {
+            "id": 1,
+            "name": "제조사"
+        },
+        {
+            "id": 2,
+            "name": "디스플레이"
+        }
+    ]
+}
+```
+
+
+
+### 카테고리 비활성화
 
 ```
 주소/api/products/categories/<int:pk>/(DELETE)
@@ -517,7 +774,7 @@
 
 
 
-## 카테고리 속한 아이템 보기(수정필요, 관리자, 사용자 분리)
+### 카테고리 속한 아이템 보기(수정필요, 관리자, 사용자 분리)
 
 ```
 주소/api/products/categories/<int:pk>/(get)
@@ -602,7 +859,7 @@
 
 
 
-## 아이템 생성
+### 아이템 생성
 
 ```
 주소/api/products/product/(POST)
@@ -687,7 +944,7 @@
 
 
 
-## 아이템 상세 정보
+### 아이템 상세 정보
 
 ```
 주소/api/products/<int:pk>/(GET)
@@ -698,8 +955,8 @@
 ```json
 {
     "id": 2,
-    "name": "노트북A",
-    "price": 1280000,
+    "name": "LG그램3",
+    "price": 3,
     "is_temp": false,
     "is_active": true,
     "category": {
@@ -707,35 +964,67 @@
         "name": "노트북"
     },
     "template": {
-        "id": 2,
-        "name": "카테고리 이미지 특화",
-        "type": 1
+        "id": 3,
+        "name": "아이템 이미지 특화",
+        "type": 2
     },
-    "created_date": "2020-11-09T10:39:44.786263+09:00",
-    "update_date": "2020-11-09T16:32:01.078872+09:00",
+    "created_date": "2020-11-13T13:22:31.025746+09:00",
+    "update_date": "2020-11-13T14:00:46.523156+09:00",
     "cms_user": {
-        "id": 2,
-        "username": "test",
-        "first_name": "김유기"
+        "id": 6,
+        "username": "zjohn99",
+        "first_name": "장좐"
     },
     "descriptions": [
         {
-            "content": "AMD",
-            "item": 1,
+            "content": "LGff",
+            "item": 2,
             "category_description": {
-                "id": 14,
+                "id": 1,
                 "name": "제조사"
+            }
+        },
+        {
+            "content": "헬지",
+            "item": 2,
+            "category_description": {
+                "id": 2,
+                "name": "디스플레이"
             }
         }
     ],
     "images": [
         {
-            "id": 1,
-            "item_image": "/media/KakaoTalk_20201019_093205576_ni0qpZF.png",
+            "id": 41,
+            "item_image": "https://ssafycmss3bucket.s3.ap-northeast-2.amazonaws.com/media/202005071135281269924_SrlMFuk.jpg",
             "is_thumbnail": true,
             "priority": 1,
-            "created_date": "2020-11-09T10:39:44.898264+09:00",
-            "update_date": "2020-11-09T10:39:44.898264+09:00"
+            "created_date": "2020-11-13T14:00:46.576187+09:00",
+            "update_date": "2020-11-13T14:00:46.576187+09:00"
+        },
+        {
+            "id": 42,
+            "item_image": "https://ssafycmss3bucket.s3.ap-northeast-2.amazonaws.com/media/image_6963812281481439508693_mvocTBT.jpg",
+            "is_thumbnail": true,
+            "priority": 1,
+            "created_date": "2020-11-13T14:00:46.616156+09:00",
+            "update_date": "2020-11-13T14:00:46.616156+09:00"
+        },
+        {
+            "id": 43,
+            "item_image": "https://ssafycmss3bucket.s3.ap-northeast-2.amazonaws.com/media/%EB%84%88%EA%B5%AC%EB%A6%AC.png",
+            "is_thumbnail": false,
+            "priority": 1,
+            "created_date": "2020-11-13T14:00:46.659300+09:00",
+            "update_date": "2020-11-13T14:00:46.660335+09:00"
+        },
+        {
+            "id": 44,
+            "item_image": "https://ssafycmss3bucket.s3.ap-northeast-2.amazonaws.com/media/%EC%84%B8%EC%85%98%ED%95%98%EC%9D%B4%EC%9E%AC%ED%82%B9.PNG",
+            "is_thumbnail": false,
+            "priority": 1,
+            "created_date": "2020-11-13T14:00:46.704447+09:00",
+            "update_date": "2020-11-13T14:00:46.704447+09:00"
         }
     ]
 }
@@ -745,13 +1034,15 @@
 
 
 
-## 아이템 수정
+### 아이템 수정
 
 ```
 주소/api/products/<int:pk>/(PUT)
 ```
 
-> 바꾸고 싶은 임시저장 아이템 id를 입력한다.
+> 바꾸고 싶은 임시저장 아이템 id를 Body에 입력한다.
+>
+> url 주소에는 바꿀 원본 아이템 id를 넣는다.
 
 - Body
 
@@ -766,8 +1057,8 @@
 ```json
 {
     "id": 2,
-    "name": "노트북A",
-    "price": 1280000,
+    "name": "LG그램3",
+    "price": 3,
     "is_temp": false,
     "is_active": true,
     "category": {
@@ -775,35 +1066,67 @@
         "name": "노트북"
     },
     "template": {
-        "id": 2,
-        "name": "카테고리 이미지 특화",
-        "type": 1
+        "id": 3,
+        "name": "아이템 이미지 특화",
+        "type": 2
     },
-    "created_date": "2020-11-09T10:39:44.786263+09:00",
-    "update_date": "2020-11-09T16:32:01.078872+09:00",
+    "created_date": "2020-11-13T13:22:31.025746+09:00",
+    "update_date": "2020-11-13T14:00:46.523156+09:00",
     "cms_user": {
-        "id": 2,
-        "username": "test",
-        "first_name": "김유기"
+        "id": 6,
+        "username": "zjohn99",
+        "first_name": "장좐"
     },
     "descriptions": [
         {
-            "content": "AMD",
-            "item": 1,
+            "content": "LGff",
+            "item": 2,
             "category_description": {
-                "id": 14,
+                "id": 1,
                 "name": "제조사"
+            }
+        },
+        {
+            "content": "헬지",
+            "item": 2,
+            "category_description": {
+                "id": 2,
+                "name": "디스플레이"
             }
         }
     ],
     "images": [
         {
-            "id": 1,
-            "item_image": "/media/KakaoTalk_20201019_093205576_ni0qpZF.png",
+            "id": 41,
+            "item_image": "https://ssafycmss3bucket.s3.ap-northeast-2.amazonaws.com/media/202005071135281269924_SrlMFuk.jpg",
             "is_thumbnail": true,
             "priority": 1,
-            "created_date": "2020-11-09T10:39:44.898264+09:00",
-            "update_date": "2020-11-09T10:39:44.898264+09:00"
+            "created_date": "2020-11-13T14:00:46.576187+09:00",
+            "update_date": "2020-11-13T14:00:46.576187+09:00"
+        },
+        {
+            "id": 42,
+            "item_image": "https://ssafycmss3bucket.s3.ap-northeast-2.amazonaws.com/media/image_6963812281481439508693_mvocTBT.jpg",
+            "is_thumbnail": true,
+            "priority": 1,
+            "created_date": "2020-11-13T14:00:46.616156+09:00",
+            "update_date": "2020-11-13T14:00:46.616156+09:00"
+        },
+        {
+            "id": 43,
+            "item_image": "https://ssafycmss3bucket.s3.ap-northeast-2.amazonaws.com/media/%EB%84%88%EA%B5%AC%EB%A6%AC.png",
+            "is_thumbnail": false,
+            "priority": 1,
+            "created_date": "2020-11-13T14:00:46.659300+09:00",
+            "update_date": "2020-11-13T14:00:46.660335+09:00"
+        },
+        {
+            "id": 44,
+            "item_image": "https://ssafycmss3bucket.s3.ap-northeast-2.amazonaws.com/media/%EC%84%B8%EC%85%98%ED%95%98%EC%9D%B4%EC%9E%AC%ED%82%B9.PNG",
+            "is_thumbnail": false,
+            "priority": 1,
+            "created_date": "2020-11-13T14:00:46.704447+09:00",
+            "update_date": "2020-11-13T14:00:46.704447+09:00"
         }
     ]
 }
@@ -811,7 +1134,7 @@
 
 
 
-## 아이템 비활성화
+### 아이템 비활성화
 
 ```
 주소/api/products/product/<int:pk>/(DELETE)
@@ -827,7 +1150,7 @@
 
 
 
-## 아이템 활성화
+### 아이템 활성화
 
 ```
 주소/api/products/product/<int:pk>/(POST)
@@ -838,8 +1161,8 @@
 ```json
 {
     "id": 2,
-    "name": "노트북A",
-    "price": 1280000,
+    "name": "LG그램3",
+    "price": 3,
     "is_temp": false,
     "is_active": true,
     "category": {
@@ -847,35 +1170,67 @@
         "name": "노트북"
     },
     "template": {
-        "id": 2,
-        "name": "카테고리 이미지 특화",
-        "type": 1
+        "id": 3,
+        "name": "아이템 이미지 특화",
+        "type": 2
     },
-    "created_date": "2020-11-09T10:39:44.786263+09:00",
-    "update_date": "2020-11-09T16:32:01.078872+09:00",
+    "created_date": "2020-11-13T13:22:31.025746+09:00",
+    "update_date": "2020-11-13T14:00:46.523156+09:00",
     "cms_user": {
-        "id": 2,
-        "username": "test",
-        "first_name": "김유기"
+        "id": 6,
+        "username": "zjohn99",
+        "first_name": "장좐"
     },
     "descriptions": [
         {
-            "content": "AMD",
-            "item": 1,
+            "content": "LGff",
+            "item": 2,
             "category_description": {
-                "id": 14,
+                "id": 1,
                 "name": "제조사"
+            }
+        },
+        {
+            "content": "헬지",
+            "item": 2,
+            "category_description": {
+                "id": 2,
+                "name": "디스플레이"
             }
         }
     ],
     "images": [
         {
-            "id": 1,
-            "item_image": "/media/KakaoTalk_20201019_093205576_ni0qpZF.png",
+            "id": 41,
+            "item_image": "https://ssafycmss3bucket.s3.ap-northeast-2.amazonaws.com/media/202005071135281269924_SrlMFuk.jpg",
             "is_thumbnail": true,
             "priority": 1,
-            "created_date": "2020-11-09T10:39:44.898264+09:00",
-            "update_date": "2020-11-09T10:39:44.898264+09:00"
+            "created_date": "2020-11-13T14:00:46.576187+09:00",
+            "update_date": "2020-11-13T14:00:46.576187+09:00"
+        },
+        {
+            "id": 42,
+            "item_image": "https://ssafycmss3bucket.s3.ap-northeast-2.amazonaws.com/media/image_6963812281481439508693_mvocTBT.jpg",
+            "is_thumbnail": true,
+            "priority": 1,
+            "created_date": "2020-11-13T14:00:46.616156+09:00",
+            "update_date": "2020-11-13T14:00:46.616156+09:00"
+        },
+        {
+            "id": 43,
+            "item_image": "https://ssafycmss3bucket.s3.ap-northeast-2.amazonaws.com/media/%EB%84%88%EA%B5%AC%EB%A6%AC.png",
+            "is_thumbnail": false,
+            "priority": 1,
+            "created_date": "2020-11-13T14:00:46.659300+09:00",
+            "update_date": "2020-11-13T14:00:46.660335+09:00"
+        },
+        {
+            "id": 44,
+            "item_image": "https://ssafycmss3bucket.s3.ap-northeast-2.amazonaws.com/media/%EC%84%B8%EC%85%98%ED%95%98%EC%9D%B4%EC%9E%AC%ED%82%B9.PNG",
+            "is_thumbnail": false,
+            "priority": 1,
+            "created_date": "2020-11-13T14:00:46.704447+09:00",
+            "update_date": "2020-11-13T14:00:46.704447+09:00"
         }
     ]
 }
@@ -883,7 +1238,7 @@
 
 
 
-## 아이템 히스토리 기록보기
+### 아이템 히스토리 기록보기
 
 ```
 주소/api/products/temp_product/<int:pk>/(GET)
@@ -928,7 +1283,7 @@
 
 
 
-## 아이템 임시 저장
+### 아이템 임시 저장
 
 ```
 주소/api/products/temp_product/<int:pk>/(POST)
@@ -942,7 +1297,7 @@
 >
 >  새로추가되는 이미지라면 -1로 입력한다.
 >
->  images_type과 is_thubnails의 길이는 같아야 한다.
+>  is_thubnails의 길이는 추가된 이미지 개수만큼이다.
 >
 >  이미지의 개수만큼 number에 입력한다.
 >
@@ -1021,7 +1376,138 @@
 
 
 
-## 이벤트 리스트 읽기
+### 템플릿 정보
+
+```
+주소/api/products/template/(GET)
+```
+
+- Response
+
+```json
+[
+    {
+        "id": 1,
+        "name": "카테고리 이미지 특화",
+        "type": 1
+    },
+    {
+        "id": 2,
+        "name": "카테고리 아이템 특화",
+        "type": 1
+    },
+    {
+        "id": 3,
+        "name": "아이템 이미지 특화",
+        "type": 2
+    },
+    {
+        "id": 4,
+        "name": "아이템 설명 특화",
+        "type": 2
+    }
+]
+```
+
+
+
+### 물건 검색
+
+```
+주소/api/products/search/?content=<>
+```
+
+> content에 검색할 물건 이름을 넣는다.
+
+- Response
+
+```json
+[
+    {
+        "id": 2,
+        "name": "LG그램3",
+        "price": 3,
+        "is_temp": false,
+        "is_active": true,
+        "category": {
+            "id": 1,
+            "name": "노트북"
+        },
+        "template": {
+            "id": 3,
+            "name": "아이템 이미지 특화",
+            "type": 2
+        },
+        "created_date": "2020-11-13T13:22:31.025746+09:00",
+        "update_date": "2020-11-13T14:00:46.523156+09:00",
+        "cms_user": {
+            "id": 6,
+            "username": "zjohn99",
+            "first_name": "장좐"
+        },
+        "descriptions": [
+            {
+                "content": "LG",
+                "item": 2,
+                "category_description": {
+                    "id": 1,
+                    "name": "제조사"
+                }
+            },
+            {
+                "content": "헬지",
+                "item": 2,
+                "category_description": {
+                    "id": 2,
+                    "name": "디스플레이"
+                }
+            }
+        ],
+        "images": [
+            {
+                "id": 49,
+                "item_image": "https://ssafycmss3bucket.s3.ap-northeast-2.amazonaws.com/media/202005071135281269924_SrlMFuk.jpg",
+                "is_thumbnail": true,
+                "priority": 1,
+                "created_date": "2020-11-13T14:07:16.270239+09:00",
+                "update_date": "2020-11-13T14:07:16.270284+09:00"
+            },
+            {
+                "id": 50,
+                "item_image": "https://ssafycmss3bucket.s3.ap-northeast-2.amazonaws.com/media/image_6963812281481439508693_mvocTBT.jpg",
+                "is_thumbnail": true,
+                "priority": 1,
+                "created_date": "2020-11-13T14:07:16.276447+09:00",
+                "update_date": "2020-11-13T14:07:16.276489+09:00"
+            },
+            {
+                "id": 51,
+                "item_image": "https://ssafycmss3bucket.s3.ap-northeast-2.amazonaws.com/media/%EB%84%88%EA%B5%AC%EB%A6%AC.png",
+                "is_thumbnail": false,
+                "priority": 1,
+                "created_date": "2020-11-13T14:07:16.282466+09:00",
+                "update_date": "2020-11-13T14:07:16.282504+09:00"
+            },
+            {
+                "id": 52,
+                "item_image": "https://ssafycmss3bucket.s3.ap-northeast-2.amazonaws.com/media/%EC%84%B8%EC%85%98%ED%95%98%EC%9D%B4%EC%9E%AC%ED%82%B9.PNG",
+                "is_thumbnail": false,
+                "priority": 1,
+                "created_date": "2020-11-13T14:07:16.288197+09:00",
+                "update_date": "2020-11-13T14:07:16.288233+09:00"
+            }
+        ]
+    }
+]
+```
+
+
+
+
+
+
+
+### 이벤트 리스트 읽기
 
 ```
 주소/api/services/event/(GET)
@@ -1059,44 +1545,53 @@
 
 
 
-## 이벤트 읽기
+### 이벤트 읽기
 
 ```
-주소/api/services/event/<int:pk>/(POST)
+주소/api/services/event/<int:pk>/(GET)
 ```
 
 - Response
 
 ```json
-{
-    "id": 20,
-    "title": "이벤트",
-    "start_date": "2020-11-03T18:00:00+09:00",
-    "end_date": "2020-11-05T18:00:00+09:00",
-    "thumbnail_image": "/media/erd.png",
-    "create_date": "2020-11-03T20:59:53.770623+09:00",
-    "update_date": "2020-11-03T20:59:53.770623+09:00",
-    "priority": 1,
-    "user": 2,
-    "images": [
-        {
-            "id": 1,
-            "image": "/media/KakaoTalk_20201019_093205576.png",
-            "priority": 1
-        },
-        {
-            "id": 2,
-            "image": "/media/KakaoTalk_20200907_134019738.jpg",
-            "priority": 2
-        }
-    ],
-    "url": null
-}
+[
+    {
+        "id": 1,
+        "title": "초특가 이벤트",
+        "content": "전 제품 65% 할인",
+        "start_date": "2020-11-14T00:00:00+09:00",
+        "is_active": true,
+        "end_date": "2020-11-15T23:59:59+09:00",
+        "thumbnail_image": "https://ssafycmss3bucket.s3.ap-northeast-2.amazonaws.com/media/458-600x250.jpg",
+        "create_date": "2020-11-13T12:56:22.074587+09:00",
+        "update_date": "2020-11-13T13:12:31.636391+09:00",
+        "priority": 1,
+        "user": 5,
+        "images": [
+            {
+                "id": 1,
+                "image": "https://ssafycmss3bucket.s3.ap-northeast-2.amazonaws.com/media/vertical1.jpg",
+                "priority": 1
+            },
+            {
+                "id": 2,
+                "image": "https://ssafycmss3bucket.s3.ap-northeast-2.amazonaws.com/media/vertical2.jpg",
+                "priority": 2
+            },
+            {
+                "id": 3,
+                "image": "https://ssafycmss3bucket.s3.ap-northeast-2.amazonaws.com/media/vertical3.jpg",
+                "priority": 3
+            }
+        ],
+        "url": "test"
+    }
+]
 ```
 
 
 
-## 이벤트 생성
+### 이벤트 생성
 
 ```
 주소/api/services/event/<int:pk>/(POST)
@@ -1170,7 +1665,7 @@
 
 
 
-## 이벤트 활성화
+### 이벤트 활성화
 
 ```
 주소/api/services/event/<int:pk>/(POST)
@@ -1206,7 +1701,7 @@
 
 
 
-## 이벤트 비활성화
+### 이벤트 비활성화
 
 ```
 주소/api/services/event/<int:pk>/(DELETE)
@@ -1224,7 +1719,7 @@
 
 
 
-## 공지 리스트 읽기
+### 공지 리스트 읽기
 
 ```
 주소/api/services/notices/(GET)
@@ -1249,7 +1744,7 @@
 
 
 
-## 공지사항 읽기
+### 공지사항 읽기
 
 ```
 주소/api/services/event/<int:pk>/(GET)
@@ -1274,7 +1769,7 @@
 
 
 
-## 공지 생성
+### 공지 생성
 
 ```
 주소/api/services/notices/(post)
@@ -1310,7 +1805,7 @@
 
 
 
-## 공지 수정
+### 공지 수정
 
 ```
 주소/api/services/notices/<int:pk>/
@@ -1344,7 +1839,7 @@
 }
 ```
 
-## 공지 활성화
+### 공지 활성화
 
 ```
 주소/api/services/notices/<int:pk>/(POST)
@@ -1378,7 +1873,7 @@
 
 
 
-## 공지 비활성화
+### 공지 비활성화
 
 ```
 주소/api/services/notices/<int:pk>/(DELETE)
@@ -1400,202 +1895,17 @@
 
 
 
-## 로그데이터
-
-```
-주소/api/accounts/logs/(GEt)
-```
-
-- Response
-
-```json
-[
-    {
-        "type": "회원가입",
-        "register_ip": "0.0.0.0",
-        "create_date": "2020-11-06T15:02:08.835470+09:00",
-        "cms_user": 2
-    },
-    {
-        "type": "로그인",
-        "register_ip": "0.0.0.0",
-        "create_date": "2020-11-06T15:02:39.444308+09:00",
-        "cms_user": 2
-    },
-    {
-        "type": "회원가입",
-        "register_ip": "0.0.0.0",
-        "create_date": "2020-11-06T15:04:58.221495+09:00",
-        "cms_user": 3
-    },
-    {
-        "type": "로그인",
-        "register_ip": "0.0.0.0",
-        "create_date": "2020-11-06T15:05:39.168803+09:00",
-        "cms_user": 3
-    },
-    {
-        "type": "로그아웃",
-        "register_ip": "0.0.0.0",
-        "create_date": "2020-11-06T15:12:48.820754+09:00",
-        "cms_user": 3
-    }
-]
-```
-
-- 실패 Response(403)
-
-```json
-{
-    "message": "권한이 없습니다."
-}
-```
-
-
-
-## 유저 필터링
-
-```
-주소/api/accounts/search/?type=<>&content=<>
-```
-
-> type 종류
->
-> - all  - 승인된 유저중에서 부서상관없이 이름으로 검색
-> - is_access - 승인되지 않은 유저들만 검색
->
-> - 부서명 - 해당 부서명으로 검색, content가 필수이다.
->
-> name - content에 들어가있는 이름으로 검색
->
-> ex) `주소/api/accounts/search/?type=생산관리&content=은석`
-
-- Response
-
-```json
-[
-    {
-        "id": 7,
-        "username": "songsong",
-        "first_name": "송은석",
-        "is_superuser": false,
-        "is_access": false,
-        "is_logger": false,
-        "is_eventer": false,
-        "is_producter": false,
-        "is_marketer": false,
-        "department": {
-            "id": 3,
-            "name": "생산관리"
-        },
-        "last_login": "2020-11-04T11:22:32.481028+09:00",
-        "employee_number": 123414141
-    },
-    {
-        "id": 9,
-        "username": "test6",
-        "first_name": "은석",
-        "is_superuser": false,
-        "is_access": false,
-        "is_logger": false,
-        "is_eventer": false,
-        "is_producter": false,
-        "is_marketer": false,
-        "department": {
-            "id": 3,
-            "name": "생산관리"
-        },
-        "last_login": "2020-11-04T11:31:24.566257+09:00",
-        "employee_number": 749172
-    }
-]
-```
 
 
 
 
 
-## 템플릿 정보
-
-```
-주소/api/products/template/(get)
-```
-
-- Response
-
-```json
-[
-    {
-        "id": 1,
-        "name": "카테고리 이미지 특화",
-        "type": 1
-    },
-    {
-        "id": 2,
-        "name": "아이템 이미지 특화",
-        "type": 2
-    }
-]
-```
 
 
 
 
 
-## 부서 정보
-
-```
-주소/api/accounts/department/
-```
-
-- Response
-
-```json
-[
-    {
-        "id": 1,
-        "name": "인사과"
-    },
-    {
-        "id": 2,
-        "name": "기획과"
-    },
-    {
-        "id": 3,
-        "name": "생산관리"
-    }
-]
-```
-
-
-
-## 이메일,아이디 여부
-
-```
-주소/api/accounts/validation/?type=<>&content=<>
-```
-
-- 성공 Response
-
-```json
-{
-    "message": "사용이 가능합니다."
-}
-```
-
-- 실패 Response(400)
-
-```json
-{
-    message: "너무 짧은 아이디 입니다.",
-    message: "존재하는 아이디 입니다.",
-    message: "존재하는 이메일 입니다."
-}
-```
-
-
-
-## 메인화면 아이템 모든 정보
+### 메인화면 아이템 모든 정보
 
 ```
 주소/api/services/main/(GET)
@@ -1606,35 +1916,15 @@
 ```json
 [
     {
-        "id": 1,
+        "id": 7,
         "priority": 1,
-        "is_active": false,
-        "create_date": "2020-11-09T11:14:39.523350+09:00",
-        "update_date": "2020-11-09T11:14:39.523350+09:00",
+        "is_active": true,
+        "create_date": "2020-11-13T16:34:01.761616+09:00",
+        "update_date": "2020-11-13T16:51:35.836814+09:00",
         "item": {
-            "id": 1,
-            "name": "노트북A",
-            "price": 1280000,
-            "is_temp": false,
-            "is_active": true,
-            "category": {
-                "id": 1,
-                "name": "노트북"
-            },
-            "template": {
-                "id": 2,
-                "name": "카테고리 이미지 특화",
-                "type": 1
-            },
-            "created_date": "2020-11-09T10:39:27.052224+09:00",
-            "update_date": "2020-11-09T10:39:27.052224+09:00",
-            "cms_user": {
-                "id": 2,
-                "username": "test",
-                "first_name": "김유기"
-            },
-            "descriptions": [],
-            "images": []
+            "id": 5,
+            "name": "오디세이",
+            "thumbnail": "media/KakaoTalk_20200921_091027148_d7tAwaw.png"
         },
         "user": {
             "id": 2,
@@ -1649,7 +1939,7 @@
 
 
 
-## 메인화면 아이템 생성
+### 메인화면 아이템 생성
 
 ```
 주소/api/services/main/(POST)
@@ -1671,35 +1961,15 @@
 
 ```json
 {
-    "id": 1,
+    "id": 7,
     "priority": 1,
-    "is_active": false,
-    "create_date": "2020-11-09T11:14:39.523350+09:00",
-    "update_date": "2020-11-09T11:14:39.523350+09:00",
+    "is_active": true,
+    "create_date": "2020-11-13T16:34:01.761616+09:00",
+    "update_date": "2020-11-13T16:36:52.915709+09:00",
     "item": {
-        "id": 1,
-        "name": "노트북A",
-        "price": 1280000,
-        "is_temp": false,
-        "is_active": true,
-        "category": {
-            "id": 1,
-            "name": "노트북"
-        },
-        "template": {
-            "id": 2,
-            "name": "카테고리 이미지 특화",
-            "type": 1
-        },
-        "created_date": "2020-11-09T10:39:27.052224+09:00",
-        "update_date": "2020-11-09T10:39:27.052224+09:00",
-        "cms_user": {
-            "id": 2,
-            "username": "test",
-            "first_name": "김유기"
-        },
-        "descriptions": [],
-        "images": []
+        "id": 5,
+        "name": "오디세이",
+        "thumbnail": "media/KakaoTalk_20200921_091027148_d7tAwaw.png"
     },
     "user": {
         "id": 2,
@@ -1711,7 +1981,7 @@
 
 
 
-## 메인화면 아이템 상세 정보
+### 메인화면 아이템 상세 정보
 
 ```
 주소/api/services/main/<int:pk>/(GET)
@@ -1721,35 +1991,15 @@
 
 ```json
 {
-    "id": 1,
+    "id": 7,
     "priority": 1,
-    "is_active": false,
-    "create_date": "2020-11-09T11:14:39.523350+09:00",
-    "update_date": "2020-11-09T11:14:39.523350+09:00",
+    "is_active": true,
+    "create_date": "2020-11-13T16:34:01.761616+09:00",
+    "update_date": "2020-11-13T16:36:52.915709+09:00",
     "item": {
-        "id": 1,
-        "name": "노트북A",
-        "price": 1280000,
-        "is_temp": false,
-        "is_active": true,
-        "category": {
-            "id": 1,
-            "name": "노트북"
-        },
-        "template": {
-            "id": 2,
-            "name": "카테고리 이미지 특화",
-            "type": 1
-        },
-        "created_date": "2020-11-09T10:39:27.052224+09:00",
-        "update_date": "2020-11-09T10:39:27.052224+09:00",
-        "cms_user": {
-            "id": 2,
-            "username": "test",
-            "first_name": "김유기"
-        },
-        "descriptions": [],
-        "images": []
+        "id": 5,
+        "name": "오디세이",
+        "thumbnail": "media/KakaoTalk_20200921_091027148_d7tAwaw.png"
     },
     "user": {
         "id": 2,
@@ -1761,7 +2011,7 @@
 
 
 
-## 메인화면 아이템 활성화
+### 메인화면 아이템 활성화
 
 ```
 주소/api/services/main/<int:pk>/(POST)
@@ -1811,7 +2061,7 @@
 
 
 
-## 메인화면 아이템 수정
+### 메인화면 아이템 수정
 
 ```
 주소/api/services/main/<int:pk>/(PUT)
@@ -1871,7 +2121,7 @@
 
 
 
-## 메인화면 아이템 비활성화
+### 메인화면 아이템 비활성화
 
 ```
 주소/api/services/main/<int:pk>/(DELETE)
@@ -1889,9 +2139,7 @@
 
 
 
-
-
-## 케로셀 아이템 모든 정보
+### 케로셀 아이템 모든 정보
 
 ```
 주소/api/services/carousel/(GET)
@@ -1902,17 +2150,48 @@
 ```json
 [
     {
-        "id": 1,
+        "id": 3,
+        "title": "대나무 이미지",
         "priority": 1,
-        "image": "/media/KakaoTalk_20201019_093205576_0AlpIJQ.png",
-        "is_active": true,
-        "url": "naver.com",
-        "create_date": "2020-11-09T10:44:02.906764+09:00",
-        "update_date": "2020-11-09T10:44:02.906764+09:00",
+        "image": "https://ssafycmss3bucket.s3.ap-northeast-2.amazonaws.com/media/844-1920x600_fgfeLej.jpg",
+        "is_active": false,
+        "url": "",
+        "create_date": "2020-11-13T15:13:20.821196+09:00",
+        "update_date": "2020-11-13T15:13:20.821242+09:00",
         "user": {
-            "id": 2,
-            "username": "test",
-            "first_name": "김유기"
+            "id": 5,
+            "username": "test930",
+            "first_name": "임선빈"
+        }
+    },
+    {
+        "id": 2,
+        "title": "시계 이미지",
+        "priority": 1,
+        "image": "https://ssafycmss3bucket.s3.ap-northeast-2.amazonaws.com/media/157-1920x600_3uT1JVu.jpg",
+        "is_active": true,
+        "url": "",
+        "create_date": "2020-11-13T12:51:35.725746+09:00",
+        "update_date": "2020-11-13T12:51:39.580436+09:00",
+        "user": {
+            "id": 5,
+            "username": "test930",
+            "first_name": "임선빈"
+        }
+    },
+    {
+        "id": 1,
+        "title": "더미 이미지",
+        "priority": 1,
+        "image": "https://ssafycmss3bucket.s3.ap-northeast-2.amazonaws.com/media/dummy-img_3wnOEpr.png",
+        "is_active": true,
+        "url": "",
+        "create_date": "2020-11-13T12:44:09.960828+09:00",
+        "update_date": "2020-11-13T12:44:13.543429+09:00",
+        "user": {
+            "id": 5,
+            "username": "test930",
+            "first_name": "임선빈"
         }
     }
 ]
@@ -1920,7 +2199,7 @@
 
 
 
-## 케로셀 아이템 생성
+### 케로셀 아이템 생성
 
 ```
 주소/api/services/carousel/(POST)
@@ -1958,7 +2237,7 @@
 
 
 
-## 케로셀 아이템 상세조회
+### 케로셀 아이템 상세조회
 
 ```
 주소/api/services/carousel/<int:pk>/(GET)
@@ -1985,7 +2264,7 @@
 
 
 
-## 케로셀 아이템 활성화
+### 케로셀 아이템 활성화
 
 ```
 주소/api/services/carousel/<int:pk>/(POST)
@@ -2012,7 +2291,7 @@
 
 
 
-## 케로셀 아이템 수정
+### 케로셀 아이템 수정
 
 ```
 주소/api/services/carousel/<int:pk>/(PUT)
@@ -2052,7 +2331,7 @@
 
 
 
-## 케로셀 아이템 비활성화
+### 케로셀 아이템 비활성화
 
 ```
 주소/api/services/carousel/<int:pk>/(DELETE)
@@ -2245,24 +2524,12 @@
 ```json
 [
     {
-        "id": 1,
-        "priority": 2,
+        "id": 7,
+        "priority": 1,
         "item": {
-            "id": 1,
-            "name": "노트북A",
-            "price": 1280000,
-            "template": 2,
-            "images": [],
-            "descriptions": [
-                {
-                    "id": 1,
-                    "category_description": {
-                        "id": 14,
-                        "name": "제조사"
-                    },
-                    "content": "AMD"
-                }
-            ]
+            "id": 5,
+            "name": "오디세이",
+            "thumbnail": "media/KakaoTalk_20200921_091027148_d7tAwaw.png"
         }
     }
 ]
@@ -2339,5 +2606,41 @@
         }
     ]
 }
+```
+
+
+
+### 공지사항 리스트 조회
+
+```
+주소/services/customer/notices/(GET)
+```
+
+- Response
+
+```json
+[
+    {
+        "id": 3,
+        "title": "1번 공지",
+        "content": "1번 공지",
+        "start_date": "2020-11-13T14:14:37.004201+09:00",
+        "image": "https://ssafycmss3bucket.s3.ap-northeast-2.amazonaws.com/media/login1_piqculY.png"
+    },
+    {
+        "id": 4,
+        "title": "2번 공지",
+        "content": "2번 공지",
+        "start_date": "2020-11-13T15:12:04.673845+09:00",
+        "image": "https://ssafycmss3bucket.s3.ap-northeast-2.amazonaws.com/media/cat_4xuOtqq.jpg"
+    },
+    {
+        "id": 8,
+        "title": "유기 test",
+        "content": "134",
+        "start_date": "2020-11-13T16:00:09.995162+09:00",
+        "image": "https://ssafycmss3bucket.s3.ap-northeast-2.amazonaws.com/media/cat.jpg"
+    }
+]
 ```
 

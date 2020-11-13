@@ -5,12 +5,18 @@ export default {
   namespaced: true,
 
   state: {
+    mainItems: '',
     carousels: '',
+
+    itemList: '',
 
     events: '',
     event: '',
 
     search: '',
+
+    // 아이템 detail 정보
+    itemInfo: '',
   },
 
   getters: {
@@ -18,8 +24,15 @@ export default {
   },
 
   mutations: {
+    SET_MAINITEMS(state, payload) {
+      state.mainItems = payload
+    },
     SET_CAROUSELS(state, payload) {
       state.carousels = payload
+    },
+
+    SET_ITEMLIST(state, payload) {
+      state.itemList = payload
     },
 
     SET_EVENTS(state, payload) {
@@ -32,9 +45,23 @@ export default {
     SET_SEARCH(state, payload) {
       state.search = payload
     },
+
+    // 아이템 detail 상태 변경
+    SET_ITEMINFO(state, payload) {
+      state.itemInfo = payload
+    }
   },
 
   actions: {
+    getMainItems({ commit }) {
+      axios.get(SERVER.URL + SERVER.ROUTER.customer.main)
+      .then((res) => {
+        commit('SET_MAINITEMS', res.data)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+    },
 
     getCarousels({ commit }) {
       axios.get(SERVER.URL + SERVER.ROUTER.customer.carousel)
@@ -46,6 +73,15 @@ export default {
       })
     },
 
+    getItemList({ commit }, cid) {
+      axios.get(SERVER.URL + SERVER.ROUTER.customer.category + cid + '/')
+      .then((res) => {
+        commit('SET_ITEMLIST', res.data)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+    },
 
     getEvents({ commit }) {
       axios.get(SERVER.URL + SERVER.ROUTER.customer.event)
@@ -76,5 +112,15 @@ export default {
         console.log(err)
       })
     },
+
+    // 아이템 detail 조회
+    getItemInfo({ commit }, cid) {
+      axios.get(SERVER.URL + SERVER.ROUTER.customer.item + cid)
+        .then(res => {
+          console.log(res)
+          commit('SET_ITEMINFO', res.data)
+        })
+        .catch(error => console.log(error.response))
+    }
   }
 }

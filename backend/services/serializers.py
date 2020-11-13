@@ -1,6 +1,6 @@
-from accounts.serializers import UserSerializer
-from products.serializers import CustomerItemSerializer, ItemSerializer
 from products.models import Item
+from accounts.serializers import UserSerializer
+from products.serializers import CustomerItemSerializer, ItemSerializer, MainItemJoinSerializer
 from django.db.models import Q
 from accounts.models import User
 from services.models import Event
@@ -28,7 +28,7 @@ class NoticesSerializer(serializers.ModelSerializer):
 
 
 class MainItemSerializer(serializers.ModelSerializer):
-    item = ItemSerializer()
+    item = MainItemJoinSerializer()
     user = UserSerializer()
     class Meta:
         model = MainItem
@@ -43,7 +43,7 @@ class MainCarouselItemSerializer(serializers.ModelSerializer):
 
 
 class CustomerMainItemSerializer(serializers.ModelSerializer):
-    item = CustomerItemSerializer()
+    item = MainItemJoinSerializer()
     class Meta:
         model = MainItem
         fields = ['id', 'priority', 'item']
@@ -58,7 +58,7 @@ class CustomerCarouselSerializer(serializers.ModelSerializer):
 class CustomerEventListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Event
-        fields = ['id', 'title', 'start_date', 'end_date', 'thumbnail_image', 'priority']
+        fields = ['id', 'title', 'content', 'start_date', 'end_date', 'thumbnail_image', 'priority']
 
 
 class CustomerEventDetailSerializer(serializers.ModelSerializer):
@@ -66,7 +66,6 @@ class CustomerEventDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Event
         fields = ['id', 'title', 'start_date', 'end_date', 'thumbnail_image', 'priority', 'content', 'url', 'images']
-
 
 
 class SearchSerializer(serializers.ModelSerializer):
@@ -88,3 +87,9 @@ class SearchSerializer(serializers.ModelSerializer):
         items = Item.objects.filter(name__contains=content).exclude(is_temp=True).exclude(is_active=False)
         serializer = CustomerItemSerializer(items, many=True)
         return serializer.data
+
+
+class CustomerNoticeListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Notices
+        fields = ['id', 'title', 'content', 'start_date', 'image']

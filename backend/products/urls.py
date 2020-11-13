@@ -12,4 +12,5 @@ urlpatterns = [
     path('customer/categories/', views.CustomerCategoryAPI.as_view()),
     path('customer/categories/<int:pk>/', views.CustomerCategoryDetailAPI.as_view()),
     path('customer/product/<int:pk>/', views.CustomerItemAPI.as_view()),
+    path('search/', views.ItemSearch.as_view()),
 ]

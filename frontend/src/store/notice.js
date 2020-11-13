@@ -37,6 +37,7 @@ export default {
     getNotices({ commit, rootGetters }) {
       axios.get(SERVER.URL + SERVER.ROUTER.notice, rootGetters['account/config'])
         .then (res => {
+          console.log(res.data)
           commit('SET_NOTICES', res.data)
         })
         .catch (error => console.log(error.response))
@@ -47,7 +48,7 @@ export default {
       axios.get(SERVER.URL + SERVER.ROUTER.notice + id, rootGetters['account/config'])
         .then(res => {
           commit('SET_NOTICE', res.data)
-          commit('SET_IMAGEURL', SERVER.URL.slice(0,SERVER.URL.length-4) + res.data.image.substr(1))
+          commit('SET_IMAGEURL', SERVER.domain + res.data.image.slice(56, res.data.image.length))
         })
         .catch(error => console.log(error.response))
     },
@@ -60,5 +61,14 @@ export default {
       })
       .catch(error => console.log(error.response))
     },
+
+    // customer 공지 조회
+    getCustomerNotice({ commit }) {
+      axios.get(SERVER.URL + SERVER.ROUTER.customer.notice)
+        .then(res => {
+          commit('SET_NOTICES', res.data)
+        })
+        .catch(error => console.log(error.response))
+    }
   },
 }

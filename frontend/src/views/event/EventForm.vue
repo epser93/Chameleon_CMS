@@ -94,10 +94,8 @@
             <button type="button" class="btn btn-dark btn-sm mr-2" @click="$router.go(-1)">뒤로가기</button>
           </div>
           <div>
-            <button type="button" class="btn btn-secondary btn-sm mr-2" @click="onClickWindows">미리보기</button>
-          </div>
-          <div>
-            <button type="button" class="btn btn-primary btn-sm" @click="onRegister">등록하기</button>
+            <button v-if="update" type="button" class="btn btn-primary btn-sm" @click="onRegister">저장</button>
+            <button type="button" class="btn btn-primary btn-sm" @click="onRegister">추가</button>
           </div>
         </div>  
 
@@ -140,7 +138,7 @@ export default {
   },
   watch: {
     event(val) {
-      this.imageUrl.thumbnail = 'http://k3c205.p.ssafy.io' + val.thumbnail_image
+      this.imageUrl.thumbnail = 'http://k3c205.p.ssafy.io' + val.thumbnail_image.slice(56)
       this.title = val.title,
       this.content = val.content,
       this.date.start = val.start_date,
@@ -150,7 +148,7 @@ export default {
         const imageData = {
           file: val.images[i].id,
           number: i,
-          preview: 'http://k3c205.p.ssafy.io' + val.images[i].image
+          preview: 'http://k3c205.p.ssafy.io' + val.images[i].image.slice(56)
         }
         this.images.detail.push(imageData)
       }
@@ -163,13 +161,6 @@ export default {
   methods: {
     ...mapActions('event', ['getEvent', 'postEvent']),
     ...mapMutations('event', ['SET_EVENT']),
-    onClickRegister(){
-      console.log('dfdfdf')
-    },
-    onClickWindows(){
-      var url="test.html";
-      window.open(url,"",)
-    },
     onUploadThumbnail() {
       this.$refs.thumbnailImage.click()
     },
@@ -277,7 +268,7 @@ hr {
 }
 
 .preview-img {
-  width: 360px;
+  width: auto;
   height: 150px;
   background-color: ghostwhite;
   border: 1px solid #ced4da;

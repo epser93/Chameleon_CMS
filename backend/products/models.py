@@ -23,7 +23,7 @@ class Template(models.Model):
 
 # Create your models here.
 class Category(models.Model):
-    name = models.CharField(max_length=200)
+    name = models.CharField(max_length=200, default=None, null = True)
     is_active = models.BooleanField(default=False)
     priority = models.IntegerField(default=1)
     created_date = models.DateTimeField(auto_now_add=True)
@@ -119,11 +119,10 @@ class AbstractItem(models.Model):
         self.name = item.name
         self.price = item.price
         self.is_temp = item.is_temp
-        self.created_date = item.created_date
-        self.update_date = item.update_date
         self.cms_user = User.objects.using('master').get(pk=item.cms_user.pk) 
         self.category = Category.objects.using('master').get(pk=item.category.pk) 
-        self.template = Template.objects.using('master').get(pk=item.template.pk) 
+        self.template = Template.objects.using('master').get(pk=item.template.pk)
+        self.save()
 
     def delete(self):
         self.is_active = False
@@ -166,8 +165,6 @@ class AbstractItemImage(models.Model):
     def copy(self, item_image, item):
         self.item_image = item_image.item_image
         self.is_thumbnail = item_image.is_thumbnail
-        self.created_date = item_image.created_date
-        self.update_date = item_image.update_date
         self.item = item
         self.save()
 

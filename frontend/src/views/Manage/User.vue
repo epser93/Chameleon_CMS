@@ -6,7 +6,7 @@
           미승인 회원 <span class="badge badge-light ml-1">{{unAuthorizedUserCount}}</span>
         </button>
       </div>
-      <div class="input-group mb-3">
+      <div class="input-group mb-3 justify-content-center">
         <select name="" id="" v-model="selectedDepartment">
           <option value="all">All</option>
           <option v-for="(department, index) in departments" :key="index" :value="department.name">{{department.name}}</option>
@@ -87,7 +87,7 @@ export default {
       selectedDepartment: 'all',
       searchedName: '',
       searchToggle : false,
-      perPage: 10,
+      perPage: 7,
       nowPage: 0,
     }
   },
@@ -101,6 +101,16 @@ export default {
     },
     changeSearchToggle() {
       this.searchToggle = !this.searchToggle
+    },
+    prevPage() {
+      if (this.nowPage > 0) {
+        this.nowPage -= 1
+      }
+    },
+    nextPage() {
+      if (this.nowPage < this.pages-1) {
+        this.nowPage += 1
+      }
     }
   },
   computed : {
@@ -174,5 +184,9 @@ td span {
   width: 97%;
   margin-right: auto;
   margin-left: auto;
+}
+
+.page-item {
+  cursor: pointer;
 }
 </style>

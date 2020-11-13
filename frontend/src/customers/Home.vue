@@ -7,7 +7,7 @@
       </ol>
       <div class="carousel-inner">
           <div :class="(index === 0) ? 'active carousel-item' : 'carousel-item'"  v-for="(carousel, index) in carousels" :key="index">
-            <img :src="'http://k3c205.p.ssafy.io'+carousel.image" class="d-block w-100" :alt="'main-image-'+index" @click="onClickWindows(carousel.url)">
+            <img :src="'http://k3c205.p.ssafy.io'+carousel.image.slice(56)" class="d-block w-100" :alt="'main-image-'+index" @click="onClickWindows(carousel.url)">
           </div>
       </div>
       <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -24,11 +24,10 @@
       <div class="row mt-4 mb-3">
         <h2 class="mr-auto ml-auto">추천 제품</h2>
       </div>
-      <div class="row justify-content-around mb-2">
-        <img src="@/assets/250.png" class="col-6 col-lg-3 mb-4" alt="recommand product image1">
-        <img src="@/assets/250.png" class="col-6 col-lg-3 mb-4" alt="recommand product image2">
-        <img src="@/assets/250.png" class="col-6 col-lg-3 mb-4" alt="recommand product image3">
-        <img src="@/assets/250.png" class="col-6 col-lg-3 mb-4" alt="recommand product image4">
+      <div class="row justify-content-around mb-2 product">
+        <img v-for="(product, index) in mainItems" :key="index"
+          :src="'http://k3c205.p.ssafy.io/'+product.item.thumbnail"
+          class="col-6 col-lg-3 mb-4" :alt="'recommand product image'+index">
       </div>
     </div>
     <!-- 이벤트 Carousel --> 
@@ -42,7 +41,7 @@
         </ol>
         <div class="carousel-inner">
           <div :class="(index === 0) ? 'active carousel-item' : 'carousel-item'"  v-for="(event, index) in events" :key="index">
-            <img :src="'http://k3c205.p.ssafy.io'+event.thumbnail_image" class="d-block w-100" :alt="'main-image-'+index" @click="onDetail(event.id)">
+            <img :src="'http://k3c205.p.ssafy.io'+event.thumbnail_image.slice(56)" class="d-block w-100" :alt="'main-image-'+index" @click="onDetail(event.id)">
           </div>
         </div>
         <a class="carousel-control-prev" href="#eventCarouselIndicators" role="button" data-slide="prev">
@@ -65,10 +64,10 @@ import { mapState, mapActions } from 'vuex'
 export default {
   name: 'Home',
   computed: {
-    ...mapState('customer', ['carousels', 'events']),
+    ...mapState('customer', ['mainItems', 'carousels', 'events']),
   },
   methods: {
-    ...mapActions('customer', ['getCarousels', 'getEvents']),
+    ...mapActions('customer', ['getMainItems', 'getCarousels', 'getEvents']),
     onClickWindows(url) {
       if (url) {
         window.open(url) 
@@ -83,6 +82,7 @@ export default {
     if (!this.$cookies.get("DontOpenNotice")) {
       window.open("http://localhost:8080/notice", "", "width=305,height=332,left=200,top=200")
     }
+    this.getMainItems()
     this.getCarousels()
     this.getEvents()
   }

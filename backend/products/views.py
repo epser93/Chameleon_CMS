@@ -17,15 +17,20 @@ class CategoryList(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
+        key = RedisKey.category_admin + 'all'
+        if cache.has_key(key):
+            return Response(cache.get(key))
         categories = Category.objects.all()
         serializer = CategorySerializer(categories, many=True)
+        cache.set(key, serializer.data)
         return Response(serializer.data)
 
     def post(self, request):
         if request.user.is_superuser == False and request.user.is_producter == False :
             return Response(forbidden_message, status=status.HTTP_403_FORBIDDEN)
         user = User.objects.using('master').get(username=request.user.username)
-        if Category.objects.filter(name=request.data['name']).exists():
+        name = request.data.get('name', None)
+        if name and Category.objects.filter(name=name).exists():
             return Response(existing_category_message, status=status.HTTP_400_BAD_REQUEST)
         category = Category()
         template = Template.objects.using('master').get(pk=int(request.data['template']))
@@ -37,6 +42,7 @@ class CategoryList(APIView):
         log.update('\'{}\' 카테고리 생성'.format(category.name), None, user)
         category = Category.objects.get(pk=category.pk)
         serializer = CategorySerializer(category)
+        RedisKey.remove_data()
         return Response(serializer.data)
 
 
@@ -44,9 +50,13 @@ class CategoryDetail(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request, pk):
+        key = RedisKey.category_admin + str(pk)
+        if cache.has_key(key):
+            return Response(cache.get(key))
         category = Category.objects.get(pk=pk)
-        items = Item.objects.filter(category=category)
+        items = Item.objects.filter(category=category).order_by('-pk')
         serializer = ItemSerializer(items, many=True)
+        cache.set(key, serializer.data)
         return Response(serializer.data)
 
     def post(self, request, pk):
@@ -59,6 +69,7 @@ class CategoryDetail(APIView):
         log.update('\'{}\' 카테고리 활성화'.format(category.name), None, user)
         category = Category.objects.get(pk=pk)
         serializer = CategorySerializer(category)
+        RedisKey.remove_data()
         return Response(serializer.data)
 
     # 테스트
@@ -79,6 +90,7 @@ class CategoryDetail(APIView):
         log.update('\'{} -> {}\' 카테고리 수정'.format(before_name, category.name), None, user)
         category = Category.objects.get(pk=pk)
         serializer = CategorySerializer(category)
+        RedisKey.remove_data()
         return Response(serializer.data)
 
     
@@ -91,6 +103,7 @@ class CategoryDetail(APIView):
         log = TotalLog()
         log.update('\'{}\' 카테고리 비활성화'.format(category.name), None, user)
         answer = {message: "비활성화 되었습니다."}
+        RedisKey.remove_data()
         return Response(answer)
 
     
@@ -136,13 +149,15 @@ class ProductsList(APIView):
             copy_item_description.create(descriptions_content[i], user, copy_of_item, category_description)
             item_description.copy(copy_item_description, item)
         images = []
-        number = int(request.data['number'])
+        number = int(request.data.get('number', 0))
         for i in range(number):
             images.append(request.FILES['image{}'.format(i)])
         is_thumbnails = request.data.getlist('is_thumbnails')
         if len(is_thumbnails) == 0:
             is_thumbnails = [False for _ in range(len(images))]
-        prioritys = request.data.get('prioritys', [i+1 for i in range(len(images))])
+        prioritys = list(map(int, request.data.getlist('prioritys')))
+        if not prioritys:
+            prioritys = [i+1 for i in range(len(images))]
         for i in range(len(images)):
             item_image = ItemImage()
             copy_item_image = CopyOfItemImage()
@@ -152,6 +167,7 @@ class ProductsList(APIView):
         log.update('\'{}\' 아이템 생성'.format(item.name), None, user)
         item = Item.objects.get(pk=item.pk)
         serializer = ItemSerializer(item)
+        RedisKey.remove_data()
         return Response(serializer.data)
 
 
@@ -159,8 +175,12 @@ class ProductDetail(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request, pk):
+        key = RedisKey.item_admin + str(pk)
+        if cache.has_key(key):
+            return Response(cache.get(key))
         item = Item.objects.get(pk=pk)
         serializer = ItemSerializer(item)
+        cache.set(key, serializer.data)
         return Response(serializer.data)
 
 
@@ -174,6 +194,7 @@ class ProductDetail(APIView):
         log.update('\'{}\' 아이템 활성화'.format(item.name), None, user)
         item = Item.objects.get(pk=pk)
         serializer = ItemSerializer(item)
+        RedisKey.remove_data()
         return Response(serializer.data)
     
 
@@ -201,6 +222,7 @@ class ProductDetail(APIView):
         log.update('\'{} -> {}\' 아이템 수정'.format(before_name, item.name), None, user)
         item = Item.objects.get(pk=pk)
         serializer = ItemSerializer(item)
+        RedisKey.remove_data()
         return Response(serializer.data)
 
     def delete(self, request, pk):
@@ -212,6 +234,7 @@ class ProductDetail(APIView):
         log = TotalLog()
         log.update('\'{}\' 아이템 비활성화'.format(item.name), None, user)
         answer = {'message': "비활성화 되었습니다."}
+        RedisKey.remove_data()
         return Response(answer)
 
 
@@ -219,9 +242,13 @@ class CopyProduct(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request, pk):
+        key = RedisKey.temp_item + str(pk)
+        if cache.has_key(key):
+            return Response(cache.get(key))
         item = Item.objects.get(pk=pk)
-        copy_items = CopyOfItem.objects.filter(item=item)
+        copy_items = CopyOfItem.objects.filter(item=item).order_by('-pk')
         serializer = CopyItemSerializer(copy_items, many=True)
+        cache.set(key, serializer.data)
         return Response(serializer.data)
 
     def post(self, request, pk):
@@ -240,7 +267,7 @@ class CopyProduct(APIView):
             category_description = CategoryDescription.objects.using('master').get(pk=description_id[i])
             copy_item_description.create(descriptions_content[i], user, copy_of_item, category_description)
         images = []
-        number = int(request.data['number'])
+        number = int(request.data.get('number', 0))
         for i in range(number):
             images.append(request.FILES['image{}'.format(i)])
         is_original = request.data.get('is_original', 'True') == 'True'
@@ -260,7 +287,6 @@ class CopyProduct(APIView):
             copy_item_image = CopyOfItemImage()
             if i == -1:
                 copy_item_image.create(images[idx], copy_of_item, is_thumbnails[idx], prioritys[idx])
-                print(copy_item_image)
                 idx += 1
             else:
                 if is_original:
@@ -272,6 +298,7 @@ class CopyProduct(APIView):
         log.update('\'{}\' 아이템 히스토리 생성'.format(item.name), None, user)
         copy_of_item = CopyOfItem.objects.get(pk=copy_of_item.pk)
         serializer = CopyItemSerializer(copy_of_item)
+        RedisKey.remove_temp()
         return Response(serializer.data)
 
 
@@ -316,5 +343,17 @@ class CustomerItemAPI(APIView):
             return Response(cache.get(key))
         item = Item.objects.get(pk=pk, is_active=True, is_temp=False)
         serializer = CustomerItemSerializer(item)
+        cache.set(key, serializer.data)
+        return Response(serializer.data)
+
+
+class ItemSearch(APIView):
+    def get(self, request):
+        content = request.GET.get('content', '')
+        key = RedisKey.search_admin + content
+        if cache.has_key(key):
+            return Response(cache.get(key))
+        items = Item.objects.filter(name__contains=content)
+        serializer = ItemSerializer(items, many=True)
         cache.set(key, serializer.data)
         return Response(serializer.data)

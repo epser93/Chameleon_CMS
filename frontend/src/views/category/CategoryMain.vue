@@ -1,10 +1,11 @@
 <template>
   <div v-if="categories" class="container pl-0">
     <div class="table-container">
-      <div class="ml-3 mt-3 mb-3">
-          <button type="button" class="btn btn-info ml-3 mb-3" @click="onRoute('ProductCG')">
-            생성
-          </button>
+      <div class="mt-3 mb-3">
+        <div class="row align-items-center mt-1 mb-3">
+          <h5 class="mb-0 ml-3">카테고리</h5>
+          <button type="button" class="btn btn-info btn-sm" @click="onRoute('ProductCG')">추가</button>
+        </div>
       <!-- 제품별 리스트 - 검색 조건 걸어줘야함 혹은 전체 보기로 기존의 것들을 출력할 수 있어야함 -->
         <table class="table">
           <thead>
@@ -31,7 +32,7 @@
               </td>
               <!-- 스위치 -->
               <td>{{ category.update_date.slice(0,10) }}</td>
-              <td><button type="button" class="btn btn-secondary btn-sm" @click="onDetail(category.id)">보기</button></td>
+              <td><button type="button" class="btn btn-outline-secondary btn-sm" @click="onDetail(category.id)">보기</button></td>
               <td><button type="button" class="btn btn-warning btn-sm" @click="onUpdate(category.id)">수정</button></td>
             </tr>
           </tbody>
@@ -39,12 +40,25 @@
       </div>
       <div class="page-navi justify-content-center">
         <nav aria-label="Page navigation example">
-          <ul class="pagination">
-            <div v-for="(page, i) in pages" :key="i">
-              <li :class="(i == nowPage) ? 'page-item active':'page-item' ">
-                <a @click="onPage(i)" class="page-link" href="#">{{ page }}</a>
-              </li>
-            </div>
+          <ul v-if="pages == 0" class="pagination">
+            <li class="page-item">
+              <img src="@/assets/icons/caret-left.svg" width="26" height="26" title="caret-left" @click="prevPage()">
+            </li>
+            <p> {{ nowPage + 1 }}  / {{ pages + 1}} </p>
+            <li class="page-item">
+              <img src="@/assets/icons/caret-right.svg" width="26" height="26" title="caret-right" @click="nextPage()">
+            </li>
+          </ul>
+          <ul v-else class="pagination">
+            <li class="page-item">
+              <img v-if="nowPage == 0" src="@/assets/icons/caret-left.svg" width="26" height="26" title="caret-left" @click="prevPage()">
+              <img v-else src="@/assets/icons/caret-left-fill.svg" width="26" height="26" title="caret-left-fill" @click="prevPage()">
+            </li>
+            <p> {{ nowPage + 1 }}  / {{ pages }} </p>
+            <li class="page-item">
+              <img v-if="nowPage == (pages-1)" src="@/assets/icons/caret-right.svg" width="26" height="26" title="caret-right" @click="nextPage()">
+              <img v-else src="@/assets/icons/caret-right-fill.svg" width="26" height="26" title="caret-right-fill" @click="nextPage()">
+            </li>
           </ul>
         </nav>
       </div>
@@ -60,7 +74,7 @@ export default {
 
   data() {
     return {
-      perPage: 10,
+      perPage: 7,
       nowPage: 0,
     }
   },
@@ -88,7 +102,6 @@ export default {
       this.$router.push({name:'ProductCGupdate', params:{cid: cid, update: 'update'}})
     },
     onRoute(name) {
-      console.log("눌림")
 			this.$router.push({name:name}, () => {})
     },
     onDetail(cid) {
@@ -104,8 +117,17 @@ export default {
           this.postCategory(category.id)
         }
       }
+    },
+      prevPage() {
+      if (this.nowPage > 0) {
+        this.nowPage -= 1
+      }
+    },
+    nextPage() {
+      if (this.nowPage < this.pages-1) {
+        this.nowPage += 1
+      }
     }
-    
   },
 
   created(){
@@ -143,5 +165,9 @@ span {
   position: absolute;
   bottom: 0;
   left: 50%;
+}
+
+.page-item {
+  cursor: pointer;
 }
 </style>

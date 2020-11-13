@@ -3,7 +3,8 @@
     <div class="title-division">
       <div class="col-8">
         <div class="form-title mt-5">
-          <h3>Add Notice</h3>
+          <h3 v-if="id">Edit Notice</h3>
+          <h3 v-else>Add Notice</h3>
           <hr>
         </div>
         <!-- Notice 제목 -->
@@ -29,13 +30,14 @@
         </div>
         <div class="row btn-division justify-content-end mt-5 mb-5">
           <div>
-            <button type="button" class="btn btn-info btn-sm mr-2" @click="onClickWindows">미리보기</button>
+            <button type="button" class="btn btn-dark btn-sm mr-2" @click="onRoute('Notice')">뒤로가기</button>
           </div>
           <div v-if="!noticeInfo || noticeInfo.is_temp">
-            <button type="button" class="btn btn-secondary btn-sm mr-2" @click="onClickTemp">임시저장</button>
+            <button type="button" class="btn btn-warning btn-sm mr-2" @click="onClickTemp">임시저장</button>
           </div>
           <div>
-            <button type="button" class="btn btn-primary btn-sm" @click="onActivate">등록하기</button>
+            <button v-if="id" type="button" class="btn btn-primary btn-sm" @click="onActivate">저장</button>
+            <button v-else type="button" class="btn btn-primary btn-sm" @click="onActivate">추가</button>
           </div>
         </div> 
       </div>
@@ -55,6 +57,7 @@ export default {
       contents: null,
       imageFile : null,
       noticeInfo : null,
+      id: false,
     }
   },
   computed : {
@@ -77,7 +80,8 @@ export default {
       formdata.append("title", this.title)
       formdata.append("content", this.contents)
       if (!this.$route.params.id) { // 바로 등록의 경우 
-        formdata.append("is_temp", 'False')  
+        formdata.append("is_temp", 'False')
+        formdata.append("is_active", 'True')  
         axios.post(SERVER.URL + SERVER.ROUTER.notice, formdata, this.formconfig)
           .then(res => {
             console.log(res)
@@ -103,6 +107,8 @@ export default {
       } 
       formdata.append("title", this.title)
       formdata.append("content", this.contents)
+      formdata.append('is_active', "True")
+      formdata.append('is_temp', 'True')
       if (!this.$route.params.id) { // 첫글 바로 임시등록할 때
         axios.post(SERVER.URL + SERVER.ROUTER.notice, formdata, this.formconfig)
           .then(() => {
@@ -118,25 +124,22 @@ export default {
           .catch(error => console.log(error.response))
       }
     },
-    onClickWindows(){
-      var url="test.html";
-      window.open(url,"",);
-    },
     init() {
       if (this.$route.params.id) {
         axios.get(SERVER.URL + SERVER.ROUTER.notice + this.$route.params.id, this.config)
           .then(res => {
-            console.log(res.data)
+            this.id = true
             this.noticeInfo = res.data
-            console.log('인포', this.noticeInfo)
             this.title = res.data.title
             this.contents = res.data.content
-            this.imageUrl = SERVER.domain + res.data.image
-            console.log(this.imageUrl)
+            this.imageUrl = SERVER.domain + res.data.image.slice(56, res.data.image.length)
           })
           .catch(error => console.log(error.response))
       }
-    }
+    },
+    onRoute(name) {
+      this.$router.push({name: name}, () => {})
+    },
   },
   created() {
     this.init()
@@ -174,7 +177,7 @@ hr {
 }
 
 #inner-img {
-  width : 300px;
+  width : auto;
   height: 125px;
   right: 50%;
   top: 50%;

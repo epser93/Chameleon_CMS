@@ -106,6 +106,16 @@ export default {
         .catch(error => console.log(error.response))
     },
 
+    // 로그아웃
+    logout({ getters }) {
+      axios.post(SERVER.URL + SERVER.ROUTER.logout, null, getters.config)
+        .then(() => {
+          cookies.remove('auth-token')
+          router.push({name : 'Login'})
+        })
+        .catch(error => console.log(error.response))
+    },
+
     // 특정 유저 정보 조회
     getUserInfo({ getters, commit }) {
       axios.get(SERVER.URL + SERVER.ROUTER.userinfo, getters.config)
