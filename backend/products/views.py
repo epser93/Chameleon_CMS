@@ -6,6 +6,8 @@ from .models import Item, ItemImage, ItemDescription, Category, CategoryDescript
 from .serializers import CopyItemSerializer, CustomerCategoryJoinSerializer, CustomerCategorySerializer, CustomerItemSerializer, ItemSerializer, CategorySerializer, TemplateSerializer
 from rest_framework.permissions import IsAuthenticated
 from accounts.views import forbidden_message
+from django.core.cache import cache
+from cms_pjt.redis_key import RedisKey
 
 
 message = 'message'
@@ -119,19 +121,20 @@ class ProductsList(APIView):
             return Response(forbidden_message, status=status.HTTP_403_FORBIDDEN)
         item = Item()
         copy_of_item = CopyOfItem()
-        user = User.objects.using('master').get(username=request.user.username)
+        user = User.objects.using('master').get(pk=request.user.pk)
         template = Template.objects.using('master').get(pk=request.data['template'])
         category = Category.objects.using('master').get(pk=request.data['category'])
         item.create(request.data, user, category, template)
         copy_of_item.copy_create(request.data, user, category, template, item)
+        item.copy(copy_of_item)
         description_id = list(map(int, request.data.getlist('descriptions_id')))
         descriptions_content = request.data.getlist('descriptions_content')
         for i in range(len(descriptions_content)):
             item_description = ItemDescription()
             copy_item_description = CopyOfItemDescription()
             category_description = CategoryDescription.objects.using('master').get(pk=description_id[i])
-            item_description.create(descriptions_content[i], user, item, category_description)
             copy_item_description.create(descriptions_content[i], user, copy_of_item, category_description)
+            item_description.copy(copy_item_description, item)
         images = []
         number = int(request.data['number'])
         for i in range(number):
@@ -184,9 +187,9 @@ class ProductDetail(APIView):
         descriptions = ItemDescription.objects.using('master').filter(item=item)
         images.delete()
         descriptions.delete()
-        copy_of_item = CopyOfItem.objects.get(pk=request.data['id'], item=item)
-        copy_of_images = CopyOfItemImage.objects.filter(item=copy_of_item)
-        copy_descriptions = CopyOfItemDescription.objects.filter(item=copy_of_item)
+        copy_of_item = CopyOfItem.objects.using('master').get(pk=request.data['id'], item=item)
+        copy_of_images = CopyOfItemImage.objects.using('master').filter(item=copy_of_item)
+        copy_descriptions = CopyOfItemDescription.objects.using('master').filter(item=copy_of_item)
         item.copy(copy_of_item)
         for copy_image in copy_of_images:
             image = ItemImage()
@@ -244,7 +247,9 @@ class CopyProduct(APIView):
         images_type = list(map(int, request.data.getlist('images_type')))
         if not images_type:
             images_type = [-1 for _ in range(len(images))]
-        is_thumbnails = list(map(bool, request.data.getlist('is_thumbnails')))
+        is_thumbnails = request.data.getlist('is_thumbnails')
+        for i in range(len(is_thumbnails)):
+            is_thumbnails[i] = is_thumbnails[i] == 'True'
         if not is_thumbnails:
             is_thumbnails = [False for _ in range(len(images))]
         prioritys = list(map(int, request.data.getlist('prioritys')))
@@ -255,43 +260,61 @@ class CopyProduct(APIView):
             copy_item_image = CopyOfItemImage()
             if i == -1:
                 copy_item_image.create(images[idx], copy_of_item, is_thumbnails[idx], prioritys[idx])
+                print(copy_item_image)
                 idx += 1
             else:
                 if is_original:
-                    item_image = ItemImage.objects.get(pk=i)
+                    item_image = ItemImage.objects.using('master').get(pk=i)
                 else:
-                    item_image = CopyOfItemImage.objects.get(pk=i)
+                    item_image = CopyOfItemImage.objects.using('master').get(pk=i)
                 copy_item_image.copy(item_image, copy_of_item)
         log = TotalLog()
         log.update('\'{}\' 아이템 히스토리 생성'.format(item.name), None, user)
-        copy_of_item = CopyOfItem.objects.using('master').get(pk=copy_of_item.pk)
-        serializer = ItemSerializer(copy_of_item)
+        copy_of_item = CopyOfItem.objects.get(pk=copy_of_item.pk)
+        serializer = CopyItemSerializer(copy_of_item)
         return Response(serializer.data)
 
 
 class TemplateAPI(APIView):
+    
     def get(self, request):
+        key = RedisKey.template
+        if cache.has_key(RedisKey.template):
+            return Response(cache.get(key))
         templates = Template.objects.all()
         serializer = TemplateSerializer(templates, many=True)
+        cache.set(key, serializer.data)
         return Response(serializer.data)
 
 
 class CustomerCategoryAPI(APIView):
     def get(self, request):
+        key = RedisKey.category_customer+'all'
+        if cache.has_key(key):
+            return Response(cache.get(key))
         categories = Category.objects.filter(is_active=True).order_by('priority', '-update_date')
         serializer = CustomerCategorySerializer(categories, many=True)
+        cache.set(key, serializer.data)
         return Response(serializer.data)
 
 
 class CustomerCategoryDetailAPI(APIView):
     def get(self, request, pk):
+        key = RedisKey.category_customer + str(pk)
+        if cache.has_key(key):
+            return Response(cache.get(key))
         category = Category.objects.get(pk=pk, is_active=True)
         serializer = CustomerCategoryJoinSerializer(category)
+        cache.set(key, serializer.data)
         return Response(serializer.data)
 
 
 class CustomerItemAPI(APIView):
     def get(self, request, pk):
+        key = RedisKey.item_customer + str(pk)
+        if cache.has_key(key):
+            return Response(cache.get(key))
         item = Item.objects.get(pk=pk, is_active=True, is_temp=False)
         serializer = CustomerItemSerializer(item)
+        cache.set(key, serializer.data)
         return Response(serializer.data)

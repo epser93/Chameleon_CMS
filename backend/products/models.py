@@ -95,13 +95,13 @@ class AbstractItem(models.Model):
     name = models.CharField(max_length=200)
     price = models.IntegerField(default=0)
     is_temp = models.BooleanField(default=False)
-    is_active = models.BooleanField(default=True)
+    is_active = models.BooleanField(default=False)
     created_date = models.DateTimeField(auto_now_add=True)
     update_date = models.DateTimeField(auto_now=True)
     
-    cms_user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.DO_NOTHING)
-    category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
-    template = models.ForeignKey(Template, on_delete=models.SET_NULL, null=True)
+    cms_user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.DO_NOTHING, default=None, null=True)
+    category = models.ForeignKey(Category, on_delete=models.SET_NULL, default=None, null=True)
+    template = models.ForeignKey(Template, on_delete=models.SET_NULL, default=None, null=True)
 
     def __str__(self) -> str:
         return self.name
@@ -109,7 +109,7 @@ class AbstractItem(models.Model):
     def create(self, data, user, category, template):
         self.name = data.get('name', "")
         self.price = int(data.get('price', self.price))
-        self.is_temp = data.get('is_temp', False)
+        self.is_temp = data.get('is_temp', False) == 'True'
         self.cms_user = user
         self.category = category
         self.template = template
