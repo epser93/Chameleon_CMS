@@ -155,7 +155,9 @@ class ProductsList(APIView):
         is_thumbnails = request.data.getlist('is_thumbnails')
         if len(is_thumbnails) == 0:
             is_thumbnails = [False for _ in range(len(images))]
-        prioritys = request.data.get('prioritys', [i+1 for i in range(len(images))])
+        prioritys = list(map(int, request.data.getlist('prioritys')))
+        if not prioritys:
+            prioritys = [i+1 for i in range(len(images))]
         for i in range(len(images)):
             item_image = ItemImage()
             copy_item_image = CopyOfItemImage()

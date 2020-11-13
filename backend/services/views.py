@@ -34,10 +34,10 @@ class EventList(APIView):
         if is_success == False:
             return Response(answer, status=status.HTTP_400_BAD_REQUEST)
         images = []
-        number = int(request.data['number'])
+        number = int(request.data.get('number', 0))
         for i in range(number):
             images.append(request.FILES['image{}'.format(i)])
-        prioritys = request.data.getlist('prioritys')
+        prioritys = list(map(int, request.data.getlist('prioritys')))
         if len(prioritys) == 0:
             prioritys = [i+1 for i in range(len(images))]
         for i in range(len(images)):
@@ -92,11 +92,11 @@ class EventDetailAPI(APIView):
         RedisKey.remove_data()
         return Response(serializer.data)
 
-    def delete(self, request, pk):
+    def delete(self, request, pk):  
         if request.user.is_superuser == False and request.user.is_eventer == False :
             return Response(forbidden_message, status=status.HTTP_403_FORBIDDEN)
         user = User.objects.using('master').get(pk=request.user.pk)
-        event = Event.objects.using('master').get(is_active=True, pk=pk)
+        event = Event.objects.using('master').get(pk=pk)
         event.delete()
         log = TotalLog()
         log.update('\'{}\' 이벤트 비활성화'.format(event.title), None, user)
@@ -237,7 +237,7 @@ class MainItemDetailAPI(APIView):
             return Response(forbidden_message, status=status.HTTP_403_FORBIDDEN)
         user = User.objects.using('master').get(pk=request.user.pk)
         main_item = MainItem.objects.using('master').get(pk=pk)
-        if MainItem.objects.filter(priority=main_item.priority).filter(is_active=True).exists():
+        if MainItem.objects.filter(priority=main_item.priority).filter(is_active=True).exclude(pk=main_item.pk).exists():
             answer = {message: '해당위치에 아이템이 등록되어 있습니다.'}
             return Response(answer, status=status.HTTP_400_BAD_REQUEST)
         main_item.activate()
