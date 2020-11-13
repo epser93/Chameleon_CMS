@@ -99,6 +99,7 @@ class Notices(models.Model):
         self.content = data.get('content', '')
         self.user = user
         self.is_active = data.get('is_active', 'False') == 'True'
+        self.is_temp = data.get('is_temp', 'False') == 'True'
         if self.is_temp == False:
             self.start_date = datetime.now().replace(tzinfo=KST)
         if image != None:
@@ -113,7 +114,8 @@ class Notices(models.Model):
         self.title = data.get('title', self.title)
         self.content = data.get('content', self.content)
         self.user = user
-        self.is_temp = data.get('is_temp', self.is_temp)
+        if data.get('is_temp', None):
+            self.is_temp = data.get('is_temp', 'False') == 'True'
         if image != None:
             is_success, answer = get_imagefile(image)
             if is_success == False:
