@@ -124,7 +124,7 @@ export default {
 
   methods: {
     ...mapActions('category', [ 'categoryRegister', 'categoryUpdate' ]),
-    ...mapMutations('category', ['SET_CATEGORY']),
+    ...mapMutations('category', ['SET_CATEGORY', 'SET_PREVIEWDATA']),
     onClickRegister(){
       const categoryData = new FormData()
       categoryData.append('name', this.categoryName)
@@ -168,8 +168,55 @@ export default {
 
     },
     onClickWindows(){
-      var url="test.html";
-      window.open(url,"",);
+      // var windowObj
+      const previewData = {
+        "id" : this.categoryIdx,
+        "name" : this.categoryName,
+        "image" : this.imageUrl,
+        "template" : this.picked,
+        "items": [
+        {
+            "id": 1,
+            "name": this.categoryName + '- item1',
+            "price": 1280000,
+            "template": 1,
+            "images": [],
+            "descriptions": [
+                {
+                    "id": 1,
+                    "category_description": {                   
+                        "id": 1,
+                        "name": "제조사"
+                    },
+                    "content": "AMD"
+                }
+            ]
+        },
+        ]
+      }
+
+      var pvdata_str = JSON.stringify(previewData)
+      console.log(pvdata_str)
+
+      window.open("http://localhost:8080/admin/preview", "page");
+      const ping = setInterval(() => {
+         window.postMessage(pvdata_str, "*");
+      }, 100);
+
+      window.addEventListener("message", ({pvdata_str}) => {
+        if(pvdata_str === "received") clearInterval(ping);
+      });
+
+
+
+
+      // var settings ='toolbar=0,directories=0,status=no,menubar=0,scrollbars=auto,resizable=no,height=200,width=200,left=0,top=0';
+      // // winObject = window.open("test2.htm", "test2", settings);
+      // console.log(previewData)
+      // this.SET_PREVIEWDATA(previewData)
+      // windowObj = window.open("http://localhost:8080/admin/preview", previewData, settings)
+      // windowObj.document.getElementById("childText").value = previewData
+      // $("#myform").submit();
     },
 
     onClickImageUpload() {

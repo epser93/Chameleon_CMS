@@ -12,6 +12,7 @@ export default {
     items: '',
     item: '',
     history: '',
+    previewData: '',
 
   },
 
@@ -45,6 +46,9 @@ export default {
     },
     SET_HISTORY(state, payload) {
       state.history = payload
+    },
+    SET_PREVIEWDATA(state, payload) {
+      state.previewData = payload
     },
   },
 
@@ -168,8 +172,8 @@ export default {
     },
 
     // 히스토리에 있는 내역으로 변경
-    putItemHistory({ rootGetters, dispatch }, {cid, hid, hisData}) {
-      axios.put(SERVER.URL + SERVER.ROUTER.item + hid + '/', hisData, rootGetters['account/config'])
+    putItemHistory({ rootGetters, dispatch }, {cid, pid, hisData}) {
+      axios.put(SERVER.URL + SERVER.ROUTER.item + pid + '/', hisData, rootGetters['account/config'])
         .then(() => {
             console.log("원본에다가 등록완료")
             router.push({name:'ProductItem'}, () => {})
@@ -180,20 +184,6 @@ export default {
     
 
     postTempItem({ rootGetters, dispatch }, {pid, tmpData}) {
-      console.log(pid)
-      console.log(tmpData)
-
-      // var a = tmpData.keys()
-      // var b = tmpData.values()
-      // console.log(a)
-      // console.log(b)
-      for (var key of tmpData.keys()) {
-        console.log(key);
-      }
-
-      for (var value of tmpData.values()) {
-        console.log(value);
-      }
       axios.post(SERVER.URL + SERVER.ROUTER.itemhistory + pid + '/', tmpData, rootGetters['account/formconfig'])
       .then(() => {
         alert("임시저장이 완료되었습니다.")
