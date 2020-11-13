@@ -2,9 +2,6 @@
   <div class="container">
     <div class="item row">
       <div class="col-8">
-        
-        {{ (is_origin) ? '원본' : '히스토리' }}
-      
         <div class="item-content">
           <h4>카테고리 : {{ category.name }}</h4>
         </div>

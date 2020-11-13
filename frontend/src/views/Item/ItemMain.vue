@@ -41,7 +41,7 @@
           <td v-else>
             <span class="badge badge-danger" @click="changeActive(item)">비활성화</span>
           </td>
-          <td><button type="button" class="btn btn-secondary" @click="onUpdate(category.id, item.id)">수정</button></td>
+          <td><button type="button" class="btn btn-warning btn-sm" @click="onUpdate(category.id, item.id)">수정</button></td>
         </tr>
 
       </tbody>
