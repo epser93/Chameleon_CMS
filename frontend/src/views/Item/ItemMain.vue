@@ -1,6 +1,6 @@
 <template>
 <div class="container" v-if="items != null && category != null">
-  <h1>{{ category.name }}</h1>
+  <!-- <h1>{{ category.name }}</h1>
   <div class="row justify-content-between">
     <div class="col-3">
       <button type="button" class="btn btn-info" @click="onCreate('ProductItemCreate')">
@@ -13,6 +13,20 @@
         <input type="text" class="form-control" placeholder="제품 검색">
         <div class="input-group-append">
           <button class="btn btn-outline-secondary" type="button" id="button-addon2">검색</button>
+        </div>
+      </div>
+    </div>
+  </div> -->
+  <div class="table-container mt-0">
+    <div class="d-flex align-items-center justify-content-between">
+      <div class="row align-items-center">
+        <h5 class="mb-0 ml-3">{{ category.name }}</h5>
+        <button type="button" class="btn btn-info btn-sm" @click="onCreate('ProductItemCreate')">추가</button>
+      </div>
+      <div class="input-group mb-3 mt-3">
+        <input type="text" class="form-control" placeholder="검색할 제품명을 입력하세요.">
+        <div class="input-group-append">
+          <button class="btn btn-secondary ml-0" type="button" id="button-addon2">검색</button>
         </div>
       </div>
     </div>
@@ -110,6 +124,11 @@ export default {
 </script>
 
 <style>
+.input-group {
+  float: right;
+  width: 40%;
+}
+
 .btn {
   margin-left: 10px
 }
