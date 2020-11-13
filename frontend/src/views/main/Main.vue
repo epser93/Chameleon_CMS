@@ -1,5 +1,10 @@
 <template>
   <div>
+    <div class="container">
+      <div class="row mt-4 mb-3">
+        <h2 class="mr-auto ml-auto">대표 이미지</h2>
+      </div>
+    </div>
 
     <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" v-if="carousels">
       <ol class="carousel-indicators">
@@ -7,7 +12,7 @@
       </ol>
       <div class="carousel-inner">
           <div :class="(index === 0) ? 'active carousel-item' : 'carousel-item'"  v-for="(carousel, index) in carousels" :key="index">
-            <img :src="'http://k3c205.p.ssafy.io'+carousel.image" class="d-block w-100" :alt="'main-image-'+index" @click="onClickWindows(carousel.url)">
+            <img :src="'http://k3c205.p.ssafy.io'+carousel.image.slice(56)" class="d-block w-100" :alt="'main-image-'+index">
           </div>
       </div>
       <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -24,7 +29,7 @@
       <div class="row mt-4 mb-3">
         <h2 class="mr-auto ml-auto">추천 제품</h2>
       </div>
-      <div class="row justify-content-around mb-2">
+      <div class="row justify-content-around mb-2 product">
         <img src="@/assets/250.png" class="col-6 col-lg-3 mb-4" alt="recommand product image1">
         <img src="@/assets/250.png" class="col-6 col-lg-3 mb-4" alt="recommand product image2">
         <img src="@/assets/250.png" class="col-6 col-lg-3 mb-4" alt="recommand product image3">
@@ -36,11 +41,31 @@
 </template>
 
 <script>
-export default {
+import { mapState, mapActions } from 'vuex'
 
+export default {
+  name: 'Main',
+  computed: {
+    ...mapState('customer', ['carousels']),
+  },
+  methods: {
+    ...mapActions('customer', ['getCarousels']),
+  },
+  created() {
+    this.getCarousels()
+  }
 }
 </script>
 
 <style>
+.carousel {
+  width: 90%;
+  margin: auto;
+}
+
+.product {
+  width: 90%;
+  margin: auto;
+}
 
 </style>

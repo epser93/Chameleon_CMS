@@ -221,7 +221,7 @@ export default {
         const imageData = {
           file: val.images[i].id,
           number: i,
-          preview: 'http://k3c205.p.ssafy.io' + val.images[i].item_image
+          preview: 'http://k3c205.p.ssafy.io' + val.images[i].item_image.slice(56)
         }
         this.is_thumbnails.push(val.images[i].is_thumbnail)
         if(val.images[i].is_thumbnail == true) {
@@ -235,7 +235,7 @@ export default {
       this.uploadIntroIndex = this.imageOfIntro.length
 
 
-      this.imageUrl = 'http://k3c205.p.ssafy.io' + val.image
+      this.imageUrl = 'http://k3c205.p.ssafy.io' + val.image.slice(56)
 
     },
   },
