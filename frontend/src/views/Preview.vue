@@ -1,16 +1,15 @@
 <template>
-
 <div> 미리보기
-    {{ datas }}
-    {{ data }}
+    <customer-top-nav/>
     {{previewData}}
     <div v-if="previewData">
         들어왓나요?
-        <DesignTemplate :data="previewData" v-if="previewData.template == 1">rrrr</DesignTemplate>
-        <SpecTemplate :data="previewData" v-else-if="previewData.template== 2">ss</SpecTemplate>
-        <CarouselTemplate :data="previewData" v-else-if="previewData.template == 3">aa</CarouselTemplate>
-        <MovingImageTemplate :data="previewData" v-else-if="previewData.template == 4">ff</MovingImageTemplate>
+        <DesignTemplate :data="previewData" v-if="previewData.template == 1"></DesignTemplate>
+        <SpecTemplate :data="previewData" v-else-if="previewData.template== 2"></SpecTemplate>
+        <CarouselTemplate :data="previewData" v-else-if="previewData.template == 3"></CarouselTemplate>
+        <MovingImageTemplate :data="previewData" v-else-if="previewData.template == 4"></MovingImageTemplate>
     </div>
+    <Footer/>
 </div>
 </template>
 
@@ -19,36 +18,25 @@ import DesignTemplate from '@/customers/Category/DesignTemplate.vue'
 import SpecTemplate from '@/customers/Category/SpecTemplate.vue'
 import CarouselTemplate from '@/customers/ProductDetail/CarouselTemplate.vue'
 import MovingImageTemplate from '@/customers/ProductDetail/MovingImageTemplate.vue'
-import { mapState } from 'vuex'
+import CustomerTopNav from '@/components/CustomerTopNav'
+import Footer from '@/components/Footer'
 
 export default {
     data(){
-        return {
-            datas: ''
+        return {    
+            previewData: '',
         }
     },
     components: {
         DesignTemplate,
         SpecTemplate,
         CarouselTemplate,
-        MovingImageTemplate
+        MovingImageTemplate,
+        CustomerTopNav,
+        Footer,
     },
-    computed: {
-        ...mapState('category', ['previewData'])
-        
-    },
-    created(){
-        // get_element;
-        // console.log(get_elements())
-        // window.addEventListener("message", ({data}) => {
-        //     window.postMessage("received","*");
-        //     this.data = data
-        //     console.log(data)
-      //Do whatever with data
-        // });
-        
-        // opener.document.all.previewData.value = this.datas;
-        // console.log(window.opener.document)
+    created() {
+        this.previewData = JSON.parse(window.opener.document.myform.sender.value)
     }
 }
 </script>

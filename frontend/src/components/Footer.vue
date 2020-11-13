@@ -11,10 +11,10 @@
           <div class="col-xs-6 col-md-3">
             <h6>Categories</h6>
             <ul class="footer-links">
-              <li @click="onRoute('About')">About</li>
-              <li @click="onRoute('Home')">Product</li>
-              <li @click="onRoute('Event')">Event</li>
-              <li @click="onRoute('Contact')">Contact</li>
+              <li @click="onRoute('CustomerAbout')">About</li>
+              <li @click="onRoute('CustomerHome')">Product</li>
+              <li @click="onRoute('CustomerEvent')">Event</li>
+              <li @click="onRoute('CustomerContact')">Contact</li>
             </ul>
           </div>
         </div>
