@@ -171,7 +171,7 @@ export default {
     putItemHistory({ rootGetters, dispatch }, {cid, hid, hisData}) {
       axios.put(SERVER.URL + SERVER.ROUTER.item + hid + '/', hisData, rootGetters['account/config'])
         .then(() => {
-            console.log("수정완료")
+            console.log("원본에다가 등록완료")
             router.push({name:'ProductItem'}, () => {})
             dispatch('getItem', cid)
         })
@@ -179,15 +179,29 @@ export default {
     },
     
 
-    postTempItem({ dispatch, rootGetters }, {cid, pid, tmpData}) {
-      axios.post(SERVER.URL + SERVER.ROUTER.itemhistory + pid + '/', tmpData, rootGetters['account/config'])
+    postTempItem({ rootGetters, dispatch }, {pid, tmpData}) {
+      console.log(pid)
+      console.log(tmpData)
+
+      // var a = tmpData.keys()
+      // var b = tmpData.values()
+      // console.log(a)
+      // console.log(b)
+      for (var key of tmpData.keys()) {
+        console.log(key);
+      }
+
+      for (var value of tmpData.values()) {
+        console.log(value);
+      }
+      axios.post(SERVER.URL + SERVER.ROUTER.itemhistory + pid + '/', tmpData, rootGetters['account/formconfig'])
       .then(() => {
-        alert("수정이 완료되었습니다.")
-        router.push({name:'ProductItem'}, () => {})
-        dispatch('getItem', cid)
+        alert("임시저장이 완료되었습니다.")
+        // router.push({name:'ProductItem'}, () => {})
+        dispatch('getItemHistory', pid)
       })
-      .catch((err) => {
-        console.log(err)
+      .catch((error) => {
+        console.log(error.response)
       })   
     },
 

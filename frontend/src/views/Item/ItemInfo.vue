@@ -2,6 +2,9 @@
   <div class="container">
     <div class="item row">
       <div class="col-8">
+        
+        {{ (is_origin) ? '원본' : '히스토리' }}
+      
         <div class="item-content">
           <h4>카테고리 : {{ category.name }}</h4>
         </div>
@@ -55,7 +58,7 @@
           <div v-else class="file-preview-content-container">
             <div class="file-preview-container">
               <div v-for="(file, index) in imageOfThumb" :key="index" class="file-preview-wrapper">
-                <div class="file-close-button" @click="fileDeleteButton" :name="file.number">
+                <div class="file-close-button" @click="fileDeleteButton" :name="file.number" :delId="file.file">
                   x
                 </div>
                 <img :src="file.preview" />
@@ -88,7 +91,7 @@
           <div v-else class="file-preview-content-container">
             <div class="file-preview-container">
               <div v-for="(file, index) in imageOfIntro" :key="index" class="file-preview-wrapper">
-                <div class="file-close-button" @click="introDeleteButton" :name="file.number">
+                <div class="file-close-button" @click="introDeleteButton" :name="file.number" :delId="file.file">
                   x
                 </div>
                 <img :src="file.preview" />
@@ -134,30 +137,35 @@
         </div>  
       </div>
       <!-- history -->
-      <div class="col-4 mt-4" v-if="history"> 
+      <div class="col-4 mt-4"> 
         <div class="card text-center">
           <div class="card-header">
             <h3><img src="@/assets/icons/card-list.svg" alt="" width="32" height="32" title="card-list" class="mr-2">History</h3>
           </div>
-          <div class="card-body">
+          <div class="card-body" v-if="history">
             <!-- {{ history }} -->
             <ul v-if="history.length">
-              <li v-for="(his,index) in history.slice().reverse()" :key="index">             
-                <div :class="(update_date.slice(0,19) == his.update_date.slice(0,19)) ? 'history-btn row justify-content-around on' : 'history-btn row justify-content-around'" :id="`history-${index}`" @click="fixHistory(index)">
+              <li>             
+                <div>
+                  <button type="button" class="btn btn-primary btn-sm" @click="onOrigin()">원본 데이터 보기</button>
+                </div>
+              </li> 
+              <li v-for="(his,index) in history.slice()" :key="index">             
+                <div class="history-btn row justify-content-around" :id="`history-${index}`" @click="fixHistory(index)">
                   <strong>저장 {{ index }}</strong>
-                  <!-- {{update_date.slice(0,19)}}
-                  {{his.update_date.slice(0,19)}} -->
-                  <p>{{ his.update_date.slice(0,19) }}</p>
+
+                  <p>{{ his.created_date.slice(0,19) }}</p>
 
                 </div>
-                <div v-if="update">
+                <!-- <div v-if="update">
                   <button type="button" class="btn btn-primary btn-sm" @click="onClickUpdate(his.id)">등록하기</button>
-                  <!-- 나는 여기서 하고 싶은게 클릭했을때, 그 부분만 등록하기 버튼이 활성화 되었으면 좋겠다. -->
-                </div>
+                </div> -->
               </li>
             </ul>
           </div>
-          
+            <div class="card-footer text-muted">
+              <button type="button" class="btn btn-primary btn-sm" @click="onClickUpdate(his_id)">등록하기</button>
+            </div>
         </div>
       </div>
 
@@ -166,14 +174,18 @@
 </template>
 
 <script>
-import { mapGetters, mapActions, mapState } from 'vuex'
+import { mapGetters, mapActions, mapState, mapMutations } from 'vuex'
 
 export default {
   data() {
     return {
+        is_origin: false,
+
+        itemId: null,
         itemName: null,
         itemPrice: null,
         is_temp: "False",
+        is_active: false,
         picked: 3,
         categoryNum: null,
         itemDescId: [],
@@ -181,12 +193,16 @@ export default {
         // imageUrl: null,
         
         update_date: null,
-        
+        created_date: null,
+
         numOfImg: null,
 
         imageOfThumb: [],
         imageOfIntro: [],
         is_thumbnails: [],
+        imagesIntroId: [],
+        imagesThumbId: [],
+        
         // files: [], //업로드용 파일
 
         uploadImageIndex: 0,
@@ -194,7 +210,10 @@ export default {
 
         update: false,
 
-        hisUpdate: '',
+        images_type: [],
+
+
+        his_id: null,
     }
   },
 
@@ -206,12 +225,13 @@ export default {
   watch: {
     item(val) {
       console.log(val)
+      this.itemId = val.id
       this.itemName = val.name
       this.itemPrice = val.price
       this.is_temp = val.is_temp
       this.picked = val.template.id
       this.update_date = val.update_date
-
+      this.created_date = val.created_date
       for(let i=0; i<val.descriptions.length; i++) {
         this.itemDescText.push(val.descriptions[i].content)
       }
@@ -221,27 +241,79 @@ export default {
         const imageData = {
           file: val.images[i].id,
           number: i,
-          preview: 'http://k3c205.p.ssafy.io' + val.images[i].item_image
+          preview: 'http://k3c205.p.ssafy.io' + val.images[i].item_image.slice(56)
         }
         this.is_thumbnails.push(val.images[i].is_thumbnail)
         if(val.images[i].is_thumbnail == true) {
           this.imageOfThumb.push(imageData)
+          this.imagesThumbId.push(imageData.file)
         } else {
           this.imageOfIntro.push(imageData)
+          this.imagesIntroId.push(imageData.file)
         }
       }
 
       this.uploadImageIndex = this.imageOfThumb.length,
       this.uploadIntroIndex = this.imageOfIntro.length
 
-
-      this.imageUrl = 'http://k3c205.p.ssafy.io' + val.image
-
+      this.is_origin = true
     },
   },
 
   methods: {
-    ...mapActions('category', ['itemRegister', 'getItemDetail', 'getItemHistory', 'putItemHistory']),
+    ...mapActions('category', ['itemRegister', 'getItemDetail', 'getItemHistory', 'putItemHistory','postTempItem']),
+    ...mapMutations('category', ['SET_HISTORY','SET_ITEM']),
+    
+    onOrigin() {
+      for (let i=0; i<this.history.length; i++) {
+        let className = '#history-' + i
+        document.querySelector(className).classList.remove('on')
+      }
+
+
+      this.itemId = this.item.id
+      this.itemName = this.item.name
+      this.itemPrice = this.item.price
+      this.is_temp = this.item.is_temp
+      this.picked = this.item.template.id
+      this.update_date = this.item.update_date
+      this.created_date = this.item.created_date
+      this.itemDescText = []
+      for(let i=0; i<this.item.descriptions.length; i++) {
+        this.itemDescText.push(this.item.descriptions[i].content)
+      }
+
+      this.imageOfThumb = []
+      this.imageOfIntro = []
+      this.is_thumbnails = []
+      this.imagesIntroId = []
+      this.imagesThumbId = []
+
+      for (let i = 0; i < this.item.images.length; i++) {
+        const imageData = {
+          file: this.item.images[i].id,
+          number: i,
+          preview: 'http://k3c205.p.ssafy.io' + this.item.images[i].item_image.slice(56)
+        }
+
+        this.is_thumbnails.push(this.item.images[i].is_thumbnail)
+        if(this.item.images[i].is_thumbnail == true) {
+          this.imageOfThumb.push(imageData)
+          this.imagesThumbId.push(imageData.file)
+        } else {
+          this.imageOfIntro.push(imageData)
+          this.imagesIntroId.push(imageData.file)
+        }
+      }
+
+      this.uploadImageIndex = this.imageOfThumb.length,
+      this.uploadIntroIndex = this.imageOfIntro.length
+
+    
+      this.imageUrl = 'http://k3c205.p.ssafy.io' + this.item.image
+
+      this.is_origin = true
+    },
 
     fixHistory(idx) {
       for (let i=0; i<this.history.length; i++) {
@@ -253,18 +325,119 @@ export default {
           document.querySelector(className).classList.remove('on')
         }
       }
+      console.log(this.history[idx])
+      console.log(this.history[idx].id)
+      this.his_id = this.history[idx].id
+
+      console.log(this.his_id)
+
+      // 여기서 바꿔야함.
+      this.itemName = this.history[idx].name,
+      this.itemPrice = this.history[idx].price,
+      this.is_temp = this.history[idx].name,
+      this.is_active = this.history[idx].is_active,
+      this.picked = this.history[idx].template,
+      this.categoryNum = this.history[idx].category.id
+
+      this.itemDescText = []
+      for(let i=0; i<this.history[idx].copy_descriptions.length; i++) {
+        this.itemDescText.push(this.history[idx].copy_descriptions[i].content)
+      }
+
+      this.update_date = this.history[idx].created_date,
+      this.created_date = this.history[idx].update_date,
+
+      this.numOfImg = this.history[idx].copy_images.length
+      
+      const tmpThum = []
+      const tmpIntro = []
+      const tmpCheck = []
+      this.imagesIntroId = []
+      this.imagesThumbId = []
+
+      for (let j=0; j<this.numOfImg; j++) {
+        const imageData = {
+          file: this.history[idx].copy_images[j].id,
+          number: j,
+          preview: 'http://k3c205.p.ssafy.io' + this.history[idx].copy_images[j].item_image.slice(56)
+        }
+        tmpCheck.push (this.history[idx].copy_images[j].is_thumbnail)
+        if (this.history[idx].copy_images[j].is_thumbnail){
+          tmpThum.push(imageData)
+          this.imagesThumbId.push(imageData.file)
+        } else {
+          tmpIntro.push(imageData)
+          this.imagesIntroId.push(imageData.file)
+        }
+      }
+      this.imageOfThumb = tmpThum,
+      this.imageOfIntro = tmpIntro,
+      this.is_thumbnails = tmpCheck
+
+
+      this.is_origin = false
     },
 
     onClickTemp() {
+      const tmpData = new FormData()
+      tmpData.append('name', this.itemName)
+      tmpData.append('price', this.itemPrice)
+       if(this.is_temp){
+        tmpData.append('is_temp', "True")
+      } else {
+        tmpData.append('is_temp', "False")
+      }
 
+      tmpData.append('category', this.categoryNum)
+      tmpData.append('template', this.picked)
+      if(this.is_origin){
+        tmpData.append('is_original', "True")
+      } else {
+        tmpData.append('is_original', "False")
+      }
+
+      for(let i=0; i<this.itemDescId.length; i++) {
+        tmpData.append('descriptions_id', this.itemDescId[i])
+        tmpData.append('descriptions_content', this.itemDescText[i])
+      }
+
+      this.numOfImg = this.imageOfThumb.length +  this.imageOfIntro.length
+      let cnt = 0
+      const idxTN = this.imageOfThumb.length
+
+      for(let i=0; i<this.numOfImg; i++) {
+        if(i < idxTN) {
+          tmpData.append('images_type', this.imagesThumbId[i])
+          if(this.imagesThumbId[i] == -1) {
+            tmpData.append('is_thumbnails', "True")
+            tmpData.append('image' + cnt, this.imageOfThumb[i].file)
+            cnt += 1
+          }
+        }
+        else {
+          tmpData.append('images_type', this.imagesIntroId[i-idxTN])
+      
+          if(this.imagesIntroId[i-idxTN] == -1) {
+            tmpData.append('is_thumbnails', "False")
+            tmpData.append('image' + cnt, this.imageOfIntro[i-idxTN].file)
+            cnt += 1
+          }
+        }
+      }
+      tmpData.append('number', cnt)
+      
+      this.postTempItem({pid: this.itemId, tmpData: tmpData})
     },
 
     onClickUpdate(hid) {
-      console.log(hid)
-      const hisData = {
-        id : hid
-      } 
-      this.putItemHistory({cid : this.category.id, hid : hid, hisData: hisData})
+      if(hid == null) {
+        alert("등록할 내용을 선택해주세요")
+      } else {
+        const hisData = {
+          id : hid
+        } 
+        this.putItemHistory({cid : this.category.id, hid : hid, hisData: hisData})
+      }
     },
 
 
@@ -290,6 +463,7 @@ export default {
         if(i < idxTN) {
           itemData.append('image' + i, this.imageOfThumb[i].file)
           itemData.append('is_thumbnails', "True")
+          console.log(this.imageOfThumb[i])
         }
         else {
           itemData.append('image' + i, this.imageOfIntro[i-idxTN].file)
@@ -324,11 +498,8 @@ export default {
             }
         ];
         num = i;
-              //이미지 업로드용 프리뷰
-              // this.filesPreview = [
-              //   ...this.filesPreview,
-              //   { file: URL.createObjectURL(this.$refs.files.files[i]), number: i }
-              // ];
+
+        this.imagesThumbId.push(-1)
       }
       this.uploadImageIndex = num + 1; //이미지 index의 마지막 값 + 1 저장
       },
@@ -351,14 +522,21 @@ export default {
           }
         ];
         num = i;
+        this.imagesThumbId.push(-1)
       }
       this.uploadImageIndex = this.uploadImageIndex + num + 1;
 
-      console.log(this.imageOfThumb);
     },
     fileDeleteButton(e) {
       const name = e.target.getAttribute('name');
+      const delId = e.target.getAttribute('delId');
       this.imageOfThumb = this.imageOfThumb.filter(data => data.number !== Number(name));
+
+      if(isNaN(delId) == true){
+        this.imagesThumbId.pop()
+      } else{
+        this.imagesThumbId = this.imagesThumbId.filter(data => data !== Number(delId));
+      }
     },
 
     // intro
@@ -380,11 +558,8 @@ export default {
             }
         ];
         num = i;
-              //이미지 업로드용 프리뷰
-              // this.filesPreview = [
-              //   ...this.filesPreview,
-              //   { file: URL.createObjectURL(this.$refs.files.files[i]), number: i }
-              // ];
+
+        this.imagesIntroId.push(-1)
       }
       this.uploadIntroIndex = num + 1; //이미지 index의 마지막 값 + 1 저장
       },
@@ -407,6 +582,7 @@ export default {
           }
         ];
         num = i;
+        this.imagesIntroId.push(-1)
       }
       this.uploadIntroIndex = this.uploadIntroIndex + num + 1;
 
@@ -414,11 +590,15 @@ export default {
     },
     introDeleteButton(e) {
       const name = e.target.getAttribute('name');
+      const delId = e.target.getAttribute('delId');
       this.imageOfIntro = this.imageOfIntro.filter(data => data.number !== Number(name));
+      if(isNaN(delId) == true){
+        this.imagesIntroId.pop()
+      } else{
+        this.imagesIntroId = this.imagesIntroId.filter(data => data !== Number(delId));
+      }
+
     },
-
-
-
 
   },
 
@@ -435,6 +615,8 @@ export default {
       this.getItemHistory(pid)
       this.update = true
     }
+
+    this.SET_HISTORY('') 
   }
 }
 </script>
