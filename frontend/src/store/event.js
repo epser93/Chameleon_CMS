@@ -1,5 +1,6 @@
 import axios from 'axios'
 import SERVER from '@/api/drf'
+import router from '@/router'
 
 export default {
   namespaced: true,
@@ -24,35 +25,36 @@ export default {
   },
 
   actions: {
-   getEvents({ rootGetters, commit }) {
-    axios.get(SERVER.URL + SERVER.ROUTER.event, rootGetters['account/config'])
-      .then((res) => {
-        commit('SET_EVENTS', res.data)
-      })
-      .catch((err) => {
-        console.log(err)
-      })
-   },
-
-   postEvent({ rootGetters }, eventData) {
-    axios.post(SERVER.URL + SERVER.ROUTER.event, eventData, rootGetters['account/formconfig'])
-      .then((res) => {
-        console.log(res.data)
-      })
-      .catch((err) => {
-        console.log(err)
-      })
-   },
-
-  getEvent({ rootGetters, commit }, eid) {
-    axios.get(SERVER.URL + SERVER.ROUTER.event + eid + '/', rootGetters['account/config'])
-      .then((res) => {
-        commit('SET_EVENT', res.data)
-      })
-      .catch((err) => {
-        console.log(err)
-      })
+    getEvents({ rootGetters, commit }) {
+      axios.get(SERVER.URL + SERVER.ROUTER.event, rootGetters['account/config'])
+        .then((res) => {
+          commit('SET_EVENTS', res.data)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
     },
+
+    postEvent({ rootGetters, dispatch }, eventData) {
+      axios.post(SERVER.URL + SERVER.ROUTER.event, eventData, rootGetters['account/formconfig'])
+        .then(() => {
+          dispatch('getEvents')
+          router.push({ name : 'Event'})
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    },
+
+    getEvent({ rootGetters, commit }, eid) {
+      axios.get(SERVER.URL + SERVER.ROUTER.event + eid + '/', rootGetters['account/config'])
+        .then((res) => {
+          commit('SET_EVENT', res.data)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+      },
 
     delEvent({ dispatch, rootGetters }, eid) {
       axios.delete(SERVER.URL + SERVER.ROUTER.event + eid + '/', rootGetters['account/config'])

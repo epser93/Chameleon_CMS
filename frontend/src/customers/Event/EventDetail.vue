@@ -9,11 +9,11 @@
     <!-- event image -->
     <div class="column justify-content-center mt-4">
       <div class="d-flex mb-4">
-        <img :src="'http://k3c205.p.ssafy.io'+event.thumbnail_image" class="w-100" alt="">
+        <img :src="'http://k3c205.p.ssafy.io'+event.thumbnail_image.slice(56)" class="w-100" alt="">
       </div>
       <!-- event detail image -->
       <div class="d-flex event-detail-img mb-4" v-for="(image, index) in event.images" :key="index">
-        <img :src="'http://k3c205.p.ssafy.io'+image.image" class="w-100" alt="">
+        <img :src="'http://k3c205.p.ssafy.io'+image.image.slice(56)" class="w-100" alt="">
       </div>
     </div>
 

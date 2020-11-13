@@ -21,7 +21,7 @@ export default {
   data() {
     return {
       categoriess: ['Main', 'Product', 'Event', 'Notice'],
-      mainCategories : [{ name: "대표 이미지", pathName : 'MainImage' }, { name: "추천제품", pathName : 'MainProduct' }],
+      mainCategories : [{ name: "대표 이미지", pathName : 'MainImage' }],
       productCategories : null,
     }
   },
