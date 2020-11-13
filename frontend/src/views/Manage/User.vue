@@ -87,7 +87,7 @@ export default {
       selectedDepartment: 'all',
       searchedName: '',
       searchToggle : false,
-      perPage: 10,
+      perPage: 7,
       nowPage: 0,
     }
   },
@@ -101,6 +101,16 @@ export default {
     },
     changeSearchToggle() {
       this.searchToggle = !this.searchToggle
+    },
+    prevPage() {
+      if (this.nowPage > 0) {
+        this.nowPage -= 1
+      }
+    },
+    nextPage() {
+      if (this.nowPage < this.pages-1) {
+        this.nowPage += 1
+      }
     }
   },
   computed : {
@@ -174,5 +184,9 @@ td span {
   width: 97%;
   margin-right: auto;
   margin-left: auto;
+}
+
+.page-item {
+  cursor: pointer;
 }
 </style>
