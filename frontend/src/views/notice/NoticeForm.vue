@@ -3,7 +3,8 @@
     <div class="title-division">
       <div class="col-8">
         <div class="form-title mt-5">
-          <h3>Add Notice</h3>
+          <h3 v-if="id">Edit Notice</h3>
+          <h3 v-else>Add Notice</h3>
           <hr>
         </div>
         <!-- Notice 제목 -->
@@ -52,6 +53,7 @@ export default {
       contents: null,
       imageFile : null,
       noticeInfo : null,
+      id: false,
     }
   },
   computed : {
@@ -119,6 +121,7 @@ export default {
       if (this.$route.params.id) {
         axios.get(SERVER.URL + SERVER.ROUTER.notice + this.$route.params.id, this.config)
           .then(res => {
+            this.id = true
             this.noticeInfo = res.data
             this.title = res.data.title
             this.contents = res.data.content
