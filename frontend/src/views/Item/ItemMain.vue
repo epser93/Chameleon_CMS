@@ -1,18 +1,15 @@
 <template>
 <div class="container" v-if="items != null && category != null">
-  <h1>{{ category.name }}</h1>
-  <div class="row justify-content-between">
-    <div class="col-3">
-      <button type="button" class="btn btn-info" @click="onCreate('ProductItemCreate')">
-        추가
-      </button>
-      
-    </div>
-    <div class="col-6">
-      <div class="input-group mb-3">
-        <input type="text" class="form-control" placeholder="제품 검색">
+  <div class="table-container mt-0">
+    <div class="d-flex align-items-center justify-content-between">
+      <div class="row align-items-center">
+        <h5 class="mb-0 ml-3">{{ category.name }}</h5>
+        <button type="button" class="btn btn-info btn-sm" @click="onCreate('ProductItemCreate')">추가</button>
+      </div>
+      <div class="input-group mb-3 mt-3">
+        <input type="text" class="form-control" placeholder="검색할 제품명을 입력하세요.">
         <div class="input-group-append">
-          <button class="btn btn-outline-secondary" type="button" id="button-addon2">검색</button>
+          <button class="btn btn-secondary ml-0" type="button" id="button-addon2">검색</button>
         </div>
       </div>
     </div>
@@ -44,7 +41,7 @@
           <td v-else>
             <span class="badge badge-danger" @click="changeActive(item)">비활성화</span>
           </td>
-          <td><button type="button" class="btn btn-secondary" @click="onUpdate(category.id, item.id)">수정</button></td>
+          <td><button type="button" class="btn btn-warning btn-sm" @click="onUpdate(category.id, item.id)">수정</button></td>
         </tr>
 
       </tbody>
@@ -110,6 +107,11 @@ export default {
 </script>
 
 <style>
+.input-group {
+  float: right;
+  width: 40%;
+}
+
 .btn {
   margin-left: 10px
 }

@@ -6,7 +6,7 @@
         <div class="input-group mb-3 mt-3">
           <input type="text" v-model="departmentName" class="form-control" placeholder="부서명을 입력하세요." aria-label="Recipient's username" aria-describedby="button-addon2">
           <div class="input-group-append">
-            <button @click="makeDepartments()" class="btn btn-secondary" type="button" id="button-addon2">부서 생성</button>
+            <button @click="makeDepartments()" class="btn btn-secondary ml-0" type="button" id="button-addon2">부서 생성</button>
           </div>
         </div>
       </div>
