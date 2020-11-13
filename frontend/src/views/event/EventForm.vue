@@ -94,7 +94,8 @@
             <button type="button" class="btn btn-dark btn-sm mr-2" @click="$router.go(-1)">뒤로가기</button>
           </div>
           <div>
-            <button type="button" class="btn btn-primary btn-sm" @click="onRegister">등록하기</button>
+            <button v-if="update" type="button" class="btn btn-primary btn-sm" @click="onRegister">저장</button>
+            <button type="button" class="btn btn-primary btn-sm" @click="onRegister">추가</button>
           </div>
         </div>  
 
@@ -267,7 +268,7 @@ hr {
 }
 
 .preview-img {
-  width: 360px;
+  width: auto;
   height: 150px;
   background-color: ghostwhite;
   border: 1px solid #ced4da;

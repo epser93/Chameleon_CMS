@@ -55,8 +55,8 @@
           <div v-else class="file-preview-content-container">
             <div class="file-preview-container">
               <div v-for="(file, index) in imageOfThumb" :key="index" class="file-preview-wrapper">
-                <div class="file-close-button" @click="fileDeleteButton" :name="file.number" :delId="file.file">
-                  x
+                <div class="file-close-button" @click="introDeleteButton" :name="file.number" :delId="file.file">
+                  <img src="@/assets/icons/x.svg" alt="delete button" width="12" height="12" title="x">
                 </div>
                 <img :src="file.preview" />
               </div>
@@ -89,7 +89,7 @@
             <div class="file-preview-container">
               <div v-for="(file, index) in imageOfIntro" :key="index" class="file-preview-wrapper">
                 <div class="file-close-button" @click="introDeleteButton" :name="file.number" :delId="file.file">
-                  x
+                  <img src="@/assets/icons/x.svg" alt="delete button" width="12" height="12" title="x">
                 </div>
                 <img :src="file.preview" />
               </div>
@@ -102,10 +102,6 @@
             </div>
           </div>
         </div>
-
-
-
-
         <div class="item-content">
           <h4>제품 사양 카테고리</h4>
           <table class="table">
@@ -117,19 +113,18 @@
             </tbody>
           </table>
         </div>
-
         <div class="row justify-content-end" id="content-btn">
           <div>
-            <button type="button" class="btn btn-dark btn-sm mr-2" @click="$router.go(-1)">뒤로가기</button>
+            <button type="button" class="btn btn-dark btn-sm" @click="$router.go(-1)">뒤로가기</button>
           </div>
           <div >
-            <button type="button" class="btn btn-secondary btn-sm" @click="onClickWindows">미리보기</button>
+            <button type="button" class="btn btn-outline-primary btn-sm" @click="onClickWindows">미리보기</button>
           </div>
           <div v-if="update">
             <button type="button" class="btn btn-primary btn-sm" @click="onClickTemp">임시저장</button>
           </div>
           <div v-else>
-            <button type="button" class="btn btn-secondary btn-sm" @click="onClickSave">저장</button>
+            <button type="button" class="btn btn-primary btn-sm" @click="onClickSave">추가</button>
           </div >
         </div>  
       </div>
@@ -145,23 +140,17 @@
               <li v-for="(his,index) in history.slice()" :key="index">             
                 <div class="history-btn row justify-content-around" :id="`history-${index}`" @click="fixHistory(index)">
                   <strong>저장 {{ index }}</strong>
-
                   <p>{{ his.created_date.slice(0,19) }}</p>
-
                 </div>
-                <!-- <div v-if="update">
-                  <button type="button" class="btn btn-primary btn-sm" @click="onClickUpdate(his.id)">등록하기</button>
-                </div> -->
               </li>
             </ul>
           </div>
             <div class="card-footer text-muted">
-              <button type="button" class="btn btn-primary btn-sm" @click="onOrigin()">원본 데이터 보기</button>
-              <button type="button" class="btn btn-primary btn-sm" @click="onClickUpdate(his_id)">등록하기</button>
+              <button type="button" class="btn btn-outline-primary btn-sm" @click="onOrigin()">원본 데이터</button>
+              <button type="button" class="btn btn-primary btn-sm" @click="onClickUpdate(his_id)">임시 저장</button>
             </div>
         </div>
       </div>
-
     </div>
   </div>
 </template>
@@ -682,6 +671,7 @@ export default {
     height: 20px;
     text-align: center;
     cursor: pointer;
+    margin-right: 5px;
 }
 
 .file-preview-container {

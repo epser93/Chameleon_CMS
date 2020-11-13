@@ -2,9 +2,9 @@
   <div v-if="events" class="container pl-0">
     <div v-if="events" class="table-container">
       <div class="btn-background">
-        <div class="event-btn ml-3 mt-3 mb-3">
-          <!-- <button type="button" class="btn btn-danger">삭제</button> -->
-          <button type="button" class="btn btn-info ml-3" @click="onCreate()">생성</button>
+        <div class="event-btn row align-items-center mt-3 mb-3">
+          <h5 class="mb-0 ml-3">이벤트</h5>
+          <button type="button" class="btn btn-info btn-sm" @click="onCreate()">추가</button>
         </div>
       </div>
       <table class="table">

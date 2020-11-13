@@ -1,8 +1,9 @@
 <template>
   <div class="container pl-0">
     <div class="table-container">
-      <div class="btn ml-3 mt-3 mb-3 p-0">
-        <button type="button" class="btn btn-info ml-3" @click="makeNotice()">생성</button>
+      <div class="notice-btn row align-items-center mt-3 mb-3">
+        <h5 class="mb-0 ml-3">공지</h5>
+        <button type="button" class="btn btn-info btn-sm" @click="makeNotice()">추가</button>
       </div>
       <table class="table">
         <thead>
