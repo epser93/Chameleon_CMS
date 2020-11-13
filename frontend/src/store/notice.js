@@ -60,5 +60,14 @@ export default {
       })
       .catch(error => console.log(error.response))
     },
+
+    // customer 공지 조회
+    getCustomerNotice({ commit }) {
+      axios.get(SERVER.URL + SERVER.ROUTER.customer.notice)
+        .then(res => {
+          commit('SET_NOTICES', res.data)
+        })
+        .catch(error => console.log(error.response))
+    }
   },
 }

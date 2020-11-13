@@ -38,7 +38,7 @@ export default {
     ...mapState('notice', ['notices'])
   },
   methods: {
-    ...mapActions('notice', ['getNotices']),
+    ...mapActions('notice', ['getCustomerNotice']),
     winClose() {
       window.close()
     },
@@ -50,7 +50,7 @@ export default {
     }
   },
   created() {
-    this.getNotices()
+    this.getCustomerNotice()
   }
 }
 </script>

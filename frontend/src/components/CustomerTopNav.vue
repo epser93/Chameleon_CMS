@@ -119,7 +119,6 @@ export default {
       axios.get(SERVER.URL + SERVER.ROUTER.customer.category)
         .then(res => {
           this.categories = res.data
-          // console.log(res)
         })
         .catch(error => console.log(error.response))
     },
