@@ -28,6 +28,7 @@
 <script>
 import SERVER from '@/api/drf'
 import axios from 'axios'
+// import { mapMutations } from 'vuex'
 export default {
   name: 'Header',
   data() {
@@ -36,6 +37,7 @@ export default {
     }
   },
   methods: {
+    // ...mapMutations('account', ['SET_USERINFO']),
     onRoute(name) {
       // this.activeTab()
       this.$router.push({name: name}, () => {})
@@ -59,6 +61,7 @@ export default {
       axios.get(SERVER.URL + SERVER.ROUTER.userinfo, config)
         .then(res => {
           this.user = res.data.username
+          // this.SET_USERINFO(res.data)
         })
         .catch(error => console.log(error.response))
     },
