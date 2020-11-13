@@ -363,6 +363,11 @@ const routes = [
         name: 'Login',
         component: () => import('@/views/Login.vue')
       },
+      {
+        path: 'preview',
+        name: 'Preview',
+        component: () => import('@/views/Preview.vue')
+      },
     ]
   },
   
