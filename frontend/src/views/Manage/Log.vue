@@ -105,12 +105,6 @@ export default {
   created() {
     this.getLogs()
   },
-  // updated() {
-  //   let pagination = document.querySelector('.page-navi')
-  //   let tableContainer = document.querySelector('.table-container')
-  //   let tableConatinerLength = (tableContainer.clientWidth - pagination.clientWidth) / 2
-  //   document.querySelector('.page-navi').style.left = String(tableConatinerLength) + 'px'
-  // }
 }
 </script>
 
