@@ -1,22 +1,5 @@
 <template>
 <div class="container" v-if="items != null && category != null">
-  <!-- <h1>{{ category.name }}</h1>
-  <div class="row justify-content-between">
-    <div class="col-3">
-      <button type="button" class="btn btn-info" @click="onCreate('ProductItemCreate')">
-        추가
-      </button>
-      
-    </div>
-    <div class="col-6">
-      <div class="input-group mb-3">
-        <input type="text" class="form-control" placeholder="제품 검색">
-        <div class="input-group-append">
-          <button class="btn btn-outline-secondary" type="button" id="button-addon2">검색</button>
-        </div>
-      </div>
-    </div>
-  </div> -->
   <div class="table-container mt-0">
     <div class="d-flex align-items-center justify-content-between">
       <div class="row align-items-center">
