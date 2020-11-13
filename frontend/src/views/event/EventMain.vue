@@ -96,7 +96,7 @@ export default {
   data() {
     return {
       checked: [],
-      perPage: 10,
+      perPage: 7,
       nowPage: 0,
     }
   },
@@ -127,6 +127,16 @@ export default {
           }
       } else {   //취소
         this.getEvents()
+      }
+    },
+    prevPage() {
+      if (this.nowPage > 0) {
+        this.nowPage -= 1
+      }
+    },
+    nextPage() {
+      if (this.nowPage < this.pages-1) {
+        this.nowPage += 1
       }
     }
   },
@@ -164,5 +174,9 @@ td {
 span {
   cursor: pointer;
   margin-top: 4px;
+}
+
+.page-item {
+  cursor: pointer;
 }
 </style>

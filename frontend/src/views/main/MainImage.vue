@@ -66,7 +66,7 @@ import { mapState, mapActions } from 'vuex'
 export default {
   data() {
     return {
-      perPage: 8,
+      perPage: 7,
       nowPage: 0,
     }
   },
@@ -105,6 +105,16 @@ export default {
             this.actImage(image.id)
           }
       }
+    },
+    prevPage() {
+      if (this.nowPage > 0) {
+        this.nowPage -= 1
+      }
+    },
+    nextPage() {
+      if (this.nowPage < this.pages-1) {
+        this.nowPage += 1
+      }
     }
   },
   created() {
@@ -141,5 +151,9 @@ td {
 span {
   cursor: pointer;
   margin-top: 4px;
+}
+
+.page-item {
+  cursor: pointer;
 }
 </style>

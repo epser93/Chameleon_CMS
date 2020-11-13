@@ -3,7 +3,8 @@
     <div class="title-division">
       <div class="col-8">
         <div class="form-title mt-5">
-          <h3>Add Notice</h3>
+          <h3 v-if="id">Edit Notice</h3>
+          <h3 v-else>Add Notice</h3>
           <hr>
         </div>
         <!-- Notice 제목 -->
@@ -28,8 +29,11 @@
           </div>
         </div>
         <div class="row btn-division justify-content-end mt-5 mb-5">
+          <div>
+            <button type="button" class="btn btn-dark btn-sm mr-2" @click="onRoute('Notice')">뒤로가기</button>
+          </div>
           <div v-if="!noticeInfo || noticeInfo.is_temp">
-            <button type="button" class="btn btn-secondary btn-sm mr-2" @click="onClickTemp">임시저장</button>
+            <button type="button" class="btn btn-warning btn-sm mr-2" @click="onClickTemp">임시저장</button>
           </div>
           <div>
             <button type="button" class="btn btn-primary btn-sm" @click="onActivate">등록하기</button>
@@ -52,6 +56,7 @@ export default {
       contents: null,
       imageFile : null,
       noticeInfo : null,
+      id: false,
     }
   },
   computed : {
@@ -119,6 +124,7 @@ export default {
       if (this.$route.params.id) {
         axios.get(SERVER.URL + SERVER.ROUTER.notice + this.$route.params.id, this.config)
           .then(res => {
+            this.id = true
             this.noticeInfo = res.data
             this.title = res.data.title
             this.contents = res.data.content
@@ -126,7 +132,10 @@ export default {
           })
           .catch(error => console.log(error.response))
       }
-    }
+    },
+    onRoute(name) {
+      this.$router.push({name: name}, () => {})
+    },
   },
   created() {
     this.init()
