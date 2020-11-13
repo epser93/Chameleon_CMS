@@ -32,7 +32,7 @@
           <div>
             <div>
               <p>아이디</p>
-              <span class="validate-fail" v-if="idValidate == 1">아이디는 영문,숫자 6~12자이내입니다.</span>
+              <span class="validate-fail" v-if="idValidate == 1">아이디는 영문,숫자 5~12자이내입니다.</span>
               <span class="validate-temp" v-if="idValidate == 2">중복체크를 해주세요.</span> 
               <span class="validate-success" v-if="idValidate == 3">사용가능한 아이디입니다.</span>
               <span class="validate-fail" v-if="idValidate == 4">중복된 아이디입니다.</span>
@@ -73,7 +73,7 @@ import { mapActions, mapState } from 'vuex'
 import SERVER from '@/api/drf'
 import axios from 'axios'
 import $ from "jquery";
-const idchk = /^[a-z0-9]{6,12}$/;
+const idchk = /^[a-z0-9]{5,12}$/;
 const pwchk = /^.*(?=^.{8,16}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/;
 export default {
   name : 'SignupModal',
