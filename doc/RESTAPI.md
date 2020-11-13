@@ -964,15 +964,14 @@
     "is_thumbnails": [
       "True","False",
     ],
-    "number": 3,
+    "number": 2,
     "image0": "이미지1",
     "image1": "이미지2",
-    "image2": "이미지3",
-    "descriptions": [
-        {
-            "id": 1,
-            "content": "AMD"
-        }
+    "descriptions_id": [
+        20
+    ],
+    "descriptions_content": [
+        "AMD"
     ]
 }
 ```

@@ -1,7 +1,7 @@
 <template>
   <div v-if="logs">
     <div class="table-container mt-0">
-      <table class="table">
+      <table class="table">        
         <thead>
           <tr>
             <th scope="col">No</th>
@@ -9,7 +9,7 @@
             <th scope="col">유저ID</th>
             <th scope="col">이름</th>
             <th scope="col">서버 IP</th>
-            <th scope="col" @click="test">생성일</th>
+            <th scope="col">생성일</th>
           </tr>
         </thead>
         <tbody>
@@ -23,14 +23,27 @@
           </tr>
         </tbody>
       </table>
-      <div class="page-navi justify-content-center">
+      <div class="page-navi">
         <nav aria-label="Page navigation example">
-          <ul class="pagination">
-            <div v-for="(page, i) in pages" :key="i">
-              <li :class="(i == nowPage) ? 'page-item active':'page-item' ">
-                <a @click="onPage(i)" class="page-link" href="#">{{ page }}</a>
-              </li>
-            </div>
+          <ul v-if="pages == 0" class="pagination">
+            <li class="page-item">
+              <img src="@/assets/icons/caret-left.svg" width="26" height="26" title="caret-left" @click="prevPage()">
+            </li>
+            <p> {{ nowPage + 1 }}  / {{ pages + 1}} </p>
+            <li class="page-item">
+              <img src="@/assets/icons/caret-right.svg" width="26" height="26" title="caret-right" @click="nextPage()">
+            </li>
+          </ul>
+          <ul v-else class="pagination">
+            <li class="page-item">
+              <img v-if="nowPage == 0" src="@/assets/icons/caret-left.svg" width="26" height="26" title="caret-left" @click="prevPage()">
+              <img v-else src="@/assets/icons/caret-left-fill.svg" width="26" height="26" title="caret-left-fill" @click="prevPage()">
+            </li>
+            <p> {{ nowPage + 1 }}  / {{ pages }} </p>
+            <li class="page-item">
+              <img v-if="nowPage == (pages-1)" src="@/assets/icons/caret-right.svg" width="26" height="26" title="caret-right" @click="nextPage()">
+              <img v-else src="@/assets/icons/caret-right-fill.svg" width="26" height="26" title="caret-right-fill" @click="nextPage()">
+            </li>
           </ul>
         </nav>
       </div>
@@ -64,14 +77,6 @@ export default {
         (this.nowPage + 1) * this.perPage
       )
     },
-    paginationLength() {
-      let pagination = document.querySelector('.page-navi')
-      let paginationLength = pagination.clientWidth
-      let tableContainer = document.querySelector('.table-container')
-      let tableConatinerLength = (tableContainer.clientWidth - paginationLength) / 2
-      document.querySelector('.page-navi').style.left = String(tableConatinerLength) + 'px'
-      return tableConatinerLength
-    },
   },
   methods: {
     ...mapActions('account', ['getLogs']),
@@ -85,12 +90,27 @@ export default {
     },
     test() {
       console.log(this.paginationLength)
+    },
+    prevPage() {
+      if (this.nowPage > 0) {
+        this.nowPage -= 1
+      }
+    },
+    nextPage() {
+      if (this.nowPage < this.pages-1) {
+        this.nowPage += 1
+      }
     }
   },
   created() {
     this.getLogs()
-    // this.paginationLength()
   },
+  // updated() {
+  //   let pagination = document.querySelector('.page-navi')
+  //   let tableContainer = document.querySelector('.table-container')
+  //   let tableConatinerLength = (tableContainer.clientWidth - pagination.clientWidth) / 2
+  //   document.querySelector('.page-navi').style.left = String(tableConatinerLength) + 'px'
+  // }
 }
 </script>
 
@@ -104,5 +124,11 @@ export default {
 .page-navi {
   position: absolute;
   bottom: 0;
+  margin-bottom: 10px;
+  left: 50%;
+}
+
+img {
+  cursor: pointer;
 }
 </style>

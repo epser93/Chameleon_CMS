@@ -122,7 +122,7 @@ input {
 }
 
 .preview-img {
-  width: 360px;
+  width: 490px;
   height: 150px;
   background-color: ghostwhite;
   border: 1px solid #ced4da;
@@ -130,8 +130,8 @@ input {
 }
 
 #inner-img {
-  width : 300px;
-  height: 125px;
+  width : auto;
+  height: 148px;
   right: 50%;
   top: 50%;
 }
