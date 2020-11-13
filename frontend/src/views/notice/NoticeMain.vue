@@ -58,7 +58,7 @@ import { mapActions, mapState } from 'vuex'
 export default {
   data() {
     return {
-      perPage: 10,
+      perPage: 7,
       nowPage: 0,
     }
   },
@@ -95,6 +95,16 @@ export default {
       } else {
         this.$router.push({name : 'NoticeDetail', params : { id : notice.id }})
       }
+    },
+    prevPage() {
+      if (this.nowPage > 0) {
+        this.nowPage -= 1
+      }
+    },
+    nextPage() {
+      if (this.nowPage < this.pages-1) {
+        this.nowPage += 1
+      }
     }
   },
   created() {
@@ -122,5 +132,9 @@ export default {
   position: absolute;
   bottom: 0;
   left: 50%;
+}
+
+.page-item {
+  cursor: pointer;
 }
 </style>
