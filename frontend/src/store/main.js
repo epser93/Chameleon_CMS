@@ -9,7 +9,8 @@ export default {
     images: '',
     image: '',
 
-    products: ''
+    products: '',
+    allProducts: ''
   },
 
   getters: {
@@ -27,6 +28,9 @@ export default {
 
     SET_PRODUCTS(state, payload) {
       state.products = payload
+    },
+    SET_ALL_PRODUCTS(state, payload) {
+      state.allProducts = payload
     },
   },
 
@@ -99,6 +103,16 @@ export default {
       axios.get(SERVER.URL + SERVER.ROUTER.main, rootGetters['account/config'])
         .then((res) => {
           commit('SET_PRODUCTS', res.data)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    },
+
+    getAllProducts({ rootGetters, commit }) {
+      axios.get(SERVER.URL + SERVER.ROUTER.search, rootGetters['account/config'])
+        .then((res) => {
+          commit('SET_ALL_PRODUCTS', res.data)
         })
         .catch((err) => {
           console.log(err)

@@ -45,7 +45,7 @@
           <div class="row">
             <h4 class="ml-3">제품군 대표 이미지</h4>
               <input ref="imageInput" type="file" hidden @change="onChangeImages">
-              <button type="button" class="btn btn-success btn-sm ml-3" @click="onClickImageUpload">업로드</button>
+              <button type="button" class="btn btn-success btn-sm ml-3" @click="onClickImageUpload">이미지 등록</button>
           </div>
           <div class="preview-img mt-2">
             <img id="inner-img" v-if="imageUrl" :src="imageUrl">
@@ -65,13 +65,13 @@
             <button type="button" class="btn btn-dark btn-sm mr-2" @click="$router.go(-1)">뒤로가기</button>
           </div>
           <div>
-            <button type="button" class="btn btn-secondary btn-sm mr-2" @click="onClickWindows">미리보기</button>
+            <button type="button" class="btn btn-outline-primary btn-sm mr-2" @click="onClickWindows">미리보기</button>
           </div>
           <div v-if="update">
-            <button type="button" class="btn btn-primary btn-sm" @click="onClickUpdate">등록하기</button>
+            <button type="button" class="btn btn-primary btn-sm" @click="onClickUpdate">저장</button>
           </div>
           <div v-else>
-            <button type="button" class="btn btn-primary btn-sm" @click="onClickRegister">저장</button> 
+            <button type="button" class="btn btn-primary btn-sm" @click="onClickRegister">추가</button> 
           </div>
         </div>  
       </div>

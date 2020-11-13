@@ -2,6 +2,11 @@
   <div class="container">
     <div class="event row">
       <div class="col-8">
+        <div class="form-title mt-5">
+          <h3 v-if="title">Edit Main Image</h3>
+          <h3 v-else>Add Main Image</h3>
+          <hr>
+        </div>
         <!-- 대표 이미지 제목 -->
         <div class="event-content">
           <h4>이미지 제목</h4>
@@ -31,10 +36,10 @@
             <button type="button" class="btn btn-dark btn-sm mr-2" @click="$router.go(-1)">뒤로가기</button>
           </div>
           <div v-if="($route.params.method == 'update')">
-            <button type="button" class="btn btn-primary btn-sm" @click="onRegister">수정하기</button>
+            <button type="button" class="btn btn-primary btn-sm" @click="onRegister">저장</button>
           </div>
           <div v-else>
-            <button type="button" class="btn btn-primary btn-sm" @click="onRegister">등록하기</button>
+            <button type="button" class="btn btn-primary btn-sm" @click="onRegister">추가</button>
           </div>
         </div>  
 

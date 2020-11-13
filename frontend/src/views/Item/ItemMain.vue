@@ -1,5 +1,5 @@
 <template>
-<div class="container" v-if="items != null && category != null">
+<div class="container pl-0" v-if="items != null && category != null">
   <div class="table-container mt-0">
     <div class="d-flex align-items-center justify-content-between">
       <div class="row align-items-center">
@@ -43,10 +43,32 @@
           </td>
           <td><button type="button" class="btn btn-warning btn-sm" @click="onUpdate(category.id, item.id)">수정</button></td>
         </tr>
-
       </tbody>
     </table>
-
+    <div class="page-navi">
+      <nav aria-label="Page navigation example">
+        <ul v-if="pages == 0" class="pagination">
+          <li class="page-item">
+            <img src="@/assets/icons/caret-left.svg" width="26" height="26" title="caret-left" @click="prevPage()">
+          </li>
+          <p> {{ nowPage + 1 }}  / {{ pages + 1}} </p>
+          <li class="page-item">
+            <img src="@/assets/icons/caret-right.svg" width="26" height="26" title="caret-right" @click="nextPage()">
+          </li>
+        </ul>
+        <ul v-else class="pagination">
+          <li class="page-item">
+            <img v-if="nowPage == 0" src="@/assets/icons/caret-left.svg" width="26" height="26" title="caret-left" @click="prevPage()">
+            <img v-else src="@/assets/icons/caret-left-fill.svg" width="26" height="26" title="caret-left-fill" @click="prevPage()">
+          </li>
+          <p> {{ nowPage + 1 }}  / {{ pages }} </p>
+          <li class="page-item">
+            <img v-if="nowPage == (pages-1)" src="@/assets/icons/caret-right.svg" width="26" height="26" title="caret-right" @click="nextPage()">
+            <img v-else src="@/assets/icons/caret-right-fill.svg" width="26" height="26" title="caret-right-fill" @click="nextPage()">
+          </li>
+        </ul>
+      </nav>
+    </div>
   </div>
 </div>
 </template>
@@ -57,12 +79,26 @@ import { mapMutations, mapActions, mapState, mapGetters } from 'vuex'
 export default {
   data() {
     return {
-      cid: ''
+      cid: '',
+      perPage: 10,
+      nowPage: 0,
     }
   },
   computed: {
     ...mapState('category', ['items']),
-    ...mapGetters('category', ['category'])
+    ...mapGetters('category', ['category']),
+    rows() {
+      return this.items.length
+    },
+    pages() {
+      return Math.ceil(this.items.length/this.perPage)
+    },
+    itemsForList() {
+      return this.items.slice(
+        (this.nowPage) * this.perPage,
+        (this.nowPage + 1) * this.perPage
+      )
+    },
   },
   methods: {
     ...mapActions('category', ['getItem', 'delItem', 'postItem']),
@@ -87,8 +123,17 @@ export default {
           this.postItem({ cid: this.category.id, pid: item.id, })
         }
       }
+    },
+    prevPage() {
+      if (this.nowPage > 0) {
+        this.nowPage -= 1
+      }
+    },
+    nextPage() {
+      if (this.nowPage < this.pages-1) {
+        this.nowPage += 1
+      }
     }
-
   },
   watch :{
     '$route' : function() {
@@ -119,5 +164,16 @@ export default {
 span {
   cursor: pointer;
   margin-top: 4px;
+}
+
+.page-navi {
+  position: absolute;
+  bottom: 0;
+  margin-bottom: 10px;
+  left: 50%;
+}
+
+.page-item {
+  cursor: pointer;
 }
 </style>

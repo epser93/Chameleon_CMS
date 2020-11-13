@@ -1,10 +1,10 @@
 <template>
-  <div v-if="images" class="container-fluid pl-0">
+  <div v-if="images" class="container pl-0">
     <div v-if="images" class="table-container">
       <div class="btn-background">
-        <div class="event-btn ml-3 mt-3 mb-3">
-          <!-- <button type="button" class="btn btn-danger">삭제</button> -->
-          <button type="button" class="btn btn-info ml-3" @click="onCreate()">생성</button>
+        <div class="event-btn align-items-center mt-3 mb-3">
+          <h5 class="mb-0">대표 이미지</h5>
+          <button type="button" class="btn btn-info btn-sm" @click="onCreate()">추가</button>
         </div>
       </div>
       <table class="table">
@@ -27,14 +27,14 @@
               <span class="badge badge-danger" @click="changeActive(image)">비활성화</span>
             </td>
             <!-- 스위치 -->
-            <td><button type="button" class="btn btn-secondary btn-sm" @click="onClickWindows(image.image)">보기</button></td>
-            <td><button type="button" class="btn btn-secondary btn-sm" @click="onUpdate(image.id)">수정</button></td>
+            <td><button type="button" class="btn btn-outline-secondary btn-sm" @click="onClickWindows(image.image)">보기</button></td>
+            <td><button type="button" class="btn btn-warning btn-sm" @click="onUpdate(image.id)">수정</button></td>
           </tr>
         </tbody>
       </table>
       <div class="page-navi">
         <nav aria-label="Page navigation example">
-          <ul v-if="pages == 0" class="pagination">
+          <ul v-if="pages == 0" class="pagination align-items-center">
             <li class="page-item">
               <img src="@/assets/icons/caret-left.svg" width="26" height="26" title="caret-left" @click="prevPage()">
             </li>

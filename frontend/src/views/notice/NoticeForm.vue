@@ -36,7 +36,8 @@
             <button type="button" class="btn btn-warning btn-sm mr-2" @click="onClickTemp">임시저장</button>
           </div>
           <div>
-            <button type="button" class="btn btn-primary btn-sm" @click="onActivate">등록하기</button>
+            <button v-if="id" type="button" class="btn btn-primary btn-sm" @click="onActivate">저장</button>
+            <button v-else type="button" class="btn btn-primary btn-sm" @click="onActivate">추가</button>
           </div>
         </div> 
       </div>
@@ -176,7 +177,7 @@ hr {
 }
 
 #inner-img {
-  width : 300px;
+  width : auto;
   height: 125px;
   right: 50%;
   top: 50%;

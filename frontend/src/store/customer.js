@@ -5,6 +5,7 @@ export default {
   namespaced: true,
 
   state: {
+    mainItems: '',
     carousels: '',
 
     itemList: '',
@@ -23,6 +24,9 @@ export default {
   },
 
   mutations: {
+    SET_MAINITEMS(state, payload) {
+      state.mainItems = payload
+    },
     SET_CAROUSELS(state, payload) {
       state.carousels = payload
     },
@@ -49,6 +53,15 @@ export default {
   },
 
   actions: {
+    getMainItems({ commit }) {
+      axios.get(SERVER.URL + SERVER.ROUTER.customer.main)
+      .then((res) => {
+        commit('SET_MAINITEMS', res.data)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+    },
 
     getCarousels({ commit }) {
       axios.get(SERVER.URL + SERVER.ROUTER.customer.carousel)
