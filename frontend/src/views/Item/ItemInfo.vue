@@ -145,11 +145,6 @@
           <div class="card-body" v-if="history">
             <!-- {{ history }} -->
             <ul v-if="history.length">
-              <li>             
-                <div>
-                  <button type="button" class="btn btn-primary btn-sm" @click="onOrigin()">원본 데이터 보기</button>
-                </div>
-              </li> 
               <li v-for="(his,index) in history.slice()" :key="index">             
                 <div class="history-btn row justify-content-around" :id="`history-${index}`" @click="fixHistory(index)">
                   <strong>저장 {{ index }}</strong>
@@ -164,6 +159,7 @@
             </ul>
           </div>
             <div class="card-footer text-muted">
+              <button type="button" class="btn btn-primary btn-sm" @click="onOrigin()">원본 데이터 보기</button>
               <button type="button" class="btn btn-primary btn-sm" @click="onClickUpdate(his_id)">등록하기</button>
             </div>
         </div>
