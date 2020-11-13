@@ -5,20 +5,20 @@
         <img src="@/assets/logo.png" width="200" height="100%" class="d-inline-block align-top" alt="" loading="lazy">
       </a>
       <div class="row align-items-center mt-4">
-        <p class="user-info">{{ user }}님 환영합니다.</p>
+        <p class="user-info">{{ userInfo.username }}님 환영합니다.</p>
         <button type="button" class="btn btn-secondary btn-sm ml-2" @click="logout()">로그아웃</button>
       </div>
     </div>
     <div class="nav-tabs-container">
       <ul class="nav nav-tabs" id="myTab" role="tablist">
-        <li class="nav-item" role="presentation">
-          <a ref="Manage" class="nav-link" id="manage-tab" data-toggle="tab" @click="onRoute('Manage')" role="tab" aria-controls="manage" aria-selected="true">Manage</a>
+        <li v-if="userInfo.is_superuser || userInfo.is_logger" class="nav-item" role="presentation">
+          <a class="nav-link Manage" id="manage-tab" data-toggle="tab" @click="onRoute('Manage')" role="tab" aria-controls="manage" aria-selected="true">Manage</a>
         </li>
         <li class="nav-item" role="presentation">
-          <a ref="Data" class="nav-link" id="data-tab" data-toggle="tab" @click="onRoute('Data')" role="tab" aria-controls="data" aria-selected="false">Data</a>
+          <a class="nav-link Data" id="data-tab" data-toggle="tab" @click="onRoute('Data')" role="tab" aria-controls="data" aria-selected="false">Data</a>
         </li>
         <li class="nav-item" role="presentation">
-          <a ref="Contents" class="nav-link" id="contents-tab" data-toggle="tab" @click="onRoute('Contents')" role="tab" aria-controls="contents" aria-selected="false">Contents</a>
+          <a class="nav-link Contents" id="contents-tab" data-toggle="tab" @click="onRoute('Contents')" role="tab" aria-controls="contents" aria-selected="false">Contents</a>
         </li>
       </ul>
     </div>
@@ -26,59 +26,25 @@
 </template>
 
 <script>
-import SERVER from '@/api/drf'
-import axios from 'axios'
-// import { mapMutations } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 export default {
   name: 'Header',
   data() {
     return {
-      user: null
+
     }
   },
+  computed: {
+    ...mapState('account', ['userInfo'])
+  },
   methods: {
-    // ...mapMutations('account', ['SET_USERINFO']),
+    ...mapActions('account', ['getUserInfo', 'logout']),
     onRoute(name) {
-      // this.activeTab()
       this.$router.push({name: name}, () => {})
     },
     fixTabs() {
-      if (this.$route.matched[2].name === "Manage") {
-        this.$refs.Manage.classList.add('active')
-      } else if (this.$route.matched[2].name === "Data") {
-        this.$refs.Data.classList.add('active')
-      } else {
-        this.$refs.Contents.classList.add('active')
-      }
+      document.querySelector('.' + this.$route.matched[2].name).classList.add('active')
     },
-    getUserInfo() {
-      const token = this.$cookies.get('auth-token')
-      const config = {
-        headers: {
-          'Authorization' : 'Token ' + token
-        }
-      }
-      axios.get(SERVER.URL + SERVER.ROUTER.userinfo, config)
-        .then(res => {
-          this.user = res.data.username
-          // this.SET_USERINFO(res.data)
-        })
-        .catch(error => console.log(error.response))
-    },
-    logout() {
-      const token = this.$cookies.get('auth-token')
-      const config = {
-        headers: {
-          'Authorization' : 'Token ' + token
-        }
-      }
-      axios.post(SERVER.URL + SERVER.ROUTER.logout, null, config)
-        .then(() => {
-          this.$cookies.remove('auth-token')
-          this.$router.push({name : 'Login'})
-        })
-        .catch(error => console.log(error.response))
-    }
   },
   mounted() {
     this.fixTabs()
