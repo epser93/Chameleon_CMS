@@ -55,6 +55,9 @@ export default{
 
         // search
         search : 'services/customer/search/?content=',
+
+        // notice
+        notice : 'services/customer/notices/'
         
       }
     }
