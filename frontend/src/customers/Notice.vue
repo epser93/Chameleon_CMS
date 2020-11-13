@@ -46,7 +46,7 @@ export default {
       this.$cookies.set('DontOpenNotice','idontwanttoseethat')
     },
     getImage(src) {
-      return SERVER.domain + src
+      return SERVER.domain + src.slice(56, src.length)
     }
   },
   created() {

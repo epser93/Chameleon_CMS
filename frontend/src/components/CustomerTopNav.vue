@@ -125,7 +125,7 @@ export default {
     },
     getImage(src) {
       if (src) {
-        return SERVER.domain + src
+        return SERVER.domain + src.slice(56, src.length)
       }
       return ''
     }

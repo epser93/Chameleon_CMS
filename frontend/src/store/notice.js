@@ -47,7 +47,7 @@ export default {
       axios.get(SERVER.URL + SERVER.ROUTER.notice + id, rootGetters['account/config'])
         .then(res => {
           commit('SET_NOTICE', res.data)
-          commit('SET_IMAGEURL', SERVER.URL.slice(0,SERVER.URL.length-4) + res.data.image.substr(1))
+          commit('SET_IMAGEURL', SERVER.domain + res.data.image.slice(56, res.data.image.length))
         })
         .catch(error => console.log(error.response))
     },
