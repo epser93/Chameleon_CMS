@@ -12,8 +12,6 @@ export default {
     items: '',
     item: '',
     history: '',
-    previewData: '',
-
   },
 
   getters: {
@@ -46,9 +44,6 @@ export default {
     },
     SET_HISTORY(state, payload) {
       state.history = payload
-    },
-    SET_PREVIEWDATA(state, payload) {
-      state.previewData = payload
     },
   },
 

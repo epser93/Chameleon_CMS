@@ -7,6 +7,12 @@
           <h3 v-else>Add Product Category</h3>
           <hr>
         </div>
+<!-- 
+        <form name="myform">
+          <input type="button" value="자식창 열기" @click="onClickWindows()"><br>
+          부모창 Sender : <input type="text" name="sender" size="10" v-model="previewData"><br>
+        </form> -->
+
         <div class="category-content">
           <h4>제품군</h4>
           <!-- {{category}} -->
@@ -65,7 +71,15 @@
             <button type="button" class="btn btn-dark btn-sm mr-2" @click="$router.go(-1)">뒤로가기</button>
           </div>
           <div>
+<<<<<<< HEAD
+            <form name="myform">
+              <input type="button"  class="btn btn-secondary btn-sm mr-2" value="미리보기" @click="onClickWindows()"><br>
+              <input type="text" name="sender" size="10" v-model="previewData" hidden>
+            </form>
+            <!-- <button type="button" class="btn btn-secondary btn-sm mr-2" @click="onClickWindows">미리보기</button> -->
+=======
             <button type="button" class="btn btn-outline-primary btn-sm mr-2" @click="onClickWindows">미리보기</button>
+>>>>>>> 64a99bbfe0bbf25857cee90bb78ea2702e6371a9
           </div>
           <div v-if="update">
             <button type="button" class="btn btn-primary btn-sm" @click="onClickUpdate">저장</button>
@@ -99,6 +113,8 @@ export default {
         delTagIdx: [],
         addTags: [],
 
+        newWindow: '',
+        previewData: '',
     }
   },
   computed: {
@@ -168,7 +184,6 @@ export default {
 
     },
     onClickWindows(){
-      // var windowObj
       const previewData = {
         "id" : this.categoryIdx,
         "name" : this.categoryName,
@@ -195,30 +210,11 @@ export default {
         ]
       }
 
-      var pvdata_str = JSON.stringify(previewData)
-      console.log(pvdata_str)
 
-      window.open("http://localhost:8080/admin/preview", "page");
-      const ping = setInterval(() => {
-         window.postMessage(pvdata_str, "*");
-      }, 100);
-
-      window.addEventListener("message", ({pvdata_str}) => {
-        if(pvdata_str === "received") clearInterval(ping);
-      });
-
-
-
-
-      // var settings ='toolbar=0,directories=0,status=no,menubar=0,scrollbars=auto,resizable=no,height=200,width=200,left=0,top=0';
-      // // winObject = window.open("test2.htm", "test2", settings);
-      // console.log(previewData)
-      // this.SET_PREVIEWDATA(previewData)
-      // windowObj = window.open("http://localhost:8080/admin/preview", previewData, settings)
-      // windowObj.document.getElementById("childText").value = previewData
-      // $("#myform").submit();
+      console.log(previewData['items'][0]['descriptions'])
+      this.previewData = JSON.stringify(previewData)
+      this.newWindow = window.open("http://localhost:8080/admin/preview", "page");
     },
-
     onClickImageUpload() {
         this.$refs.imageInput.click();
     },
