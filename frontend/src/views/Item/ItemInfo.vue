@@ -428,8 +428,9 @@ export default {
       } else {
         const hisData = {
           id : hid
-        } 
-        this.putItemHistory({cid : this.category.id, hid : hid, hisData: hisData})
+        }
+        // console.log(hisData)
+        this.putItemHistory({cid : this.category.id, pid : this.item.id, hisData: hisData})
       }
     },
 

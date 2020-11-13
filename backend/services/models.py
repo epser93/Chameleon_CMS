@@ -89,8 +89,8 @@ class Notices(models.Model):
     end_date = models.DateTimeField(default=None, null=True)
     create_date = models.DateTimeField(auto_now_add=True)
     update_date = models.DateTimeField(auto_now=True)
-    is_active = models.BooleanField(default=True)
-    is_temp = models.BooleanField(default=True)
+    is_active = models.BooleanField(default=False)
+    is_temp = models.BooleanField(default=False)
     image = models.ImageField(default=None, null=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.DO_NOTHING)
 
@@ -98,7 +98,8 @@ class Notices(models.Model):
         self.title = data.get('title', '')
         self.content = data.get('content', '')
         self.user = user
-        self.is_temp = data.get('is_temp', 'True') == 'True'
+        self.is_active = data.get('is_active', 'False') == 'True'
+        self.is_temp = data.get('is_temp', 'False') == 'True'
         if self.is_temp == False:
             self.start_date = datetime.now().replace(tzinfo=KST)
         if image != None:
@@ -113,7 +114,8 @@ class Notices(models.Model):
         self.title = data.get('title', self.title)
         self.content = data.get('content', self.content)
         self.user = user
-        self.is_temp = data.get('is_temp', self.is_temp)
+        if data.get('is_temp', None):
+            self.is_temp = data.get('is_temp', 'False') == 'True'
         if image != None:
             is_success, answer = get_imagefile(image)
             if is_success == False:

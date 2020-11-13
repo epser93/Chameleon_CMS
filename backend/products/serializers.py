@@ -127,3 +127,17 @@ class CustomerCategoryJoinSerializer(serializers.ModelSerializer):
         items = Item.objects.filter(is_active=True).filter(is_temp=False).filter(category=obj)
         serializer = CustomerItemSerializer(items, many=True)
         return serializer.data
+
+
+class MainItemJoinSerializer(serializers.ModelSerializer):
+    thumbnail = serializers.SerializerMethodField()
+    class Meta:
+        model = Item
+        fields = ['id', 'name', 'thumbnail']
+
+    def get_thumbnail(self, obj):
+        images = ItemImage.objects.filter(item=obj).filter(is_thumbnail=True)
+        item_image = None
+        if images:
+            item_image = 'media/' + images[0].item_image.name
+        return item_image
