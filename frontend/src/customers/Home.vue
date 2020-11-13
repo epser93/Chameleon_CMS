@@ -24,11 +24,10 @@
       <div class="row mt-4 mb-3">
         <h2 class="mr-auto ml-auto">추천 제품</h2>
       </div>
-      <div class="row justify-content-around mb-2">
-        <img src="@/assets/250.png" class="col-6 col-lg-3 mb-4" alt="recommand product image1">
-        <img src="@/assets/250.png" class="col-6 col-lg-3 mb-4" alt="recommand product image2">
-        <img src="@/assets/250.png" class="col-6 col-lg-3 mb-4" alt="recommand product image3">
-        <img src="@/assets/250.png" class="col-6 col-lg-3 mb-4" alt="recommand product image4">
+      <div class="row justify-content-around mb-2 product">
+        <img v-for="(product, index) in mainItems" :key="index"
+          :src="'http://k3c205.p.ssafy.io/'+product.item.thumbnail"
+          class="col-6 col-lg-3 mb-4" :alt="'recommand product image'+index">
       </div>
     </div>
     <!-- 이벤트 Carousel --> 
@@ -65,10 +64,10 @@ import { mapState, mapActions } from 'vuex'
 export default {
   name: 'Home',
   computed: {
-    ...mapState('customer', ['carousels', 'events']),
+    ...mapState('customer', ['mainItems', 'carousels', 'events']),
   },
   methods: {
-    ...mapActions('customer', ['getCarousels', 'getEvents']),
+    ...mapActions('customer', ['getMainItems', 'getCarousels', 'getEvents']),
     onClickWindows(url) {
       if (url) {
         window.open(url) 
@@ -83,6 +82,7 @@ export default {
     if (!this.$cookies.get("DontOpenNotice")) {
       window.open("http://localhost:8080/notice", "", "width=305,height=332,left=200,top=200")
     }
+    this.getMainItems()
     this.getCarousels()
     this.getEvents()
   }
