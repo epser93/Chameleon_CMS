@@ -32,14 +32,27 @@
           </tr>
         </tbody>
       </table>
-      <div class="page-navi justify-content-center">
+      <div class="page-navi">
         <nav aria-label="Page navigation example">
-          <ul class="pagination">
-            <div v-for="(page, i) in pages" :key="i">
-              <li :class="(i == nowPage) ? 'page-item active':'page-item' ">
-                <a @click="onPage(i)" class="page-link" href="#">{{ page }}</a>
-              </li>
-            </div>
+          <ul v-if="pages == 0" class="pagination">
+            <li class="page-item">
+              <img src="@/assets/icons/caret-left.svg" width="26" height="26" title="caret-left" @click="prevPage()">
+            </li>
+            <p> {{ nowPage + 1 }}  / {{ pages + 1}} </p>
+            <li class="page-item">
+              <img src="@/assets/icons/caret-right.svg" width="26" height="26" title="caret-right" @click="nextPage()">
+            </li>
+          </ul>
+          <ul v-else class="pagination">
+            <li class="page-item">
+              <img v-if="nowPage == 0" src="@/assets/icons/caret-left.svg" width="26" height="26" title="caret-left" @click="prevPage()">
+              <img v-else src="@/assets/icons/caret-left-fill.svg" width="26" height="26" title="caret-left-fill" @click="prevPage()">
+            </li>
+            <p> {{ nowPage + 1 }}  / {{ pages }} </p>
+            <li class="page-item">
+              <img v-if="nowPage == (pages-1)" src="@/assets/icons/caret-right.svg" width="26" height="26" title="caret-right" @click="nextPage()">
+              <img v-else src="@/assets/icons/caret-right-fill.svg" width="26" height="26" title="caret-right-fill" @click="nextPage()">
+            </li>
           </ul>
         </nav>
       </div>
