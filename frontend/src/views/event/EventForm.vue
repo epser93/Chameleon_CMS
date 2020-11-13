@@ -94,9 +94,6 @@
             <button type="button" class="btn btn-dark btn-sm mr-2" @click="$router.go(-1)">뒤로가기</button>
           </div>
           <div>
-            <button type="button" class="btn btn-secondary btn-sm mr-2" @click="onClickWindows">미리보기</button>
-          </div>
-          <div>
             <button type="button" class="btn btn-primary btn-sm" @click="onRegister">등록하기</button>
           </div>
         </div>  
@@ -163,13 +160,6 @@ export default {
   methods: {
     ...mapActions('event', ['getEvent', 'postEvent']),
     ...mapMutations('event', ['SET_EVENT']),
-    onClickRegister(){
-      console.log('dfdfdf')
-    },
-    onClickWindows(){
-      var url="test.html";
-      window.open(url,"",)
-    },
     onUploadThumbnail() {
       this.$refs.thumbnailImage.click()
     },

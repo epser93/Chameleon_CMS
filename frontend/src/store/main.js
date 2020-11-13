@@ -1,5 +1,6 @@
 import axios from 'axios'
 import SERVER from '@/api/drf'
+import router from '@/router'
 
 export default {
   namespaced: true,
@@ -40,10 +41,11 @@ export default {
         })
     },
 
-    postImage({ rootGetters }, mainImageData) {
+    postImage({ rootGetters, dispatch }, mainImageData) {
       axios.post(SERVER.URL + SERVER.ROUTER.carousel, mainImageData, rootGetters['account/formconfig'])
-        .then((res) => {
-          console.log(res.data)
+        .then(() => {
+          dispatch('getImages')
+          router.push({ name : 'MainImage'})
         })
         .catch((err) => {
           console.log(err)
@@ -60,10 +62,11 @@ export default {
         })
       },
 
-    putImage({ rootGetters }, {id, mainImageData}) {
+    putImage({ rootGetters, dispatch }, {id, mainImageData}) {
       axios.put(SERVER.URL + SERVER.ROUTER.carousel + id + '/', mainImageData, rootGetters['account/config'])
-        .then((res) => {
-          console.log(res.data)
+        .then(() => {
+          dispatch('getImages')
+          router.push({ name : 'MainImage'})
         })
         .catch((err) => {
           console.log(err)

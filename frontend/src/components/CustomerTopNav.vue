@@ -181,6 +181,7 @@ export default {
   position: absolute;
   width: 100vw;
   z-index: 999999;
+  margin-top: -18px;
 }
 
 .nav-link {
