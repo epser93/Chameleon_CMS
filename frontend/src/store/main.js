@@ -8,6 +8,7 @@ export default {
     images: '',
     image: '',
 
+    products: ''
   },
 
   getters: {
@@ -21,7 +22,11 @@ export default {
 
     SET_IMAGE(state, payload) {
       state.image = payload
-    }
+    },
+
+    SET_PRODUCTS(state, payload) {
+      state.products = payload
+    },
   },
 
   actions: {
@@ -85,6 +90,16 @@ export default {
       .catch((err) => {
         console.log(err)
       })   
+    },
+
+    getProducts({ rootGetters, commit }) {
+      axios.get(SERVER.URL + SERVER.ROUTER.main, rootGetters['account/config'])
+        .then((res) => {
+          commit('SET_PRODUCTS', res.data)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
     },
 
   }

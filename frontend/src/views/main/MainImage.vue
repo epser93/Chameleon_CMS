@@ -17,7 +17,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(image, index) in images" :key="index">
+          <tr v-for="(image, index) in imagesForList" :key="index">
             <td>{{ image.title }}</td>
             <!-- 스위치 -->
             <td v-if="image.is_active" class="row justify-content-center">
@@ -33,18 +33,25 @@
         </tbody>
       </table>
       <div class="page-navi">
-        <nav aria-label="Page navigation example justify-content-center">
-          <ul class="pagination">
+        <nav aria-label="Page navigation example">
+          <ul v-if="pages == 0" class="pagination">
             <li class="page-item">
-              <a class="page-link" href="#" aria-label="Previous">
-                <span aria-hidden="true">&laquo;</span>
-              </a>
+              <img src="@/assets/icons/caret-left.svg" width="26" height="26" title="caret-left" @click="prevPage()">
             </li>
-            <li class="page-item active"><a class="page-link" href="#">1</a></li>
+            <p> {{ nowPage + 1 }}  / {{ pages + 1}} </p>
             <li class="page-item">
-              <a class="page-link" href="#" aria-label="Next">
-                <span aria-hidden="true">&raquo;</span>
-              </a>
+              <img src="@/assets/icons/caret-right.svg" width="26" height="26" title="caret-right" @click="nextPage()">
+            </li>
+          </ul>
+          <ul v-else class="pagination">
+            <li class="page-item">
+              <img v-if="nowPage == 0" src="@/assets/icons/caret-left.svg" width="26" height="26" title="caret-left" @click="prevPage()">
+              <img v-else src="@/assets/icons/caret-left-fill.svg" width="26" height="26" title="caret-left-fill" @click="prevPage()">
+            </li>
+            <p> {{ nowPage + 1 }}  / {{ pages }} </p>
+            <li class="page-item">
+              <img v-if="nowPage == (pages-1)" src="@/assets/icons/caret-right.svg" width="26" height="26" title="caret-right" @click="nextPage()">
+              <img v-else src="@/assets/icons/caret-right-fill.svg" width="26" height="26" title="caret-right-fill" @click="nextPage()">
             </li>
           </ul>
         </nav>
@@ -57,8 +64,26 @@
 import { mapState, mapActions } from 'vuex'
 
 export default {
+  data() {
+    return {
+      perPage: 8,
+      nowPage: 0,
+    }
+  },
   computed: {
     ...mapState('main',['images']),
+    rows() {
+      return this.images.length
+    },
+    pages() {
+      return Math.ceil(this.images.length/this.perPage)
+    },
+    imagesForList() {
+      return this.images.slice(
+        (this.nowPage) * this.perPage,
+        (this.nowPage + 1) * this.perPage
+      )
+    },
   },
   methods: {
     ...mapActions('main', ['getImages', 'delImage', 'actImage']),

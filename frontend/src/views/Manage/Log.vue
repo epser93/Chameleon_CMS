@@ -25,7 +25,16 @@
       </table>
       <div class="page-navi">
         <nav aria-label="Page navigation example">
-          <ul class="pagination">
+          <ul v-if="pages == 0" class="pagination">
+            <li class="page-item">
+              <img src="@/assets/icons/caret-left.svg" width="26" height="26" title="caret-left" @click="prevPage()">
+            </li>
+            <p> {{ nowPage + 1 }}  / {{ pages + 1}} </p>
+            <li class="page-item">
+              <img src="@/assets/icons/caret-right.svg" width="26" height="26" title="caret-right" @click="nextPage()">
+            </li>
+          </ul>
+          <ul v-else class="pagination">
             <li class="page-item">
               <img v-if="nowPage == 0" src="@/assets/icons/caret-left.svg" width="26" height="26" title="caret-left" @click="prevPage()">
               <img v-else src="@/assets/icons/caret-left-fill.svg" width="26" height="26" title="caret-left-fill" @click="prevPage()">

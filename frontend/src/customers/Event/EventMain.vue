@@ -13,7 +13,7 @@
           <div class="event-text-box col-sm-12 col-md-4">
             <h4 class="event-name"  @click="onDetail(event.id)">{{ event.title }}</h4>
             <div class="event-spec m-0">
-              <p>{{ event }}</p>
+              <!-- <p>{{ event }}</p> -->
             </div>
             <p class="date">기간: {{ event.start_date.slice(0,10) }} ~ {{ event.end_date.slice(0,10) }}</p>
           </div>

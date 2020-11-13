@@ -175,21 +175,6 @@ const routes = [
                     name: 'MainImageUpdate',
                     component: () => import('@/views/main/MainImageForm.vue'),
                   },
-                  {
-                    path: 'product',
-                    name: 'MainProduct',
-                    component: () => import('@/views/main/MainProduct.vue')
-                  },
-                  {
-                    path: 'product/:method',
-                    name: 'MainProductCreate',
-                    component: () => import('@/views/main/MainProductForm.vue')
-                  },
-                  {
-                    path: 'product/:method/:id',
-                    name: 'MainProductUpdate',
-                    component: () => import('@/views/main/MainProductForm.vue'),
-                  },
                 ]
               },
               {
