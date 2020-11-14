@@ -223,7 +223,7 @@ export default {
         const imageData = {
           file: val.images[i].id,
           number: i,
-          preview: 'http://k3c205.p.ssafy.io' + val.images[i].item_image.slice(56)
+          preview: 'https://chameleon.gq' + val.images[i].item_image.slice(56)
         }
         this.is_thumbnails.push(val.images[i].is_thumbnail)
         if(val.images[i].is_thumbnail == true) {
@@ -275,7 +275,7 @@ export default {
         const imageData = {
           file: this.item.images[i].id,
           number: i,
-          preview: 'http://k3c205.p.ssafy.io' + this.item.images[i].item_image.slice(56)
+          preview: 'https://chameleon.gq' + this.item.images[i].item_image.slice(56)
         }
 
         this.is_thumbnails.push(this.item.images[i].is_thumbnail)
@@ -292,7 +292,7 @@ export default {
       this.uploadIntroIndex = this.imageOfIntro.length
 
     
-      this.imageUrl = 'http://k3c205.p.ssafy.io' + this.item.image
+      this.imageUrl = 'https://chameleon.gq' + this.item.image
 
       this.is_origin = true
     },
@@ -341,7 +341,7 @@ export default {
         const imageData = {
           file: this.history[idx].copy_images[j].id,
           number: j,
-          preview: 'http://k3c205.p.ssafy.io' + this.history[idx].copy_images[j].item_image.slice(56)
+          preview: 'https://chameleon.gq' + this.history[idx].copy_images[j].item_image.slice(56)
         }
         tmpCheck.push (this.history[idx].copy_images[j].is_thumbnail)
         if (this.history[idx].copy_images[j].is_thumbnail){

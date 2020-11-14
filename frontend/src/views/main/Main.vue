@@ -6,15 +6,13 @@
       </div>
     </div>
 
-    {{ allProducts }}
-
     <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" v-if="carousels">
       <ol class="carousel-indicators">
         <li data-target="#carouselExampleIndicators" :class="(index === 0) ? 'active' : ''" :data-slide-to="index"  v-for="(carousel, index) in carousels" :key="index"></li>
       </ol>
       <div class="carousel-inner">
           <div :class="(index === 0) ? 'active carousel-item' : 'carousel-item'"  v-for="(carousel, index) in carousels" :key="index">
-            <img :src="'http://k3c205.p.ssafy.io'+carousel.image.slice(56)" class="d-block w-100" :alt="'main-image-'+index">
+            <img :src="'https://chameleon.gq'+carousel.image.slice(56)" class="d-block w-100" :alt="'main-image-'+index">
           </div>
       </div>
       <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -32,19 +30,21 @@
         <h2 class="mr-auto ml-auto">추천 제품</h2>
       </div>
       <div class="row justify-content-around mb-2 product">
-        <img :src="'http://k3c205.p.ssafy.io/'+product.item.thumbnail" class="col-6 col-lg-3 mb-4" :alt="'recommand product image' + index" v-for="(product, index) in products" :key="index" @click="onModal(product)">
+        <img :src="'https://chameleon.gq/'+product.item.thumbnail" class="col-6 col-lg-3 mb-4" :alt="'recommand product image' + index" v-for="(product, index) in products.reverse()" :key="index" @click="onModal(product)">
       </div>
     </div>
+
     <!-- 추천 제품 모달 -->
     <div class="modal" tabindex="-1" id="recommendModal">
-      <div class="modal-dialog" v-if="product">
+      <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" v-if="modalProduct">
         <div class="modal-content">
           <div class="modal-header" >
             <h5 class="modal-title">추천 상품 변경</h5>
           </div>
           <div class="modal-body">
             <div class="container">
-              <h4 class="product-name">현재 상품 : {{ product.item.name }}</h4>
+              <h4 class="product-name">현재 상품 : {{ modalProduct.item.name }}</h4>
+              <hr>
               <div class="row mt-4 mb-4 ml-4">
                 <!-- <div class="input-group mb-3 justify-content-center">
                   <select name="" id="" v-model="selectedDepartment">
@@ -57,10 +57,26 @@
                   </div>
                 </div> -->
               </div>
+              <table class="table">
+                <thead>
+                  <tr class="top-tr">
+                    <th scope="col">카테고리</th>
+                    <th scope="col">상품명</th>
+                    <th scope="col">변경</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="user-infos" v-for="(product, index) in allProducts" :key="index">
+                    <td>{{ product.category.name }}</td>
+                    <td>{{ product.name }}</td>
+                    <td v-if="nowProducts.includes(product.id)"><button type="button" class="btn btn-danger btn-sm m-0" disabled>추천 상품</button></td>
+                    <td v-else><button type="button" class="btn btn-warning btn-sm m-0" @click="onUpdate(product.id)">수정</button></td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
-          <div class="modal-footer justify-content-center">
-            <button type="button" class="btn btn-primary">변경</button>
+          <div class="modal-footer justify-content-right">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
           </div>
         </div>
@@ -78,25 +94,43 @@ export default {
   name: 'Main',
   data() {
     return {
-      product: ''
+      modalProduct: ''
     }
   },
   computed: {
     ...mapState('customer', ['carousels']),
-    ...mapState('main', ['products', 'allProducts'])
+    ...mapState('main', ['products', 'allProducts']),
+    nowProducts() {
+      const ids = []
+      for(let i=0; i<this.products.length; i++) {
+        ids.push(this.products[i].item.id)
+      }
+      return ids
+    }
   },
   methods: {
     ...mapActions('customer', ['getCarousels']),
-    ...mapActions('main', ['getProducts','getAllProducts']),
+    ...mapActions('main', ['getProducts', 'putProduct', 'getAllProducts']),
     onModal(product) {
-      this.product = product
+      this.modalProduct = product
       $('#recommendModal').modal('show')
+    },
+    onUpdate(pid) {
+      if (confirm("추천 상품을 변경하시겠습니까?") == true){
+        const putData = {
+          priority: this.modalProduct.priority,
+          is_active: "True",
+          id: pid
+        }
+        this.putProduct({ pid: this.modalProduct.id, putData: putData })
+        $('#recommendModal').modal('hide')
+      }
     },
   },
   created() {
     this.getCarousels()
     this.getProducts()
-    // this.getAllProducts()
+    this.getAllProducts()
   }
 }
 </script>
