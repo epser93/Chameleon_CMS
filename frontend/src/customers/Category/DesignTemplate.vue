@@ -3,7 +3,7 @@
     <!-- This is Design Template of Product category -->
     <h3 class="mt-4">{{ datas.name }}</h3>
     <hr>
-    <div v-for="(item, index) in datas.items" :key="index" class="row col-12 mt-4 item" @click="onRoute('CustomerProduct', item.id)">
+    <div v-for="(item, index) in datas.items" :key="index" class="row mt-4 item" @click="onRoute('CustomerProduct', item.id)">
       <div class="vertical col-12 col-sm-6 col-md-4">
         <img class="product-img" :src="getImg(item.images)" alt="">
         <h4 class="product-name mt-2">{{ item.name }}</h4>
