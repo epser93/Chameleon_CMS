@@ -5,7 +5,10 @@
     <hr>
     <!-- 상품 리스트 (연동후 for문으로 돌리기) -->
     <div class="row mt-4 mb-4 ml-4 item" v-for="(item, index) in datas.items" :key="index" @click="onRoute('CustomerProduct', item.id)">
-      <div class="col-5">
+      <div v-if="item.images.length == 0" class="col-5">
+        <img src="@/assets/dummy-250.png" class="product-img" alt="">
+      </div>
+      <div v-else class="col-5">
         <img :src="getImg(item.images)" class="product-img" alt="">
       </div>
       <div class="col-7">

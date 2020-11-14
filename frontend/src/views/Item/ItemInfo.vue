@@ -92,6 +92,7 @@
                   <img src="@/assets/icons/x.svg" alt="delete button" width="12" height="12" title="x">
                 </div>
                 <img :src="file.preview" />
+                {{file.preview}}
               </div>
               <div class="file-preview-wrapper-upload">
                 <div class="image-box" id="image-box-preview">
@@ -118,7 +119,10 @@
             <button type="button" class="btn btn-dark btn-sm" @click="$router.go(-1)">뒤로가기</button>
           </div>
           <div >
-            <button type="button" class="btn btn-outline-primary btn-sm" @click="onClickWindows">미리보기</button>
+            <form name="myform">
+              <input type="button"  class="btn btn-secondary btn-sm mr-2" value="미리보기" @click="onClickWindows()"><br>
+              <input type="text" name="sender" size="10" v-model="previewData" hidden>
+            </form>
           </div>
           <div v-if="update">
             <button type="button" class="btn btn-primary btn-sm" @click="onClickTemp">저장</button>
@@ -193,7 +197,7 @@ export default {
         update: false,
 
         images_type: [],
-
+        previewData: '',
 
         his_id: null,
     }
@@ -460,51 +464,49 @@ export default {
 
 
     onClickWindows(){
-            const previewData = {
-        "id" : this.categoryIdx,
-        "name" : this.categoryName,
-        "image" : this.imageUrl,
-        "template" : this.picked,
+      const previewData = {
+        "id" : this.category.id,
+        "name" : this.category.name,
+        "image" : 'http://k3c205.p.ssafy.io' + this.category.image.slice(56),
+        "template" : 0,
         "items": [
         {
             "id": 1,
-            "name": this.categoryName + '- 제품1',
-            "price": 1280000,
-            "template": 1,
+            "name": this.itemName,
+            "price": this.itemPrice,
+            "template": this.picked,
             "images": [],
-            "descriptions": [
-                {
-                    "id": 1,
-                    "category_description": {                   
-                        "id": 1,
-                        "name": "제품 사양1"
-                    },
-                    "content": "미리보기입니다."
-                },
-                {
-                    "id": 2,
-                    "category_description": {                   
-                        "id": 2,
-                        "name": "제품 사양2"
-                    },
-                    "content": "미리보기입니다."
-                },
-                {
-                    "id": 3,
-                    "category_description": {                   
-                        "id": 3,
-                        "name": "제품 사양3"
-                    },
-                    "content": "미리보기입니다."
-                },
-
-            ]
+            "descriptions": []
         },
         
         ]
       }
+      const tmpImageLen = this.imageOfThumb.length + this.imageOfIntro.length
+      for(let i=0; i<tmpImageLen; i++) {
+        let tmpImage
+        if(this.imageOfThumb.length > i){
+          tmpImage = {
+            "id": i + 1,
+            "item_image" : this.imageOfThumb[i].preview,
+            "is_thumbnail" : true,
+            "priority" : 1,
+          }
+        } else {
+           tmpImage = {
+            "id": i + 1,
+            "item_image" : this.imageOfIntro[i-this.imageOfThumb.length].preview,
+            "is_thumbnail" : false,
+            "priority" : 1,
+          }
+        }
+        previewData.items[0].images.push(tmpImage)
+      }
 
-      console.log(previewData['items'][0]['descriptions'])
+
+      console.log(previewData)
+
+
+      // console.log(previewData['items'][0]['descriptions'])
       this.previewData = JSON.stringify(previewData)
       this.newWindow = window.open("http://localhost:8080/admin/preview", "page");
       
@@ -526,6 +528,7 @@ export default {
                 number: i
             }
         ];
+        
         num = i;
 
         this.imagesThumbId.push(-1)
