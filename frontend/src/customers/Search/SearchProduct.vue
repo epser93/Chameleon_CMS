@@ -6,7 +6,7 @@
     <hr>
     <div class="row col-12 my-4" v-for="(item, index) in search.items" :key="index">
       <div class="vertical col-12 col-sm-6 col-md-4 item" @click="onProductDetail(item.id)">
-        <img class="product-img" :src="getImg(item.images)" alt="">
+        <img class="product-img" :src="item.images" alt="">
         <h4 class="product-name mt-2">{{ item.name }}</h4>
         <hr>
         <h5 class="product-price">{{ addComma(item.price) }}원</h5>
@@ -35,14 +35,6 @@ export default {
     },
     onProductDetail(cid) {
       this.$router.push({name: 'CustomerProduct', params: {cid: cid}}, () => {})
-    },
-    getImg(src) {
-      for (let i=0; i<src.length; i++) {
-        if (src[i].is_thumbnail === true) {
-          return SERVER.domain + src[i].item_image.slice(56, src[i].item_image.length)
-        } 
-      }
-      return '@/assets/250.png'
     },
   },
   computed: {
