@@ -7,7 +7,7 @@
       </ol>
       <div class="carousel-inner">
           <div :class="(index === 0) ? 'active carousel-item' : 'carousel-item'"  v-for="(carousel, index) in carousels" :key="index">
-            <img :src="'http://k3c205.p.ssafy.io'+carousel.image.slice(56)" class="d-block w-100" :alt="'main-image-'+index" @click="onClickWindows(carousel.url)">
+            <img :src="carousel.image" class="d-block w-100" :alt="'main-image-'+index" @click="onClickWindows(carousel.url)">
           </div>
       </div>
       <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -26,7 +26,7 @@
       </div>
       <div class="row mb-4 justify-content-around mb-2 mr-4 ml-4 product">
         <div v-for="(product, index) in mainItems" :key="index">
-          <img class="recommand-img" :src="'http://k3c205.p.ssafy.io/'+product.item.thumbnail" :alt="'recommand product image'+index">
+          <img class="recommand-img" :src="product.item.thumbnail" :alt="'recommand product image'+index">
           <div class="text-center">
             <p>{{ product.item.name }}</p>
           </div>
@@ -44,7 +44,7 @@
         </ol>
         <div class="carousel-inner">
           <div :class="(index === 0) ? 'active carousel-item' : 'carousel-item'"  v-for="(event, index) in events" :key="index">
-            <img :src="'http://k3c205.p.ssafy.io'+event.thumbnail_image.slice(56)" class="d-block w-100" :alt="'main-image-'+index" @click="onDetail(event.id)">
+            <img :src="event.thumbnail_image" class="d-block w-100" :alt="'main-image-'+index" @click="onDetail(event.id)">
           </div>
         </div>
         <a class="carousel-control-prev" href="#eventCarouselIndicators" role="button" data-slide="prev">
