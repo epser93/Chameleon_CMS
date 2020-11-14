@@ -147,7 +147,6 @@ export default {
 
     // 유저 필터링
     filterUser({ getters, commit }, {department, name}) {
-      console.log(SERVER.URL + SERVER.ROUTER.usersearch + `?type=${department}&content=${name}`)
       axios.get(SERVER.URL + SERVER.ROUTER.usersearch + `?type=${department}&content=${name}`, getters.config)
         .then(res => {
           commit('SET_ACCESSUSERINFOS', res.data)

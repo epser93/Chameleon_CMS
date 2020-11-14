@@ -92,7 +92,6 @@
                   <img src="@/assets/icons/x.svg" alt="delete button" width="12" height="12" title="x">
                 </div>
                 <img :src="file.preview" />
-                {{file.preview}}
               </div>
               <div class="file-preview-wrapper-upload">
                 <div class="image-box" id="image-box-preview">
@@ -500,6 +499,19 @@ export default {
           }
         }
         previewData.items[0].images.push(tmpImage)
+      }
+
+      for(let i=0; i<this.category.description.length; i++){
+        const category_desc = {
+            "id" : 1,
+            "category_description": {
+              "id": this.category.description[i].id,
+              "name": this.category.description[i].name
+            },
+            "content" : this.itemDescText[i]
+        }
+        
+        previewData.items[0].descriptions.push(category_desc)
       }
 
 
