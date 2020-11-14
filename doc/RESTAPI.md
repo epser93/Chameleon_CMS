@@ -1414,9 +1414,14 @@
 ### 물건 검색
 
 ```
-주소/api/products/search/?content=<>
+주소/api/products/search/?type=<>&content=<>
 ```
 
+> type
+>
+> - all : 카테고리에 상관없이 content가 들어간 아이템을 검색
+> - 카테고리이름 : 해당 카테고리에 속해있는 content가 들어간 아이템을 검색
+>
 > content에 검색할 물건 이름을 넣는다.
 
 - Response
@@ -1500,10 +1505,6 @@
     }
 ]
 ```
-
-
-
-
 
 
 
@@ -2552,12 +2553,39 @@
 ```json
 [
     {
-        "id": 7,
+        "id": 14,
         "priority": 1,
         "item": {
-            "id": 5,
-            "name": "오디세이",
-            "thumbnail": "media/KakaoTalk_20200921_091027148_d7tAwaw.png"
+            "id": 17,
+            "name": "테스트",
+            "thumbnail": "https://ssafycmss3bucket.s3.ap-northeast-2.amazonaws.com/media/2020-11-14_174143_KakaoTalk_20200921_091027148.png"
+        }
+    },
+    {
+        "id": 10,
+        "priority": 2,
+        "item": {
+            "id": 13,
+            "name": "갤럭시탭A7",
+            "thumbnail": "https://ssafycmss3bucket.s3.ap-northeast-2.amazonaws.com/media/sec-galaxy-tab-a7-t500-sm-t500nzaekoo-----------306748675.jpg"
+        }
+    },
+    {
+        "id": 9,
+        "priority": 3,
+        "item": {
+            "id": 14,
+            "name": "갤럭시탭S7",
+            "thumbnail": "https://ssafycmss3bucket.s3.ap-northeast-2.amazonaws.com/media/sec-galaxy-tab-s7-plus-5g-t976-sm-t976nznhkoo-frontmysticbronze-295760031.jpg"
+        }
+    },
+    {
+        "id": 8,
+        "priority": 4,
+        "item": {
+            "id": 9,
+            "name": "맥북",
+            "thumbnail": "https://ssafycmss3bucket.s3.ap-northeast-2.amazonaws.com/media/login1_LGw1qzC.png"
         }
     }
 ]
