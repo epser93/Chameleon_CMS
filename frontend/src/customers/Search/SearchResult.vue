@@ -45,7 +45,7 @@
       <div v-for="(event, index) in search.events" :key="index">
         <div class="row my-4 justify-content-around" v-if="index < 2">
           <div class="col-sm-12 col-md-8">
-            <img :src="'http://k3c205.p.ssafy.io'+event.thumbnail_image.slice(56)" class="event-img" alt="" @click="onEventDetail(event.id)">
+            <img :src="'https://chameleon.gq'+event.thumbnail_image.slice(56)" class="event-img" alt="" @click="onEventDetail(event.id)">
           </div>
           <div class="col-sm-12 col-md-4">
             <h4 class="event-name" @click="onEventDetail(event.id)">{{ event.title }}</h4>
