@@ -71,15 +71,11 @@
             <button type="button" class="btn btn-dark btn-sm mr-2" @click="$router.go(-1)">뒤로가기</button>
           </div>
           <div>
-<<<<<<< HEAD
             <form name="myform">
               <input type="button"  class="btn btn-secondary btn-sm mr-2" value="미리보기" @click="onClickWindows()"><br>
               <input type="text" name="sender" size="10" v-model="previewData" hidden>
             </form>
             <!-- <button type="button" class="btn btn-secondary btn-sm mr-2" @click="onClickWindows">미리보기</button> -->
-=======
-            <button type="button" class="btn btn-outline-primary btn-sm mr-2" @click="onClickWindows">미리보기</button>
->>>>>>> 64a99bbfe0bbf25857cee90bb78ea2702e6371a9
           </div>
           <div v-if="update">
             <button type="button" class="btn btn-primary btn-sm" @click="onClickUpdate">저장</button>
@@ -192,7 +188,7 @@ export default {
         "items": [
         {
             "id": 1,
-            "name": this.categoryName + '- item1',
+            "name": this.categoryName + '- 제품1',
             "price": 1280000,
             "template": 1,
             "images": [],
@@ -201,14 +197,33 @@ export default {
                     "id": 1,
                     "category_description": {                   
                         "id": 1,
-                        "name": "제조사"
+                        "name": "제품 사양1"
                     },
-                    "content": "AMD"
-                }
+                    "content": "미리보기입니다."
+                },
+                {
+                    "id": 2,
+                    "category_description": {                   
+                        "id": 2,
+                        "name": "제품 사양2"
+                    },
+                    "content": "미리보기입니다."
+                },
+                {
+                    "id": 3,
+                    "category_description": {                   
+                        "id": 3,
+                        "name": "제품 사양3"
+                    },
+                    "content": "미리보기입니다."
+                },
+
             ]
         },
+        
         ]
       }
+
 
 
       console.log(previewData['items'][0]['descriptions'])
