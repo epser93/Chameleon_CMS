@@ -3,14 +3,10 @@
     <h3 class="mt-4">{{ datas.name }}</h3>
     <hr>
     <div class="row mt-4 mb-4 ml-4 item" v-for="(item, index) in datas.items" :key="index" @click="onRoute('CustomerProduct', item.id)">
-<<<<<<< HEAD
-      <div v-if="item.images.length == 0" class="col-5">
+      <div v-if="item.images.length == 0" class="col-12 col-md-5">
         <img src="@/assets/dummy-250.png" class="product-img" alt="">
       </div>
-      <div v-else class="col-5">
-=======
-      <div class="col-12 col-md-5">
->>>>>>> 3ac91f1e6b9e065dc52e301f2c480b09c198fb22
+      <div v-else class="col-12 col-md-5">
         <img :src="getImg(item.images)" class="product-img" alt="">
       </div>
       <div class="row spec col-12 col-md-7 align-items-center justify-content-start">
