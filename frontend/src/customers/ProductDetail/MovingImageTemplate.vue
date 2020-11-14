@@ -1,13 +1,13 @@
 <template>
   <div class="container-fluid">
-    <section class="one">
+    <div class="one">
       <div class="left">
         <div v-for="(thumbnail, index) in thumbnails" :key="index" class="product-img">
           <img :src="getImage(thumbnail.item_image)" class="product-image mb-3" alt="">
         </div>
       </div>
-    <div class="right mt-4">
-      <div class="right-child">
+    <div class="right">
+      <div class="right-child mt-5">
         <div class="itm-info-box">
           <h3>{{ itemInfo.name }}</h3>
           <h5>{{ addComma(itemInfo.price) }}원</h5>
@@ -17,10 +17,10 @@
         </div>
       </div>
     </div>
-    </section>
-    <div class="bottom">
-      <div v-for="(detailImage, index) in detailImages" :key="index" class="product-img">
-        <img :src="getImage(detailImage.item_image)" class="product-image mb-3" alt="">
+    </div>
+    <div class="column bottom">
+      <div v-for="(detailImage, index) in detailImages" :key="index" class="bottom-product-image">
+        <img :src="getImage(detailImage.item_image)" class="mb-3" alt="">
       </div>
     </div>
   </div>
@@ -87,16 +87,15 @@ export default {
 </script>
 
 <style scoped>
-.container {
-  height:100%;
-  background: #b3c1da;
-  width:992px;
+/* .container {
   margin:0 auto;
   padding:25px;
-}
+} */
 
 .one {
   position:relative;
+  width: auto;
+  border-bottom: 10px solid #f8f9fa;
 }
 
 .one::after {
@@ -112,12 +111,14 @@ export default {
 }
 
 .product-img {
-  width: 100%;
+  width: 30vw;
 
 }
 
 .right {
-  width:calc(50% - 13px);
+  width:calc(30% - 13px);
+  margin-right: auto;
+  margin-left: auto;
   float:right;
   display: flex;
   margin-bottom: 10px;
@@ -131,12 +132,8 @@ export default {
   border-radius:4px;
 }
 
-/* check */
 .right-child {
-  background-color: #8da8d0;
-  width:458px;
-  margin: auto;
-  height: 85vh;
+  width:350px;
   padding:10px;
   text-align:center;
   color:black;
@@ -154,12 +151,14 @@ export default {
   bottom:25px;
 }
 
-.bottom {
+/* .bottom {
   width:100%;
-  height:900px;
-  background:#8698b9;
-}
+  margin-top: 30px;
+} */
 
+.bottom-product-image {
+  width: 100vw;
+}
 @media (max-width:992px) {
   .left{
     width:100%;
