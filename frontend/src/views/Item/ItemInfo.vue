@@ -460,8 +460,54 @@ export default {
 
 
     onClickWindows(){
-      var url="test.html";
-      window.open(url,"",);
+            const previewData = {
+        "id" : this.categoryIdx,
+        "name" : this.categoryName,
+        "image" : this.imageUrl,
+        "template" : this.picked,
+        "items": [
+        {
+            "id": 1,
+            "name": this.categoryName + '- 제품1',
+            "price": 1280000,
+            "template": 1,
+            "images": [],
+            "descriptions": [
+                {
+                    "id": 1,
+                    "category_description": {                   
+                        "id": 1,
+                        "name": "제품 사양1"
+                    },
+                    "content": "미리보기입니다."
+                },
+                {
+                    "id": 2,
+                    "category_description": {                   
+                        "id": 2,
+                        "name": "제품 사양2"
+                    },
+                    "content": "미리보기입니다."
+                },
+                {
+                    "id": 3,
+                    "category_description": {                   
+                        "id": 3,
+                        "name": "제품 사양3"
+                    },
+                    "content": "미리보기입니다."
+                },
+
+            ]
+        },
+        
+        ]
+      }
+
+      console.log(previewData['items'][0]['descriptions'])
+      this.previewData = JSON.stringify(previewData)
+      this.newWindow = window.open("http://localhost:8080/admin/preview", "page");
+      
     },
 
     imageUpload() {
