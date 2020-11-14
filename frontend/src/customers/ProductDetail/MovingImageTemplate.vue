@@ -20,13 +20,13 @@
       </div>
     </div>
     <div v-if="checkPoint !== 0" class="column bottom">
-      <div v-for="(detailImage, index) in detailImages" :key="index" class="bottom-product-image">
-        <img :src="detailImage.item_image" class="mb-3" alt="">
+      <div v-for="(detailImage, index) in detailImages" :key="index">
+        <img :src="detailImage.item_image" class="bottom-product-image mb-3" alt="">
       </div>
     </div>
     <div v-else class="column bottom">
-      <div v-for="(detailImage, index) in previewDetails" :key="index" class="bottom-product-image">
-        <img :src="detailImage.item_image" class="mb-3" alt="">
+      <div v-for="(detailImage, index) in previewDetails" :key="index">
+        <img :src="detailImage.item_image" class="bottom-product-image mb-3" alt="">
       </div>
     </div>
   </div>
