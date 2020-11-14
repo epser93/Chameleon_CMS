@@ -2,9 +2,7 @@
   <div class="container-fluid">
     <div class="one">
       <div class="left">
-        <div v-for="(thumbnail, index) in thumbnails" :key="index" class="product-img">
-          <img :src="getImage(thumbnail.item_image)" class="product-image mb-3" alt="">
-        </div>
+        <img v-for="(thumbnail, index) in thumbnails" :key="index" :src="getImage(thumbnail.item_image)" class="product-image mb-3" alt="">
       </div>
     <div class="right">
       <div class="right-child mt-5">
@@ -112,7 +110,6 @@ export default {
 
 .product-img {
   width: 30vw;
-
 }
 
 .right {
