@@ -1,8 +1,11 @@
 <template>
   <div class="container-fluid">
     <div class="one">
-      <div class="left">
+      <div v-if="checkPoint !== 0" class="left">
         <img v-for="(thumbnail, index) in thumbnails" :key="index" :src="getImage(thumbnail.item_image)" class="product-image mb-3" alt="">
+      </div>
+      <div v-else class="left">
+        <img v-for="(thumbnail, index) in previewThumbnails" :key="index" :src="getImage(thumbnail.item_image)" class="product-image mb-3" alt="">
       </div>
     <div class="right">
       <div class="right-child mt-5">
@@ -16,8 +19,13 @@
       </div>
     </div>
     </div>
-    <div class="column bottom">
+    <div v-if="checkPoint !== 0" class="column bottom">
       <div v-for="(detailImage, index) in detailImages" :key="index" class="bottom-product-image">
+        <img :src="getImage(detailImage.item_image)" class="mb-3" alt="">
+      </div>
+    </div>
+    <div v-else class="column bottom">
+      <div v-for="(detailImage, index) in previewDetails" :key="index" class="bottom-product-image">
         <img :src="getImage(detailImage.item_image)" class="mb-3" alt="">
       </div>
     </div>
@@ -29,7 +37,7 @@ import $ from 'jquery'
 import { mapActions, mapState } from 'vuex'
 import SERVER from '@/api/drf'
 export default {
-  props: ['itemInfo'],
+  props: ['itemInfo','checkPoint', 'previewThumbnails', 'previewDetails'],
   data() {
     return {
 
@@ -62,7 +70,11 @@ export default {
       }
     },
     getImage(src) {
-      return SERVER.domain + src.slice(56, src.length)
+      if(this.checkPoint === 0){
+        return src
+      } else {
+        return SERVER.domain + src.slice(56, src.length)
+      }
     },
     addComma(num) {
       const regexp = /\B(?=(\d{3})+(?!\d))/g;
@@ -76,7 +88,9 @@ export default {
   },
   created () {
     window.addEventListener('scroll', this.reOrder);
-    this.divideImage(this.itemInfo.images)
+    if(this.checkPoint !== 0) {
+      this.divideImage(this.itemInfo.images)
+    }
   },
   destroyed () {
     window.removeEventListener('scroll', this.reOrder);
