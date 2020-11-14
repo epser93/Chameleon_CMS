@@ -8,6 +8,7 @@ from rest_framework.permissions import IsAuthenticated
 from accounts.views import forbidden_message
 from django.core.cache import cache
 from cms_pjt.redis_key import RedisKey
+from accounts.views import get_ip
 
 
 message = 'message'
@@ -39,7 +40,7 @@ class CategoryList(APIView):
             category_description = CategoryDescription()
             category_description.create(description, category)
         log = TotalLog()
-        log.update('\'{}\' 카테고리 생성'.format(category.name), None, user)
+        log.update('\'{}\' 카테고리 생성'.format(category.name), get_ip(request), user)
         category = Category.objects.get(pk=category.pk)
         serializer = CategorySerializer(category)
         RedisKey.remove_data()
@@ -66,7 +67,7 @@ class CategoryDetail(APIView):
         category = Category.objects.using('master').get(pk=pk)
         category.activate()
         log = TotalLog()
-        log.update('\'{}\' 카테고리 활성화'.format(category.name), None, user)
+        log.update('\'{}\' 카테고리 활성화'.format(category.name), get_ip(request), user)
         category = Category.objects.get(pk=pk)
         serializer = CategorySerializer(category)
         RedisKey.remove_data()
@@ -87,7 +88,7 @@ class CategoryDetail(APIView):
         self.descriptions_update(request.data, category)
         self.descriptions_delete(request.data)
         log = TotalLog()
-        log.update('\'{} -> {}\' 카테고리 수정'.format(before_name, category.name), None, user)
+        log.update('\'{} -> {}\' 카테고리 수정'.format(before_name, category.name), get_ip(request), user)
         category = Category.objects.get(pk=pk)
         serializer = CategorySerializer(category)
         RedisKey.remove_data()
@@ -101,7 +102,7 @@ class CategoryDetail(APIView):
         category = Category.objects.get(pk=pk)
         category.delete()
         log = TotalLog()
-        log.update('\'{}\' 카테고리 비활성화'.format(category.name), None, user)
+        log.update('\'{}\' 카테고리 비활성화'.format(category.name), get_ip(request), user)
         answer = {message: "비활성화 되었습니다."}
         RedisKey.remove_data()
         return Response(answer)
@@ -164,7 +165,7 @@ class ProductsList(APIView):
             item_image.create(images[i], item, is_thumbnails[i], prioritys[i])
             copy_item_image.copy(item_image, copy_of_item)
         log = TotalLog()
-        log.update('\'{}\' 아이템 생성'.format(item.name), None, user)
+        log.update('\'{}\' 아이템 생성'.format(item.name), get_ip(request), user)
         item = Item.objects.get(pk=item.pk)
         serializer = ItemSerializer(item)
         RedisKey.remove_data()
@@ -191,7 +192,7 @@ class ProductDetail(APIView):
         user = User.objects.using('master').get(username=request.user.username)
         item.activate()
         log = TotalLog()
-        log.update('\'{}\' 아이템 활성화'.format(item.name), None, user)
+        log.update('\'{}\' 아이템 활성화'.format(item.name), get_ip(request), user)
         item = Item.objects.get(pk=pk)
         serializer = ItemSerializer(item)
         RedisKey.remove_data()
@@ -219,7 +220,7 @@ class ProductDetail(APIView):
             description = ItemDescription()
             description.copy(copy_description, item)
         log = TotalLog()
-        log.update('\'{} -> {}\' 아이템 수정'.format(before_name, item.name), None, user)
+        log.update('\'{} -> {}\' 아이템 수정'.format(before_name, item.name), get_ip(request), user)
         item = Item.objects.get(pk=pk)
         serializer = ItemSerializer(item)
         RedisKey.remove_data()
@@ -232,7 +233,7 @@ class ProductDetail(APIView):
         item = Item.objects.get(pk=pk)
         item.delete()
         log = TotalLog()
-        log.update('\'{}\' 아이템 비활성화'.format(item.name), None, user)
+        log.update('\'{}\' 아이템 비활성화'.format(item.name), get_ip(request), user)
         answer = {'message': "비활성화 되었습니다."}
         RedisKey.remove_data()
         return Response(answer)
@@ -295,7 +296,7 @@ class CopyProduct(APIView):
                     item_image = CopyOfItemImage.objects.using('master').get(pk=i)
                 copy_item_image.copy(item_image, copy_of_item)
         log = TotalLog()
-        log.update('\'{}\' 아이템 히스토리 생성'.format(item.name), None, user)
+        log.update('\'{}\' 아이템 히스토리 생성'.format(item.name), get_ip(request), user)
         copy_of_item = CopyOfItem.objects.get(pk=copy_of_item.pk)
         serializer = CopyItemSerializer(copy_of_item)
         RedisKey.remove_temp()
