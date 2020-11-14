@@ -173,16 +173,16 @@ export default {
 }
 
 #dropDown {
-  position: absolute;
-  z-index: 999999;
+  position: fixed;
+  z-index: 1000;
   width: 100vw;
   margin-top: -18px;
 }
 
 #searchBar {
-  position: absolute;
+  position: fixed;
   width: 100vw;
-  z-index: 999999;
+  z-index: 1000;
   margin-top: -18px;
 }
 
@@ -199,5 +199,10 @@ export default {
 
 #v-pills-home-tab {
   font-family: 'Raleway', sans-serif;
+}
+
+.category-thumbanil {
+  height: 365px;
+  width: auto;
 }
 </style>
