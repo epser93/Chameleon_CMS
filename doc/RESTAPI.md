@@ -1414,9 +1414,14 @@
 ### 물건 검색
 
 ```
-주소/api/products/search/?content=<>
+주소/api/products/search/?type=<>&content=<>
 ```
 
+> type
+>
+> - all : 카테고리에 상관없이 content가 들어간 아이템을 검색
+> - 카테고리이름 : 해당 카테고리에 속해있는 content가 들어간 아이템을 검색
+>
 > content에 검색할 물건 이름을 넣는다.
 
 - Response
@@ -1500,10 +1505,6 @@
     }
 ]
 ```
-
-
-
-
 
 
 
@@ -1916,20 +1917,88 @@
 ```json
 [
     {
-        "id": 7,
+        "id": 14,
         "priority": 1,
         "is_active": true,
-        "create_date": "2020-11-13T16:34:01.761616+09:00",
-        "update_date": "2020-11-13T16:51:35.836814+09:00",
+        "create_date": "2020-11-14T18:54:13.253926+09:00",
+        "update_date": "2020-11-14T18:54:13.253926+09:00",
         "item": {
-            "id": 5,
-            "name": "오디세이",
-            "thumbnail": "media/KakaoTalk_20200921_091027148_d7tAwaw.png"
+            "id": 17,
+            "name": "테스트",
+            "thumbnail": "https://ssafycmss3bucket.s3.ap-northeast-2.amazonaws.com/media/2020-11-14_174143_KakaoTalk_20200921_091027148.png"
         },
         "user": {
             "id": 2,
             "username": "test",
             "first_name": "김유기"
+        }
+    },
+    {
+        "id": 11,
+        "priority": 1,
+        "is_active": false,
+        "create_date": "2020-11-13T17:22:06.955081+09:00",
+        "update_date": "2020-11-14T18:51:02.756084+09:00",
+        "item": {
+            "id": 12,
+            "name": "갤럭시 S20",
+            "thumbnail": "https://ssafycmss3bucket.s3.ap-northeast-2.amazonaws.com/media/sec-galaxy-s20-fe-5g-g781-sm-g781nlvakoo--307316192.jpg"
+        },
+        "user": {
+            "id": 5,
+            "username": "test930",
+            "first_name": "임선빈"
+        }
+    },
+    {
+        "id": 10,
+        "priority": 2,
+        "is_active": true,
+        "create_date": "2020-11-13T17:22:02.685343+09:00",
+        "update_date": "2020-11-14T18:10:43.871750+09:00",
+        "item": {
+            "id": 13,
+            "name": "갤럭시탭A7",
+            "thumbnail": "https://ssafycmss3bucket.s3.ap-northeast-2.amazonaws.com/media/sec-galaxy-tab-a7-t500-sm-t500nzaekoo-----------306748675.jpg"
+        },
+        "user": {
+            "id": 5,
+            "username": "test930",
+            "first_name": "임선빈"
+        }
+    },
+    {
+        "id": 9,
+        "priority": 3,
+        "is_active": true,
+        "create_date": "2020-11-13T17:21:59.116707+09:00",
+        "update_date": "2020-11-14T18:19:15.989505+09:00",
+        "item": {
+            "id": 14,
+            "name": "갤럭시탭S7",
+            "thumbnail": "https://ssafycmss3bucket.s3.ap-northeast-2.amazonaws.com/media/sec-galaxy-tab-s7-plus-5g-t976-sm-t976nznhkoo-frontmysticbronze-295760031.jpg"
+        },
+        "user": {
+            "id": 7,
+            "username": "zinxi12",
+            "first_name": "진시황"
+        }
+    },
+    {
+        "id": 8,
+        "priority": 4,
+        "is_active": true,
+        "create_date": "2020-11-13T17:20:27.145244+09:00",
+        "update_date": "2020-11-14T18:10:35.560233+09:00",
+        "item": {
+            "id": 9,
+            "name": "맥북",
+            "thumbnail": "https://ssafycmss3bucket.s3.ap-northeast-2.amazonaws.com/media/login1_LGw1qzC.png"
+        },
+        "user": {
+            "id": 4,
+            "username": "songsong",
+            "first_name": "송은석"
         }
     }
 ]
@@ -1969,7 +2038,7 @@
     "item": {
         "id": 5,
         "name": "오디세이",
-        "thumbnail": "media/KakaoTalk_20200921_091027148_d7tAwaw.png"
+        "thumbnail": "https://ssafycmss3bucket.s3.ap-northeast-2.amazonaws.com/media/KakaoTalk_20200921_091027148_d7tAwaw.png"
     },
     "user": {
         "id": 2,
@@ -1999,7 +2068,7 @@
     "item": {
         "id": 5,
         "name": "오디세이",
-        "thumbnail": "media/KakaoTalk_20200921_091027148_d7tAwaw.png"
+        "thumbnail": "https://ssafycmss3bucket.s3.ap-northeast-2.amazonaws.com/media/KakaoTalk_20200921_091027148_d7tAwaw.png"
     },
     "user": {
         "id": 2,
@@ -2021,35 +2090,15 @@
 
 ```json
 {
-    "id": 1,
+    "id": 7,
     "priority": 1,
     "is_active": true,
-    "create_date": "2020-11-09T11:14:39.523350+09:00",
-    "update_date": "2020-11-09T11:17:47.976566+09:00",
+    "create_date": "2020-11-13T16:34:01.761616+09:00",
+    "update_date": "2020-11-13T16:36:52.915709+09:00",
     "item": {
-        "id": 1,
-        "name": "노트북A",
-        "price": 1280000,
-        "is_temp": false,
-        "is_active": true,
-        "category": {
-            "id": 1,
-            "name": "노트북"
-        },
-        "template": {
-            "id": 2,
-            "name": "카테고리 이미지 특화",
-            "type": 1
-        },
-        "created_date": "2020-11-09T10:39:27.052224+09:00",
-        "update_date": "2020-11-09T10:39:27.052224+09:00",
-        "cms_user": {
-            "id": 2,
-            "username": "test",
-            "first_name": "김유기"
-        },
-        "descriptions": [],
-        "images": []
+        "id": 5,
+        "name": "오디세이",
+        "thumbnail": "https://ssafycmss3bucket.s3.ap-northeast-2.amazonaws.com/media/KakaoTalk_20200921_091027148_d7tAwaw.png"
     },
     "user": {
         "id": 2,
@@ -2081,35 +2130,15 @@
 
 ```json
 {
-    "id": 1,
-    "priority": 2,
-    "is_active": false,
-    "create_date": "2020-11-09T11:14:39.523350+09:00",
-    "update_date": "2020-11-09T11:18:06.654806+09:00",
+    "id": 7,
+    "priority": 1,
+    "is_active": true,
+    "create_date": "2020-11-13T16:34:01.761616+09:00",
+    "update_date": "2020-11-13T16:36:52.915709+09:00",
     "item": {
         "id": 1,
-        "name": "노트북A",
-        "price": 1280000,
-        "is_temp": false,
-        "is_active": true,
-        "category": {
-            "id": 1,
-            "name": "노트북"
-        },
-        "template": {
-            "id": 2,
-            "name": "카테고리 이미지 특화",
-            "type": 1
-        },
-        "created_date": "2020-11-09T10:39:27.052224+09:00",
-        "update_date": "2020-11-09T10:39:27.052224+09:00",
-        "cms_user": {
-            "id": 2,
-            "username": "test",
-            "first_name": "김유기"
-        },
-        "descriptions": [],
-        "images": []
+        "name": "오디세이",
+        "thumbnail": "https://ssafycmss3bucket.s3.ap-northeast-2.amazonaws.com/media/KakaoTalk_20200921_091027148_d7tAwaw.png"
     },
     "user": {
         "id": 2,
@@ -2524,12 +2553,39 @@
 ```json
 [
     {
-        "id": 7,
+        "id": 14,
         "priority": 1,
         "item": {
-            "id": 5,
-            "name": "오디세이",
-            "thumbnail": "media/KakaoTalk_20200921_091027148_d7tAwaw.png"
+            "id": 17,
+            "name": "테스트",
+            "thumbnail": "https://ssafycmss3bucket.s3.ap-northeast-2.amazonaws.com/media/2020-11-14_174143_KakaoTalk_20200921_091027148.png"
+        }
+    },
+    {
+        "id": 10,
+        "priority": 2,
+        "item": {
+            "id": 13,
+            "name": "갤럭시탭A7",
+            "thumbnail": "https://ssafycmss3bucket.s3.ap-northeast-2.amazonaws.com/media/sec-galaxy-tab-a7-t500-sm-t500nzaekoo-----------306748675.jpg"
+        }
+    },
+    {
+        "id": 9,
+        "priority": 3,
+        "item": {
+            "id": 14,
+            "name": "갤럭시탭S7",
+            "thumbnail": "https://ssafycmss3bucket.s3.ap-northeast-2.amazonaws.com/media/sec-galaxy-tab-s7-plus-5g-t976-sm-t976nznhkoo-frontmysticbronze-295760031.jpg"
+        }
+    },
+    {
+        "id": 8,
+        "priority": 4,
+        "item": {
+            "id": 9,
+            "name": "맥북",
+            "thumbnail": "https://ssafycmss3bucket.s3.ap-northeast-2.amazonaws.com/media/login1_LGw1qzC.png"
         }
     }
 ]

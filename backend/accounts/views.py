@@ -113,7 +113,7 @@ class ManagementAPI(APIView):
         log = TotalLog()
         log.update('\'{}({})\' 회원가입 승인'.format(user.first_name, user.username), None, admin_user)
         answer = {message : '승인이 완료되었습니다.'}
-        RedisKey.remove_user()
+        RedisKey.remove_data()
         return Response(answer)
 
     def put(self, request, pk):
@@ -125,7 +125,7 @@ class ManagementAPI(APIView):
         serializer = CMSUserSerializer(user)
         log = TotalLog()
         log.update('\'{}({})\' 권한 변경'.format(user.first_name, user.username), request.data, admin_user)
-        RedisKey.remove_user()
+        RedisKey.remove_data()
         return Response(serializer.data)
             
 
@@ -160,7 +160,7 @@ class UserSearchAPI(APIView):
             return Response(forbidden_message, status=status.HTTP_403_FORBIDDEN)
         _type = request.GET.get('type', 'all')
         content = request.GET.get('content', '')
-        key = '{}{}:{}'.format(RedisKey.temp_item, _type, content) 
+        key = '{}{}:{}'.format(RedisKey.user_search, _type, content) 
         if cache.has_key(key):
             return Response(cache.get(key))
         if _type == 'all':

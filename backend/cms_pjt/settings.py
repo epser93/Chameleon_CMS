@@ -8,11 +8,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 env = environ.Env(DEBUG=(bool, False),)
 environ.Env.read_env()
 
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-MEDIAFILES_LOCATION = 'media'
-STATICFILES_LOCATION = 'static'
-
 SECRET_KEY = env('SECRET_KEY')
 
 DEBUG = env('DEBUG')

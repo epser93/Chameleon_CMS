@@ -1,8 +1,7 @@
-from re import template
 from accounts.serializers import UserSerializer
 from rest_framework import serializers
 from .models import Category, CategoryDescription, CopyOfItemDescription, CopyOfItemImage, Item, ItemDescription, ItemImage, Template
-
+from cms_pjt.settings import AWS_STORAGE_BUCKET_NAME
 
 class TemplateSerializer(serializers.ModelSerializer):
     class Meta:
@@ -139,5 +138,5 @@ class MainItemJoinSerializer(serializers.ModelSerializer):
         images = ItemImage.objects.filter(item=obj).filter(is_thumbnail=True)
         item_image = None
         if images:
-            item_image = 'media/' + images[0].item_image.name
+            item_image = 'https://{}.s3.ap-northeast-2.amazonaws.com/media/'.format(AWS_STORAGE_BUCKET_NAME) + images[0].item_image.name
         return item_image
