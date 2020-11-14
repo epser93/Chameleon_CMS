@@ -109,17 +109,6 @@ export default {
         })
     },
 
-    putProduct({ rootGetters, dispatch }, {pid, putData}) {
-      axios.put(SERVER.URL + SERVER.ROUTER.main + pid + '/', putData ,rootGetters['account/config'])
-        .then(() => {
-          dispatch('getProducts')
-          alert("추천 상품이 변경되었습니다.")
-        })
-        .catch((err) => {
-          console.log(err)
-        })
-    },
-
     getAllProducts({ rootGetters, commit }) {
       axios.get(SERVER.URL + SERVER.ROUTER.search, rootGetters['account/config'])
         .then((res) => {

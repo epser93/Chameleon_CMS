@@ -7,7 +7,7 @@
       </ol>
       <div class="carousel-inner">
           <div :class="(index === 0) ? 'active carousel-item' : 'carousel-item'"  v-for="(carousel, index) in carousels" :key="index">
-            <img :src="'https://chameleon.gq'+carousel.image.slice(56)" class="d-block w-100" :alt="'main-image-'+index" @click="onClickWindows(carousel.url)">
+            <img :src="'http://k3c205.p.ssafy.io'+carousel.image.slice(56)" class="d-block w-100" :alt="'main-image-'+index" @click="onClickWindows(carousel.url)">
           </div>
       </div>
       <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -26,7 +26,7 @@
       </div>
       <div class="row justify-content-around mb-2 product">
         <img v-for="(product, index) in mainItems" :key="index"
-          :src="'https://chameleon.gq/'+product.item.thumbnail"
+          :src="'http://k3c205.p.ssafy.io/'+product.item.thumbnail"
           class="col-6 col-lg-3 mb-4" :alt="'recommand product image'+index">
       </div>
     </div>
@@ -41,7 +41,7 @@
         </ol>
         <div class="carousel-inner">
           <div :class="(index === 0) ? 'active carousel-item' : 'carousel-item'"  v-for="(event, index) in events" :key="index">
-            <img :src="'https://chameleon.gq'+event.thumbnail_image.slice(56)" class="d-block w-100" :alt="'main-image-'+index" @click="onDetail(event.id)">
+            <img :src="'http://k3c205.p.ssafy.io'+event.thumbnail_image.slice(56)" class="d-block w-100" :alt="'main-image-'+index" @click="onDetail(event.id)">
           </div>
         </div>
         <a class="carousel-control-prev" href="#eventCarouselIndicators" role="button" data-slide="prev">
