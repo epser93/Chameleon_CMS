@@ -33,7 +33,7 @@
           <th scope="row"></th>
           <td>{{ item.category.name }}</td>
           <td>{{ item.name }}</td>
-          <td>{{ item.price }}</td>
+          <td>{{ addComma(item.price) }}원</td>
           <td>{{ item.update_date.slice(0,10) }}</td>
           <td v-if="item.is_active">
             <span class="badge badge-success" @click="changeActive(item)">활성화</span>
@@ -133,6 +133,10 @@ export default {
       if (this.nowPage < this.pages-1) {
         this.nowPage += 1
       }
+    },
+    addComma(num) {
+      const regexp = /\B(?=(\d{3})+(?!\d))/g;
+      return num.toString().replace(regexp, ',');
     }
   },
   watch :{

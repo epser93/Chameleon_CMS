@@ -7,7 +7,7 @@
         <img class="product-img" :src="getImg(item.images)" alt="">
         <h4 class="product-name mt-2">{{ item.name }}</h4>
         <hr>
-        <h5 class="product-price">{{ item.price }}원</h5>
+        <h5 class="product-price">{{ addComma(item.price) }}원</h5>
         <div v-for="(spec, index) in item.descriptions" :key="index" class="mb-2">
           <span class="product-des">{{spec.category_description.name}} : {{ spec.content}}</span>
         </div>
@@ -33,6 +33,10 @@ export default {
       },
       onRoute(name, id) {
         this.$router.push({name: name, params: {cid: id}}, () => {})
+      },
+      addComma(num) {
+        const regexp = /\B(?=(\d{3})+(?!\d))/g;
+        return num.toString().replace(regexp, ',');
       }
     },
 }

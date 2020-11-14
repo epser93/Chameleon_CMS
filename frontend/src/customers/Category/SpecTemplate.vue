@@ -9,7 +9,7 @@
       <div class="row spec col-12 col-md-7 align-items-center justify-content-start">
         <div class="product-spec m-0">
           <h4 class="product-name">{{ item.name }}</h4>
-          <h5 class="price">{{ item.price }}원</h5>
+          <h5 class="price">{{ addComma(item.price) }}원</h5>
           <p v-for="(spec, index) in item.descriptions" :key="index">{{spec.category_description.name}} : {{ spec.content}}</p>
         </div>
       </div>
@@ -34,6 +34,10 @@ export default {
     },
     onRoute(name, id) {
       this.$router.push({name: name, params: {cid: id}}, () => {})
+    },
+    addComma(num) {
+      const regexp = /\B(?=(\d{3})+(?!\d))/g;
+      return num.toString().replace(regexp, ',');
     }
   },
 }
