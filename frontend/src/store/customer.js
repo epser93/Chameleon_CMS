@@ -15,8 +15,9 @@ export default {
 
     search: '',
 
-    // 아이템 detail 정보
-    itemInfo: '',
+    itemInfo: '', // 아이템 detail 정보
+    detailImages: [], // 아이템 디테일 이미지
+    thumbnails: [], // 아이템 썸네일 이미지
   },
 
   getters: {
@@ -49,7 +50,18 @@ export default {
     // 아이템 detail 상태 변경
     SET_ITEMINFO(state, payload) {
       state.itemInfo = payload
-    }
+    },
+
+    // detail 이미지 상태 변경
+    SET_DETAILIMAGE(state, payload) {
+      state.detailImages = payload 
+    },
+
+    // thumnail 이미지 상태 변경
+    SET_THUMBNAILS(state, payload) {
+      state.thumbnails = payload
+    },
+
   },
 
   actions: {
@@ -76,6 +88,7 @@ export default {
     getItemList({ commit }, cid) {
       axios.get(SERVER.URL + SERVER.ROUTER.customer.category + cid + '/')
       .then((res) => {
+        console.log(res)
         commit('SET_ITEMLIST', res.data)
       })
       .catch((err) => {
@@ -117,10 +130,28 @@ export default {
     getItemInfo({ commit }, cid) {
       axios.get(SERVER.URL + SERVER.ROUTER.customer.item + cid)
         .then(res => {
-          console.log(res)
           commit('SET_ITEMINFO', res.data)
         })
         .catch(error => console.log(error.response))
-    }
+    },
+
+    // 상품 detail page 이미지 나누기 썸네일, detail로
+    divideImage({commit}, src) {
+      const thumbnail = []
+      const detail = []
+      for (let i=0; i<src.length; i++) {
+        if (src[i].is_thumbnail) {
+          thumbnail.push(src[i])
+        } else {
+          detail.push(src[i])
+        }
+      }
+      // 더미 데이터 불러와서 넣어주기
+      // if (thumbnail.length) === 0 {
+      //   thumbnail.push()
+      // }
+      commit('SET_THUMBNAILS', thumbnail)
+      commit('SET_DETAILIMAGE', detail)
+    },
   }
 }

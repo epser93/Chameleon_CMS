@@ -52,7 +52,7 @@
                 <div class="card card-body">
                   <div class="row">
                     <div class="nav nav-pills col-3 flex-column" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                      <a :class="(index === 0) ? 'nav-link active' : 'nav-link'" v-for="(item, index) in category.items" :key="index" @click="onRoute('CarouselTemplate')" data-toggle="tab"  role="tab" :aria-selected="(index) ? true : false">{{ item.name }}</a>
+                      <a :class="(index === 0) ? 'nav-link active' : 'nav-link'" v-for="(item, index) in category.items" :key="index" @click="onRoute('CustomerProduct', item.id), onHideWide()" data-toggle="tab"  role="tab" :aria-selected="(index) ? true : false">{{ item.name }}</a>
                       <a class="nav-link" @click="onDetail(category.id); onHideWide();" data-toggle="tab" role="tab" aria-selected="false">더 알아보기</a>
                     </div>
                     <div class="col-9">
@@ -92,8 +92,8 @@ export default {
     }
   },
   methods: {
-    onRoute(name) {
-      this.$router.push({name: name}, () => {})
+    onRoute(name, cid) {
+      this.$router.push({name: name, params: {cid: cid}}, () => {})
     },
     onDetail(cid) {
       this.$router.push({name: 'CustomerCategory', params:{ cid: cid }}, () => {})
@@ -173,16 +173,16 @@ export default {
 }
 
 #dropDown {
-  position: absolute;
-  z-index: 999999;
+  position: fixed;
+  z-index: 1000;
   width: 100vw;
   margin-top: -18px;
 }
 
 #searchBar {
-  position: absolute;
+  position: fixed;
   width: 100vw;
-  z-index: 999999;
+  z-index: 1000;
   margin-top: -18px;
 }
 
