@@ -88,6 +88,7 @@ export default {
     getItemList({ commit }, cid) {
       axios.get(SERVER.URL + SERVER.ROUTER.customer.category + cid + '/')
       .then((res) => {
+        console.log(res)
         commit('SET_ITEMLIST', res.data)
       })
       .catch((err) => {
@@ -134,7 +135,7 @@ export default {
         .catch(error => console.log(error.response))
     },
 
-    // 이미지 나누기 썸네일, detail로
+    // 상품 detail page 이미지 나누기 썸네일, detail로
     divideImage({commit}, src) {
       const thumbnail = []
       const detail = []
@@ -145,6 +146,10 @@ export default {
           detail.push(src[i])
         }
       }
+      // 더미 데이터 불러와서 넣어주기
+      // if (thumbnail.length) === 0 {
+      //   thumbnail.push()
+      // }
       commit('SET_THUMBNAILS', thumbnail)
       commit('SET_DETAILIMAGE', detail)
     },
