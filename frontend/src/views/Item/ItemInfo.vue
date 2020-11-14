@@ -226,7 +226,7 @@ export default {
         const imageData = {
           file: val.images[i].id,
           number: i,
-          preview: 'http://k3c205.p.ssafy.io' + val.images[i].item_image.slice(56)
+          preview: val.images[i].item_image
         }
         this.is_thumbnails.push(val.images[i].is_thumbnail)
         if(val.images[i].is_thumbnail == true) {
@@ -278,7 +278,7 @@ export default {
         const imageData = {
           file: this.item.images[i].id,
           number: i,
-          preview: 'http://k3c205.p.ssafy.io' + this.item.images[i].item_image.slice(56)
+          preview: this.item.images[i].item_image
         }
 
         this.is_thumbnails.push(this.item.images[i].is_thumbnail)
@@ -295,7 +295,7 @@ export default {
       this.uploadIntroIndex = this.imageOfIntro.length
 
     
-      this.imageUrl = 'http://k3c205.p.ssafy.io' + this.item.image
+      this.imageUrl = this.item.image
 
       this.is_origin = true
     },
@@ -344,7 +344,7 @@ export default {
         const imageData = {
           file: this.history[idx].copy_images[j].id,
           number: j,
-          preview: 'http://k3c205.p.ssafy.io' + this.history[idx].copy_images[j].item_image.slice(56)
+          preview: this.history[idx].copy_images[j].item_image
         }
         tmpCheck.push (this.history[idx].copy_images[j].is_thumbnail)
         if (this.history[idx].copy_images[j].is_thumbnail){
@@ -466,7 +466,7 @@ export default {
       const previewData = {
         "id" : this.category.id,
         "name" : this.category.name,
-        "image" : 'http://k3c205.p.ssafy.io' + this.category.image.slice(56),
+        "image" : this.category.image,
         "template" : 0,
         "items": [
         {
@@ -517,8 +517,6 @@ export default {
 
       console.log(previewData)
 
-
-      // console.log(previewData['items'][0]['descriptions'])
       this.previewData = JSON.stringify(previewData)
       this.newWindow = window.open("http://localhost:8080/admin/preview", "page");
       

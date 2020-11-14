@@ -69,8 +69,8 @@
     </div>
   </div>
     <!-- {{ previewData.items[0] }} -->
-    {{ this.thumbImg }}
-    {{ previewData.template}}
+    <!-- {{ this.thumbImg }}
+    {{ previewData.template}} -->
     <!-- 내용 -->
     <div v-if="previewData">
         <SpecTemplate :datas="previewData" v-if="previewData.template== 1"></SpecTemplate>

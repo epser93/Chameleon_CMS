@@ -22,7 +22,6 @@
 </template>
 
 <script>
-import SERVER from '@/api/drf'
 export default {
   name: 'SpecTemplate',
   props: ['datas'],
@@ -30,7 +29,7 @@ export default {
     getImg(src) {
       for (let i=0; i<src.length; i++) {
         if (src[i].is_thumbnail === true) {
-          return SERVER.domain + src[i].item_image.slice(56, src[i].item_image.length)
+          return src[i].item_image
         } 
       }
       return '@/assets/250.png'
