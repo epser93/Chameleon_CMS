@@ -6,7 +6,7 @@
       </ol>
       <div class="carousel-inner">
         <div v-for="(notice, index) in notices" :key="index" :class="(index === 0) ? 'carousel-item active' : 'carousel-item'">
-          <img :src="getImage(notice.image)" class="d-block w-100" alt="main image1">
+          <img :src="notice.image" class="d-block w-100" alt="main image1">
         </div>
       </div>
       <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -27,7 +27,6 @@
 
 <script>
 import {mapActions, mapState} from 'vuex'
-import SERVER from '@/api/drf'
 export default {
   name: 'Notice',
   data() {
@@ -45,9 +44,6 @@ export default {
     winNonOpen() {
       this.$cookies.set('DontOpenNotice','idontwanttoseethat')
     },
-    getImage(src) {
-      return SERVER.domain + src.slice(56, src.length)
-    }
   },
   created() {
     this.getCustomerNotice()

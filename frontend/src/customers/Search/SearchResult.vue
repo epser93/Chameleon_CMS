@@ -8,7 +8,7 @@
       <div class="row col-12 my-4">
         <div v-for="(item, index) in search.items" :key="index" class="column col-12 col-sm-6 col-md-4 mb-4 item" @click="onProductDetail(item.id)">
           <div v-if="index < 3">
-            <img class="product-img" :src="getImg(item.images)" alt="">
+            <img class="product-img" :src="item.images" alt="">
             <h4 class="product-name mt-2">{{ item.name }}</h4>
             <hr>
             <h5 class="product-price">{{ addComma(item.price) }}원</h5>
@@ -31,7 +31,7 @@
       <div v-for="(event, index) in search.events" :key="index">
         <div class="row my-4 justify-content-around event" v-if="index < 3">
           <div class="col-sm-12 col-md-8">
-            <img :src="'http://k3c205.p.ssafy.io'+event.thumbnail_image.slice(56)" class="event-img" alt="" @click="onEventDetail(event.id)">
+            <img :src="event.thumbnail_image" class="event-img" alt="" @click="onEventDetail(event.id)">
           </div>
           <div class="col-sm-12 col-md-4">
             <h4 class="event-name" @click="onEventDetail(event.id)">{{ event.title }}</h4>
@@ -60,7 +60,6 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
-import SERVER from '@/api/drf'
 export default {
   name: 'SearchResult',
   data() {
@@ -98,14 +97,6 @@ export default {
     addComma(num) {
       const regexp = /\B(?=(\d{3})+(?!\d))/g;
       return num.toString().replace(regexp, ',');
-    },
-    getImg(src) {
-      for (let i=0; i<src.length; i++) {
-        if (src[i].is_thumbnail === true) {
-          return SERVER.domain + src[i].item_image.slice(56, src[i].item_image.length)
-        } 
-      }
-      return '@/assets/250.png'
     },
   },
   created() {
