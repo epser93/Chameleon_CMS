@@ -94,8 +94,8 @@
             <button type="button" class="btn btn-dark btn-sm mr-2" @click="$router.go(-1)">뒤로가기</button>
           </div>
           <div>
-            <button v-if="update" type="button" class="btn btn-primary btn-sm" @click="onRegister">저장</button>
-            <button type="button" class="btn btn-primary btn-sm" @click="onRegister">추가</button>
+            <button v-if="!update" type="button" class="btn btn-primary btn-sm" @click="onRegister">저장</button>
+            <button v-else type="button" class="btn btn-primary btn-sm" >수정</button>
           </div>
         </div>  
 
