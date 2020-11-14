@@ -120,8 +120,8 @@ export default {
         })
     },
 
-    getAllProducts({ rootGetters, commit }) {
-      axios.get(SERVER.URL + SERVER.ROUTER.search, rootGetters['account/config'])
+    getAllProducts({ rootGetters, commit }, {category, product}) {
+      axios.get(SERVER.URL + SERVER.ROUTER.search + `?type=${category}&content=${product}`, rootGetters['account/config'])
         .then((res) => {
           commit('SET_ALL_PRODUCTS', res.data)
         })
