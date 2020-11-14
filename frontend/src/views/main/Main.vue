@@ -24,7 +24,7 @@
       </a>
     </div>
     <!-- 추천 제품 리스트 -->
-    <div class="container" v-if="products">
+    <div class="container recommand-products" v-if="products">
       <div class="row mt-4 mb-3">
         <h2 class="mr-auto ml-auto">추천 제품</h2>
       </div>
@@ -42,8 +42,7 @@
           <div class="modal-body">
             <div class="container">
               <h4 class="product-name">현재 상품 : {{ modalProduct.item.name }}</h4>
-              <hr>
-              <div class="row mt-4 mb-4 ml-4">
+              <div class="row mt-4 ml-4">
                 <!-- <div class="input-group mb-3 justify-content-center">
                   <select name="" id="" v-model="selectedDepartment">
                     <option value="all">All</option>
@@ -139,5 +138,9 @@ export default {
 .carousel {
   width: 90%;
   margin: auto;
+}
+
+.recommand-products {
+  cursor: pointer;
 }
 </style>
