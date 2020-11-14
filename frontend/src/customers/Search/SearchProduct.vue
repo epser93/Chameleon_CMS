@@ -22,7 +22,6 @@
 </template>
 
 <script>
-import SERVER from '@/api/drf'
 import { mapActions, mapState } from 'vuex'
 export default {
   name: 'SearchProduct',

@@ -27,7 +27,6 @@
 
 <script>
 import {mapActions, mapState} from 'vuex'
-import SERVER from '@/api/drf'
 export default {
   name: 'Notice',
   data() {

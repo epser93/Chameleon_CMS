@@ -60,7 +60,6 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
-import SERVER from '@/api/drf'
 export default {
   name: 'SearchResult',
   data() {
