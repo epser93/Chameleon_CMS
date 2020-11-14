@@ -124,7 +124,7 @@
             </form>
           </div>
           <div v-if="update">
-            <button type="button" class="btn btn-primary btn-sm" @click="onClickTemp">저장</button>
+            <button type="button" class="btn btn-primary btn-sm" @click="onClickTemp">임시 저장</button>
           </div>
           <div v-else>
             <button type="button" class="btn btn-primary btn-sm" @click="onClickSave">추가</button>
@@ -150,7 +150,7 @@
           </div>
             <div class="card-footer text-muted">
               <button type="button" class="btn btn-outline-primary btn-sm" @click="onOrigin()">원본 데이터</button>
-              <button type="button" class="btn btn-primary btn-sm" @click="onClickUpdate(his_id)">임시 저장</button>
+              <button type="button" class="btn btn-primary btn-sm" @click="onClickUpdate(his_id)">등록</button>
             </div>
         </div>
       </div>

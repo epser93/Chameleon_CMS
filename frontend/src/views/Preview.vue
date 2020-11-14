@@ -2,7 +2,7 @@
 <div v-if="previewData"> 
     <!-- customer-top-nav -->
     <div @mouseleave="onHideWide()">
-    <nav class="navbar fixed-top navbar-expand-md navbar-light bg-light">
+    <nav class="navbar navbar-expand-md navbar-light bg-light">
     
     <!-- logo -->
     <a class="navbar-brand">
