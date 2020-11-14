@@ -1,6 +1,6 @@
 from products.models import Item
 from accounts.serializers import UserSerializer
-from products.serializers import CustomerItemSerializer, ItemSerializer, MainItemJoinSerializer
+from products.serializers import CustomerItemSerializer, MainItemJoinSerializer
 from django.db.models import Q
 from accounts.models import User
 from services.models import Event
