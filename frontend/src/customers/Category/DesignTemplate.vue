@@ -4,7 +4,8 @@
     <hr>
     <div class="row">
       <div v-for="(item, index) in datas.items" :key="index" class="item mt-4 mb-4 vertical col-12 col-sm-6 col-md-4" @click="onRoute('CustomerProduct', item.id)">
-        <img class="product-img" :src="getImg(item.images)" alt="">
+        <img v-if="item.images.length == 0" class="product-img" src="@/assets/dummy-250.png" alt="">
+        <img v-else class="product-img" :src="getImg(item.images)" alt="">
         <h4 class="product-name mt-2">{{ item.name }}</h4>
         <hr>
         <h5 class="product-price">{{ addComma(item.price) }}원</h5>

@@ -4,17 +4,26 @@
       <!-- col-md 이상일 때 나오는 왼쪽 세로 캐로우셀 -->
       <div class="d-none d-sm-none d-md-block col-2 px-0">
         <ol class="carousel-indicators-img mb-0" data-interval="false">
-          <div class="direction column mt-5">
+          <div v-if="checkPoint !== 0" class="direction column mt-5">
             <img v-for="(thumbnail, index) in thumbnails" :key="index" :src="getImage(thumbnail.item_image)" data-target="#carouselExampleCaptions" :data-slide-to="index" :class="(index === 0) ? 'active preview-img' : 'preview-img'" alt="">
+          </div>
+          <div v-else class="direction column mt-5">
+            <img v-for="(thumbnail, index) in previewThumbnails" :key="index" :src="getImage(thumbnail.item_image)" data-target="#carouselExampleCaptions" :data-slide-to="index" :class="(index === 0) ? 'active preview-img' : 'preview-img'" alt="">
           </div>
         </ol>
       </div>
       <!-- Carousel Image -->
       <div class="col-sm-12 col-md-5 mt-5 mr-auto ml-auto pl-0 pr-4">
         <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel" data-interval="false">
-          <div class="carousel-inner">
+          <div v-if="checkPoint !== 0" class="carousel-inner">
             <!-- Image1 -->
             <div v-for="(thumbnail, index) in thumbnails" :key="index" :src="getImage(thumbnail.item_image)" :class="(index === 0) ? 'carousel-item active' : 'carousel-item'">
+              <img :src="getImage(thumbnail.item_image)" class="inner-img d-block" alt="product image">
+            </div>
+          </div>
+           <div v-else class="carousel-inner">
+            <!-- Image1 -->
+            <div v-for="(thumbnail, index) in previewThumbnails" :key="index" :src="getImage(thumbnail.item_image)" :class="(index === 0) ? 'carousel-item active' : 'carousel-item'">
               <img :src="getImage(thumbnail.item_image)" class="inner-img d-block" alt="product image">
             </div>
           </div>
@@ -22,8 +31,11 @@
       </div>
       <!-- col-sm일 때 나오는 하단 캐로우셀 -->
       <div class="d-block d-sm-block d-md-none col-12 mb-4">
-        <ol class="carousel-indicators">
+        <ol v-if="checkPoint !== 0" class="carousel-indicators">
           <li v-for="(thumbnail, index) in thumbnails" :key="index" data-target="#carouselExampleCaptions" :data-slide-to="index" class="preview-btn"></li>
+        </ol>
+        <ol v-else class="carousel-indicators">
+          <li v-for="(thumbnail, index) in previewThumbnails" :key="index" data-target="#carouselExampleCaptions" :data-slide-to="index" class="preview-btn"></li>
         </ol>
       </div>
       <!-- col-md 이상일 때 Item Info -->
@@ -50,8 +62,13 @@
       <p v-for="(spec, index) in itemInfo.descriptions" :key="index">{{ spec.category_description.name }} : {{ spec.content}}</p> 
     </div>
     <!-- Item deatil image ara -->
-    <div class="itm-detail mb-3">
+    <div v-if="checkPoint !== 0" class="itm-detail mb-3">
       <div v-for="(detailImage, index) in detailImages" :key="index">
+        <img :src="getImage(detailImage.item_image)" class="itm-detail-img d-block" alt="...">
+      </div>
+    </div>
+    <div v-else class="itm-detail mb-3">
+      <div v-for="(detailImage, index) in previewDetails" :key="index">
         <img :src="getImage(detailImage.item_image)" class="itm-detail-img d-block" alt="...">
       </div>
     </div>
@@ -63,14 +80,19 @@ import SERVER from '@/api/drf'
 import {mapActions, mapState} from 'vuex'
 export default {
   name: 'CarouselTemplate',
-  props: ['itemInfo'],
+  props: ['itemInfo', 'checkPoint', 'previewThumbnails', 'previewDetails'],
   computed: {
     ...mapState('customer', ['thumbnails', 'detailImages'])
   },
   methods: {
     ...mapActions('customer', ['divideImage']),
     getImage(src) {
-      return SERVER.domain + src.slice(56, src.length)
+      console.log(src)
+      if(this.checkPoint === 0){
+        return src
+      } else {
+        return SERVER.domain + src.slice(56, src.length)
+      }
     },
     addComma(num) {
       const regexp = /\B(?=(\d{3})+(?!\d))/g;
@@ -83,7 +105,13 @@ export default {
     }
   },
   created() {
-    this.divideImage(this.itemInfo.images)
+    if(this.checkPoint !== 0) {
+      this.divideImage(this.itemInfo.images)
+    }
+    console.log(this.itemInfo)
+    console.log(this.previewThumbnails)
+    // console.log(this.thumbnails)
+    
   }
 }
 </script>
