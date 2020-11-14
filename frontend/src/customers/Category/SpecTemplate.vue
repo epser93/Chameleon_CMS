@@ -1,19 +1,17 @@
 <template>
   <div class="container">
-    <!-- This is Spec Template of Product category -->
     <h3 class="mt-4">{{ datas.name }}</h3>
     <hr>
-    <!-- 상품 리스트 (연동후 for문으로 돌리기) -->
     <div class="row mt-4 mb-4 ml-4 item" v-for="(item, index) in datas.items" :key="index" @click="onRoute('CustomerProduct', item.id)">
-      <div class="col-5">
+      <div class="col-12 col-md-5">
         <img :src="getImg(item.images)" class="product-img" alt="">
       </div>
-      <div class="col-7">
-        <h4 class="product-name">{{ item.name }}</h4>
+      <div class="row spec col-12 col-md-7 align-items-center justify-content-start">
         <div class="product-spec m-0">
+          <h4 class="product-name">{{ item.name }}</h4>
+          <h5 class="price">{{ item.price }}원</h5>
           <p v-for="(spec, index) in item.descriptions" :key="index">{{spec.category_description.name}} : {{ spec.content}}</p>
         </div>
-        <p class="price">{{ item.price }}원</p>
       </div>
       <hr>
     </div>
@@ -41,7 +39,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 p {
   margin: 0;
 }
@@ -55,7 +53,10 @@ p {
   cursor: pointer;
 }
 
-@media screen and (max-width: 960px) {
+.spec {
+  justify-content: center;
+}
+/* @media screen and (max-width: 960px) {
   .product-img {
    width: 80%;
    height: auto;
@@ -83,6 +84,16 @@ p {
   .price {
     position: relative;
     font-size: 0.5rem;
+  }
+} */
+@media screen and (max-width: 768px) {
+  .product-img {
+    width: 100%;
+    height: auto;
+  }
+
+  .spec {
+    margin-left: 20px;
   }
 }
 </style>

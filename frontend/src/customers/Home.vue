@@ -24,10 +24,13 @@
       <div class="row mt-4 mb-3">
         <h2 class="mr-auto ml-auto">추천 제품</h2>
       </div>
-      <div class="row justify-content-around mb-2 product">
-        <img v-for="(product, index) in mainItems" :key="index"
-          :src="'http://k3c205.p.ssafy.io/'+product.item.thumbnail"
-          class="col-6 col-lg-3 mb-4" :alt="'recommand product image'+index">
+      <div class="row mb-4 justify-content-around mb-2 mr-4 ml-4 product">
+        <div v-for="(product, index) in mainItems" :key="index">
+          <img class="recommand-img" :src="'http://k3c205.p.ssafy.io/'+product.item.thumbnail" :alt="'recommand product image'+index">
+          <div class="text-center">
+            <p>{{ product.item.name }}</p>
+          </div>
+        </div>
       </div>
     </div>
     <!-- 이벤트 Carousel --> 
@@ -90,6 +93,11 @@ export default {
 </script>
 
 <style>
+.recommand-img {
+  width: auto;
+  height: 200px;
+}
+
 @media screen and (max-width: 500px) {
   h2 {
    font-size: 20px;
