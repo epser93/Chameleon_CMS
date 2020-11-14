@@ -60,7 +60,7 @@ class Signup(RegisterView):
         user = User.objects.using('master').get(username=request.data['username'])
         user.update(department, request.data)
         log = TotalLog()
-        log.update('\'{}({})\' 회원가입'.format(user.first_name, user.username), request.data, user)
+        log.update('\'{}({})\' 회원가입'.format(user.first_name, user.username), get_ip(request), user)
         answer = {message: '회원가입이 완료되었습니다. 관리자 승인 후 로그인 해주세요.'}
         return Response(answer)
 
@@ -83,7 +83,7 @@ class Login(LoginView):
         if user.is_access == False and user.is_superuser == False:
             return Response(forbidden_message, status=status.HTTP_403_FORBIDDEN)
         log = TotalLog()
-        log.update('\'{}({})\' 로그인'.format(user.first_name, user.username), request.data, user)
+        log.update('\'{}({})\' 로그인'.format(user.first_name, user.username), get_ip(request), user)
         return answer
 
 
@@ -96,7 +96,7 @@ class Logout(LogoutView):
             return Response(answer, status=status.HTTP_400_BAD_REQUEST)
         super().post(request, *args, **kwargs)
         log = TotalLog()
-        log.update('\'{}({})\' 로그아웃'.format(user.first_name, user.username), request.data, user)
+        log.update('\'{}({})\' 로그아웃'.format(user.first_name, user.username), get_ip(request), user)
         answer = {message: '로그아웃 되었습니다.'}
         return Response(answer)
 
@@ -111,7 +111,7 @@ class ManagementAPI(APIView):
         user = User.objects.using('master').get(pk=pk)
         user.access_ok()
         log = TotalLog()
-        log.update('\'{}({})\' 회원가입 승인'.format(user.first_name, user.username), None, admin_user)
+        log.update('\'{}({})\' 회원가입 승인'.format(user.first_name, user.username), get_ip(request), admin_user)
         answer = {message : '승인이 완료되었습니다.'}
         RedisKey.remove_data()
         return Response(answer)
@@ -124,7 +124,7 @@ class ManagementAPI(APIView):
         user.update(None, request.data)
         serializer = CMSUserSerializer(user)
         log = TotalLog()
-        log.update('\'{}({})\' 권한 변경'.format(user.first_name, user.username), request.data, admin_user)
+        log.update('\'{}({})\' 권한 변경'.format(user.first_name, user.username), get_ip(request), admin_user)
         RedisKey.remove_data()
         return Response(serializer.data)
             
@@ -207,3 +207,13 @@ class ValidationAPI(APIView):
                 return Response(answer, status=status.HTTP_400_BAD_REQUEST)
         answer = {message: '사용이 가능합니다.'}
         return Response(answer)
+
+
+
+def get_ip(request):
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+    return ip
