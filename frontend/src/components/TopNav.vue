@@ -14,9 +14,9 @@
         <li v-if="userInfo.is_superuser || userInfo.is_logger" class="nav-item" role="presentation">
           <a class="nav-link Manage" id="manage-tab" data-toggle="tab" @click="onRoute('Manage')" role="tab" aria-controls="manage" aria-selected="true">Manage</a>
         </li>
-        <li class="nav-item" role="presentation">
+        <!-- <li class="nav-item" role="presentation">
           <a class="nav-link Data" id="data-tab" data-toggle="tab" @click="onRoute('Data')" role="tab" aria-controls="data" aria-selected="false">Data</a>
-        </li>
+        </li> -->
         <li class="nav-item" role="presentation">
           <a class="nav-link Contents" id="contents-tab" data-toggle="tab" @click="onRoute('Contents')" role="tab" aria-controls="contents" aria-selected="false">Contents</a>
         </li>

@@ -99,8 +99,10 @@ export default {
           commit('SET_USERINFO', res.data)
           if (res.data.is_superuser ){
             router.push({ name : 'Manage'})
+          } else if (res.data.is_logger) {
+            router.push({ name : 'Log'})
           } else {
-            router.push({ name : 'Data'})
+            router.push({ name : 'Contents'}, () => {})
           }
         })
         .catch(error => console.log(error.response))
