@@ -43,7 +43,7 @@
         <div class="d-flex mt-5">
           <div class="column itm-info-box mr-auto ml-auto">
             <h3>{{ itemInfo.name }}</h3>
-            <h5>{{ itemInfo.price }}원</h5>
+            <h5>{{ addComma(itemInfo.price) }}원</h5>
             <div class="itm-info-detail">
               <p v-for="(spec, index) in itemInfo.descriptions" :key="index">{{ spec.category_description.name }} : {{ spec.content}}</p>
             </div>
@@ -55,7 +55,7 @@
     <div class="item-info-sm d-block d-sm-block d-md-none col-12">
       <div class="item-info-sm-detail mx-1 row justify-content-between">
         <h4>판매가</h4>
-        <h4>{{ itemInfo.price }}원</h4>
+        <h4>{{ addComma(itemInfo.price) }}원</h4>
       </div>
     </div>
     <div class="d-block d-sm-block d-md-none col-12 column mx-2">
@@ -93,6 +93,10 @@ export default {
       } else {
         return SERVER.domain + src.slice(56, src.length)
       }
+    },
+    addComma(num) {
+      const regexp = /\B(?=(\d{3})+(?!\d))/g;
+      return num.toString().replace(regexp, ',');
     }
   },
   watch: {
