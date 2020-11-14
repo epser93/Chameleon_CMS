@@ -52,7 +52,7 @@
     <!-- Item deatil image ara -->
     <div class="bottom mb-4">
       <h1>Item detail image Area</h1>
-      <div v-for="(detailImage, index) in detailImages" :key="index" :src="getImage(detailImage.item_image)">
+      <div v-for="(detailImage, index) in detailImages" :key="index">
         <img :src="getImage(detailImage.item_image)" class="d-block" alt="...">
       </div>
     </div>
@@ -61,31 +61,21 @@
 
 <script>
 import SERVER from '@/api/drf'
+import {mapActions, mapState} from 'vuex'
 export default {
   name: 'CarouselTemplate',
   props: ['itemInfo'],
-  data() {
-    return {
-      thumbnails: [],
-      detailImages: []
-    }
+  computed: {
+    ...mapState('customer', ['thumbnails', 'detailImages'])
   },
   methods: {
-    divideImage() {
-      for (let i=0; i<this.itemInfo.images.length; i++) {
-        if (this.itemInfo.images[i].is_thumbnail) {
-          this.thumbnails.push(this.itemInfo.images[i])
-        } else {
-          this.detailImages.push(this.itemInfo.images[i])
-        }
-      }
-    },
+    ...mapActions('customer', ['divideImage']),
     getImage(src) {
       return SERVER.domain + src.slice(56, src.length)
     }
   },
   created() {
-    this.divideImage()
+    this.divideImage(this.itemInfo.images)
   }
 }
 </script>
