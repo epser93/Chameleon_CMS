@@ -349,11 +349,20 @@ class CustomerItemAPI(APIView):
 
 class ItemSearch(APIView):
     def get(self, request):
+        _type = request.GET.get('type', 'all')
         content = request.GET.get('content', '')
-        key = RedisKey.search_admin + content
+        key = '{}{}:{}'.format(RedisKey.search_admin, _type, content) 
         if cache.has_key(key):
             return Response(cache.get(key))
-        items = Item.objects.filter(name__contains=content)
+        if _type == 'all':
+            items = Item.objects.filter(name__contains=content)
+        else:
+            category = Category.objects.filter(name=_type)
+            if not category:
+                answer = {message: '잘못된 요청입니다.'}
+                return Response(answer, status=status.HTTP_400_BAD_REQUEST)
+            category = category[0]
+            items = Item.objects.filter(category=category).filter(name__contains=content)
         serializer = ItemSerializer(items, many=True)
         cache.set(key, serializer.data)
         return Response(serializer.data)

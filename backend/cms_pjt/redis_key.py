@@ -29,22 +29,17 @@ class RedisKey():
     user = 'user*'
     user_admin = 'user:'
     user_search = 'user:search:'
-    remove_list = [category, item, temp, event, notice, main, carousel, search]
+    remove_list = [category, item, temp, event, notice, main, carousel, search, user]
 
     @classmethod
     def remove_data(cls):
-        print(1)
         for _type in cls.remove_list:
             cls.remove_keys(cache.keys(_type))
+
 
     @classmethod
     def remove_temp(cls):
         cls.remove_keys(cache.keys(cls.temp))
-
-
-    @classmethod
-    def remove_user(cls):
-        cls.remove_keys(cache.keys(cls.user))
 
 
     @classmethod
