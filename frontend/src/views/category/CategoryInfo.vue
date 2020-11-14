@@ -127,7 +127,7 @@ export default {
         this.initNums.push(val.description[i].id)
       }
       this.picked = val.template.id
-      this.imageUrl = 'https://chameleon.gq' + val.image.slice(56)
+      this.imageUrl = 'http://k3c205.p.ssafy.io' + val.image.slice(56)
 
       // console.log(val)
     },

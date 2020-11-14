@@ -12,7 +12,7 @@
       </ol>
       <div class="carousel-inner">
           <div :class="(index === 0) ? 'active carousel-item' : 'carousel-item'"  v-for="(carousel, index) in carousels" :key="index">
-            <img :src="'https://chameleon.gq'+carousel.image.slice(56)" class="d-block w-100" :alt="'main-image-'+index">
+            <img :src="'http://k3c205.p.ssafy.io'+carousel.image.slice(56)" class="d-block w-100" :alt="'main-image-'+index">
           </div>
       </div>
       <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -30,7 +30,7 @@
         <h2 class="mr-auto ml-auto">추천 제품</h2>
       </div>
       <div class="row justify-content-around mb-2 product">
-        <img :src="'https://chameleon.gq/'+product.item.thumbnail" class="col-6 col-lg-3 mb-4" :alt="'recommand product image' + index" v-for="(product, index) in products.reverse()" :key="index" @click="onModal(product)">
+        <img :src="'http://k3c205.p.ssafy.io/'+product.item.thumbnail" class="col-6 col-lg-3 mb-4" :alt="'recommand product image' + index" v-for="(product, index) in products.reverse()" :key="index" @click="onModal(product)">
       </div>
     </div>
 
