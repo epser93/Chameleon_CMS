@@ -16,7 +16,7 @@ class MasterSlaveRouter(object):
        # Relations between objects are allowed if both objects are
        # in the master/slave pool.
         
-        db_list = ['master', 'slave', 'accounts', 'authtoken']
+        db_list = ['master', 'slave', 'accounts', 'authtoken', 'services', 'products']
         if obj1._meta.app_label in db_list and obj2._meta.app_label in db_list:
             return True
         return None

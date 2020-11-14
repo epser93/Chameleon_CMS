@@ -1,18 +1,21 @@
 from accounts.models import User
 from django.db import models
 from django.conf import settings
-from django.core.files.storage import FileSystemStorage
+from datetime import datetime
 
 extentions = ['jpg', 'png', 'jpeg']
-fs = FileSystemStorage()
 message = "message"
 
 def get_imagefile(image):
     extention = image.name.split('.')[-1].lower()
     if extention not in extentions:
         return False, {message: "잘못된 확장자 입니다."}
-    image_file = fs.save(image.name, image)
-    return True, image_file
+    time = list(str(datetime.now())[:-7])
+    time[10] = '_'
+    time.append('_')
+    time = ''.join(time)
+    image.name = time + image.name
+    return True, image
 
 class Template(models.Model):
     name = models.CharField(max_length=100)
