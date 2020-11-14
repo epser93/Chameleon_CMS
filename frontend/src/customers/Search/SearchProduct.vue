@@ -1,28 +1,16 @@
 <template>
   <div class="container my-4">
+    <h3>' {{ this.$route.params.text }} ' 관련 상품 {{ result }}건</h3>
+    <hr>
     <h3 class="title my-4">Product</h3>
     <hr>
-    <div class="row col-12 my-4">
-      <div class="vertical col-12 col-sm-6 col-md-4">
-        <img class="product-img" src="@/assets/250.png" alt="">
-        <h4 class="product-name mt-2">제품명</h4>
+    <div class="row col-12 my-4" v-for="(item, index) in search.items" :key="index">
+      <div class="vertical col-12 col-sm-6 col-md-4 item" @click="onProductDetail(item.id)">
+        <img class="product-img" :src="getImg(item.images)" alt="">
+        <h4 class="product-name mt-2">{{ item.name }}</h4>
         <hr>
-        <h5 class="product-price">제품가격</h5>
-        <p class="product-des">간단한 설명</p>
-      </div>
-      <div class="vertical col-12 col-sm-6 col-md-4">
-        <img class="product-img" src="@/assets/250.png" alt="">
-        <h4 class="product-name mt-2">제품명</h4>
-        <hr>
-        <h5 class="product-price">제품가격</h5>
-        <p class="product-des">간단한 설명</p>
-      </div>
-      <div class="vertical col-12 col-sm-6 col-md-4">
-        <img class="product-img" src="@/assets/250.png" alt="">
-        <h4 class="product-name mt-2">제품명</h4>
-        <hr>
-        <h5 class="product-price">제품가격</h5>
-        <p class="product-des">간단한 설명</p>
+        <h5 class="product-price">{{ addComma(item.price) }}원</h5>
+        <p v-for="(spec, index) in item.descriptions" :key="index" class="product-des">{{ spec.category_description.name }} : {{ spec.content}}</p>
       </div>
     </div>
 
@@ -35,12 +23,55 @@
 </template>
 
 <script>
+import SERVER from '@/api/drf'
+import { mapActions, mapState } from 'vuex'
 export default {
   name: 'SearchProduct',
+  methods: {
+    ...mapActions('customer', ['getSearch']),
+    addComma(num) {
+      const regexp = /\B(?=(\d{3})+(?!\d))/g;
+      return num.toString().replace(regexp, ',');
+    },
+    onProductDetail(cid) {
+      this.$router.push({name: 'CustomerProduct', params: {cid: cid}}, () => {})
+    },
+    getImg(src) {
+      for (let i=0; i<src.length; i++) {
+        if (src[i].is_thumbnail === true) {
+          return SERVER.domain + src[i].item_image.slice(56, src[i].item_image.length)
+        } 
+      }
+      return '@/assets/250.png'
+    },
+  },
+  computed: {
+    ...mapState('customer', ['search']),
+    result() {
+      if ( this.search ) {
+        return this.search.items.length
+      }
+      else {
+        return 0
+      }
+    },
+
+  },
+  created() {
+    this.getSearch(this.$route.params.text)
+  }
 
 }
 </script>
 
-<style>
+<style scoped>
+.item {
+  cursor: pointer;
+}
+
+.product-img {
+  height : 250px;
+  width: auto
+}
 
 </style>
