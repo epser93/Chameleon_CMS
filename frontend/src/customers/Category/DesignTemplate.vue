@@ -1,31 +1,15 @@
 <template>
   <div class="container">
     <!-- This is Design Template of Product category -->
-    <h3 class="mt-4">선택 제품군 이름</h3>
+    <h3 class="mt-4">{{ datas.name }}</h3>
     <hr>
-    {{ datas }}
-    <!-- 상품 리스트 (연동후 for문으로 돌리기) -->
-    <div class="row col-12 mt-4">
+    <div v-for="(item, index) in datas.items" :key="index" class="row col-12 mt-4 item" @click="onRoute('CustomerProduct', item.id)">
       <div class="vertical col-12 col-sm-6 col-md-4">
-        <img class="product-img" src="@/assets/250.png" alt="">
-        <h4 class="product-name mt-2">제품명</h4>
+        <img class="product-img" :src="getImg(item.images)" alt="">
+        <h4 class="product-name mt-2">{{ item.name }}</h4>
         <hr>
-        <h5 class="product-price">제품가격</h5>
-        <p class="product-des">간단한 설명</p>
-      </div>
-      <div class="vertical col-12 col-sm-6 col-md-4">
-        <img class="product-img" src="@/assets/250.png" alt="">
-        <h4 class="product-name mt-2">제품명</h4>
-        <hr>
-        <h5 class="product-price">제품가격</h5>
-        <p class="product-des">간단한 설명</p>
-      </div>
-      <div class="vertical col-12 col-sm-6 col-md-4">
-        <img class="product-img" src="@/assets/250.png" alt="">
-        <h4 class="product-name mt-2">제품명</h4>
-        <hr>
-        <h5 class="product-price">제품가격</h5>
-        <p class="product-des">간단한 설명</p>
+        <h5 class="product-price">{{ item.price }}원</h5>
+        <span v-for="(spec, index) in item.descriptions" :key="index" class="product-des">{{spec.category_description.name}} : {{ spec.content}}</span>
       </div>
     </div>
 
@@ -33,9 +17,23 @@
 </template>
 
 <script>
+import SERVER from '@/api/drf'
 export default {
     name: 'DesignTemplate.vue',
-    props: ['datas']
+    props: ['datas'],
+    methods: {
+      getImg(src) {
+        for (let i=0; i<src.length; i++) {
+          if (src[i].is_thumbnail === true) {
+            return SERVER.domain + src[i].item_image.slice(56, src[i].item_image.length)
+          } 
+        }
+        return '@/assets/250.png'
+      },
+      onRoute(name, id) {
+        this.$router.push({name: name, params: {cid: id}}, () => {})
+      }
+    },
 }
 </script>
 
@@ -43,6 +41,17 @@ export default {
 .product-img {
   border: 1px solid transparent;
   border-radius: 10px;
+}
+
+.product-des {
+  background-color: #e9e9e9;
+  padding: 5px;
+  border-radius: 10px;
+  margin-right: 10px;
+}
+
+.item {
+  cursor: pointer;
 }
 
 @media screen and (max-width: 992px) {

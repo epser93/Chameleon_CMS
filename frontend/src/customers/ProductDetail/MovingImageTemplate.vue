@@ -2,54 +2,46 @@
   <div class="container-fluid">
     <section class="one">
       <div class="left">
-        <div v-for="image in images" :key="image.name" class="product-img">
-          <img :src="image.src" class="product-image mb-3" alt="">
+        <div v-for="(thumbnail, index) in thumbnails" :key="index" class="product-img">
+          <img :src="getImage(thumbnail.item_image)" class="product-image mb-3" alt="">
         </div>
       </div>
     <div class="right mt-4">
       <div class="right-child">
         <div class="itm-info-box">
-          <h3>제품 이름</h3>
-          <p>제품 No.</p>
-          <h5>000,000원</h5>
+          <h3>{{ itemInfo.name }}</h3>
+          <h5>{{ itemInfo.price }}원</h5>
           <div class="itm-info-detail">
-            <p>Item Detail Information 1</p>
-            <p>Item Detail Information 2</p>
-            <p>Item Detail Information 3</p>
-            <p>Item Detail Information 4</p>
-            <p>Item Detail Information 5</p>
-            <p>Item Detail Information 6</p>
+            <p v-for="(spec, index) in itemInfo.descriptions" :key="index">{{ spec.category_description.name }} : {{ spec.content}}</p>
           </div>
         </div>
       </div>
     </div>
     </section>
     <div class="bottom">
+      <div v-for="(detailImage, index) in detailImages" :key="index" class="product-img">
+        <img :src="getImage(detailImage.item_image)" class="product-image mb-3" alt="">
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import $ from 'jquery'
-
+import { mapActions, mapState } from 'vuex'
+import SERVER from '@/api/drf'
 export default {
-  created () {
-    window.addEventListener('scroll', this.reOrder);
-  },
-  destroyed () {
-    window.removeEventListener('scroll', this.reOrder);
-  },
+  props: ['itemInfo'],
   data() {
     return {
-      images: [
-        {name: 'vertical1', src: require("@/assets/vertical1.jpg")},
-        {name: 'vertical2', src: require("@/assets/vertical2.jpg")},
-        {name: 'vertical2', src: require("@/assets/vertical3.jpg")},
-        {name: 'vertical2', src: require("@/assets/vertical4.jpg")},
-      ]
+
     }
   },
+  computed: {
+    ...mapState('customer', ['thumbnails', 'detailImages'])
+  },
   methods: {
+    ...mapActions('customer', ['divideImage']),
     reOrder() {
       let mq = window.matchMedia("(min-width: 1140px)");
       if (mq.matches) {
@@ -70,7 +62,17 @@ export default {
       } else {
         $('.right-child').removeClass('customm posAbs posFix');
       }
+    },
+    getImage(src) {
+      return SERVER.domain + src.slice(56, src.length)
     }
+  },
+  created () {
+    window.addEventListener('scroll', this.reOrder);
+    this.divideImage(this.itemInfo.images)
+  },
+  destroyed () {
+    window.removeEventListener('scroll', this.reOrder);
   },
 }
 </script>
