@@ -6,12 +6,12 @@
         <h5 class="mb-0 ml-3">{{ category.name }}</h5>
         <button type="button" class="btn btn-info btn-sm" @click="onCreate('ProductItemCreate')">추가</button>
       </div>
-      <div class="input-group mb-3 mt-3">
+      <!-- <div class="input-group mb-3 mt-3">
         <input type="text" class="form-control" placeholder="검색할 제품명을 입력하세요.">
         <div class="input-group-append">
           <button class="btn btn-secondary ml-0" type="button" id="button-addon2">검색</button>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
   <!-- 제품별 리스트 - 검색 조건 걸어줘야함 혹은 전체 보기로 기존의 것들을 출력할 수 있어야함 -->
