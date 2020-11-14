@@ -73,6 +73,11 @@ export default {
       return SERVER.domain + src.slice(56, src.length)
     }
   },
+  watch: {
+    'itemInfo' : function() {
+      this.divideImage(this.itemInfo.images)
+    }
+  },
   created() {
     this.divideImage(this.itemInfo.images)
   }
