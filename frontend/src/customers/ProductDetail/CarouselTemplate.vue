@@ -5,10 +5,10 @@
       <div class="d-none d-sm-none d-md-block col-2 px-0">
         <ol class="carousel-indicators-img mb-0" data-interval="false">
           <div v-if="checkPoint !== 0" class="direction column mt-5">
-            <img v-for="(thumbnail, index) in thumbnails" :key="index" :src="getImage(thumbnail.item_image)" data-target="#carouselExampleCaptions" :data-slide-to="index" :class="(index === 0) ? 'active preview-img' : 'preview-img'" alt="">
+            <img v-for="(thumbnail, index) in thumbnails" :key="index" :src="thumbnail.item_image" data-target="#carouselExampleCaptions" :data-slide-to="index" :class="(index === 0) ? 'active preview-img' : 'preview-img'" alt="">
           </div>
           <div v-else class="direction column mt-5">
-            <img v-for="(thumbnail, index) in previewThumbnails" :key="index" :src="getImage(thumbnail.item_image)" data-target="#carouselExampleCaptions" :data-slide-to="index" :class="(index === 0) ? 'active preview-img' : 'preview-img'" alt="">
+            <img v-for="(thumbnail, index) in previewThumbnails" :key="index" :src="thumbnail.item_image" data-target="#carouselExampleCaptions" :data-slide-to="index" :class="(index === 0) ? 'active preview-img' : 'preview-img'" alt="">
           </div>
         </ol>
       </div>
@@ -17,14 +17,14 @@
         <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel" data-interval="false">
           <div v-if="checkPoint !== 0" class="carousel-inner">
             <!-- Image1 -->
-            <div v-for="(thumbnail, index) in thumbnails" :key="index" :src="getImage(thumbnail.item_image)" :class="(index === 0) ? 'carousel-item active' : 'carousel-item'">
-              <img :src="getImage(thumbnail.item_image)" class="inner-img d-block" alt="product image">
+            <div v-for="(thumbnail, index) in thumbnails" :key="index" :src="thumbnail.item_image" :class="(index === 0) ? 'carousel-item active' : 'carousel-item'">
+              <img :src="thumbnail.item_image" class="inner-img d-block" alt="product image">
             </div>
           </div>
            <div v-else class="carousel-inner">
             <!-- Image1 -->
-            <div v-for="(thumbnail, index) in previewThumbnails" :key="index" :src="getImage(thumbnail.item_image)" :class="(index === 0) ? 'carousel-item active' : 'carousel-item'">
-              <img :src="getImage(thumbnail.item_image)" class="inner-img d-block" alt="product image">
+            <div v-for="(thumbnail, index) in previewThumbnails" :key="index" :src="thumbnail.item_image" :class="(index === 0) ? 'carousel-item active' : 'carousel-item'">
+              <img :src="thumbnail.item_image" class="inner-img d-block" alt="product image">
             </div>
           </div>
         </div>
@@ -64,19 +64,18 @@
     <!-- Item deatil image ara -->
     <div v-if="checkPoint !== 0" class="itm-detail mb-3">
       <div v-for="(detailImage, index) in detailImages" :key="index">
-        <img :src="getImage(detailImage.item_image)" class="itm-detail-img d-block" alt="...">
+        <img :src="detailImage.item_image" class="itm-detail-img d-block" alt="...">
       </div>
     </div>
     <div v-else class="itm-detail mb-3">
       <div v-for="(detailImage, index) in previewDetails" :key="index">
-        <img :src="getImage(detailImage.item_image)" class="itm-detail-img d-block" alt="...">
+        <img :src="detailImage.item_image" class="itm-detail-img d-block" alt="...">
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import SERVER from '@/api/drf'
 import {mapActions, mapState} from 'vuex'
 export default {
   name: 'CarouselTemplate',
@@ -86,14 +85,7 @@ export default {
   },
   methods: {
     ...mapActions('customer', ['divideImage']),
-    getImage(src) {
-      console.log(src)
-      if(this.checkPoint === 0){
-        return src
-      } else {
-        return SERVER.domain + src.slice(56, src.length)
-      }
-    },
+    
     addComma(num) {
       const regexp = /\B(?=(\d{3})+(?!\d))/g;
       return num.toString().replace(regexp, ',');

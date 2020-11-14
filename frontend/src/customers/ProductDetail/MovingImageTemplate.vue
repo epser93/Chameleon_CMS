@@ -2,10 +2,10 @@
   <div class="container-fluid">
     <div class="one">
       <div v-if="checkPoint !== 0" class="left">
-        <img v-for="(thumbnail, index) in thumbnails" :key="index" :src="getImage(thumbnail.item_image)" class="product-image mb-3" alt="">
+        <img v-for="(thumbnail, index) in thumbnails" :key="index" :src="thumbnail.item_image" class="product-image mb-3" alt="">
       </div>
       <div v-else class="left">
-        <img v-for="(thumbnail, index) in previewThumbnails" :key="index" :src="getImage(thumbnail.item_image)" class="product-image mb-3" alt="">
+        <img v-for="(thumbnail, index) in previewThumbnails" :key="index" :src="thumbnail.item_image" class="product-image mb-3" alt="">
       </div>
       <div class="right">
         <div class="right-child">
@@ -20,13 +20,13 @@
       </div>
     </div>
     <div v-if="checkPoint !== 0" class="column bottom">
-      <div v-for="(detailImage, index) in detailImages" :key="index">
-        <img :src="getImage(detailImage.item_image)" class="bottom-product-image mt-5 mb-3" alt="">
+      <div v-for="(detailImage, index) in detailImages" :key="index" class="bottom-product-image">
+        <img :src="detailImage.item_image" class="mb-3" alt="">
       </div>
     </div>
     <div v-else class="column bottom">
-      <div v-for="(detailImage, index) in previewDetails" :key="index">
-        <img :src="getImage(detailImage.item_image)" class="bottom-product-image mt-5 mb-3" alt="">
+      <div v-for="(detailImage, index) in previewDetails" :key="index" class="bottom-product-image">
+        <img :src="detailImage.item_image" class="mb-3" alt="">
       </div>
     </div>
   </div>
@@ -35,7 +35,6 @@
 <script>
 import $ from 'jquery'
 import { mapActions, mapState } from 'vuex'
-import SERVER from '@/api/drf'
 export default {
   props: ['itemInfo','checkPoint', 'previewThumbnails', 'previewDetails'],
   data() {
@@ -67,13 +66,6 @@ export default {
         }
       } else {
         $('.right-child').removeClass('customm posAbs posFix');
-      }
-    },
-    getImage(src) {
-      if(this.checkPoint === 0){
-        return src
-      } else {
-        return SERVER.domain + src.slice(56, src.length)
       }
     },
     addComma(num) {
