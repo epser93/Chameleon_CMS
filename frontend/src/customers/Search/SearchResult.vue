@@ -1,33 +1,19 @@
 <template>
   <div class="container my-4" v-if="search">
-    <h3>' {{ text }} ' 검색결과 {{ result }}건</h3>
-    {{ search }}
+    <h3>' {{ this.$route.params.text }} ' 검색결과 {{ result }}건</h3>
     <hr>
-
     <div v-if="search.items.length > 0">
       <h3 class="title my-4">Product</h3>
       <hr>
       <div class="row col-12 my-4">
-        <div class="column col-12 col-sm-6 col-md-4 mb-4">
-          <img class="product-img" src="@/assets/250.png" alt="">
-          <h4 class="product-name mt-2">제품명</h4>
-          <hr>
-          <h5 class="product-price">제품가격</h5>
-          <p class="product-des">간단한 설명</p>
-        </div>
-        <div class="column col-12 col-sm-6 col-md-4 mb-4">
-          <img class="product-img" src="@/assets/250.png" alt="">
-          <h4 class="product-name mt-2">제품명</h4>
-          <hr>
-          <h5 class="product-price">제품가격</h5>
-          <p class="product-des">간단한 설명</p>
-        </div>
-        <div class="column col-12 col-sm-6 col-md-4 mb-4">
-          <img class="product-img" src="@/assets/250.png" alt="">
-          <h4 class="product-name mt-2">제품명</h4>
-          <hr>
-          <h5 class="product-price">제품가격</h5>
-          <p class="product-des">간단한 설명</p>
+        <div v-for="(item, index) in search.items" :key="index" class="column col-12 col-sm-6 col-md-4 mb-4 item" @click="onProductDetail(item.id)">
+          <div v-if="index < 3">
+            <img class="product-img" :src="getImg(item.images)" alt="">
+            <h4 class="product-name mt-2">{{ item.name }}</h4>
+            <hr>
+            <h5 class="product-price">{{ addComma(item.price) }}원</h5>
+            <p v-for="(spec, index) in item.descriptions" :key="index" class="product-des">{{ spec.category_description.name }} : {{ spec.content}}</p>
+          </div>
         </div>
       </div>
 
@@ -43,7 +29,7 @@
       <hr>
 
       <div v-for="(event, index) in search.events" :key="index">
-        <div class="row my-4 justify-content-around" v-if="index < 2">
+        <div class="row my-4 justify-content-around event" v-if="index < 3">
           <div class="col-sm-12 col-md-8">
             <img :src="'http://k3c205.p.ssafy.io'+event.thumbnail_image.slice(56)" class="event-img" alt="" @click="onEventDetail(event.id)">
           </div>
@@ -74,12 +60,12 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
-
+import SERVER from '@/api/drf'
 export default {
   name: 'SearchResult',
   data() {
     return {
-      text: '',
+
     }
   },
   computed: {
@@ -95,8 +81,7 @@ export default {
   },
   watch: {
     $route() {
-      this.text = this.$route.params.text
-      this.getSearch(this.text)
+      this.getSearch(this.$route.params.text)
     }
   },
   methods: {
@@ -106,11 +91,25 @@ export default {
     },
     onEventDetail(eid) {
       this.$router.push({name:'CustomerEventDetail', params:{eid: eid}})
-		},
+    },
+    onProductDetail(cid) {
+      this.$router.push({name: 'CustomerProduct', params: {cid: cid}}, () => {})
+    },
+    addComma(num) {
+      const regexp = /\B(?=(\d{3})+(?!\d))/g;
+      return num.toString().replace(regexp, ',');
+    },
+    getImg(src) {
+      for (let i=0; i<src.length; i++) {
+        if (src[i].is_thumbnail === true) {
+          return SERVER.domain + src[i].item_image.slice(56, src[i].item_image.length)
+        } 
+      }
+      return '@/assets/250.png'
+    },
   },
   created() {
-    this.text = this.$route.params.text
-    this.getSearch(this.text)
+    this.getSearch(this.$route.params.text)
   }
 }
 </script>
@@ -123,6 +122,8 @@ export default {
 .product-img {
   border: 1px solid transparent;
   border-radius: 10px;
+  width: auto;
+  height: 250px;
 }
 
 @media screen and (max-width: 992px) {
@@ -183,6 +184,14 @@ p {
 .date {
   position: absolute;
   bottom: 0px;
+}
+
+.event {
+  cursor: pointer;
+}
+
+.item {
+  cursor: pointer;
 }
 
 </style>

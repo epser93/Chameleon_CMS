@@ -7,26 +7,26 @@
       <div v-else class="left">
         <img v-for="(thumbnail, index) in previewThumbnails" :key="index" :src="getImage(thumbnail.item_image)" class="product-image mb-3" alt="">
       </div>
-    <div class="right">
-      <div class="right-child mt-5">
-        <div class="itm-info-box">
-          <h3>{{ itemInfo.name }}</h3>
-          <h5>{{ addComma(itemInfo.price) }}원</h5>
-          <div class="itm-info-detail">
-            <p v-for="(spec, index) in itemInfo.descriptions" :key="index">{{ spec.category_description.name }} : {{ spec.content}}</p>
+      <div class="right">
+        <div class="right-child">
+          <div class="itm-info-box">
+            <h3>{{ itemInfo.name }}</h3>
+            <h5>{{ addComma(itemInfo.price) }}원</h5>
+            <div class="itm-info-detail">
+              <p v-for="(spec, index) in itemInfo.descriptions" :key="index">{{ spec.category_description.name }} : {{ spec.content}}</p>
+            </div>
           </div>
         </div>
       </div>
     </div>
-    </div>
     <div v-if="checkPoint !== 0" class="column bottom">
-      <div v-for="(detailImage, index) in detailImages" :key="index" class="bottom-product-image">
-        <img :src="getImage(detailImage.item_image)" class="mb-3" alt="">
+      <div v-for="(detailImage, index) in detailImages" :key="index">
+        <img :src="getImage(detailImage.item_image)" class="bottom-product-image mt-5 mb-3" alt="">
       </div>
     </div>
     <div v-else class="column bottom">
-      <div v-for="(detailImage, index) in previewDetails" :key="index" class="bottom-product-image">
-        <img :src="getImage(detailImage.item_image)" class="mb-3" alt="">
+      <div v-for="(detailImage, index) in previewDetails" :key="index">
+        <img :src="getImage(detailImage.item_image)" class="bottom-product-image mt-5 mb-3" alt="">
       </div>
     </div>
   </div>
@@ -49,7 +49,7 @@ export default {
   methods: {
     ...mapActions('customer', ['divideImage']),
     reOrder() {
-      let mq = window.matchMedia("(min-width: 1140px)");
+      let mq = window.matchMedia("(min-width: 992px)");
       if (mq.matches) {
         $('.right').addClass('customm');
         let scroll = $(window).scrollTop(),
@@ -106,7 +106,7 @@ export default {
 
 .one {
   position:relative;
-  width: auto;
+  /* width: auto; */
   border-bottom: 10px solid #f8f9fa;
 }
 
@@ -122,12 +122,13 @@ export default {
   margin-right:25px;
 }
 
-.product-img {
-  width: 30vw;
+.product-image {
+  width: 100%;
 }
 
 .right {
-  width:calc(30% - 13px);
+  width:calc(40% - 13px);
+  height: 51vw;
   margin-right: auto;
   margin-left: auto;
   float:right;
@@ -144,12 +145,13 @@ export default {
 }
 
 .right-child {
-  width:350px;
+  width:400px;
   padding:10px;
   text-align:center;
   color:black;
   border: 4px solid #f8f9fa;
   border-radius: 10px;
+  margin-top: 45px;
 }
 
 .posFix {
@@ -162,13 +164,8 @@ export default {
   bottom:25px;
 }
 
-/* .bottom {
-  width:100%;
-  margin-top: 30px;
-} */
-
 .bottom-product-image {
-  width: 100vw;
+  width: 100%;
 }
 @media (max-width:992px) {
   .left{
@@ -181,10 +178,26 @@ export default {
 
   .right{
     width:100%;
+    height: auto;
   }
 
   .right > right-child {
     width:100%;
+  }
+
+  .right-child {
+    margin-top: 0;
+    border: none;
+    text-align: start;
+    height: auto;
+  }
+
+  .left {
+    border-bottom: 10px solid #f8f9fa;
+  }
+
+  .itm-info-box {
+    margin-top: 16px;
   }
 }
 </style>
