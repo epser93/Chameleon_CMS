@@ -3,14 +3,14 @@
     <h3>' {{ text }} ' 관련 이벤트 {{ result }}건</h3>
     <hr>
     
-    <div v-if="search.events.length > 0">
+    <div>
       <h3 class="title my-4">EVENT</h3>
       <hr>
 
       <div v-for="(event, index) in search.events" :key="index">
         <div class="row my-4 justify-content-around">
           <div class="col-sm-12 col-md-8">
-            <img :src="'http://k3c205.p.ssafy.io'+event.thumbnail_image.slice(56)" class="event-img" alt="" @click="onEventDetail(event.id)">
+            <img :src="'http://k3c205.p.ssafy.io'+event.thumbnail_image.slice(56)" class="event-img event" alt="" @click="onEventDetail(event.id)">
           </div>
           <div class="col-sm-12 col-md-4">
             <h4 class="event-name" @click="onEventDetail(event.id)">{{ event.title }}</h4>
@@ -70,6 +70,8 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+.event {
+  cursor: pointer;
+}
 </style>
