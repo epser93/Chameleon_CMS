@@ -200,4 +200,9 @@ export default {
 #v-pills-home-tab {
   font-family: 'Raleway', sans-serif;
 }
+
+.category-thumbanil {
+  height: 365px;
+  width: auto;
+}
 </style>
