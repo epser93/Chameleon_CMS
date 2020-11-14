@@ -15,7 +15,7 @@
           <div class="carousel-inner">
             <!-- Image1 -->
             <div v-for="(thumbnail, index) in thumbnails" :key="index" :src="getImage(thumbnail.item_image)" :class="(index === 0) ? 'carousel-item active' : 'carousel-item'">
-              <img :src="getImage(thumbnail.item_image)" class="d-block" alt="...">
+              <img :src="getImage(thumbnail.item_image)" class="inner-img d-block" alt="product image">
             </div>
           </div>
         </div>
@@ -28,7 +28,7 @@
       </div>
       <!-- col-md 이상일 때 Item Info -->
       <div class="itm-info-md d-none d-sm-none d-md-block col-5">
-        <div class="d-flex mt-2">
+        <div class="d-flex mt-5">
           <div class="column itm-info-box mr-auto ml-auto">
             <h3>{{ itemInfo.name }}</h3>
             <h5>{{ itemInfo.price }}원</h5>
@@ -50,10 +50,9 @@
       <p v-for="(spec, index) in itemInfo.descriptions" :key="index">{{ spec.category_description.name }} : {{ spec.content}}</p> 
     </div>
     <!-- Item deatil image ara -->
-    <div class="bottom mb-4">
-      <h1>Item detail image Area</h1>
+    <div class="itm-detail mb-3">
       <div v-for="(detailImage, index) in detailImages" :key="index">
-        <img :src="getImage(detailImage.item_image)" class="d-block" alt="...">
+        <img :src="getImage(detailImage.item_image)" class="itm-detail-img d-block" alt="...">
       </div>
     </div>
   </div>
@@ -81,10 +80,6 @@ export default {
 </script>
 
 <style scoped>
-.box {
-  background-color: #e8f0f7;
-}
-
 .carousel-indicators-img{
   width: 50px;
 }
@@ -112,9 +107,11 @@ ol {
 }
 
 .carousel-inner {
-  margin-top: 55px;
   margin-right: -50px;
-  /* min-width: 250px; */
+}
+
+.inner-img {
+  max-width: 390px;
 }
 
 .itm-info-detail {
@@ -133,7 +130,6 @@ ol {
 
 .bottom {
   width:100%;
-  height:900px;
   background:#8698b9;
 }
 
@@ -141,11 +137,10 @@ ol {
   background-color: #4c4949;
 }
 
-img {
-  margin-left: auto;
-  margin-right: auto;
+.itm-detail-img {
+  width: 100%;
 }
-  
+
 @media screen and (max-width: 768px) {
   .itm-info {
     width: 100%;
@@ -162,6 +157,10 @@ img {
   .carousel-inner {
     margin-top: 0;
     margin-bottom: 40px;
+  }
+  img {
+    margin-left: auto;
+    margin-right: auto;
   }
 }
 </style>
