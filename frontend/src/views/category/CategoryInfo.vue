@@ -7,11 +7,6 @@
           <h3 v-else>Add Product Category</h3>
           <hr>
         </div>
-<!-- 
-        <form name="myform">
-          <input type="button" value="자식창 열기" @click="onClickWindows()"><br>
-          부모창 Sender : <input type="text" name="sender" size="10" v-model="previewData"><br>
-        </form> -->
 
         <div class="category-content">
           <h4>제품군</h4>
@@ -127,7 +122,7 @@ export default {
         this.initNums.push(val.description[i].id)
       }
       this.picked = val.template.id
-      this.imageUrl = 'http://k3c205.p.ssafy.io' + val.image.slice(56)
+      this.imageUrl = val.image
 
       // console.log(val)
     },
@@ -213,6 +208,7 @@ export default {
         previewData.items.push(tmpItem)
       }
       this.previewData = JSON.stringify(previewData)
+      console.log(this.previewData)
       this.newWindow = window.open("http://localhost:8080/admin/preview", "page");
       
     },
