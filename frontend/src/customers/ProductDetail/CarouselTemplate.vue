@@ -2,8 +2,8 @@
   <div class="box container-fluid">
     <div class="row">
       <!-- col-md 이상일 때 나오는 왼쪽 세로 캐로우셀 -->
-      <div class="d-none d-sm-none d-md-block col-2 px-0">
-        <ol class="carousel-indicators-img mb-0" data-interval="false">
+      <div class="d-none d-sm-none d-md-block col-2 px-0 mt-5">
+        <ol class="carousel-indicators-img" data-interval="false">
           <div v-if="checkPoint !== 0" class="direction column mt-5">
             <img v-for="(thumbnail, index) in thumbnails" :key="index" :src="thumbnail.item_image" data-target="#carouselExampleCaptions" :data-slide-to="index" :class="(index === 0) ? 'active preview-img' : 'preview-img'" alt="">
           </div>
@@ -140,7 +140,7 @@ ol {
 }
 
 .inner-img {
-  max-width: 390px;
+  max-width: 100%;
 }
 
 .itm-info-detail {

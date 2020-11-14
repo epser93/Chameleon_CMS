@@ -4,18 +4,17 @@
     <hr>
     <h3 class="title my-4">Product</h3>
     <hr>
-    <div class="row col-12 my-4" v-for="(item, index) in search.items" :key="index">
-      <div class="vertical col-12 col-sm-6 col-md-4 item" @click="onProductDetail(item.id)">
-        <img class="product-img" :src="item.images" alt="">
+    <div class="row my-4">
+      <div v-for="(item, index) in search.items" :key="index" class="col-sm-12 col-md-6 col-lg-4 item" @click="onProductDetail(item.id)">
+        <img class="product-img justify-content-center" :src="item.images" alt="">
         <h4 class="product-name mt-2">{{ item.name }}</h4>
         <hr>
         <h5 class="product-price">{{ addComma(item.price) }}원</h5>
         <p v-for="(spec, index) in item.descriptions" :key="index" class="product-des">{{ spec.category_description.name }} : {{ spec.content}}</p>
       </div>
     </div>
-
-    <div class="button">
-      <button type="button" class="my-4 btn btn-outline-secondary btn-lg" @click="$router.go(-1)">
+    <div class="row justify-content-center">
+      <button type="button" class="my-4 btn btn-outline-secondary btn-md" @click="$router.go(-1)">
         뒤로가기
       </button>
     </div>
