@@ -54,7 +54,7 @@
                 <div class="card card-body">
                   <div class="row">
                     <div class="nav nav-pills col-3 flex-column" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                      <a class="nav-link active" v-for="(item, index) in previewData.items" :key="index" data-toggle="tab" role="tab" :aria-selected="(index) ? true : false">{{ item.name }}</a>
+                      <a class="nav-link" v-for="(item, index) in previewData.items" :key="index" data-toggle="tab" role="tab" :aria-selected="(index) ? true : false">{{ item.name }}</a>
                       <a class="nav-link" @click="onHideWide();" data-toggle="tab" role="tab" aria-selected="false">더 알아보기</a>
                     </div>
                     <div class="col-9">
@@ -68,13 +68,15 @@
       </div>
     </div>
   </div>
-
+    <!-- {{ previewData.items[0] }} -->
+    {{ this.thumbImg }}
+    {{ previewData.template}}
     <!-- 내용 -->
     <div v-if="previewData">
-        <SpecTemplate :data="previewData" v-if="previewData.template== 1"></SpecTemplate>
-        <DesignTemplate :data="previewData" v-else-if="previewData.template == 2"></DesignTemplate>
-        <CarouselTemplate :data="previewData" v-else-if="previewData.template == 3"></CarouselTemplate>
-        <MovingImageTemplate :data="previewData" v-else-if="previewData.template == 4"></MovingImageTemplate>
+        <SpecTemplate :datas="previewData" v-if="previewData.template== 1"></SpecTemplate>
+        <DesignTemplate :datas="previewData" v-else-if="previewData.template == 2"></DesignTemplate>
+        <CarouselTemplate :checkPoint="previewData.template" :itemInfo="previewData.items[0]" :previewThumbnails ="this.thumbImg" :previewDetails ="this.detailImg" v-else-if="previewData.items[0].template == 3"></CarouselTemplate>
+        <MovingImageTemplate :checkPoint="previewData.template" :itemInfo="previewData.items[0]" :previewThumbnails ="this.thumbImg" :previewDetails ="this.detailImg" v-else-if="previewData.items[0].template == 4"></MovingImageTemplate>
     </div>
 
   <!-- Site footer -->
@@ -122,6 +124,8 @@ export default {
     data(){
         return {    
             previewData: '',
+            thumbImg: [],
+            detailImg: [],
         }
     },
     components: {
@@ -140,9 +144,27 @@ export default {
         onHideSearch() {
         $('#searchBar').collapse('hide')
         },
+        divideImg() {
+            const tmpImgLen = this.previewData.items[0].images.length
+            for(let i=0; i<tmpImgLen; i++){
+                
+                if(this.previewData.items[0].images[i].is_thumbnail == true) {
+                    const thumbnails = {
+                        "item_image" : this.previewData.items[0].images[i].item_image 
+                    }
+                    this.thumbImg.push(thumbnails)
+                } else {
+                    const thumbnails = {
+                        "item_image" : this.previewData.items[0].images[i].item_image 
+                    }
+                    this.detailImg.push(thumbnails)
+                }
+            }
+        }
     },
     created() {
         this.previewData = JSON.parse(window.opener.document.myform.sender.value)
+        this.divideImg()
     }
 }
 </script>
