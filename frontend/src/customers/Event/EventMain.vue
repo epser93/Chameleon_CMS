@@ -56,8 +56,8 @@ p {
 }
 
 .event-img {
-  height: 20vh;
-  width: auto;
+  height: auto;
+  width: 100%;
 }
 
 @media screen and (max-width: 960px) {
