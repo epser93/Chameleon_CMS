@@ -21,6 +21,11 @@ export default {
   methods: {
     ...mapActions('customer', ['getItemInfo']),
   },
+  watch: {
+    '$route' : function() {
+      this.getItemInfo(this.$route.params.cid)
+    }
+  },
   created() {
     this.getItemInfo(this.$route.params.cid)
   }
