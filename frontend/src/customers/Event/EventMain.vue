@@ -8,7 +8,7 @@
       <div v-for="(event, index) in events" :key="index">
         <div class="events row mt-4 mb-4">
           <div class="event-img-box col-sm-12 col-md-8">
-            <img :src="'https://chameleon.gq'+event.thumbnail_image.slice(56)" class="event-img" alt=""  @click="onDetail(event.id)">
+            <img :src="'http://k3c205.p.ssafy.io'+event.thumbnail_image.slice(56)" class="event-img" alt=""  @click="onDetail(event.id)">
           </div>
           <div class="event-text-box col-sm-12 col-md-4">
             <h4 class="event-name"  @click="onDetail(event.id)">{{ event.title }}</h4>
