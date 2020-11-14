@@ -38,7 +38,7 @@ export default{
       // main
       main : 'services/main/',
       carousel : 'services/carousel/',
-      search : 'products/search/?content=',
+      search : 'products/search/',
 
       // customer
       customer : {
