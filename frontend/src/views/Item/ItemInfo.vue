@@ -55,7 +55,7 @@
           <div v-else class="file-preview-content-container">
             <div class="file-preview-container">
               <div v-for="(file, index) in imageOfThumb" :key="index" class="file-preview-wrapper">
-                <div class="file-close-button" @click="introDeleteButton" :name="file.number" :delId="file.file">
+                <div class="file-close-button" @click="fileDeleteButton(file.number, file.file)">
                   <img src="@/assets/icons/x.svg" alt="delete button" width="12" height="12" title="x">
                 </div>
                 <img :src="file.preview" />
@@ -88,7 +88,8 @@
           <div v-else class="file-preview-content-container">
             <div class="file-preview-container">
               <div v-for="(file, index) in imageOfIntro" :key="index" class="file-preview-wrapper">
-                <div class="file-close-button" @click="introDeleteButton" :name="file.number" :delId="file.file">
+                <div class="file-close-button" @click="introDeleteButton(file.number, file.file)">
+                    <!-- <div class="file-close-button" @click="introDeleteButton" :name="file.number" :delId="file.file"> -->
                   <img src="@/assets/icons/x.svg" alt="delete button" width="12" height="12" title="x">
                 </div>
                 <img :src="file.preview" />
@@ -569,9 +570,10 @@ export default {
       this.uploadImageIndex = this.uploadImageIndex + num + 1;
 
     },
-    fileDeleteButton(e) {
-      const name = e.target.getAttribute('name');
-      const delId = e.target.getAttribute('delId');
+    fileDeleteButton(name, delId) {
+      // const name = e.target.getAttribute('name');
+      // const delId = e.target.getAttribute('delId');
+      // console.log(e)
       this.imageOfThumb = this.imageOfThumb.filter(data => data.number !== Number(name));
 
       if(isNaN(delId) == true){
@@ -630,9 +632,9 @@ export default {
 
       console.log(this.imageOfIntro);
     },
-    introDeleteButton(e) {
-      const name = e.target.getAttribute('name');
-      const delId = e.target.getAttribute('delId');
+    introDeleteButton(name, delId) {
+      // const name = e.target.getAttribute('name');
+      // const delId = e.target.getAttribute('delId');
       this.imageOfIntro = this.imageOfIntro.filter(data => data.number !== Number(name));
       if(isNaN(delId) == true){
         this.imagesIntroId.pop()
