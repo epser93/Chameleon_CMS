@@ -23,10 +23,13 @@
           </div>
           <div>
             <p>사번</p>
+            <span class="validate-fail" v-if="employeeNumberValidate == 1">사번은 숫자로만 구성되어있습니다.</span>
             <input v-model="employeeNumber" type="text">
           </div>
           <div>
             <p>이메일</p>
+            <span class="validate-fail" v-if="emailValidate == 1">유효한 이메일 형식이 아닙니다.</span>
+            <span class="validate-success" v-if="emailValidate == 2">사용가능한 이메일입니다.</span>
             <input v-model="email" type="email">
           </div>
           <div>
@@ -75,6 +78,8 @@ import axios from 'axios'
 import $ from "jquery";
 const idchk = /^[a-z0-9]{5,12}$/;
 const pwchk = /^.*(?=^.{8,16}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/;
+const emailchk = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/
+const employeeNumberchk =  /^[0-9]*$/
 export default {
   name : 'SignupModal',
   data() {
@@ -88,8 +93,10 @@ export default {
       id: '',
       pwValidate1: 0, // 0 : nothing / 1 : 사용불가 비밀번호 / 2 : 사용가능 비밀번호
       pwValidate2: 0, // 0 : nothing / 1 : 비밀번호 일치x / 2 : 비밀번호 일치 
-      idValidate: 0, // 0: nothing / 1: id검증 실패 / 2: id검증 성공 / 3: id 중복 pass / 4 : id 중복 fail
-      isDuplicateId: null
+      idValidate: 0, // 0: nothing / 1: id검증 실패 / 2: id검증 성공 중복체크 필요 / 3: id 중복 pass / 4 : id 중복 fail
+      isDuplicateId: null,
+      emailValidate: 0, // 0: nothing / 1: 유효 이메일 x / 2: 이메일 검증 성공
+      employeeNumberValidate : 0 // 0: nothing / 1: 유효한 사번 X
     }
   },
   methods: {
@@ -113,24 +120,28 @@ export default {
       this.initializeParameter()
     },
     signup() {
-      const signUpData = {
-        username : this.id,
-        password1 : this.pw1,
-        password2 : this.pw2,
-        department : this.part.name,
-        email : this.email,
-        first_name: this.name,
-        employee_number : this.employeeNumber
+      if (this.pwValidate1 === 2 && this.pwValidate2 === 2 && this.idValidate === 3 && this.emailValidate === 2 && this.employeeNumberValidate !== 1) {
+        const signUpData = {
+          username : this.id,
+          password1 : this.pw1,
+          password2 : this.pw2,
+          department : this.part.name,
+          email : this.email,
+          first_name: this.name,
+          employee_number : this.employeeNumber
+        }
+        axios.post(SERVER.URL + SERVER.ROUTER.signup, signUpData)
+          .then(() => {
+            this.onRoute("Login")
+            alert('회원가입이 완료되었습니다. 관리자 승인후 로그인해주세요')
+          })
+          .catch(error => {
+            console.log(error.response)
+            alert(error.response.data.message)
+          })
+      } else {
+        alert('잘못된 형식입니다.')
       }
-      axios.post(SERVER.URL + SERVER.ROUTER.signup, signUpData)
-        .then(() => {
-          this.onRoute("Login")
-          alert('회원가입이 완료되었습니다. 관리자 승인후 로그인해주세요')
-        })
-        .catch(error => {
-          console.log(error.response)
-          alert(error.response.data.message)
-        })
     },
     isDuplicate(account) {
       axios.get(SERVER.URL + SERVER.ROUTER.accountvalidation + `?type=id&content=${account}`)
@@ -147,6 +158,22 @@ export default {
     }
   },
   watch: {
+    email : function() {
+      if (this.email.length === 0) {
+        this.emailValidate = 0
+      } else if (!emailchk.test(this.email)) {
+        this.emailValidate = 1
+      } else {
+        this.emailValidate = 2
+      }
+    },
+    employeeNumber : function() {
+      if (!employeeNumberchk.test(this.employeeNumber)) {
+        this.employeeNumberValidate = 1
+      } else {
+        this.employeeNumberValidate = 0
+      }
+    },
     isDuplicateId: function() {
       if (this.isDuplicateId === false) {
         this.idValidate = 3

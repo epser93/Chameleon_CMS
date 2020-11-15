@@ -1,5 +1,5 @@
 <template>
-  <div class="container" v-if="notice && image">
+  <div class="container" v-if="notice">
     <div class="col-8">
       <div class="row division align-items-center pl-3 mt-5">
         <p class="title">제목</p>
@@ -11,7 +11,7 @@
       </div>
       <div class="division">
         <p class="image">공지 이미지</p>
-        <img class="notice-image" :src="image" alt="">
+        <img class="notice-image" :src="notice.image" alt="">
       </div>
       <div v-if="!notice.end_date" class="row justify-content-end mt-5 mb-5" id="content-btn">
         <div>
@@ -41,7 +41,7 @@ export default {
     }
   },
   computed: {
-    ...mapState('notice', ['notice', 'image'])
+    ...mapState('notice', ['notice'])
   },
   methods: {
     ...mapActions('notice', ['getNotice', 'endNotice']),

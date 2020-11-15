@@ -86,7 +86,7 @@ export default {
   },
   created() {
     if (!this.$cookies.get("DontOpenNotice")) {
-      window.open("http://localhost:8080/notice", "", "width=305,height=332,left=200,top=200")
+      window.open("https://chameleon.gq/notice", "", "width=305,height=332,left=200,top=200")
     }
     this.getMainItems()
     this.getCarousels()

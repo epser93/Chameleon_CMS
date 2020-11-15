@@ -8,7 +8,6 @@ export default {
   state: {
     notices: '', // 공지 리스트
     notice: '', // 특정 공지
-    image: '', // 이미지 url 가공
   },
 
   getters: {
@@ -25,11 +24,6 @@ export default {
     SET_NOTICE(state, payload) {
       state.notice = payload
     },
-    
-    // 이미지 url 가공
-    SET_IMAGEURL(state, payload) {
-      state.image = payload
-    },
   },
 
   actions: {
@@ -37,7 +31,6 @@ export default {
     getNotices({ commit, rootGetters }) {
       axios.get(SERVER.URL + SERVER.ROUTER.notice, rootGetters['account/config'])
         .then (res => {
-          console.log(res.data)
           commit('SET_NOTICES', res.data)
         })
         .catch (error => console.log(error.response))
@@ -48,7 +41,6 @@ export default {
       axios.get(SERVER.URL + SERVER.ROUTER.notice + id, rootGetters['account/config'])
         .then(res => {
           commit('SET_NOTICE', res.data)
-          commit('SET_IMAGEURL', SERVER.domain + res.data.image.slice(56, res.data.image.length))
         })
         .catch(error => console.log(error.response))
     },
