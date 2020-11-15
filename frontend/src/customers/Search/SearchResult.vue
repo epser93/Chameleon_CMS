@@ -117,6 +117,11 @@ export default {
   height: 250px;
 }
 
+.event-img {
+  width: 100%;
+  height: auto;
+}
+
 @media screen and (max-width: 992px) {
   .product-img {
     width: 100%;
