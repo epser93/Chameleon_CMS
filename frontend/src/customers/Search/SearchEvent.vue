@@ -66,6 +66,8 @@ export default {
   created() {
     this.text = this.$route.params.text
     this.getSearch(this.text)
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
   }
 }
 </script>

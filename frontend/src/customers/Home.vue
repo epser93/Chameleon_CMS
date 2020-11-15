@@ -25,7 +25,7 @@
         <h2 class="mr-auto ml-auto">추천 제품</h2>
       </div>
       <div class="row mb-4 justify-content-around mb-2 mr-4 ml-4 product">
-        <div v-for="(product, index) in mainItems" :key="index">
+        <div v-for="(product, index) in mainItems" :key="index" @click="onRoute(product.item.id)">
           <img class="recommand-img" :src="product.item.thumbnail" :alt="'recommand product image'+index">
           <div class="text-center">
             <p>{{ product.item.name }}</p>
@@ -76,6 +76,9 @@ export default {
         window.open(url) 
       }
     },
+    onRoute(cid) {
+      this.$router.push({name: 'CustomerProduct', params: {cid: cid}})
+    },
     onDetail(eid) {
       let routeData = this.$router.resolve({name:'CustomerEventDetail', params:{eid: eid}})
       window.open(routeData.href)
@@ -83,7 +86,7 @@ export default {
   },
   created() {
     if (!this.$cookies.get("DontOpenNotice")) {
-      window.open("http://localhost:8080/notice", "", "width=305,height=332,left=200,top=200")
+      window.open("https://chameleon.gq/notice", "", "width=305,height=332,left=200,top=200")
     }
     this.getMainItems()
     this.getCarousels()
