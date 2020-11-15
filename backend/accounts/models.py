@@ -62,9 +62,9 @@ class TotalLog(models.Model):
     def __str__(self) -> str:
         return '{} {}'.format(self.cms_user.username, self.type)
 
-    def update(self, type, data, user):
+    def update(self, type, ip_address, user):
         self.type = type
-        self.register_ip = '0.0.0.0'
+        self.register_ip = ip_address
         self.cms_user = user
         department = Department.objects.using('master').get(pk=user.department.pk)
         self.department = department

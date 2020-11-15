@@ -92,45 +92,23 @@ ENGINE = 'django.db.backends.mysql'
 init_command = 'SET sql_mode="STRICT_TRANS_TABLES"'
 
 DATABASES = {
-    'default': {
-        'ENGINE': ENGINE,
-        'NAME': env('NAME'),
-        'USER': env('DB_USER'),
-        'PASSWORD': env('PASSWORD'),
-        'HOST': env('HOST'),
-        'PORT': env('MASTER_PORT'),
-        'OPTIONS': {
-            'init_command': init_command
-        }
-    },
-    'master': {
-        'ENGINE': ENGINE,
-        'NAME': env('NAME'),
-        'USER': env('DB_USER'),
-        'PASSWORD': env('PASSWORD'),
-        'HOST': env('HOST'),
-        'PORT': env('MASTER_PORT'),
-        'OPTIONS': {
-            'init_command': init_command
-        }
-    },
-    'slave': {
-        'ENGINE': ENGINE,
-        'NAME': env('NAME'),
-        'USER': env('DB_USER'),
-        'PASSWORD': env('PASSWORD'),
-        'HOST': env('HOST'),
-        'PORT': 3307,
-        'OPTIONS': {
-            'init_command': init_command
-        }
-    },
+    # 'default': {
+    #     'ENGINE': ENGINE,
+    #     'NAME': env('NAME'),
+    #     'USER': env('DB_USER'),
+    #     'PASSWORD': env('PASSWORD'),
+    #     'HOST': env('HOST'),
+    #     'PORT': env('MASTER_PORT'),
+    #     'OPTIONS': {
+    #         'init_command': init_command
+    #     }
+    # },
     # 'master': {
     #     'ENGINE': ENGINE,
-    #     'NAME': env('MASTER_NAME'),
-    #     'USER': env('MASTER_USER'),
-    #     'PASSWORD': env('MASTER_PASSWORD'),
-    #     'HOST': env('MASTER_HOST'),
+    #     'NAME': env('NAME'),
+    #     'USER': env('DB_USER'),
+    #     'PASSWORD': env('PASSWORD'),
+    #     'HOST': env('HOST'),
     #     'PORT': env('MASTER_PORT'),
     #     'OPTIONS': {
     #         'init_command': init_command
@@ -138,15 +116,48 @@ DATABASES = {
     # },
     # 'slave': {
     #     'ENGINE': ENGINE,
-    #     'NAME': env('SLAVE_NAME'),
-    #     'USER': env('SLAVE_USER'),
-    #     'PASSWORD': env('SLAVE_PASSWORD'),
-    #     'HOST': env('SLAVE_HOST'),
-    #     'PORT': env('SLAVE_PORT'),
+    #     'NAME': env('NAME'),
+    #     'USER': env('DB_USER'),
+    #     'PASSWORD': env('PASSWORD'),
+    #     'HOST': env('HOST'),
+    #     'PORT': 3307,
     #     'OPTIONS': {
     #         'init_command': init_command
     #     }
-    # }
+    # },
+    'default': {
+        'ENGINE': ENGINE,
+        'NAME': env('MASTER_NAME'),
+        'USER': env('MASTER_USER'),
+        'PASSWORD': env('MASTER_PASSWORD'),
+        'HOST': env('MASTER_HOST'),
+        'PORT': env('MASTER_PORT'),
+        'OPTIONS': {
+            'init_command': init_command
+        }
+    },
+    'master': {
+        'ENGINE': ENGINE,
+        'NAME': env('MASTER_NAME'),
+        'USER': env('MASTER_USER'),
+        'PASSWORD': env('MASTER_PASSWORD'),
+        'HOST': env('MASTER_HOST'),
+        'PORT': env('MASTER_PORT'),
+        'OPTIONS': {
+            'init_command': init_command
+        }
+    },
+    'slave': {
+        'ENGINE': ENGINE,
+        'NAME': env('SLAVE_NAME'),
+        'USER': env('SLAVE_USER'),
+        'PASSWORD': env('SLAVE_PASSWORD'),
+        'HOST': env('SLAVE_HOST'),
+        'PORT': env('SLAVE_PORT'),
+        'OPTIONS': {
+            'init_command': init_command
+        }
+    }
 }
 
 DATABASE_ROUTERS = ['cms_pjt.routers.MasterSlaveRouter']
