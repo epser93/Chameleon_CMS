@@ -57,6 +57,8 @@ export default {
   },
   created() {
     this.getSearch(this.$route.params.text)
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
   }
 
 }
