@@ -40,37 +40,35 @@
             <h5 class="modal-title">추천 상품 변경</h5>
           </div>
           <div class="modal-body">
-            <div class="container">
-              <h4 class="product-name">현재 상품 : {{ modalProduct.item.name }}</h4>
-              <hr>
-              <div class="input-group mb-3 justify-content-center">
-                <select name="" id="" v-model="selectedCategory">
-                  <option value="all">All</option>
-                  <option v-for="(category, index) in categories" :key="index" :value="category.name">{{category.name}}</option>
-                </select>
-                <input type="text" class="form-control" placeholder="제품 검색" v-model="searchedProduct" @keypress.enter="changeSearchToggle()">
-                <div class="input-group-append">
-                  <button class="btn btn-secondary ml-0" type="button" id="button-addon2" @click="changeSearchToggle()">검색</button>
-                </div>
+            <h4 class="product-name">현재 상품 : {{ modalProduct.item.name }}</h4>
+            <hr>
+            <div class="input-group mb-3">
+              <select v-model="selectedCategory">
+                <option value="all">All</option>
+                <option v-for="(category, index) in categories" :key="index" :value="category.name">{{category.name}}</option>
+              </select>
+              <input type="text" class="form-control" placeholder="제품 검색" v-model="searchedProduct" @keypress.enter="changeSearchToggle()">
+              <div class="input-group-append">
+                <button class="btn btn-secondary ml-0" type="button" id="button-addon2" @click="changeSearchToggle()">검색</button>
               </div>
-              <table class="table">
-                <thead>
-                  <tr class="top-tr">
-                    <th scope="col">카테고리</th>
-                    <th scope="col">상품명</th>
-                    <th scope="col">변경</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr class="user-infos" v-for="(product, index) in allProducts" :key="index">
-                    <td>{{ product.category.name }}</td>
-                    <td>{{ product.name }}</td>
-                    <td v-if="nowProducts.includes(product.id)"><button type="button" class="btn btn-danger btn-sm m-0" disabled>추천 상품</button></td>
-                    <td v-else><button type="button" class="btn btn-warning btn-sm m-0" @click="onUpdate(product.id)">수정</button></td>
-                  </tr>
-                </tbody>
-              </table>
             </div>
+            <table class="table">
+              <thead>
+                <tr class="top-tr">
+                  <th scope="col">카테고리</th>
+                  <th scope="col">상품명</th>
+                  <th scope="col">변경</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="user-infos" v-for="(product, index) in allProducts" :key="index">
+                  <td>{{ product.category.name }}</td>
+                  <td>{{ product.name }}</td>
+                  <td v-if="nowProducts.includes(product.id)"><button type="button" class="btn btn-danger btn-sm m-0" disabled>추천 상품</button></td>
+                  <td v-else><button type="button" class="btn btn-warning btn-sm m-0" @click="onUpdate(product.id)">수정</button></td>
+                </tr>
+              </tbody>
+            </table>
           </div>
           <div class="modal-footer justify-content-right">
             <button type="button" class="btn btn-secondary" data-dismiss="modal" @click="SET_ALL_PRODUCTS('')">취소</button>
@@ -156,13 +154,17 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .carousel {
-  width: 90%;
+  width: 80%;
   margin: auto;
 }
 
 .recommand-products {
   cursor: pointer;
+}
+
+.input-group {
+    width: 100%;
 }
 </style>
