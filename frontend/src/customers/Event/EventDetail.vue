@@ -39,6 +39,8 @@ export default {
   },
   created() {
     this.getEvent(this.$route.params.eid)
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
   }
 }
 </script>

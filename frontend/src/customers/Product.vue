@@ -24,10 +24,14 @@ export default {
   watch: {
     '$route' : function() {
       this.getItemInfo(this.$route.params.cid)
+      document.body.scrollTop = 0;
+      document.documentElement.scrollTop = 0;
     }
   },
   created() {
     this.getItemInfo(this.$route.params.cid)
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
   }
 }
 </script>
