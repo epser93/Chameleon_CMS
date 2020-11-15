@@ -78,7 +78,7 @@ import axios from 'axios'
 import $ from "jquery";
 const idchk = /^[a-z0-9]{5,12}$/;
 const pwchk = /^.*(?=^.{8,16}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/;
-const emailchk = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/
+const emailchk = /^[-A-Za-z0-9_]+[-A-Za-z0-9_.]*[@]{1}[-A-Za-z0-9_]+[-A-Za-z0-9_.]*[.]{1}[A-Za-z]{1,5}$/;
 const employeeNumberchk =  /^[0-9]*$/
 export default {
   name : 'SignupModal',
