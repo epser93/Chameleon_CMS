@@ -138,7 +138,7 @@ export default {
   },
   watch: {
     event(val) {
-      this.imageUrl.thumbnail = 'http://k3c205.p.ssafy.io' + val.thumbnail_image.slice(56)
+      this.imageUrl.thumbnail = val.thumbnail_image
       this.title = val.title,
       this.content = val.content,
       this.date.start = val.start_date,
@@ -148,7 +148,7 @@ export default {
         const imageData = {
           file: val.images[i].id,
           number: i,
-          preview: 'http://k3c205.p.ssafy.io' + val.images[i].image.slice(56)
+          preview: val.images[i].image
         }
         this.images.detail.push(imageData)
       }

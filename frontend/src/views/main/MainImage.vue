@@ -94,7 +94,7 @@ export default {
 			this.$router.push({name: 'MainImageUpdate', params: {method: 'update', id: id}}, () => {})
     },
     onClickWindows(url) {
-      window.open('http://k3c205.p.ssafy.io'+url.slice(56)) 
+      window.open(url) 
     },
     changeActive(image){
       if (confirm("상태를 변경하시겠습니까?") == true){    //확인

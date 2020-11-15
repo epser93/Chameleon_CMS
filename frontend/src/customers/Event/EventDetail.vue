@@ -34,7 +34,7 @@ export default {
   methods: {
     ...mapActions('customer', ['getEvent']),
     onClickWindows(url) {
-      window.open('http://k3c205.p.ssafy.io'+url) 
+      window.open('https://chameleon.gq'+url) 
     },
   },
   created() {

@@ -66,7 +66,7 @@ export default {
   watch: {
     image(val) {
       this.title = val.title
-      this.thumbnail = 'http://k3c205.p.ssafy.io'+val.image.slice(56)
+      this.thumbnail = val.image
       this.linkUrl = val.url
     }
   },
