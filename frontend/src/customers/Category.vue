@@ -29,6 +29,8 @@ export default {
   },
   created() {
     this.getItemList(this.$route.params.cid)
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
   }
 }
 </script>
