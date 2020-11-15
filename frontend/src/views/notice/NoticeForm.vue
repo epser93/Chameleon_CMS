@@ -36,8 +36,8 @@
             <button type="button" class="btn btn-warning btn-sm mr-2" @click="onClickTemp">임시저장</button>
           </div>
           <div>
-            <button v-if="id" type="button" class="btn btn-primary btn-sm" @click="onActivate">저장</button>
-            <button v-else type="button" class="btn btn-primary btn-sm" @click="onActivate">추가</button>
+            <button v-if="id" type="button" class="btn btn-primary btn-sm" @click="onActivate">등록하기</button>
+            <button v-else type="button" class="btn btn-primary btn-sm" @click="onActivate">등록하기</button>
           </div>
         </div> 
       </div>
@@ -83,17 +83,15 @@ export default {
         formdata.append("is_temp", 'False')
         formdata.append("is_active", 'True')  
         axios.post(SERVER.URL + SERVER.ROUTER.notice, formdata, this.formconfig)
-          .then(res => {
-            console.log(res)
+          .then(() => {
             this.$router.push({ name : 'Notice'})
           })
           .catch(error => console.log(error.response))
       } else { // 임시저장후 등록의 경우 수정 + 활성이 한번에 이루어짐
-        axios.put(SERVER.URL + SERVER.ROUTER.notice + this.$route.params.id, formdata, this.formconfig)
+        axios.put(SERVER.URL + SERVER.ROUTER.notice + this.$route.params.id +'/', formdata, this.formconfig)
           .then(() =>{
             axios.post(SERVER.URL + SERVER.ROUTER.notice + this.$route.params.id + '/', null, this.config)
-              .then(res => {
-                console.log('활성', res)
+              .then(() => {
                 this.$router.push({ name : 'Notice' })
               })
               .catch(error => console.log(error.response))
@@ -117,8 +115,7 @@ export default {
           .catch(error => console.log(error.response))
       } else { // 임시 등록 후 다시 임시등록을 할 때
         axios.put(SERVER.URL + SERVER.ROUTER.notice + this.$route.params.id, formdata, this.formconfig)
-          .then(res => {
-            console.log(res)
+          .then(() => {
             this.$router.push({ name : 'Notice' })
           })
           .catch(error => console.log(error.response))
@@ -132,7 +129,7 @@ export default {
             this.noticeInfo = res.data
             this.title = res.data.title
             this.contents = res.data.content
-            this.imageUrl = SERVER.domain + res.data.image.slice(56, res.data.image.length)
+            this.imageUrl = res.data.image
           })
           .catch(error => console.log(error.response))
       }
