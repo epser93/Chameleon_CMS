@@ -19,6 +19,7 @@
 ## 목차
 
 - [개요](#개요)
+- [인프라](#인프라)
 - [주요기능](#주요기능)
 - [ERD](#ERD)
 - [와이어프레임](#와이어프레임)
@@ -45,17 +46,18 @@ Admin Page : https://chameleon.gq/admin
 
 운영되는 사이트의 트래픽을 감당하기 위해 HW 이중화 구조로 설계
 
-classic load balancer 1
+## 인프라
+- Classic load balancer 1
 
-Web Server 2
+- Web Server 2
 
-Web Application Server 2
+- Web Application Server 2
 
-Redis Server 1
+- Redis Server 1
 
-S3 1
+- AWS S3 1
 
-data base server(mysql master-slave) 2
+- Database server(mysql master-slave) 2
 
 
 
