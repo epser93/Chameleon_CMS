@@ -6,7 +6,11 @@
     <hr>
     <div class="row my-4">
       <div v-for="(item, index) in search.items" :key="index" class="col-sm-12 col-md-6 col-lg-4 item" @click="onProductDetail(item.id)">
+<<<<<<< HEAD
         <img class="product-img" :src="item.images[0].item_image" alt="" style="width: 100%">
+=======
+        <img class="product-img justify-content-center" :src="getImg(item.images)" alt="">
+>>>>>>> fb4df6a8ac9e15dfb391bba5a8fdc5dd88360600
         <h4 class="product-name mt-2">{{ item.name }}</h4>
         <hr>
         <h5 class="product-price">{{ addComma(item.price) }}원</h5>
@@ -34,6 +38,14 @@ export default {
     onProductDetail(cid) {
       this.$router.push({name: 'CustomerProduct', params: {cid: cid}}, () => {})
     },
+    getImg(src) {
+      for (let i=0; i<src.length; i++) {
+        if (src[i].is_thumbnail) {
+          return src[i].item_image
+        }
+      }
+      return '@/assets/250.png'
+    }
   },
   computed: {
     ...mapState('customer', ['search']),
