@@ -43,6 +43,20 @@ Admin Page : https://chameleon.gq/admin
 
 운영 효율성을 높이기 위해 제품의 추가/수정이 용이하도록 CMS로 제어할 수 있는 온라인 제품 소개 사이트 플랫폼 제작
 
+운영되는 사이트의 트래픽을 감당하기 위해 HW 이중화 구조로 설계
+
+classic load balancer 1
+
+Web Server 2
+
+Web Application Server 2
+
+Redis Server 1
+
+S3 1
+
+data base server(mysql master-slave) 2
+
 
 
 ## 주요기능
@@ -85,14 +99,24 @@ Admin Page : https://chameleon.gq/admin
 - Backend
   - django 2.1.15
   - python 3.7.7
+  - boto3 1.16.15
+  - djangorestframework 3.11.1
+  - gunicorn 20.0.4
+  - django-storages 1.9.1
 - Infra
+  - aws ec2
+  - rds
+  - route 53
+  - s3
+  - redis
 - OS
   - Ubuntu 18.04
-- DB
-
-
+- DB 
+  - mysql 8.0.21
 
 ## 초기설정
+
+### frontend
 
 - node.js / vue-cli 설치
 - frontend 라이브러리 설치
@@ -103,7 +127,65 @@ frontend /
 npm install
 ```
 
+### backend
 
+- 필요한 라이브러리 설치
+
+```
+pip install -r requirements.txt
+```
+
+- backend env 파일 설정
+
+> backend/cms_pjt 폴더로 이동후 .env 파일 생성
+> 주의 : .env 파일 내부에서는 띄워쓰기를 하지 말아주세요!
+
+```
+SECRET_KEY=장고 시크릿키
+DEBUG=디버그 여부
+
+NAME=테스트 디비 이름
+DB_USER=테스트 디비 유저
+PASSWORD=테스트 디비 패스워드
+HOST=테스트 디비 주소
+PORT=테스트 디비 포트
+
+MASTER_NAME=마스터 디비 이름
+MASTER_USER=마스터 디비 유저 이름
+MASTER_PASSWORD=마스터 디비 패스워드
+MASTER_HOST=마스터 디비 주소
+MASTER_PORT=마스터 디비 포트
+
+SLAVE_NAME=슬레이브 디비 이름
+SLAVE_USER=슬레이브 디비 유저 이름
+SLAVE_PASSWORD=슬레이브 디비 유저 패스워드
+SLAVE_HOST=cms-슬레이드 디비 주소
+SLAVE_PORT=슬레이브 디비 포트
+
+EMAIL_HOST_USER=확인메일 보낼 이메일 주소
+EMAIL_HOST_PASSWORD=해당 아이디 비밀번호
+
+AWS_REGION=s3 지역
+AWS_STORAGE_BUCKET_NAME=s3 버킷 이름
+AWS_ACCESS_KEY_ID=s3 접속 키 아이디
+AWS_SECRET_ACCESS_KEY=접속시 연결 비밀키
+AWS_DEFAULT_ACL=ACL 설정타입
+
+LOCATION=redis 주소
+REDIS_PASSWORD=redis 비밀번호
+```
+
+- mysql master-slave구조이기 때문에 변경없이 사용하기 위해서는 master-slave의 db를 연결해야 한다.
+- db구조를 바꾸고 싶다면 settings.py에 db관련된 코드를 수정하면 된다.
+
+
+
+- 정상적으로 연결이 되었다면 아래의 명령어 입력
+
+```bash
+python manage.py makemigrations
+python manage.py migrate
+```
 
 
 
