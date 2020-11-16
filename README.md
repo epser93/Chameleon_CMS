@@ -21,6 +21,7 @@
 - [개요](#개요)
 - [인프라](#인프라)
 - [주요기능](#주요기능)
+- [아키텍쳐](#아키텍쳐)
 - [ERD](#ERD)
 - [와이어프레임](#와이어프레임)
 - [기술스택](#기술스택)
@@ -46,18 +47,26 @@ Admin Page : https://chameleon.gq/admin
 
 운영되는 사이트의 트래픽을 감당하기 위해 HW 이중화 구조로 설계
 
+
+
 ## 인프라
 - Classic load balancer 1
-
 - Web Server 2
-
 - Web Application Server 2
-
 - Redis Server 1
-
 - AWS S3 1
-
 - Database server(mysql master-slave) 2
+
+
+
+## 아키텍쳐
+![](./doc/아키텍쳐.png)
+
+> 1. 클라이언트 요청 
+> 2. 로드밸런서를 통해 자동으로 부하가 적은 웹서버로 할당
+> 3. 정적파일 웹서버(Nginx)에서 제공 동적파일이 필요한경우 Nginx 내부 로드밸런서를 통해 자동으로 부하가 적은 WAS로 요청
+> 4. WAS에서 DB 데이터를 받아와 가공후 전송
+>    1. 요청받은 데이터가 기존의 정보와 동일하다면 DB 접근을 하지 않고 레디스에 캐싱된 데이터를 보내줌
 
 
 
@@ -112,9 +121,13 @@ Admin Page : https://chameleon.gq/admin
   - s3
   - redis
 - OS
+  
   - Ubuntu 18.04
 - DB 
+  
   - mysql 8.0.21
+  
+  
 
 ## 초기설정
 
@@ -179,8 +192,6 @@ REDIS_PASSWORD=redis 비밀번호
 
 - mysql master-slave구조이기 때문에 변경없이 사용하기 위해서는 master-slave의 db를 연결해야 한다.
 - db구조를 바꾸고 싶다면 settings.py에 db관련된 코드를 수정하면 된다.
-
-
 
 - 정상적으로 연결이 되었다면 아래의 명령어 입력
 
