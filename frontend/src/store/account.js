@@ -189,8 +189,8 @@ export default {
     // 권한 부여 
     giveAuthorities({ getters, state, dispatch }, authorityInfo) {
       axios.put(SERVER.URL + SERVER.ROUTER.usermanage + state.authorityModalUser.id + '/', authorityInfo, getters.config)
-       .then(res => {
-         console.log(res)
+       .then(() => {
+        //  console.log(res)
          dispatch('getAccessUserInfo')
         })
        .catch(error => console.log(error.response))

@@ -49,7 +49,7 @@ export default {
   },
   methods: {
     imageUpload() {
-      console.log(this.$refs.files.files);
+      // console.log(this.$refs.files.files);
 
       // this.files = [...this.files, this.$refs.files.files];
       //하나의 배열로 넣기
@@ -75,18 +75,18 @@ export default {
               // ];
       }
       this.uploadImageIndex = num + 1; //이미지 index의 마지막 값 + 1 저장
-      console.log(this.files);
+      // console.log(this.files);
       // console.log(this.filesPreview);
       },
 
     imageAddUpload() {
-      console.log(this.$refs.files.files);
+      // console.log(this.$refs.files.files);
 
       // this.files = [...this.files, this.$refs.files.files];
       //하나의 배열로 넣기c
       let num = -1;
       for (let i = 0; i < this.$refs.files.files.length; i++) {
-        console.log(this.uploadImageIndex);
+        // console.log(this.uploadImageIndex);
         this.files = [
           ...this.files,
           //이미지 업로드
@@ -103,7 +103,7 @@ export default {
       }
       this.uploadImageIndex = this.uploadImageIndex + num + 1;
 
-      console.log(this.files);
+      // console.log(this.files);
       // console.log(this.filesPreview);
     },
     fileDeleteButton(e) {

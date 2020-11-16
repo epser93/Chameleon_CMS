@@ -151,8 +151,8 @@ export default {
         } 
       }
       for(let i=0; i<this.tags.length; i++) {
-        console.log(this.initTags)
-        console.log(this.tags[i])
+        // console.log(this.initTags)
+        // console.log(this.tags[i])
         if(!this.initTags.includes(this.tags[i])) {
           this.addTags.push(this.tags[i])
         } 
@@ -208,15 +208,15 @@ export default {
         previewData.items.push(tmpItem)
       }
       this.previewData = JSON.stringify(previewData)
-      console.log(this.previewData)
-      this.newWindow = window.open("http://localhost:8080/admin/preview", "page");
+      // console.log(this.previewData)
+      this.newWindow = window.open("https://chameleon.gq/admin/preview", "page");
       
     },
     onClickImageUpload() {
         this.$refs.imageInput.click();
     },
     onChangeImages(e) {
-        console.log(e.target.files)
+        // console.log(e.target.files)
         this.image = e.target.files[0];
         this.imageUrl = URL.createObjectURL(this.image);
     },

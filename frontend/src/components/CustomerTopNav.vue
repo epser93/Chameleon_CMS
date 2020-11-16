@@ -1,5 +1,5 @@
 <template>
-  <div @mouseleave="onHideWide()">
+  <div @mouseleave="onHideWide();">
     <nav class="navbar fixed-top navbar-expand-md navbar-light bg-light">
       
       <!-- logo -->
@@ -24,6 +24,13 @@
           </li>
           <li class="nav-item mx-4">
             <a class="nav-link" @click="onHideSearch()" data-toggle="collapse" data-target=".productContent" aria-controls="productContent" aria-expanded="false">Product</a>
+            <div class="collapse d-md-none productContent" id="productToggle">
+              <div class="card card-body">
+                <div class="nav nav-pills flex-column" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                  <a @click="onHideCollapse(); onDetail(category.id);" v-for="(category, index) in categories" :key="index" class="nav-link" :id="`v-pills-${category.name}-tab`" data-toggle="tab" :href="`#v-pills-${category.name}`" role="tab" :aria-controls="`v-pills-${category.name}`" :aria-selected="true">{{ category.name }} </a>
+                </div>
+              </div>
+            </div>
           </li>
           <li class="nav-item mx-4">
             <a class="nav-link" @click="onRoute('CustomerEvent'); onHideWide(); onHideCollapse();">Event</a>

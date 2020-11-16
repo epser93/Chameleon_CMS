@@ -143,7 +143,7 @@
             <ul v-if="history.length">
               <li v-for="(his,index) in history.slice()" :key="index">             
                 <div class="history-btn row justify-content-around" :id="`history-${index}`" @click="fixHistory(index)">
-                  <strong>저장 {{ index }}</strong>
+                  <strong>저장 {{ hisRow - index }}</strong>
                   <p>{{ his.created_date.slice(0,19) }}</p>
                 </div>
               </li>
@@ -206,11 +206,13 @@ export default {
   computed: {
     ...mapState('category', ['item', 'history']),
     ...mapGetters('category', ['category']),
+    hisRow() {
+      return this.history.length
+    }
   },
-
   watch: {
     item(val) {
-      console.log(val)
+      // console.log(val)
       this.itemId = val.id
       this.itemName = val.name
       this.itemPrice = val.price
@@ -304,18 +306,18 @@ export default {
     fixHistory(idx) {
       for (let i=0; i<this.history.length; i++) {
         let className = '#history-' + i
-        console.log(className)
+        // console.log(className)
         if (i == idx) {
           document.querySelector(className).classList.add('on')
         } else {
           document.querySelector(className).classList.remove('on')
         }
       }
-      console.log(this.history[idx])
-      console.log(this.history[idx].id)
+      // console.log(this.history[idx])
+      // console.log(this.history[idx].id)
       this.his_id = this.history[idx].id
 
-      console.log(this.his_id)
+      // console.log(this.his_id)
 
       // 여기서 바꿔야함.
       this.itemName = this.history[idx].name,
@@ -413,6 +415,8 @@ export default {
       tmpData.append('number', cnt)
       
       this.postTempItem({pid: this.itemId, tmpData: tmpData})
+      document.body.scrollTop = 0;
+      document.documentElement.scrollTop = 0;
     },
 
     onClickUpdate(hid) {
@@ -450,7 +454,7 @@ export default {
         if(i < idxTN) {
           itemData.append('image' + i, this.imageOfThumb[i].file)
           itemData.append('is_thumbnails', "True")
-          console.log(this.imageOfThumb[i])
+          // console.log(this.imageOfThumb[i])
         }
         else {
           itemData.append('image' + i, this.imageOfIntro[i-idxTN].file)
@@ -516,15 +520,15 @@ export default {
       }
 
 
-      console.log(previewData)
+      // console.log(previewData)
 
       this.previewData = JSON.stringify(previewData)
-      this.newWindow = window.open("http://localhost:8080/admin/preview", "page");
+      this.newWindow = window.open("https://chameleon.gq/admin/preview", "page");
       
     },
 
     imageUpload() {
-      console.log(this.$refs.detailImages.files);
+      // console.log(this.$refs.detailImages.files);
       let num = -1;
       for (let i = 0; i < this.$refs.detailImages.files.length; i++) {
         this.imageOfThumb = [
@@ -548,10 +552,10 @@ export default {
       },
 
     imageAddUpload() {
-      console.log(this.$refs.detailImages.files);
+      // console.log(this.$refs.detailImages.files);
       let num = -1;
       for (let i = 0; i < this.$refs.detailImages.files.length; i++) {
-        console.log(this.uploadImageIndex);
+        // console.log(this.uploadImageIndex);
         this.imageOfThumb = [
           ...this.imageOfThumb,
           //이미지 업로드
@@ -586,7 +590,7 @@ export default {
     // intro
 
     introUpload() {
-      console.log(this.$refs.introImages.files);
+      // console.log(this.$refs.introImages.files);
       let num = -1;
       for (let i = 0; i < this.$refs.introImages.files.length; i++) {
         this.imageOfIntro = [
@@ -609,10 +613,10 @@ export default {
       },
 
     introAddUpload() {
-      console.log(this.$refs.introImages.files);
+      // console.log(this.$refs.introImages.files);
       let num = -1;
       for (let i = 0; i < this.$refs.introImages.files.length; i++) {
-        console.log(this.uploadIntroIndex);
+        // console.log(this.uploadIntroIndex);
         this.imageOfIntro = [
           ...this.imageOfIntro,
           //이미지 업로드
@@ -630,7 +634,7 @@ export default {
       }
       this.uploadIntroIndex = this.uploadIntroIndex + num + 1;
 
-      console.log(this.imageOfIntro);
+      // console.log(this.imageOfIntro);
     },
     introDeleteButton(name, delId) {
       // const name = e.target.getAttribute('name');

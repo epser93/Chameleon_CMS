@@ -100,8 +100,8 @@ export default {
     if(this.checkPoint !== 0) {
       this.divideImage(this.itemInfo.images)
     }
-    console.log(this.itemInfo)
-    console.log(this.previewThumbnails)
+    // console.log(this.itemInfo)
+    // console.log(this.previewThumbnails)
     // console.log(this.thumbnails)
     
   }

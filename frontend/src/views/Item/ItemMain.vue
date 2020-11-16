@@ -109,8 +109,8 @@ export default {
     },
 
     onUpdate(cid, pid) {
-      console.log(cid)
-      console.log(pid)
+      // console.log(cid)
+      // console.log(pid)
       this.$router.push({name:'ProducItemUpdate', params:{cid: cid, pid: pid, update: 'update'}})
     },
     

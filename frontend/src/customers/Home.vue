@@ -44,7 +44,7 @@
         </ol>
         <div class="carousel-inner">
           <div :class="(index === 0) ? 'active carousel-item' : 'carousel-item'"  v-for="(event, index) in events" :key="index">
-            <img :src="event.thumbnail_image" class="d-block w-100" :alt="'main-image-'+index" @click="onDetail(event.id)">
+            <img :src="event.thumbnail_image" class="event-img d-block w-100" :alt="'main-image-'+index" @click="onDetail(event.id)">
           </div>
         </div>
         <a class="carousel-control-prev" href="#eventCarouselIndicators" role="button" data-slide="prev">
@@ -91,6 +91,8 @@ export default {
     this.getMainItems()
     this.getCarousels()
     this.getEvents()
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
   }
 }
 </script>
@@ -99,6 +101,11 @@ export default {
 .recommand-img {
   width: auto;
   height: 200px;
+  cursor: pointer;
+}
+
+.event-img {
+  cursor: pointer;
 }
 
 @media screen and (max-width: 500px) {
