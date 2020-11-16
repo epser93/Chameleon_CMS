@@ -17,9 +17,7 @@
       </div>
     </div>
 
-    {{ event }}
-
-    <div class="d-flex flexbox_wrapping justify-content-center mt-4 mb-4" v-if="event.url != 'null'">
+    <div class="d-flex flexbox_wrapping justify-content-center mt-4 mb-4" v-if="event.url != 'Null'">
       <button type="button" class="btn btn-dark" @click="onClickWindows(image.image)">관련 상품 보러가기</button>
     </div>
   </div>
