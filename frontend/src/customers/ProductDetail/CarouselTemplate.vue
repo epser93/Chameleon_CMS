@@ -111,6 +111,7 @@ export default {
 <style scoped>
 .carousel-indicators-img{
   width: 50px;
+  cursor: pointer;
 }
 
 .preview-img {
@@ -166,8 +167,14 @@ ol {
   background-color: #4c4949;
 }
 
+.preview-img {
+  border: 1px solid #dee0e2;
+}
+
 .itm-detail-img {
   width: 100%;
+  border-top: 10px solid #f8f9fa;
+  padding: 20px;
 }
 
 @media screen and (max-width: 768px) {
