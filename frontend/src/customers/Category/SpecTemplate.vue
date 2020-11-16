@@ -2,7 +2,7 @@
   <div class="container">
     <h3 class="mt-4">{{ datas.name }}</h3>
     <hr>
-    <div class="row mt-4 mb-4 ml-4 item" v-for="(item, index) in datas.items" :key="index" @click="onRoute('CustomerProduct', item.id)">
+    <div class="row mt-4 mb-4 ml-4 item" v-for="(item, index) in datas.items" :key="index"  @click="onRoute('CustomerProduct', item.id)">
       <div v-if="item.images.length == 0" class="col-12 col-md-5">
         <img src="@/assets/dummy-250.png" class="product-img" alt="">
       </div>
@@ -55,7 +55,7 @@ p {
   bottom: 0px;
 }
 
-.item {
+.product-img {
   cursor: pointer;
 }
 

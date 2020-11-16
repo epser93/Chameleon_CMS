@@ -8,7 +8,7 @@
       <div class="row col-12 my-4">
         <div v-for="(item, index) in search.items" :key="index" class="column col-12 col-sm-6 col-md-4 mb-4 item" @click="onProductDetail(item.id)">
           <div v-if="index < 3">
-            <img class="product-img" :src="item.images" alt="">
+            <img class="product-img" :src="item.images[0].item_image" alt="" style="width: 100%">
             <h4 class="product-name mt-2">{{ item.name }}</h4>
             <hr>
             <h5 class="product-price">{{ addComma(item.price) }}원</h5>

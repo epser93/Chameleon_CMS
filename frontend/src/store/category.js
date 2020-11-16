@@ -18,7 +18,7 @@ export default {
     // watch, computed
     category(state) {
       for (let i=0; i<state.categories.length; i++) {
-        console.log(state.categories[i])
+        // console.log(state.categories[i])
 				if (state.category == state.categories[i].id) {
           return state.categories[i]
           
@@ -50,10 +50,10 @@ export default {
   actions: {
     // API 함수
     categoryRegister({ rootGetters, dispatch }, categoryData) {
-      console.log(categoryData)
+      // console.log(categoryData)
       axios.post(SERVER.URL + SERVER.ROUTER.category, categoryData, rootGetters['account/config'])
         .then(() => {
-            console.log("등록완료")
+            // console.log("등록완료")
             dispatch('getCategoryList')
             router.push({ name : 'Product'})
         })
@@ -63,7 +63,7 @@ export default {
     categoryUpdate({ rootGetters, dispatch }, {cid, categoryData}) {
       axios.put(SERVER.URL + SERVER.ROUTER.category + cid + '/', categoryData, rootGetters['account/config'])
         .then(() => {
-            console.log("수정완료")
+            // console.log("수정완료")
             dispatch('getCategoryList')
             router.push({ name : 'Product'})
         })
@@ -106,7 +106,7 @@ export default {
     itemRegister({ rootGetters, dispatch }, {cid, itemData}) {
       axios.post(SERVER.URL + SERVER.ROUTER.item, itemData, rootGetters['account/config'])
         .then(() => {
-            console.log("등록완료")
+            // console.log("등록완료")
             router.push({name:'ProductItem'}, () => {})
             dispatch('getItem', cid)
         })
@@ -170,7 +170,7 @@ export default {
     putItemHistory({ rootGetters, dispatch }, {cid, pid, hisData}) {
       axios.put(SERVER.URL + SERVER.ROUTER.item + pid + '/', hisData, rootGetters['account/config'])
         .then(() => {
-            console.log("원본에다가 등록완료")
+            // console.log("원본에다가 등록완료")
             router.push({name:'ProductItem'}, () => {})
             dispatch('getItem', cid)
         })

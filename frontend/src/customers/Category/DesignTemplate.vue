@@ -10,7 +10,7 @@
         <hr>
         <h5 class="product-price">{{ addComma(item.price) }}원</h5>
         <div v-for="(spec, index) in item.descriptions" :key="index" class="mb-2">
-          <span class="product-des">{{spec.category_description.name}} : {{ spec.content}}</span>
+          <span v-if="index < 3" class="product-des">{{spec.category_description.name}} : {{ spec.content}}</span>
         </div>
       </div>
     </div>
@@ -57,7 +57,7 @@ export default {
   margin-right: 10px;
 }
 
-.item {
+.product-img {
   cursor: pointer;
 }
 

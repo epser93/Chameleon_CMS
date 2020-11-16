@@ -12,6 +12,10 @@
 <script>
 export default {
   name: 'Contact',
+  created() {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+  }
 }
 </script>
 

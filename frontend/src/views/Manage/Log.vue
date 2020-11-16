@@ -89,7 +89,7 @@ export default {
       return tz.toLocaleDateString() + '(' + arrDay[tz.getDay()] + ') ' + tz.getHours() + '시 ' + tz.getMinutes() + '분 ' + tz.getSeconds() + '초 '
     },
     test() {
-      console.log(this.paginationLength)
+      // console.log(this.paginationLength)
     },
     prevPage() {
       if (this.nowPage > 0) {

@@ -153,8 +153,8 @@ export default {
         this.images.detail.push(imageData)
       }
       this.uploadImageIndex = val.images.length
-      console.log(val.detail)
-      console.log(this.images.detail)
+      // console.log(val.detail)
+      // console.log(this.images.detail)
 
     }
   },
@@ -202,7 +202,7 @@ export default {
     },
     fileDeleteButton(e) {
       const name = e.target.getAttribute('name');
-      console.log(name)
+      // console.log(name)
       this.images.detail = this.images.detail.filter(data => data.number !== Number(name));
     },
     onRegister() {
