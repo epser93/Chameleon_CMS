@@ -39,7 +39,11 @@ export default {
   },
   watch: {
     event() {
-      this.$ga.page('event-' + this.event.title);
+      this.$ga.page({
+        page: '/event',
+        title: 'event - ' + this.event.title,
+        location: window.location.href
+      })
     }
   },
   created() {
