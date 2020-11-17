@@ -41,7 +41,7 @@ export default {
     event() {
       this.$ga.page({
         page: '/event',
-        title: 'event - ' + this.event.title,
+        title: this.event.title,
         location: window.location.href
       })
     }

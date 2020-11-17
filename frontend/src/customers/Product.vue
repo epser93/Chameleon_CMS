@@ -30,7 +30,7 @@ export default {
     itemInfo() {
       this.$ga.page({
         page: '/product',
-        title: 'product - ' + this.itemInfo.name,
+        title: this.itemInfo.name,
         location: window.location.href
       })
     }

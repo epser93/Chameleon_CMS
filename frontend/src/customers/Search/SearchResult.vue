@@ -113,7 +113,7 @@ export default {
   mounted() {
     this.$ga.page({
       page: '/search',
-      title: 'search - ' + this.$route.params.text,
+      title: this.$route.params.text,
       location: window.location.href
     })
   }
