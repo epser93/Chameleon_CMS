@@ -349,7 +349,7 @@ const router = new VueRouter({
 
 import VueAnalytics from 'vue-analytics';
 Vue.use(VueAnalytics, {
-    id: 'G-SYSQQFMZND',
+    id: 'UA-183274370-1',
     router
 });
 
