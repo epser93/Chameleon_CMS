@@ -26,6 +26,13 @@ export default {
       this.getItemInfo(this.$route.params.cid)
       document.body.scrollTop = 0;
       document.documentElement.scrollTop = 0;
+    },
+    itemInfo() {
+      this.$ga.page({
+        page: '/product',
+        title: 'product - ' + this.itemInfo.name,
+        location: window.location.href
+      })
     }
   },
   created() {
