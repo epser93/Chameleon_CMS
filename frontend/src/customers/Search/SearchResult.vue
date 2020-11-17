@@ -109,6 +109,9 @@ export default {
   },
   created() {
     this.getSearch(this.$route.params.text)
+  },
+  mounted() {
+    this.$ga.page('search-' + this.$route.params.text);
   }
 }
 </script>

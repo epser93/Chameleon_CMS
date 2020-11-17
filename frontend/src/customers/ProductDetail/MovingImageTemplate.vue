@@ -76,6 +76,7 @@ export default {
   watch: {
     'itemInfo' : function() {
       this.divideImage(this.itemInfo.images)
+      this.$ga.page('product-' + this.itemInfo.name);
     }
   },
   created () {

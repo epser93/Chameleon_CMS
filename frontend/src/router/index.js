@@ -347,10 +347,4 @@ const router = new VueRouter({
   routes
 })
 
-import VueAnalytics from 'vue-analytics';
-Vue.use(VueAnalytics, {
-    id: 'UA-183274370-1',
-    router
-});
-
 export default router
