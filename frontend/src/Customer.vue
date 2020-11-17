@@ -9,15 +9,6 @@
 </template>
 
 <script>
-//vue-analytics
-import Vue from 'vue'
-import router from './router'
-import VueAnalytics from 'vue-analytics'
-Vue.use(VueAnalytics,{
-  id: 'G-SYSQQFMZND',
-  router
-})
-
 import CustomerTopNav from '@/components/CustomerTopNav'
 import Footer from '@/components/Footer'
 
