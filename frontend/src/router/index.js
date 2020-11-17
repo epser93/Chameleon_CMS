@@ -10,7 +10,7 @@ const routes = [
   {
     path: '/',
     name: 'CustomerMain',
-    component: () => import('@/customers/Main.vue'),
+    component: () => import('@/Customer.vue'),
     redirect: '/',
     children: [
       {
