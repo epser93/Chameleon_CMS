@@ -519,7 +519,7 @@ export default {
       // console.log(previewData)
 
       this.previewData = JSON.stringify(previewData)
-      this.newWindow = window.open("http://localhost:8080/admin/preview", "page");
+      this.newWindow = window.open("https://chameleon.gq/admin/preview", "page");
       
     },
 
