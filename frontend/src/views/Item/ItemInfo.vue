@@ -370,11 +370,7 @@ export default {
       const tmpData = new FormData()
       tmpData.append('name', this.itemName)
       tmpData.append('price', this.itemPrice)
-       if(this.is_temp){
-        tmpData.append('is_temp', "True")
-      } else {
-        tmpData.append('is_temp', "False")
-      }
+      tmpData.append('is_temp', "False")
 
       tmpData.append('category', this.categoryNum)
       tmpData.append('template', this.picked)
@@ -523,7 +519,7 @@ export default {
       // console.log(previewData)
 
       this.previewData = JSON.stringify(previewData)
-      this.newWindow = window.open("https://chameleon.gq/admin/preview", "page");
+      this.newWindow = window.open("http://localhost:8080/admin/preview", "page");
       
     },
 
