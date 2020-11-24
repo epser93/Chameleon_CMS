@@ -13,8 +13,13 @@ import 'bootstrap/dist/js/bootstrap.min.js'
 import VueCookies  from 'vue-cookies'
 Vue.use(VueCookies)
 
-
 Vue.config.productionTip = false
+
+// google-analytics
+import VueAnalytics from 'vue-analytics';
+Vue.use(VueAnalytics, {
+    id: 'UA-183274370-1',
+});
 
 new Vue({
   router,

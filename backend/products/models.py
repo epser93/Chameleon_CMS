@@ -112,7 +112,7 @@ class AbstractItem(models.Model):
     def create(self, data, user, category, template):
         self.name = data.get('name', "")
         self.price = int(data.get('price', self.price))
-        self.is_temp = data.get('is_temp', False) == 'True'
+        self.is_temp = data.get('is_temp', 'False') == 'True'
         self.cms_user = user
         self.category = category
         self.template = template

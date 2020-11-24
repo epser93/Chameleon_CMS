@@ -37,11 +37,20 @@ export default {
       window.open('https://chameleon.gq'+url) 
     },
   },
+  watch: {
+    event() {
+      this.$ga.page({
+        page: '/event',
+        title: this.event.title,
+        location: window.location.href
+      })
+    }
+  },
   created() {
     this.getEvent(this.$route.params.eid)
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
-  }
+  },
 }
 </script>
 
