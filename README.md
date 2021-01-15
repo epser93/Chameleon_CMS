@@ -1,10 +1,12 @@
 # Chameleon CMS - 제일기획 기업 연계 PJT
 
-
-
 > 팀원 : 김유기(팀장), 강현영, 송은석, 임선빈, 장주환
 >
 > 개발기간 :  20.10.12 ~ 20.11.16
+>
+> 소개영상 :  https://youtu.be/PF1TWlqGhkM
+>
+> 시연영상 :  https://youtu.be/W2ff6Ov0sDw
 
 
 
