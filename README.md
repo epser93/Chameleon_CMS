@@ -10,7 +10,7 @@
 
 
 
-![Customer Main](README.assets/Customer Main.JPG)
+![Main](README.assets/Main.JPG)
 
 ![로그](README.assets/로그.JPG)
 
