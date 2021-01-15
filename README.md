@@ -4,9 +4,9 @@
 >
 > 개발기간 :  20.10.12 ~ 20.11.16
 >
-> 소개영상 :  https://youtu.be/PF1TWlqGhkM
+> 소개영상 :  https://youtu.be/i49xwjVcc1c
 >
-> 시연영상 :  https://youtu.be/W2ff6Ov0sDw
+> 시연영상 :  https://youtu.be/_USv4O9pWQA
 
 
 
